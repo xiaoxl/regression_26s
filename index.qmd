@@ -1,5 +1,5 @@
 # Preface {.unnumbered}
-These are notes.
+These are notes for STAT 3113 Regression 2026 Spring at Arkansas Tech University. If you have any questions please contact me through [email](mailto:xxiao@atu.edu).
 
 
 
