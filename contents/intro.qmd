@@ -1,0 +1,15 @@
+# Section
+
+{{< include ../math.qmd >}}
+
+
+## Sbusection
+
+
+::: {#def-}
+GOOD
+:::
+
+
+Some formulas: bad
+

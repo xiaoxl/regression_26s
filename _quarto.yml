@@ -1,0 +1,79 @@
+project:
+  type: book
+  output-dir: docs
+
+
+number-sections: true
+# top-level-division: part
+toc-depth: 3
+number-depth: 4
+bibliography: reference.bib
+csl: "ims.csl"
+ 
+crossref:
+  labels: arabic        # (default is arabic)
+  subref-labels: roman i # (default is alpha a)
+ 
+execute:
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    # comment: "#>"
+    collapse: true
+
+jupyter: stats
+
+# filters:
+#   - pseudocode
+
+# pseudocode:
+#   caption-prefix: "Algorithm"
+#   reference-prefix: "Algorithm"
+#   caption-number: true
+
+format:
+  bookup-html:
+        toc: true
+        toc-depth: 3
+  # html:
+  #   theme: cosmo
+  #   code-block-bg: true
+  #   code-block-border-left: true #"#31BAE9"
+  #   # code-line-numbers: true
+  #   highlight-style: atom-one
+  #   page-layout: article
+
+book:
+  title: "PROJECTS"
+  author: "Xinli Xiao"
+  date: last-modified
+  chapters: 
+    - index.qmd
+    - part: "PART 1"
+      chapters: 
+        - contents/intro.qmd
+#   appendices:
+    # - contents/app/index.qmd
+  sidebar:
+    style: "docked"
+    # pinned: true
+    # align: center
+    # border: true
+    search: true
+    collapse-level: 1
+    # alignment: "center"
+  # navbar: 
+  #   background: primary
+  #   search: true
+  #   left: 
+  #     - text: "Home"
+  #       menu: 
+  #       - contents/index.qmd
+  page-navigation: true
+  bread-crumbs: false
+
+    
+
+
+
