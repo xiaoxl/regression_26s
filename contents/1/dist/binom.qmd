@@ -1,0 +1,45 @@
+# Binomial distribution
+
+
+{{< include ../../math.qmd >}}
+
+Let $\mathcal Y=\set{0,\ldots,n}$.
+
+::: {#def-distribution-binom}
+## Binomial distribution
+$Y\in\mathcal Y$ has a *binomial distribution with probability $\theta$*, denoted by $Y\sim\distbinom(n, \theta)$, if
+$$
+\Pr(y\mid\theta)=\Pr\qty(Y=y\mid \theta)=\pdfbinom(y,n,\theta)=\dbinom{n}{y}\theta^y(1-\theta)^{n-y}.
+$$
+:::
+
+## Expected values
+
+::: {#thm-dist-binom-exp}
+Let $Y\sim\distbinom(n,\theta)$. Then
+$$
+\Exp\qty(Y)=n\theta.
+$$
+:::
+
+
+::: {.callout-tip collapse="true"}
+# Proof.
+$$
+\begin{split}
+    \Exp\qty(Y)&=\sum_{y=0}^n\dbinom{n}{y}y\theta^y(1-\theta)^{n-y}\\
+    &=\sum_{y=0}^n\frac{n!}{y!(n-y)!}y\theta^y(1-\theta)^{n-y}\\
+        &=\sum_{y=1}^n\frac{n(n-1)!}{y(y-1)!(n-y)!}y\theta^{1+(y-1)}(1-\theta)^{n-y}\\
+    &=\sum_{y=1}^nn\theta\frac{(n-1)!}{(y-1)!\qty((n-1)-(y-1))!}\theta^{y-1}(1-\theta)^{(n-1)-(y-1)}\\
+        &=\sum_{y=0}^{n-1}n\theta\frac{(n-1)!}{y!(n-1-y)!}\theta^{y}(1-\theta)^{(n-1)-y}\\
+    &=n\theta\sum_{y=0}^{n-1}\dbinom{n-1}{y}\theta^y(1-\theta)^{n-1-y}\\
+    &=n\theta(\theta+1-\theta)^{n-1}\\
+    &=n\theta.
+\end{split}
+$$
+:::
+
+
+## Variance
+dd
+

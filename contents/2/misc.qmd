@@ -1,0 +1,406 @@
+
+# Variable selection
+
+## Step-wise
+
+`olsrr` `ols_step_both_p`
+
+
+## best of subsets
+
+`leaps` `regsubsets`
+
+
+# Residual analysis
+
+
+::: {.callout-note}
+## Four assumptions of the error term $\varepsilon$
+
+$\varepsilon$ is assumed to be
+
+1. normally distributed
+2. with a mean of 0
+3. the variance $\sigma^2$ is constant
+4. all pairs of error terms are uncorrelated
+:::
+
+
+
+
+## Residual analysis
+
+
+::: {.callout-note}
+## Regression residual
+The **regression residual** is the observed value of the dependent variable minus the predicted value, or 
+
+$$
+\hat{\varepsilon}=y-\hat y.
+$$
+:::
+
+![](assests/img/20250417205337.png)
+
+
+::: {#thm-}
+1. The mean of the residuals is equal to 0.
+2. The standard deviation of the residuals is the standard deviation of the fitted regression model $s$: $\sum \hat{\varepsilon}^2=SSE$, and $s=\sqrt{SSE/(n-k-1)}$.
+:::
+
+
+
+### Plots
+We use plots to display residuals, and detect departures from assumptions. If the assumptions concerning the error term 𝜀 are satisfied, we expect to see the residual plot that 
+
+- have no trends
+- have no dramatic increases or decreases in variability
+- only a few residuals (around 5%) more than 2 estimated standard deviations ($2s$) of 𝜀 above or below 0.
+
+
+
+::: {.callout-note}
+## Detecting model lack of fit with residuals
+1. Plot $\varepsilon$ on the vertical axis against each $x_i$ on the horizontal axis.
+2. Plot $\varepsilon$ on the vertical axis against $\hat{y}$ on the horizontal axis.
+3. In each plot, look for 
+   - trends
+   - dramatic changes in variability
+   - more than 5% residuals that lie outside 2s of 0
+:::
+
+
+
+### Partial residual plot
+
+The set of **partial regression residuals** for the jth independent variable $x_j$ is calculated as follows:
+
+$$
+\hat{\varepsilon}^*=\hat{\varepsilon}+\hat{\beta}_jx_j
+$$
+
+The partial residuals verse $x_j$ reveals more information about the relationship between $y$ and $x_j$.
+
+```{r}
+#| eval: false
+df <- read.csv("COFFEE2.csv")
+head(df)
+```
+
+```{r}
+#| echo: false
+df <- read.csv("assests/datasets/COFFEE2.csv")
+head(df)
+```
+
+The residual plot is 
+
+```{r}
+fit <- lm(DEMAND~., data=df)
+plot(df$PRICE, fit$residuals)
+```
+
+There is an obvious trend. Therefore it implies a lack of fit.
+
+Now consider the partial residual plot for PRICE:
+
+```{r}
+plot(df$PRICE, fit$residuals+fit$coefficients['PRICE']*df$PRICE)
+```
+
+Now modify the model by making $x_1=1/PRICE$. Let us run the model again.
+
+
+```{r}
+fit2 <- lm(DEMAND~.-PRICE+I(1/PRICE), data=df)
+summary(fit2)
+plot(df$PRICE, fit2$residuals)
+```
+
+```{r}
+plot(df$PRICE, fit2$residuals+fit$coefficients['PRICE']*df$PRICE)
+```
+
+
+
+::: {.callout-tip}
+## What You Should Expect in a Partial Residual Plot
+
+Partial residual plot is like looking at the impact of a single variable. It will show you how a certain variable is contributing to the response variable $y$.
+
+1. You expect to see a roughly linear pattern between the predictor and the partial residuals. If the relationship is nonlinear, it suggests a transformation or non-linear model might be better.
+2. No strong curvature or pattern. Patterns like U-shapes or waves indicate the model may be missing a non-linear term (e.g., $x^2$, $\log(x)$).
+3. The spread of points should be roughly even across the range of the predictor.
+4. The residuals should be centered around zero, showing that the model doesn't systematically over- or under-predict.
+:::
+
+
+### Homoscedastic vs Heteroscedastic
+This part is about whether the variance is equal.
+
+
+::: {.callout-note}
+- Variances that satisfy this property are called **homoscedastic**. 
+- Unequal variances for different settings of the independent variable(s) are said to be **heteroscedastic**.  
+:::
+
+
+Possible reasons: the variance is a function of its mean $E(y)$. In this case we perform a transformation to $y$. It is called variance-stabilizing transformations. 
+
+| Type of Response | Variance | Stabilizing transformation|
+|---|---|---|
+|Poisson | $E(y)$ | $\sqrt{y}$ |
+|Binomial | $E(y)[1-E(y)]/n$ | $\sin^{-1}{\sqrt y}$ |
+|Multiplicative | $[E(y)]^2\sigma^2$ | $\ln{y}$ |
+
+
+
+```{r}
+#| eval: false
+df <- read.csv("SOCWORK.csv")
+head(df)
+```
+```{r}
+#| echo: false
+df <- read.csv("assests/datasets/SOCWORK.csv")
+head(df)
+```
+
+
+```{r}
+fit <- lm(SALARY~EXP+I(EXP^2), data=df)
+summary(fit)
+```
+
+
+```{r}
+plot(fit$fitted.values, fit$residuals)
+```
+
+It has a very rough fang pattern. So we try $\log$ transformation.
+
+
+```{r}
+fit2 <- lm(log(SALARY)~EXP+I(EXP^2), data=df)
+summary(fit2)
+```
+
+```{r}
+plot(fit2$fitted.values, fit2$residuals)
+```
+
+
+
+
+
+### Normality
+
+The last topic to check the normality of the common distribution of the residuals. The most common tool is called *Q-Q plot* (Quantile-Quantile plot): a plot to compare the quantiles of your data to the quantiles of a standard normal distribution.
+
+
+
+::: {.callout-note}
+## Expectations from a Q-Q plot
+1. If the points are on the reference line, then the points follow normal distribution.
+2. Points lower the line indicate a left skewness. Points above the line indicate a right skewness.
+:::
+
+
+
+```{r}
+qqnorm(fit$residuals)
+qqline(fit$residuals)
+```
+
+
+```{r}
+qqnorm(fit2$residuals)
+qqline(fit2$residuals)
+```
+
+
+
+Usually nonnormality is accopanied by heteroscedasticity. For more transformations, we could use Box-Cox approach.
+
+
+::: {.callout-note}
+Keep in mind that regression is **robust** with respect to nonnormal errors if the sample size is reasonable large. However, if the distribution of the residuals is highly skewed, you may want to search for a normalizing transformation, for example, using Box-Cox approach. 
+:::
+
+
+::: {.callout-note}
+## Box-Cox transformation
+The Box-Cox transforamtion is defined as
+
+$$
+\begin{split}
+y(\lambda)&=\frac{y^{\lambda}-1}{\lambda}\approx y^{\lambda}\quad\text{ for }\lambda\neq 0,\\
+y(\lambda)&=\log(y)\quad\text{ for }\lambda=0
+\end{split}
+$$
+
+After we apply the Box-Cox transformations with different $\lambda$ to $y$, we use a model to fit the transformed data, and then study the corresponding residuals. For each model, we compute the likelihood of the model's residuals under the assumption that the errors are noramlly distributed. Then we would pick the $\lambda$ with the maximal likelihood.
+:::
+This part is done by the following code. We generate the Box-Cox plot with is log-likelihood vs. $\lambda$. We find the best $\lambda$ based on the plot, and perform the corresponding transformation.
+
+Let us consider the original example.
+
+```{r}
+library(MASS)
+boxcox(fit, data=df)
+```
+The peak is around $\lambda=0$, so we will apply $\log$ transformation to $y$.
+
+
+
+## Detecting outliers
+
+### Standardized residuals
+
+::: {#def-}
+The **standardized residual**, denoted $z_i$, is $z_i=\hat{\varepsilon}_i/s$.
+:::
+
+Outliers are points whose standarized residual is beyond 1, 2, 3, etc.. The threshold is based on the confidence level. Usually we use 2.
+
+
+
+
+### influential observations
+
+1. leverage
+2. Cook's distance
+
+
+
+```{r}
+#| eval: false
+
+df <- read.csv("FASTFOOD.csv")
+df$CITY <- as.factor(df$CITY)
+head(df)
+```
+
+
+
+```{r}
+#| echo: false
+
+df <- read.csv("assests/datasets/FASTFOOD.csv")
+df$CITY <- as.factor(df$CITY)
+head(df)
+```
+
+
+```{r}
+fit <- lm(SALES~TRAFFIC+CITY, data=df)
+df$CITY <- as.factor(df$CITY)
+summary(fit)
+```
+
+
+
+::: {#def-}
+## Leverage
+The **leverage** of the ith observation is the weight $h_i$ associated with $y_i$ in the equation
+
+$$
+\hat{y}_i=h_1y_1+h_2y_2+\ldots+h_iy_i+\ldots+h_ny_n
+$$
+where $h_1$, ..., $h_n$ are functions of only the values of the independent variables in the model. It measures the influence of $y_i$ on its predicted value $\hat{y_i}$.
+
+:::
+
+
+::: {.callout-note}
+## Rule of Thumb for detecting influence with leverage
+$y_i$ is influential if $h_i>\dfrac{2(k+1)}{n}$ where $k$ is the number of variables.
+:::
+
+
+
+ | Low Residual | High Residual
+Low Leverage | Unimportant | Small influence
+High Leverage | Maybe okay | ❗ High influence ❗
+
+
+::: {#def-}
+## Cook's distance
+$$
+D_i=\frac{\sum (\hat{y}_j-\hat{y}_{j(i)})^2}{p\cdot MSE}
+$$
+where
+- $\hat y_j$ = predicted value from full model
+- $\hat{y}_{j(i)}$ = predicted value without the i-th point
+- $p$ = number of parameters (including intercept)
+- $MSE$ = mean squared error
+:::
+
+
+Values of $𝐷_𝑖$  can be compared to the values of the 𝐹 distribution with $𝜈_1  = 𝑘 + 1$ and $𝜈_2  = 𝑛 − (𝑘 + 1)$ degrees of freedom.
+
+Usually, an observation with a value of $𝐷_𝑖$ that falls at or above the 50th percentile of the 𝐹 distribution is considered to be an influential observation.
+
+A range rule of thumb is: if $𝐷_𝑖  >1$ indicate that the 𝑖th observation is influential and should be studied further. 
+
+
+::: {.callout-note}
+# Rule of Thumb for Cook's distance
+- $D_i\approx 0$: not influential
+- $D_i\approx 0.5$: worth looking into
+- $D_i>1$: Highly influential, investigate further
+:::
+
+To compute cook's distance, 
+
+```{r}
+cooks.distance(fit)
+```
+and detect influential points:
+
+```{r}
+which(cooks.distance(fit)>1)
+```
+
+## `plot(fit)`
+
+We can use `plot(fit)` to directly get plots related to residual analysis.
+
+It contains several plots.
+
+
+```{r}
+plot(fit, which=1)
+```
+This typically produces the residuals vs. fitted values plot. It is used to assess the linearity assumption and to check for patterns in the residuals. If the residuals exhibit a random scatter around zero with no clear pattern, it suggests that the model’s assumptions are reasonable. On the other hand, if there is a pattern (e.g., curvature), it may indicate that the model is not appropriately capturing the relationship between the predictor(s) and the response variable.
+
+
+```{r}
+plot(fit, which=2)
+```
+This is the Q-Q plot.
+
+
+```{r}
+plot(fit, which=3)
+```
+This is the scale-location plot (also called a "spread-location plot"), which helps to check for homogeneity of variance (constant variance of residuals). It plots the square root of the standardized residuals against the fitted values, and a horizontal band of points indicates that the variance is constant.
+
+
+
+
+```{r}
+plot(fit, which=5)
+```
+This is the residuals vs leverage plot. 
+- x-axis: leverage
+- y-aixs: studentized residuals
+- bubble size: cook's distance
+
+In this plot: 
+- read it horizentally to get the leverage information: to tell how influential the data is
+- read it vertically to get the standardized information: to tell how "outlier" the data is
+- use the cook's distance contour line to tell the cook's distance of the data point
+
+In this case, you can see an outlier #13: it has high residual, low leverage, ok cook's distance. So it is an OK outlier which doesn't have a big influence.
+

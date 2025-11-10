@@ -1,0 +1,351 @@
+# slr
+
+{{< include ../math.qmd >}}
+
+
+We want to use sample data to investigate the relationships among a group of variables, ultimately to create a model for some variable that can be used to predict its value in the futre. 
+
+Language:
+ 
+- Predicting the value of $X$ by $\Exp(X)$ is tantamount to using $\Exp(X)$ as a **model** for the true $X$.
+- The variable to be modeled is called the **dependent** (or **reponse**) variable.
+
+## Probabilistic model for $y$
+
+The **probabilistic model** for $y$ is
+$$
+y=\Exp(y)+\text{Random error}.
+$$
+It is called *probabilistic* since we can make a probability statement about the magnitude of the deviation between $y$ and $\Exp(y)$.
+
+
+::: {.callout-note}
+# General Form of Probabilistic Model in Regression
+$$
+y=\Exp(y)+\varepsilon
+$$
+where
+
+- $y$: Dependent variable
+- $\Exp(y)$: Mean value of $y$
+- $\varepsilon$: Unexplainable or random error
+
+This model suggests that y will come back to its mean evautually. This is why it is called **regression** model.
+:::
+
+
+
+
+
+::: {#def-}
+The variables used to predict $y$ are called **independent variables** and are denoted by $x_i$.
+:::
+
+
+::: {.callout-tip}
+# Regression Modeling
+
+1. Hypothesize the form of the model for $\Exp(y)$.
+2. Collect the sample data.
+3. Use the sample data to estimate unknown parameters in the model.
+4. Specify the probability distribution of $\varepsilon$, and estimate any unknown parameters of this distribution.
+5. Statistically check the usefulness of the model.
+6. Check the validity of the assumptions on $\varepsilon$, and make model modifications if necessary.
+7. When satisfied that the model is useful, and assumptions are met, use the model to make inferences.
+:::
+
+
+## SLR
+
+
+::: {.callout-note}
+# A First-Order Model
+$$
+y=\beta_0+\beta_1x+\varepsilon
+$$
+where
+
+- $y$: The **response** variable
+- $x$: The **independent** variable (variable used as a **predictor** of $y$)
+- $\Exp(y)=\beta_0+\beta_1x$: Deterministic component
+- $\varepsilon$: Random error component
+- $\beta_0$: **$y$-intercept**
+- $\beta_1$: **Slope**
+:::
+
+### Fitting the model
+
+MLE=LSE under the assumption that e is normal
+
+
+different estimators 
+
+
+
+
+first assuming that $\sigma$ is constant.
+
+
+
+- Sum of squares of deviations for the $x$s: $SS_{xx}=\sum(x_i-\bar{x})^2$
+- Sum of squares of deviations for the $y$s: $SS_{yy}=\sum(y_i-\bar{y})^2$
+- Sum of cross-products: $SS_{xy}=\sum(x_i-\bar{x})(y_i-\bar{y})$
+
+
+
+::: {#thm-}
+Estimate $\beta_0$, $\beta_1$ and $\sigma^2$. The NLL is
+$$
+NLL = -\frac{n}{2}\ln\qty(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum\qty(y_i-\beta_0-\beta_1x_i)^2.
+$$
+:::
+
+
+::: {.solution}
+$$
+\begin{split}
+\pdv{NLL}{\beta_0}&=
+\end{split}
+$$
+:::
+
+
+
+## estimation
+
+b0, b1 are estimations
+
+1. b0, b1 formula
+2. E(b0) E(b1)
+3. Var(b0), Var(b1)
+4. relations to y: b1, ybar independent, b0, b1 are independent
+   
+
+$$
+\hat{\beta}_1=\frac{S_{xy}}{S_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
+$$
+
+$$
+\Var(y_i-\bar{y})=\Var(y_i-\frac1n\sum y_j)=\Var(\frac{n-1}{n}y_i-\sum_{j\neq i}\frac1ny_j)=\frac{(n-1)^2}{n^2}\sigma^2+\frac{n-1}{n^2}\sigma^2=\frac{n-1}{n}\sigma^2.
+$$
+
+
+Since $\sum_i (x_i-\bar{x})=\sum_i (y_i-\bar{y})=0$, we have
+$$
+\sum_i (x_i-\bar{x})\bar{x}=\sum_i (x_i-\bar{x})\bar{y}=\sum_i (y_i-\bar{y})\bar{x}=\sum_i (y_i-\bar{y})\bar{y}=0.
+$$
+
+
+
+$$
+\begin{split}
+\Var(S_{xy})&=\Var\qty[\sum_i (x_i-\bar{x})(y_i-\bar{y})]=\Var\qty[\sum_i (x_i-\bar{x})y_i-\sum_i (x_i-\bar{x})\bar{y}]=\Var\qty[\sum_i (x_i-\bar{x})y_i]\\
+&=\sum(x_i-\bar{x})^2\Var(y_i)=\sum(x_i-\bar{x})^2\sigma^2=S_{xx}\sigma^2.
+\end{split}
+$$
+
+
+$$
+\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
+$$
+
+
+
+
+::: {#thm-}
+## Uncorrelation 
+$\hat{\beta}_0$ and $\bar y$ are uncorrelated.
+:::
+
+::: {.proof}
+$$
+\begin{split}
+\Cov(\hat{\beta}_1,\bar{y})=&\Cov\qty(\frac{1}{S_{xx}}\sum_i(x_i-\bar x)(y_i-\bar y), \sum\frac{1}{n} y_j)=\sum_{i,j}\frac{(x_i-\bar x)}{nS_{xx}}\Cov(y_i,y_j)\\
+=&\sum_{i}\frac{(x_i-\bar x)}{nS_{xx}}\sigma^2=0.
+\end{split}
+$$
+Since $\hat{\beta}_1$ and $\bar y$ are both normal, the uncorrelation implies that they are also indepedent.
+:::
+
+
+$$
+\begin{split}
+\Var(\hat{\beta}_0)&=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2.
+\end{split}
+$$
+
+
+
+$$
+\begin{split}
+\Exp\qty(y_i-\hat{y}_i)^2&=\Exp\qty(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)^2
+\end{split}
+$$
+
+$$
+\Exp\qty(\sum(y_i-\hat{y}_i)^2)=\Exp\qty(\sum(y_i-\bar{y}_i)^2) - \Exp(S_{xy}^2) =(n-2)\sigma^2.
+$$
+
+$$
+\Var(y_i-\bar y)=\Var\qty(y_i-\sum\frac1n y_j)=\Var\qty(\sum_{j\neq i}\qty(-\frac1n)y_j+\frac{n-1}n y_i)=\sum_{j\neq i}\frac1{n^2}\Var(y_j)+\frac{(n-1)^2}{n^2}\Var{y_i}=\frac{n-1}{n}\sigma^2.
+$$
+
+$$
+\Exp\qty(y_i-\bar y)=\Exp(y_i)-\Exp(\bar y)=\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x)=\beta_1(x_i-\bar x).
+$$
+
+$$
+\sum\qty(\Exp\qty(y_i-\bar y))^2=\sum\qty(\Exp(y_i)-\Exp(\bar y))^2=\sum\qty(\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x))^2=\sum\qty(\beta_1(x_i-\bar x))^2=\beta_1^2S_{xx}.
+$$
+
+$$
+\begin{split}
+\Exp\qty(\sum(y_i-\bar{y}_i)^2)&=\sum\Exp\qty((y_i-\bar{y})^2)=\sum\qty(\Exp\qty(y_i-\bar{y}))^2+\sum\Var(y_i-\bar y) =\beta_1^2S_{xx}+(n-1)\sigma^2.
+\end{split}
+$$
+
+
+
+$$ 
+\begin{split}
+\Exp(S_{xy})&=\Exp\qty(\sum(x_i-\bar x)(y_i-\bar y))=\Exp\qty(\sum(x_i-\bar x)y_i)=\sum(x_i-\bar x)E(y_i)\\
+&=\sum(x_i-\bar x)(\beta_0+\beta_1x_i)=\sum(x_i-\bar x)\beta_1x_i=\beta_1\sum(x_i-\bar x)x_i=\beta_1\sum(x_i-\bar x)^2\\
+&=\beta_1S_{xx}.
+\end{split}
+$$
+
+
+
+$$ 
+\begin{split}
+\Exp(S_{xy}^2)&=\qty(\Exp(S_{xy}))^2+\Var(S_{xy})=\beta_1^2S_{xx}^2+S_{xx}\sigma^2.
+\end{split}
+$$
+
+$$ 
+\begin{split}
+\Exp(\frac{S_{xy}^2}{S_{xx}})&=\frac{1}{S_{xx}}\beta_1^2S_{xx}^2+\frac{1}{S_{xx}}S_{xx}\sigma^2=\beta_1^2S_{xx}+\sigma^2.
+\end{split}
+$$
+
+
+1. $\Exp(S_{xy})=\beta_1S_{xx}$.
+2. $\Var(S_{xy})=S_{xx}\sigma^2$.
+3. $\Exp(S_{yy})=(n-2)\sigma^2$.
+<!-- 4. $\Var(S_{yy})=(n-2)\sigma^2$. -->
+
+
+1. $\Exp(S_{xy})$
+2. $\Var(\S_{xy})$
+3. $SST=SSE+SSR$
+4. $\Exp(SST)$
+5. $\Exp(SSR)$
+6. $\Exp(SSE)$
+7. $\Var(SST)$
+8. $\Var(SSR)$
+9. $\Var(SSR)$
+
+
+
+## $\beta_1$
+
+hypotheis: $\beta_1\neq0$
+
+$\hat{\beta}_1$ is normal, so t-test:
+
+$$
+t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{S_{xx}}},\quad s^2=\frac{SSE}{n-2}
+$$
+
+- one tailed test:
+  - Ha: $\beta_1<0$: $t<-t_{\alpha}$: $p=\Pr(t<t_c)$, $t_c<0$
+  - Ha: $\beta_1>0$: $t>t_{\alpha}$: $p=\Pr(t>t_c)$, $t_c>0$
+- two tailed test:
+  - Ha: $\beta_1\neq0$: $\abs{t}>t_{\alpha/2}$: $p=2\Pr(t>t_c)$, $t_c>0$
+
+$t_c$ is the computed value
+
+$\Pr(t>t_{\alpha})=\alpha=\Pr(\text{Type I error})=\Pr(\text{Reject }H_0\mid H_0\text{ is true.})$
+
+
+
+## coeffcient of correlation
+
+$$
+r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
+$$
+
+it is related to COV
+
+
+$\rho$ population coefficient of correlation, is estimated by $r$
+
+Hypothesis:
+
+$t=r\sqrt{n-2}/{sqrt{1-r^2}}$
+
+
+## coefficient of determination
+$$
+r^2=\frac{S_{yy}-SSE}{S_{yy}}=1-\frac{SSE}{S_{yy}}
+$$
+
+proportion of total saple variability of the y explained by the linear relationship between y and x
+
+About 100(r2)% of the sample variation in y (measured by the total sum
+of squares of deviations of the sample y-values about their mean ji) can be
+explained by (or attributed to) using x to predict yin the straight-line model.
+
+
+$$
+SSR=\sum(\hat y_i-\bar y)^2=\frac{S_{xy}^2}{S_{xx}}
+$$
+
+
+
+
+## predicted interval and confidence interval
+
+$\sigma_{\hat y}$
+
+Since $\bar y$ and $\hat{\beta}_1$ are independent, we have
+$$
+\begin{split}
+\Var(\hat y(x))&=\Var(\hat{\beta}_0+\hat{\beta}_1x)=\Var(\bar y-\hat{\beta}_1(x-\bar x))=\Var(\bar y)+(x-\bar x)^2\Var(\hat{\beta}_1)\\
+&=\frac1n\sigma^2+(x-\bar x)^2\frac1{S_{xx}}\sigma^2=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\end{split}
+$$
+
+
+$$
+\Var(y-\hat y)=\sigma^2+\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}]=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+$$
+
+
+
+
+```{r}
+library(MASS)
+
+fit <- lm(medv~lstat, data=Boston)
+
+newx = data.frame(lstat=seq(1, 40, by=0.1))
+pred.int <- predict(fit, newx, interval='prediction')
+conf.int <- predict(fit, newx, interval='confidence')
+```
+
+Both `pred.int` and `conf.int` are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.
+
+
+```{r}
+plot(Boston$lstat, Boston$medv)
+
+lines(newx$lstat, pred.int[,1])
+
+lines(newx$lstat, pred.int[,2], col='red')
+lines(newx$lstat, pred.int[,3], col='red')
+
+lines(newx$lstat, conf.int[,2], col='blue')
+lines(newx$lstat, conf.int[,3], col='blue')
+```
+

@@ -1,0 +1,33 @@
+# Distributions
+
+Main references: @Hof2009.
+
+
+{{< include ../math.qmd >}}
+
+
+
+## Notations
+- $Y$: a random variable
+- $\Pr(Y\mid\theta)$: the probability of $Y$
+- $p(y\mid\theta)=\Pr(Y=y\mid\theta)$: the discrete probability density function
+- $f(y\mid\theta)=\dfrac{\dl1}{\dl1y}\Pr(Y\leq y\mid\theta)$: the continuous probability density function
+- $\Exp\qty(Y)$: the expectation of $Y$
+- $\Var\qty(Y)$: the variance of $Y$
+
+## Distributions
+- $\distbinom(n,\theta)$: Binomial distribution.
+- $\distbeta(\alpha,\beta)$: Beta distribution.
+- $\distpois(\lambda)$: Poisson distribution.
+- $\distgamma(\lambda)$: Gamma distribution.
+- $\distexp(\lambda)$: Exponential distribution.
+- $\distnormal(\mu,\sigma^2)$: Nomral distribution.
+
+## pdfs
+- $\displaystyle \pdfbinom(y, n, \theta)=\dbinom{n}{y} \theta^{y}(1-\theta)^{n-y}$.
+- $\displaystyle \pdfbeta(\theta, \alpha, \beta)=\dfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\theta^{\alpha-1}(1-\theta)^{\beta-1}$.
+- $\displaystyle \pdfpois$
+- $\displaystyle \pdfgamma$
+- $\displaystyle \pdfexp$
+- $\displaystyle \pdfnormal$
+

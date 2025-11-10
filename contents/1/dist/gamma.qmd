@@ -1,0 +1,80 @@
+## Gamma distribution
+
+
+{{< include ../../math.qmd >}}
+
+
+
+::: {#def-dist-gamma}
+Let $\mathcal Y=\set{0,1,2,\ldots}$. The uncertain quantity $Y\in\mathcal Y$ has a \textit{Gamma distribution} (denoted by $Y\sim\distgamma(a,b)$ or $Y\sim\Gamma(a,b)$) if 
+$$
+\Pr\qty(Y=\theta\mid a,b)=\pdfgamma(\theta,a, b)=\dfrac{b^a}{\Gamma(a)}\theta^{a-1}\me^{-b\theta},\quad \text{for }\theta,a,b>0.
+$$
+
+Here 
+
+- $a$ is the **shape**.
+- $b$ is the **rate**, which also represents **effective sample size**.
+- $\lambda=\frac1b$ is the **scale**.
+:::
+
+
+::: {.callout-note}
+# Python code
+
+```{python}
+from scipy.stats import gamma
+import matplotlib.pyplot as plt
+import numpy as np
+
+rv = gamma(a=20, scale=1/2)
+
+plt.plot(rv.pdf(np.arange(100)))
+```
+
+```{python}
+rv.interval(.95)
+```
+
+
+:::
+
+
+::: {#thm-dist-poisson-exp}
+If $Y\sim \distgamma(a, b)$, then 
+
+- $\Exp\qty[Y\mid a, b]=a/b$, 
+- $\Var\qty[Y\mid a, b]=a/b^2$, 
+- $\Mode\qty[Y\mid  a, b]=$
+:::
+
+
+::: {.callout-note}
+# Proof
+
+$$
+\begin{split}
+\Exp\qty[Y\mid a,b]&= \int_{0}^{\infty}\theta\frac{b^a}{\Gamma(a)}\theta^{a-1}\me^{-b\theta}\dl3\theta\\
+&=\int_{0}^{\infty}\frac{b^a}{\Gamma(a)}\theta^{(a+1)-1}\me^{-b\theta}\dl3\theta\\
+&=\int_{0}^{\infty}\frac{\Gamma(a+1)}{b\Gamma(a)}\frac{b^{a+1}}{\Gamma(a+1)}\theta^{(a+1)-1}\me^{-b\theta}\dl3\theta\\
+&=\frac{\Gamma(a+1)}{b\Gamma(a)}\int_{0}^{\infty}\pdfgamma(\theta,a+1,b)\dl3\theta\\
+&=\frac{a}{b},\\
+\Exp\qty[Y^2\mid a,b]&= \int_{0}^{\infty}\theta^2\frac{b^a}{\Gamma(a)}\theta^{a-1}\me^{-b\theta}\dl3\theta\\
+&=\int_{0}^{\infty}\frac{b^a}{\Gamma(a)}\theta^{(a+2)-1}\me^{-b\theta}\dl3\theta\\
+&=\int_{0}^{\infty}\frac{\Gamma(a+2)}{b^2\Gamma(a)}\frac{b^{a+2}}{\Gamma(a+2)}\theta^{(a+2)-1}\me^{-b\theta}\dl3\theta\\
+&=\frac{\Gamma(a+2)}{b^2\Gamma(a)}\int_{0}^{\infty}\pdfgamma(\theta,a+2,b)\dl3\theta\\
+&=\frac{a(a+1)}{b^2},\\
+\Var\qty[Y\mid a, b]&=\Exp\qty[Y^2\mid a, b]-\qty(\Exp\qty[Y\mid a, b])^2\\
+&=\frac{a(a+1)}{b^2}-\frac{a^2}{b^2}=\frac{a}{b^2}.
+\end{split}
+$$
+:::
+
+
+
+::: {.callout-note}
+# Vague prior
+Assume $\epsilon>0$, then $\distgamma(\epsilon, \epsilon)$ represents a distribution without knowledge. Its mean is $1$ and variance is $1/\epsilon$ which is very large.
+
+With Poisson likelihood, the posterior mean is $\dfrac{\epsilon+\sum y_i}{\epsilon+n}\approx \dfrac{\sum y_i}{n}$ .
+:::

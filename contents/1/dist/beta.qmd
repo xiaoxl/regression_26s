@@ -1,0 +1,63 @@
+# Beta distribution
+
+
+
+{{< include ../../math.qmd >}}
+
+::: {#def-distribution-beta}
+## Beta distribution
+$\theta\sim\distbeta(\alpha, \beta)$ means that 
+$$
+\Pr(\theta)=\pdfbeta(\alpha, \beta;\theta)=c\cdot\theta^{\alpha-1}(1-\theta)^{\beta-1}
+$$
+where $c=\dfrac{1}{B(\alpha,\beta)}=\dfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}$.
+:::
+
+
+$\pdfbeta(1,1)$ is actually uniform.
+
+
+
+## Expected values
+
+::: {#thm-dist-beta-exp}
+Let $\theta\sim\distbeta(\alpha,\beta)$. Then $\Exp\qty[\theta]=\dfrac{\alpha}{\alpha+\beta}$.
+:::
+::: {.proof}
+$$
+\begin{split}
+    \Exp\qty[\theta]&=\int_0^1\theta\cdot\pdfbeta(\alpha,\beta)\dl3\theta=\int_0^1\theta\cdot c\cdot\theta^{\alpha-1}(1-\theta)^{\beta-1}\dl3\theta\\
+    &=\int_0^1c\cdot\theta^{\alpha}(1-\theta)^{\beta-1}\dl3\theta=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}\frac{\Gamma(\alpha+1)\Gamma(\beta)}{\Gamma(\alpha++\beta+1)}\\
+    &=\frac{\Gamma(\alpha+1)\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\alpha+\beta+1)}=\frac{\alpha}{\alpha+\beta}.
+\end{split}
+$$
+:::
+
+## Binomial and Beta
+If the prior distribution is Beta, and the sampling data is binomial, then the posterior is also Beta.
+
+::: {#thm-beta-relationstobinom}
+Let the prior distribution for $\theta$ be 
+$$
+\Pr(\theta)=\pdfbeta(\alpha, \beta)=c\,\theta^{\alpha-1}(1-\theta)^{\beta-1}
+$$ 
+and the sampling data for $y$ be 
+$$
+\Pr\qty(y\mid\theta)=\dbinom{n}{y}\theta^y(1-\theta)^{n-y},
+$$
+then the posterior distribution is again beta: 
+$$
+\Pr\qty(\theta\mid y)=\pdfbeta(\alpha+y, \beta+n-y).
+$$
+:::
+
+::: {.proof}
+$$
+\begin{split}
+    \Pr\qty(\theta\mid y)&=\frac{\Pr\qty(y\mid\theta)\Pr\qty(\theta)}{\int_0^1\Pr\qty(y\mid\theta)\Pr\qty(\theta)\dl3\theta}=c\,\theta^y(1-\theta)^{n-y}\theta^{\alpha-1}(1-\theta)^{\beta-1}\\
+    &=c\,\theta^{y+\alpha-1}(1-\theta)^{n-y+\beta-1}\\
+    &=\pdfbeta(\alpha+y,\beta+n-y).
+\end{split}
+$$
+:::
+

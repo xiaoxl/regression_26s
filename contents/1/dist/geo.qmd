@@ -1,0 +1,13 @@
+# geo
+
+
+The geometric distribution is the number of trials needed to get the first success, i.e., the
+number of Bernoulli events until a success is observed, such as the first head when flipping
+a coin. It takes values on the positive integers starting with one (since at least one trial is needed to observe a success). Let $\mathcal Y=\set{1,2,\ldots}$.
+
+::: {#def-dist-geo}
+$Y\in\mathcal Y$ has a \textit{geometric distribution} if
+$$
+\pr{Y=y\mid p}={\tt Geo}(y,p)=p(1-p)^{x-1}.
+$$
+:::

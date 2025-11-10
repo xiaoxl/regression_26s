@@ -1,0 +1,84 @@
+# stats models
+
+{{< include ../math.qmd >}}
+
+@Men2020
+
+The process of finding the model that relates $y$ to $x$ and best fits the data is called *regression analysis*.
+
+-   The variable $y$ to be modeled is called the **dependent variable** (or **response variable**). Its expected value is denoted $\Exp(y)$.
+
+**General Form of probabilistic Model in Regression** is $$
+y=E(y)+\varepsilon
+$$
+
+## Estimation
+
+a statistic whose sampling distribution has the mean around the proposed value and a small variance. If the means are equal: unbiased estimator. No: biased.
+
+## build a model that fits the data
+
+predicted value: $\hat{y}$, $\hat{\beta}$, ...
+
+-   model: $y=\Exp(y)+\varepsilon$
+
+@Jam2023
+
+-   want to estimate $f$: $Y=f(X)+\varepsilon$
+-   want to use $\hat{f}$ to estimate $f$: $\hat{Y}=\hat{f}(X)$.
+
+## Estimators
+
+1.  unbiased: E(X)=m
+2.  consistent: X converges in probability to m as n-\>infty
+    1.  lim Pr(\|X-m\|\>e)=0 The two are different:
+3.  biased but consistent: example: sample variance with ddof=0 (It is also MLE of mean?)
+4.  unbiased but inconsistent: when the variance is not reduced when n grows: example: sample max is unbiased estimator of the mean in an uniform distribution U\[0, t\], but it does not converge to the upper bound t as n-\>infty.
+
+-   Efficiency: An estimator is efficient if it has the lowest possible variance among all unbiased estimators for a given parameter.
+-   Sufficiency: An estimator is sufficient if it captures all the information in the data about a parameter.
+    -   ![](assests/img/20250219102913.png)
+-   Asymptotic Normality: An estimator is asymptotically normal if its distribution approaches a normal distribution a
+    -   ![](assests/img/20250219102949.png)
+-   Robustness: An estimator is robust if it performs well even when assumptions (like normality) are violated or if outliers exist.
+    -   Example: Median vs. Mean
+        -   The sample median is a robust estimator of the center because it is not affected by extreme values.
+        -   The sample mean is not robust, since a single extreme outlier can significantly change its value.
+-   Scale Invariance: An estimator is scale-invariant if multiplying all data points by a constant does not change its relative properties (linear).
+    -   Example:
+        -   mean is invariant
+        -   variance is not
+        -   ![](assests/img/20250219103658.png)
+-   Bias-Variance Tradeoff: Bias and variance are two competing sources of error in an estimator:
+    -   Bias: Systematic deviation from the true value.
+    -   Variance: Fluctuations in the estimator due to sample randomness.
+    -   Optimal Estimator:
+        -   Low bias, low variance → Best estimator
+        -   Low bias, high variance → Can improve by averaging (e.g., mean)
+        -   High bias, low variance → May still be useful if consistent
+
+![](assests/img/20250219103305.png)
+
+BLUE: Best Linear Unbiased Estimator The acronym BLUE stands for Best Linear Unbiased Estimator. It refers to an estimator that is:
+
+Linear: The estimator is a linear function of the data. Unbiased: The expected value of the estimator is equal to the true parameter value. Best: It has the minimum variance among all unbiased estimators. (efficient)
+
+The Gauss-Markov theorem guarantees that under certain conditions, the Ordinary Least Squares (OLS) estimator is BLUE. These conditions are:
+
+-   The model is linear.
+-   The errors have a mean of zero and constant variance (homoscedasticity).
+-   The errors are uncorrelated. If these conditions hold, then the OLS estimator is the best linear unbiased estimator in terms of minimum variance.
+-   
+
+## MLE
+
+invariance
+
+## MSE=Var+bias
+
+## Batch means
+
+## correlated data
+
+-   violate assumptions so many calculations cannot be done
+-   if you really want to do, the estimation is still unbiased, but the vairance is wrong, which will effect many things.

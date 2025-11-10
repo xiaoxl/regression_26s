@@ -1,0 +1,294 @@
+
+# Basics 
+
+
+
+
+
+
+## Population vs Sample
+
+- **Population**: the set of all elements of interest in a particular study.
+- **Sample**: is a subset of the population
+- **Statistical Inference**: The process of using data collected on a sample to draw conclusions about a population is called statistical inference. 
+
+
+::: {#exm-}
+According to the research firm TVNewser (May 2017), the average age of viewers of CNN news programming is 60 years. Suppose a FOX network executive hypothesized that the average age of FOX News viewer is greater than 60. To test her hypothesis, she samples 500 FOX News viewers and determines the age of each.
+
+a. Describe the population
+b. Describe the sample
+c. Sample size
+d. Describe the statistical inference
+:::
+<!-- 
+
+## Variable Types
+
+- Qualitative (categorical) data use labels or names to identify an attribute of an element.
+- Quantitative (numerical) data use numeric values.
+
+- Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…
+- Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals  -->
+
+
+## Data structure
+A dataset is a collection of *values*. Values are organized in two ways. Every value belongs to a *variable* and an *observation*. 
+
+
+::: {#def-}
+# Variables and Observations @Wic2014
+- A **variable** contains all values that measure the same underlying attribute (like height, temperature, duration) across units.
+- An **observation** contains all values measured on the same unit (like a person, or a day, or a race) across attributes.
+:::
+ 
+
+
+::: {#def-}
+# Quantitative and Qualitative @Men2020
+- **Quantitative data** are observations measured on a naturally occurring numerical scale. It is also called *numerical data*.
+- **Qualitative data** are nonnumerical data that can only be classified into one of a group of categories. It is also called *categorical data*.
+:::
+
+
+
+::: {#def-}
+# Discrete and Continuous
+- Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2...
+- Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.
+:::
+
+
+
+
+::: {.callout-note}
+# Random variables
+A variable in a dataset can be modeled by a *random variable*. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset. 
+
+Then to make a mearuement is the same as to take a sample from the random variable.  
+
+
+<!-- On the other side, to study a variable in a dataset, we need to identify the random variable corresponding to it. In the rest of the notes we will use variables in a dataset and random variables interchangably. -->
+
+:::
+
+
+## Data Visualization
+### Qualitative (categorical) data
+Usually the most important is the **class relative frequency**: 
+$$
+\text{class relative frequency}=\frac{\text{class frequency}}{n}.
+$$
+
+To display it, we could use table, bar chart or pie chart.
+
+
+::: {.callout-tip collapse="true"}
+
+
+
+
+# Example: Possums
+
+All the example about possums below come from the dataset [here](./assests/data/possum.csv).
+
+
+::: {.panel-tabset}
+## R
+```{r}
+df <- read.csv('assests/data/possum.csv')
+head(df)
+```
+
+We first compute the frequency table of the variable `pop`:
+
+```{r}
+table(df$pop)
+```
+or relative frequency talbe:
+```{r}
+table(df$pop)/length(df$pop)
+```
+
+Then we could draw the barplot of this variable:
+
+```{r}
+barplot(table(df$pop))
+```
+
+and the pie plot:
+```{r}
+pie(table(df$pop))
+```
+
+Note that `table` is handling the statistics, while `barplot` and `pie` draw on top of the result from `table`.
+
+
+## Python
+
+```{python}
+import pandas as pd
+df = pd.read_csv('assests/data/possum.csv')
+df.head()
+```
+
+
+We first compute the frequency table of the variable `pop`:
+
+```{python}
+df['pop'].value_counts()
+```
+or relative frequency talbe:
+```{python}
+df['pop'].value_counts(normalize=True)
+```
+
+Then we could draw the barplot of this variable:
+
+```{python}
+import matplotlib.pyplot as plt
+vc = df['pop'].value_counts()
+plt.bar(vc.index, vc)
+```
+
+and the pie plot:
+```{python}
+_ = plt.pie(vc)
+```
+
+:::
+:::
+
+### Quantitative (numerical) data
+
+We would like to use **histogram** to display these type of data. In other words, we split the range into small segments (called *bins*), and count the frequency or relative frequency of data falling into these bins.
+
+
+::: {.callout-tip collapse="true"}
+# Example: Possums
+```{r}
+df <- read.csv('assests/data/possum.csv')
+head(df)
+```
+
+We display the histogram of `headL`. We could use `breaks` to control the number of bins.
+```{r}
+hist(df$headL, breaks=10)
+```
+
+The function `hist` does not just draw the histogram. It also provide many infomation we might need. 
+
+```{r}
+res <- hist(df$headL, breaks=10)
+res
+```
+
+:::
+
+### Some statistics
+
+For a quantitative data, we would also like to compute some statistics: minx, max, quartiles, median and mean. In R, we could use `summary` to compute them, and use box plots to show them.
+
+
+::: {.callout-tip collapse="true"}
+# Example: Possums
+
+
+```{r}
+summary(df)
+```
+
+We could use the box plot to show these infomation. It consists of a box, two lines and possibly some points:
+
+- The box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).
+- The lines, known as *whiskers*, extends to one and a half times the interquartile range, but then they are limited to reaching actual data points. 
+- The points, considered as *outliers*, are those which are not covered by the box and the lines.
+
+
+```{r}
+boxplot(df$headL)
+```
+
+
+:::
+
+### Relations among multiple variables
+
+We could show the relation between two variables in a scatter plot.
+
+
+::: {.callout-tip collapse="true"}
+# Example: Possums
+
+The cases that both variables are numerical continuous:
+```{r}
+plot(df$headL, df$skullW)
+```
+
+The cases that one variable is categorical:
+
+```{r}
+plot(as.factor(df$pop), df$skullW)
+```
+
+Note that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category.
+
+
+We can see pairwise plots for each pair of variables. Note that before the plot, we have to cast `pop` and `sex` into factors.
+
+```{r}
+df$pop <- as.factor(df$pop)
+df$sex <- as.factor(df$sex)
+pairs(df)
+```
+Pair plot is very important since it can easily help us to find the expected relations between variables. We will use it a lot in regression analysis.
+
+:::
+
+
+
+## p
+
+
+::: {#def-}
+# Population
+A **population data set** is a collection (or set) of data measured on all experimental units of interest to you. @Men2020
+:::
+
+::: {#def-}
+# Sample
+A **sample** is a subset of data selected from a population. @Men2020
+:::
+
+
+
+::: {#def-}
+# random sample
+A **random sample** of $n$ experimental units is one selected from the population in such a way that every different sample of size $n$ has an equal probability of selection. @Men2020
+:::
+
+
+
+
+
+### Inferential statistics
+
+
+::: {#def-}
+# Statistical inference @Men2020
+- A **statistical inference** is an estimate, prediction, or some other generatlization about a population based on information contianed in a sample. 
+- A **measure of reliability** is a statement about the degree of uncertainty associated with a statistical inference.
+:::
+
+
+
+::: {.callout-note}
+# Inferential statistics
+1. Identify **population**
+2. Identify **variable(s)**
+3. Collect **sample** data
+4. **Inference** about population based on sample
+5. **Measure** of reliability for inference
+:::
+
+

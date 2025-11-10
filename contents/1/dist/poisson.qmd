@@ -1,0 +1,105 @@
+# Poisson distribution
+
+
+{{< include ../../math.qmd >}}
+
+
+Poisson distribution is a discrete probability distribution that expresses the probability of a given number of events occurring in a fixed interval of time or space if these events occur with a known constant mean rate and independently of the time since the last event.
+
+::: {#def-dist-poisson}
+Let $\mathcal Y=\set{0,1,2,\ldots}$. The uncertain quantity $Y\in\mathcal Y$ has a *Poisson distribution with mean $\theta$* (denoted by $Y\sim\distpois(\theta)$) if 
+$$
+\Pr\qty(Y=y\mid \theta)=\pdfpois(y,\theta)=\dfrac{\theta^y\me^{-\theta}}{y!}\propto\theta^y/y!.
+$$
+:::
+
+
+
+::: {#thm-dist-poisson-exp}
+If $Y\sim \distpois(\theta)$, then 
+
+- $\Exp\qty[Y|\theta]=\theta$,
+- $\Var\qty[Y|\theta]=\theta$,
+- $\Mode\qty[Y]=\lfloor\theta\rfloor$.
+:::
+
+::: {.callout-note collapse="true"}
+# Proof
+
+$$
+\begin{split}
+    \Exp\qty[Y|\theta]&=\sum_{y=0} y\,\pdfpois\qty(y,\theta)=\sum_{y=0} y\,\frac{\theta^y\me^{-\theta}}{y!}=\me^{-\theta}\sum_{y=1}\frac{y}{y!}\theta^{y-1}\theta\\
+    &=\theta\me^{-\theta}\sum_{y-1=0}\frac{\theta^{y-1}}{(y-1)!}=\theta\me^{-\theta}\me^{\theta}=\theta,\\
+    \Exp\qty[Y^2|\theta]&=\sum_{y=0} y^2\,\pdfpois\qty(y,\theta)=\theta\me^{-\theta}\sum_{y-1=0}\frac{\theta^{y-1}}{(y-1)!}y\\
+    &=\theta\me^{-\theta}\left(\sum_{y-1=0}\frac{\theta^{y-1}}{(y-1)!}(y-1)+\sum_{y-1=0}\frac{\theta^{y-1}}{(y-1)!}\right)\\
+     &=\theta\me^{-\theta}\left(\theta\me^{\theta}+\me^{\theta}\right)=\theta^2+\theta,\\
+     \Var\qty[Y|\theta]&=\Exp\qty[Y^2|\theta]-\Exp\qty[Y|\theta]^2=\theta^2+\theta-\theta^2=\theta.
+\end{split}
+$$
+To find the $\Mode$, we check the relation between two consecutive terms.
+
+$$
+\dfrac{\pdfpois(y,\theta)}{\pdfpois(y-1, \theta)}=\frac{\theta^{y}\me^{-\theta}/y!}{\theta^{y-1}\me^{-\theta}/(y-1)!}=\frac{\theta}{y}.
+$$
+$\pdfpois(y,\theta)$ is increasing when $\theta/y\geq1$ (which means that $y\leq \theta$), and decreasing when $\theta/y\leq 1$ (which means that $y\geq \theta$). Since $y$ has to be an integer, we have
+
+$$
+\Mode\qty[Y\mid\theta]=\lfloor\theta\rfloor.
+$$
+
+:::
+
+
+::: {#thm-}
+# Moment generating function
+Let $Y\sim\distpois(\theta)$. Then
+$$
+M(t)=\Exp\qty[\me^{tY}]=\exp(\theta(\me^t-1))=\me^{\theta(\me^t-1)}.
+$$
+:::
+
+::: {.callout-note collapse="true"}
+# Proof
+$$
+\begin{split}
+\Exp\qty[\me^{tY}]&=\sum_{y=0}^{\infty}\me^{ty}\pdfpois(y,\theta)=\sum_{y=0}^{\infty}\me^{ty}\frac{\theta^y\me^{-\theta}}{y!}\\
+&=\sum_{y=0}^{\infty}\frac{\qty(\theta\me^t)^y\me^{-\theta}}{y!}=\me^{-\theta}\sum_{y=0}^{\infty}\frac{\qty(\theta\me^t)^y}{y!}=\me^{-\theta}\me^{\theta\me^t}\\
+&=\me^{\theta(\me^t-1)}.
+\end{split}
+$$
+:::
+
+
+
+
+
+
+
+## Relations between Poisson distribution and binomial distribution
+Consider the number of events happen during a fixed length period. This is a Poisson process. Assume that the expectation of the distribution is $\theta$. This means that we could expect $\theta$ events happening during the time. The distribution of the process is $\pdfpois(y, \theta)$.
+
+We may understand the process in terms of binomial distribution. We could split the time period into $n$ pieces. The probability of that the event happens in one piece is $p$. Then this process can be described by a binomial distribution $\pdfbinom(y, n, p)$. Its expectation value is $np$. Then we have $np=\theta$. Therefore $p=\theta/n$.
+
+
+::: {#thm-poisson_binom}
+Poisson distribution is the limit of binomial distribution:
+
+$$
+\lim_{n\rightarrow\infty}\pdfbinom(y,n,\theta/n)=\pdfpois(y,\theta).
+$$
+:::
+
+::: {.callout-note collapse="true"}
+# Proof
+
+$$
+\begin{split}
+\lim_{n\rightarrow\infty}\pdfbinom(y,n,\theta/n)&= \lim_{n\rightarrow\infty}\binom{n}{y}\qty(\frac{\theta}{n})^y\qty(1-\frac{\theta}{n})^{n-y}\\
+&=\lim_{n\rightarrow\infty}\frac{n!}{y!(n-k)!}\frac{\theta^y}{n^y}\qty(1-\frac{\theta}{n})^n\qty(1-\frac{\theta}{n})^{-y}\\
+&=\frac{\theta^y}{y!}\lim_{n\rightarrow\infty}\mqty[\frac{n(n-1)(n-2)\ldots(n-y+1)}{n^y}\qty(1-\frac{\theta}{n})^{-y}]\lim_{n\rightarrow\infty}\qty(1-\frac{\theta}{n})^n\\
+&=\frac{\theta^y}{y!}\me^{-\theta}\\
+&=\pdfpois(y,\theta).
+\end{split}
+$$
+:::
+

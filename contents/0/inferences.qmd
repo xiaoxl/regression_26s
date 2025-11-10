@@ -1,0 +1,226 @@
+# Inferences
+
+
+{{< include ../math.qmd >}}
+
+
+
+## General theory
+
+Cited from [@Hog2019, pp. 206, Chapter 4].
+
+### Sampling
+
+
+Consider a random variable $X$ with an unknown distribution. Our information about the distribution of $X$ comes from a sample on $X$: $\qty{X_1,\ldots,X_n}$.
+
+- The sample ovservations $\qty{X_1,\ldots,X_n}$ have the same distribution as $X$.
+- $n$ denotes the **sample size**.
+- When the sample is actually drawn, we use $x_1,\ldots,x_n$ as the **realizations** of the sample.
+
+
+::: {#def-}
+# Random sample
+If the random variables $X_1,\ldots, X_n$ are iid, then these random variable constitute a **random sample** of size $n$ from the common distribution.
+:::
+
+
+::: {#def-}
+# Statistics
+Let $X_1,\ldots,X_n$ denote a sample on a random variable $X$. Let $T=T(X_1,\ldots,X_n)$ be a function of the sample. $T$ is called a **statistic**. Once a sample is drawn, $t=T(x_1,\ldots,x_n)$ is called the *realization* of $T$. 
+:::
+
+
+::: {#def-}
+# Sampling distribution
+- The distribution of $T$ is called the **sampling distribution**.
+- The standard deviation of the sampling distribution is called the **standard error of estimate**.
+:::
+
+
+
+::: {#thm-}
+# The Central Limit Theorem
+For large sample sizes, the mean $\bar{y}$ of a sample from a population with mean $\mu$ and a standard deviation $\sigma$ has a sampling distribution that is approximately normal.
+:::
+
+### Point estimation
+
+Assume that the distribution of $X$ is known down to an unknown parameter $\theta$ where $\theta$ can be a vector. Then the pdf of $X$ can be written as $f(x;\theta)$. In this case we might find some statistic $T$ to estimate $\theta$. This is called a **point estimator** of $\theta$. A realization $t$ is called an **estimate** of $\theta$.
+
+
+::: {#def-}
+# Unbiasedness
+Let $X_1,\ldots,X_n$ is a sample on a random varaible $X$ with pdf $f(x;\theta)$. Let $T$ be a statistic. We say that $T$ is an **unbiased** estimator of $\theta$ if $E(T)=\theta$.
+:::
+
+
+
+Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider a sample $\set{X_i}$ of size $n$. By definition all $X_i$'s are iid. Therefore $\Exp\qty(X_i)=\mu$, and $\Var\qty(X_i)=\sigma^2$ for any $i=1,\ldots, N$.
+
+Consider the following statistics:
+
+- $\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i$,
+- $\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2$.
+
+
+::: {#lem-}
+
+1. $\Exp(\bar{\mu})=\mu$.
+2. $\Exp(\bar{\sigma}^2)=\sigma^2$.
+:::
+
+
+::: {.callout-tip collapse="true"}
+# Proof
+$$
+\begin{aligned}
+\Exp\qty(\bar{\mu})&=\Exp\qty(\frac1N\sum_{i=1}^NX_i)=\frac1N\sum_{i=1}^N\Exp\qty(X_i)=\frac1N\sum_{i=1}^N\mu=\mu,\\
+\Exp\qty(\bar{\sigma}^2)&=\frac{1}{N-1}\Exp\qty[\sum_{i=1}^N(X_i-\bar{\mu})^2]=\frac{1}{N-1}\sum_{i=1}^N\Exp\mqty[\qty(X_i-\bar{\mu})^2]\\
+&=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(X_i-\bar{\mu})+\qty(\Exp\qty(X_i-\bar{\mu}))^2)\\
+&=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(\frac{N-1}{N}X_i-\frac1NX_1-\ldots-\frac1NX_N)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{\mu}))^2)\\
+&=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\Var\qty(X_i)+\frac1{N^2}\Var\qty(X_1)+\ldots+\frac1{N^2}\Var\qty(X_N))\\
+&=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\sigma^2+\frac1{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2)\\
+&=\frac{N}{N-1}\frac{(N-1)^2+N-1}{N^2}\sigma^2=\sigma^2.
+\end{aligned}
+$$
+
+:::
+
+
+::: {#def-}
+The following are the unbiased estimators of $\mu$ and $\sigma^2$ of $X$.
+
+1. $\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i$ is called the *sample mean* of the samples. 
+2. $\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2$ is called the *sample variance* of the samples.
+
+
+:::
+
+
+::: {.callout-caution}
+Please pay attention to the denominator of the sample variance. The $N-1$ is due to the degree of freedom: all $X_i$'s and $\bar{\mu}$ are not independent to each other.
+:::
+
+
+
+### Confidence intervals
+
+::: {#def-}
+# Confidence interval
+Consider a sample of $X$. Fix a number $0<\alpha<1$. Let $L$ and $U$ be two statistics. We say the interval $(L,U)$ is a $(1-\alpha)100\%$ **confidence interval** for $\theta$ if 
+
+$$
+1-\alpha=\Pr[\theta\in(L,U)].
+$$
+:::
+
+
+::: {#thm-}
+# Large-Sample $100(1-\alpha)\%$ Confidence interval
+$$
+L,U=\bar{\mu}\pm z_{\alpha/2}\qty(\frac{\bar{\sigma}}{\sqrt{n}}),
+$$
+where $z_{\alpha/2}=1.96$ if $\alpha=5\%$.
+
+:::
+
+- For any $n$, if $X_i\sim \mathcal N(\mu, \sigma^2)$, $T_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}$ has a Student's $t$-distribution of degree of freedom $n-1$. 
+- When $n$ is big enough, for any distribution $X_i$, $Z_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}$ is approximately $\mathcal N(0,1)$. 
+- Student's $t$-distribution of degree of freedom $n-1$ is approaching $\mathcal N(0,1)$ when $n$ is increasing. When $n=30$ they are very close to each other. Therefore in many cases Statisticians require sample size $\geq30$.
+- For large sample or small sample, the coefficients to compute confidence intervals are $z_{\alpha/2}$ or $t_{\alpha/2}$. These two numbers come from normal distribution or Student's $t$-distribution.
+
+
+
+## Hypothesis test
+Elements of a Statistical Test of Hypothesis 
+
+- Null Hypothesis $𝐻_0$ 
+- Alternative Hypothesis $𝐻_𝑎$ 
+- Test Statistic 
+- Level of significance $\alpha$ 
+- Rejection Region 
+- $𝑃$-Value 
+- Conclusion
+
+
+
+::: {.callout-note}
+# Type I error vs Type II error
+
+Hypothesis test is built around the idea to control Type I error (=reducing false positive rate=increasing precision), since the significance level $\alpha$ is the probability of Type I errors (=the probability of rejecting $H_0$ when $H_0$ is actually right). 
+
+When using Hypothesis test, the scenario is usually that people capture some signals in order to prove an effect happens. The null hypothesis ($H_0$) is assumed to be the default case, and they want to make sure that once the signal is captured, the effect happens. In this case it is ok to miss some events that happens without the signal. In other words, people prioritize not making a false claim than missing an opportunity.
+:::
+
+
+
+
+
+
+![](assests/img/20250118234700.png)
+![](assests/img/20250118234719.png)
+![](assests/img/20250118234743.png)
+
+
+![](assests/img/20250118234802.png)
+
+![](assests/img/20250118234822.png)
+
+
+
+
+## best linear unbiased estimator (BLUE)
+
+![](assests/img/20250118234628.png)
+
+
+
+The distribution of a statistic is called the sampling distribution.
+
+Key Points:
+A statistic is a numerical value calculated from a sample (e.g., sample mean, sample proportion, or sample variance).
+The sampling distribution describes the probability distribution of that statistic across all possible samples of a given size from the population.
+Example:
+If you repeatedly draw samples of size 
+𝑛
+n from a population and calculate the sample mean (
+𝑥
+ˉ
+x
+ˉ
+ ) for each sample, the distribution of these sample means is the sampling distribution of the sample mean.
+Similarly, if you calculate a proportion or variance for each sample, their distributions across samples are the sampling distributions of the sample proportion or sample variance, respectively.
+The concept of a sampling distribution is foundational in inferential statistics, as it underpins methods like hypothesis testing and the construction of confidence intervals.
+
+
+
+![](assests/img/20250118234124.png)
+
+
+![](assests/img/20250118234212.png)
+
+
+![](assests/img/20250118234239.png)
+
+![](assests/img/20250118234253.png)
+
+
+![](assests/img/20250118234347.png)
+
+![](assests/img/20250118234359.png)
+
+
+![](assests/img/20250118234413.png)
+
+![](assests/img/20250118234428.png)
+
+![](assests/img/20250118234440.png)
+
+![](assests/img/20250118234454.png)
+
+
+![](assests/img/20250118234513.png)
+
+
+![](assests/img/20250119120825.png)
