@@ -43,7 +43,7 @@ format:
   #   # code-line-numbers: true
   #   highlight-style: atom-one
   #   page-layout: article
-
+ 
 book:
   title: "Regression 26 Spring"
   author: "Xinli Xiao"

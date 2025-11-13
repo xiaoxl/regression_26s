@@ -67,7 +67,7 @@ possum$hdlngth
 
 
 ::: {#def-}
-# Quantitative and Qualitative @Mendenhall2020
+# Quantitative and Qualitative @Men2020
 - **Quantitative data** are observations measured on a naturally occurring numerical scale. It is also called *numerical data*.
 - **Qualitative data** are nonnumerical data that can only be classified into one of a group of categories. It is also called *categorical data*.
 :::
@@ -118,96 +118,75 @@ To display it, we could use table, bar chart or pie chart.
 
 
 ## Example: `possum`
+Here we still consider the `possum` dataset. 
 
-All the example about possums below come from the dataset [here](./assests/data/possum.csv).
-
-
-::: {.panel-tabset}
-## R
 ```{r}
-df <- read.csv('assests/data/possum.csv')
-head(df)
+library(DAAG)
+data(possum)
+head(possum)
 ```
-
-We first compute the frequency table of the variable `pop`:
+The variable `Pop` (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable `Pop`:
 
 ```{r}
-table(df$pop)
+table(possum$Pop)
 ```
 or relative frequency talbe:
 ```{r}
-table(df$pop)/length(df$pop)
+table(possum$Pop)/length(possum$Pop)
 ```
 
 Then we could draw the barplot of this variable:
 
 ```{r}
-barplot(table(df$pop))
+barplot(table(possum$Pop))
 ```
 
 and the pie plot:
 ```{r}
-pie(table(df$pop))
+pie(table(possum$Pop))
 ```
 
 Note that `table` is handling the statistics, while `barplot` and `pie` draw on top of the result from `table`.
 
-
-:::
 :::
 
 ### Quantitative (numerical) data
 
-We would like to use **histogram** to display these type of data. In other words, we split the range into small segments (called *bins*), and count the frequency or relative frequency of data falling into these bins.
+
+For a quantitative data, we would like to see the histogram, as well as computing some statistics: minx, max, quartiles, median and mean.
+
+- **Histogram** is an approximation of the distribution. In other words, we split the range into small segments (called *bins*), and count the frequency or relative frequency of data falling into these bins.
+- **Box plot** consists of a box, two lines and possibly some points:
+    - The box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).
+    - The lines, known as *whiskers*, extends to one and a half times the interquartile range, but then they are limited to reaching actual data points. 
+    - The points, considered as *outliers*, are those which are not covered by the box and the lines.
 
 
 ::: {.callout-tip collapse="true"}
 ## Example: `possum`
+We still consider the `possum` dataset. We could use `summary` to compute the major statistics.
+
 ```{r}
-df <- read.csv('assests/data/possum.csv')
-head(df)
+library(DAAG)
+data(possum)
+summary(possum)
 ```
 
-We display the histogram of `headL`. We could use `breaks` to control the number of bins.
-```{r}
-hist(df$headL, breaks=10)
-```
-
-The function `hist` does not just draw the histogram. It also provide many infomation we might need. 
+The variable `hdlngth` (head length) is quantitative. We first show the histogram. We could use `breaks` to control the number of bins. Note that the function `hist` does not just draw the histogram. It also provide many infomation we might need. 
 
 ```{r}
-res <- hist(df$headL, breaks=10)
+res <- hist(possum$hdlngth, breaks=10)
 res
 ```
 
-:::
-
-### Some statistics
-
-For a quantitative data, we would also like to compute some statistics: minx, max, quartiles, median and mean. In R, we could use `summary` to compute them, and use box plots to show them.
-
-
-::: {.callout-tip collapse="true"}
-## Example: `possum`
-
+Then we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.
 
 ```{r}
-summary(df)
+boxplot(possum$hdlngth)
 ```
-
-We could use the box plot to show these infomation. It consists of a box, two lines and possibly some points:
-
-- The box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).
-- The lines, known as *whiskers*, extends to one and a half times the interquartile range, but then they are limited to reaching actual data points. 
-- The points, considered as *outliers*, are those which are not covered by the box and the lines.
-
-
-```{r}
-boxplot(df$headL)
-```
-
 
 :::
+
 
 ### Relations among multiple variables
 
@@ -219,13 +198,13 @@ We could show the relation between two variables in a scatter plot.
 
 The cases that both variables are numerical continuous:
 ```{r}
-plot(df$headL, df$skullW)
+plot(possum$hdlngth, possum$skullw)
 ```
 
 The cases that one variable is categorical:
 
 ```{r}
-plot(as.factor(df$pop), df$skullW)
+plot(as.factor(possum$Pop), possum$skullw)
 ```
 
 Note that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category.
@@ -234,58 +213,11 @@ Note that in this case, the categorical data has to be a factor. And once it is 
 We can see pairwise plots for each pair of variables. Note that before the plot, we have to cast `pop` and `sex` into factors.
 
 ```{r}
-df$pop <- as.factor(df$pop)
-df$sex <- as.factor(df$sex)
-pairs(df)
+possum$Pop <- as.factor(possum$Pop)
+possum$sex <- as.factor(possum$sex)
+pairs(possum)
 ```
 Pair plot is very important since it can easily help us to find the expected relations between variables. We will use it a lot in regression analysis.
 
 :::
-
-
-
-## p
-
-
-::: {#def-}
-# Population
-A **population data set** is a collection (or set) of data measured on all experimental units of interest to you. @Men2020
-:::
-
-::: {#def-}
-# Sample
-A **sample** is a subset of data selected from a population. @Men2020
-:::
-
-
-
-::: {#def-}
-# random sample
-A **random sample** of $n$ experimental units is one selected from the population in such a way that every different sample of size $n$ has an equal probability of selection. @Men2020
-:::
-
-
-
-
-
-### Inferential statistics
-
-
-::: {#def-}
-# Statistical inference @Men2020
-- A **statistical inference** is an estimate, prediction, or some other generatlization about a population based on information contianed in a sample. 
-- A **measure of reliability** is a statement about the degree of uncertainty associated with a statistical inference.
-:::
-
-
-
-::: {.callout-note}
-# Inferential statistics
-1. Identify **population**
-2. Identify **variable(s)**
-3. Collect **sample** data
-4. **Inference** about population based on sample
-5. **Measure** of reliability for inference
-:::
-
 

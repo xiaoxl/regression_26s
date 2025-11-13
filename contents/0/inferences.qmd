@@ -5,7 +5,51 @@
 
 
 
-## General theory
+
+
+## Inferential statistics
+
+
+
+::: {#def-}
+# Population and sample @Men2020
+- A **population data set** is a collection (or set) of data measured on all experimental units of interest to you. 
+- A **sample** is a subset of data selected from a population. 
+- A **random sample** of $n$ experimental units is one selected from the population in such a way that every different sample of size $n$ has an equal probability of selection. 
+:::
+
+
+
+
+
+::: {#def-}
+# Statistical inference @Men2020
+- A **statistical inference** is an estimate, prediction, or some other generatlization about a population based on information contianed in a sample. 
+- A **measure of reliability** is a statement about the degree of uncertainty associated with a statistical inference.
+:::
+
+
+
+::: {.callout-note}
+# Inferential statistics
+1. Identify **population**
+2. Identify **variable(s)**
+3. Collect **sample** data
+4. **Inference** about population based on sample
+5. **Measure** of reliability for inference
+:::
+
+
+
+
+
+
+## Estimators
+
+
+
+
+
 
 Cited from [@Hog2019, pp. 206, Chapter 4].
 
@@ -143,84 +187,41 @@ Elements of a Statistical Test of Hypothesis
 - $𝑃$-Value 
 - Conclusion
 
+Given some data, we would like to know whether these data are "exotic" enough--under the assumption that the null hypothesis $H_0$ is true--to justify rejecting $H_0$. In other words, we compute the probability of obtaining data at least as extreme as what we observed when assuming $H_0$ is true. This probability is called the p-value. Once the p-value is smaller than the chosen level of significance $\alpha$, we reject $H_0$. 
+
+Consider a test statistic $T(X)$ and we observe $T(X)=t_{\text{obs}}$. Then
+
+$$
+p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
+$$
+is the p-value for a right-tailed test.
+
 
 
 ::: {.callout-note}
 # Type I error vs Type II error
 
-Hypothesis test is built around the idea to control Type I error (=reducing false positive rate=increasing precision), since the significance level $\alpha$ is the probability of Type I errors (=the probability of rejecting $H_0$ when $H_0$ is actually right). 
+- Type I error: rejecting $H_0$ when $H_0$ is actually true.
+- Type II error: failing to reject $H_0$ when $H_0$ is actually false.
+
+Hypothesis test is designed to control Type I error rate (which is to reduce false positive rate, and which is to increase precision), since the significance level $\alpha$ is the probability of Type I errors.
+
+$$
+\alpha=\Pr(\text{reject }H_0\mid H_0\text{ is true}).
+$$
 
 When using Hypothesis test, the scenario is usually that people capture some signals in order to prove an effect happens. The null hypothesis ($H_0$) is assumed to be the default case, and they want to make sure that once the signal is captured, the effect happens. In this case it is ok to miss some events that happens without the signal. In other words, people prioritize not making a false claim than missing an opportunity.
+
+<!-- In many scientific contexts, the emphasis is on avoiding false claims of an effect. Thus, researchers often prefer to minimize Type I errors even at the cost of accepting a higher risk of Type II errors. In other words, it is usually considered worse to declare an effect that does not exist than to miss an effect that actually exists. -->
+
+We could balance Type I and Type II errors by controlling $\alpha$. 
+
+- Reduing $\alpha$ will make the test less likely to make Type I errors but increase the likelihood of Type II errors. 
+- Increasing sample size reduces probability of making both types of errors, which can improve the test's reliability.
 :::
 
+how to perform h test.
 
 
 
 
-
-![](assests/img/20250118234700.png)
-![](assests/img/20250118234719.png)
-![](assests/img/20250118234743.png)
-
-
-![](assests/img/20250118234802.png)
-
-![](assests/img/20250118234822.png)
-
-
-
-
-## best linear unbiased estimator (BLUE)
-
-![](assests/img/20250118234628.png)
-
-
-
-The distribution of a statistic is called the sampling distribution.
-
-Key Points:
-A statistic is a numerical value calculated from a sample (e.g., sample mean, sample proportion, or sample variance).
-The sampling distribution describes the probability distribution of that statistic across all possible samples of a given size from the population.
-Example:
-If you repeatedly draw samples of size 
-𝑛
-n from a population and calculate the sample mean (
-𝑥
-ˉ
-x
-ˉ
- ) for each sample, the distribution of these sample means is the sampling distribution of the sample mean.
-Similarly, if you calculate a proportion or variance for each sample, their distributions across samples are the sampling distributions of the sample proportion or sample variance, respectively.
-The concept of a sampling distribution is foundational in inferential statistics, as it underpins methods like hypothesis testing and the construction of confidence intervals.
-
-
-
-![](assests/img/20250118234124.png)
-
-
-![](assests/img/20250118234212.png)
-
-
-![](assests/img/20250118234239.png)
-
-![](assests/img/20250118234253.png)
-
-
-![](assests/img/20250118234347.png)
-
-![](assests/img/20250118234359.png)
-
-
-![](assests/img/20250118234413.png)
-
-![](assests/img/20250118234428.png)
-
-![](assests/img/20250118234440.png)
-
-![](assests/img/20250118234454.png)
-
-
-![](assests/img/20250118234513.png)
-
-
-![](assests/img/20250119120825.png)

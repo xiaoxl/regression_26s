@@ -3,3 +3,8 @@
 
 {{< include basics.qmd >}}
 
+{{< include inferences.qmd >}}
+
+{{< include prob.qmd >}}
+
+{{< include statsmodels.qmd >}}
