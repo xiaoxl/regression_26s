@@ -13,23 +13,18 @@
 - **Statistical Inference**: The process of using data collected on a sample to draw conclusions about a population is called statistical inference. 
 
 
-::: {#exm-}
-According to the research firm TVNewser (May 2017), the average age of viewers of CNN news programming is 60 years. Suppose a FOX network executive hypothesized that the average age of FOX News viewer is greater than 60. To test her hypothesis, she samples 500 FOX News viewers and determines the age of each.
 
-a. Describe the population
-b. Describe the sample
-c. Sample size
-d. Describe the statistical inference
+
+::: {.callout-tip collapse="true"}
+## Example: `gssr`
+According to a previous national media report, the *average age* of U.S. adults who watch national TV news is **60 years**. A data analyst hypothesizes that the **average age of frequent TV-news watchers** is **greater than 60**. To test this, she uses the **General Social Survey (GSS)**, accessible via the `gssr` R package @gssr, to draw a **sample of 500 respondents** and record their ages.
+
+a. **Describe the population**: All U.S. adults who watch TV news **several times a week or more often**, as defined by the GSS survey question on TV-news frequency.
+b. **Describe the sample**: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.
+c. **Sample size**: $n = 500$
+d. **Describe the statistical inference**: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.
 :::
-<!-- 
 
-## Variable Types
-
-- Qualitative (categorical) data use labels or names to identify an attribute of an element.
-- Quantitative (numerical) data use numeric values.
-
-- Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…
-- Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals  -->
 
 
 ## Data structure
@@ -37,15 +32,42 @@ A dataset is a collection of *values*. Values are organized in two ways. Every v
 
 
 ::: {#def-}
-# Variables and Observations @Wic2014
+# Variables and Observations @Wickham2014
 - A **variable** contains all values that measure the same underlying attribute (like height, temperature, duration) across units.
 - An **observation** contains all values measured on the same unit (like a person, or a day, or a race) across attributes.
 :::
  
 
 
+::: {.callout-tip collapse="true"}
+## Example: `possum`
+Researchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see @sec-app_possum.
+
+```{r}
+#| warning: false
+library(DAAG)
+data(possum)
+head(possum)
+```
+The dimension of the dataset is
+```{r}
+dim(possum)
+```
+
+In this example, there are 14 varaibles, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.
+
+```{r}
+possum$hdlngth
+```
+
+:::
+
+
+
+
+
 ::: {#def-}
-# Quantitative and Qualitative @Men2020
+# Quantitative and Qualitative @Mendenhall2020
 - **Quantitative data** are observations measured on a naturally occurring numerical scale. It is also called *numerical data*.
 - **Qualitative data** are nonnumerical data that can only be classified into one of a group of categories. It is also called *categorical data*.
 :::
@@ -58,7 +80,13 @@ A dataset is a collection of *values*. Values are organized in two ways. Every v
 - Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.
 :::
 
-
+```{mermaid}
+graph TD
+    A[All Variables] --> B[Numerical]
+    A --> C[Categorical]
+    B --> D[Continuous]
+    B --> E[Discrete]
+```
 
 
 ::: {.callout-note}
@@ -67,10 +95,11 @@ A variable in a dataset can be modeled by a *random variable*. The probability d
 
 Then to make a mearuement is the same as to take a sample from the random variable.  
 
-
-<!-- On the other side, to study a variable in a dataset, we need to identify the random variable corresponding to it. In the rest of the notes we will use variables in a dataset and random variables interchangably. -->
-
 :::
+
+
+
+
 
 
 ## Data Visualization
@@ -88,7 +117,7 @@ To display it, we could use table, bar chart or pie chart.
 
 
 
-# Example: Possums
+## Example: `possum`
 
 All the example about possums below come from the dataset [here](./assests/data/possum.csv).
 
@@ -124,38 +153,6 @@ pie(table(df$pop))
 Note that `table` is handling the statistics, while `barplot` and `pie` draw on top of the result from `table`.
 
 
-## Python
-
-```{python}
-import pandas as pd
-df = pd.read_csv('assests/data/possum.csv')
-df.head()
-```
-
-
-We first compute the frequency table of the variable `pop`:
-
-```{python}
-df['pop'].value_counts()
-```
-or relative frequency talbe:
-```{python}
-df['pop'].value_counts(normalize=True)
-```
-
-Then we could draw the barplot of this variable:
-
-```{python}
-import matplotlib.pyplot as plt
-vc = df['pop'].value_counts()
-plt.bar(vc.index, vc)
-```
-
-and the pie plot:
-```{python}
-_ = plt.pie(vc)
-```
-
 :::
 :::
 
@@ -165,7 +162,7 @@ We would like to use **histogram** to display these type of data. In other words
 
 
 ::: {.callout-tip collapse="true"}
-# Example: Possums
+## Example: `possum`
 ```{r}
 df <- read.csv('assests/data/possum.csv')
 head(df)
@@ -191,7 +188,7 @@ For a quantitative data, we would also like to compute some statistics: minx, ma
 
 
 ::: {.callout-tip collapse="true"}
-# Example: Possums
+## Example: `possum`
 
 
 ```{r}
@@ -218,7 +215,7 @@ We could show the relation between two variables in a scatter plot.
 
 
 ::: {.callout-tip collapse="true"}
-# Example: Possums
+## Example: `possum`
 
 The cases that both variables are numerical continuous:
 ```{r}
