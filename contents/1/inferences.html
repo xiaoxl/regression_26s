@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Multiple Linear regression – Regression 26 Spring</title>
+<title>2&nbsp; Inferences – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +49,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/3/mlr.html" rel="next">
-<link href="../../contents/2/project1.html" rel="prev">
+<link href="../../contents/2/intro.html" rel="next">
+<link href="../../contents/1/basics.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -76,6 +95,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -251,7 +299,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Inferences</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -286,13 +334,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Review</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/basics.html" class="sidebar-item-text sidebar-link">
@@ -301,7 +349,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/inferences.html" class="sidebar-item-text sidebar-link">
+  <a href="../../contents/1/inferences.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Inferences</span></span></a>
   </div>
 </li>
@@ -344,16 +392,16 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
  <span class="menu-text">MLR</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
   </div>
 </li>
@@ -404,8 +452,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#inferential-statistics" id="toc-inferential-statistics" class="nav-link active" data-scroll-target="#inferential-statistics"><span class="header-section-number">2.1</span> Inferential statistics</a></li>
+  <li><a href="#estimators" id="toc-estimators" class="nav-link" data-scroll-target="#estimators"><span class="header-section-number">2.2</span> Estimators</a>
+  <ul class="collapse">
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling"><span class="header-section-number">2.2.1</span> Sampling</a></li>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">2.2.2</span> Point estimation</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.2.3</span> Confidence intervals</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test"><span class="header-section-number">2.3</span> Hypothesis test</a>
+  <ul class="collapse">
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">2.3.1</span> t-test</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -413,7 +477,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Inferences</span></h1>
 </div>
 
 
@@ -430,8 +494,322 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<section id="inferential-statistics" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="inferential-statistics"><span class="header-section-number">2.1</span> Inferential statistics</h2>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.1 (Population and sample <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">1</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li>A <strong>population data set</strong> is a collection (or set) of data measured on all experimental units of interest to you.</li>
+<li>A <strong>sample</strong> is a subset of data selected from a population.</li>
+<li>A <strong>random sample</strong> of <span class="math inline">\(n\)</span> experimental units is one selected from the population in such a way that every different sample of size <span class="math inline">\(n\)</span> has an equal probability of selection.</li>
+</ul>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.2 (Statistical inference <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">1</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li>A <strong>statistical inference</strong> is an estimate, prediction, or some other generatlization about a population based on information contianed in a sample.</li>
+<li>A <strong>measure of reliability</strong> is a statement about the degree of uncertainty associated with a statistical inference.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Inferential statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Identify <strong>population</strong></li>
+<li>Identify <strong>variable(s)</strong></li>
+<li>Collect <strong>sample</strong> data</li>
+<li><strong>Inference</strong> about population based on sample</li>
+<li><strong>Measure</strong> of reliability for inference</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="estimators" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="estimators"><span class="header-section-number">2.2</span> Estimators</h2>
+<p>Cited from <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">2</a>, Chapter 4]</span>.</p>
+<section id="sampling" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="sampling"><span class="header-section-number">2.2.1</span> Sampling</h3>
+<p>Consider a random variable <span class="math inline">\(X\)</span> with an unknown distribution. Our information about the distribution of <span class="math inline">\(X\)</span> comes from a sample on <span class="math inline">\(X\)</span>: <span class="math inline">\(\qty{X_1,\ldots,X_n}\)</span>.</p>
+<ul>
+<li>The sample ovservations <span class="math inline">\(\qty{X_1,\ldots,X_n}\)</span> have the same distribution as <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(n\)</span> denotes the <strong>sample size</strong>.</li>
+<li>When the sample is actually drawn, we use <span class="math inline">\(x_1,\ldots,x_n\)</span> as the <strong>realizations</strong> of the sample.</li>
+</ul>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.3 (Random sample)</strong></span> If the random variables <span class="math inline">\(X_1,\ldots, X_n\)</span> are iid, then these random variable constitute a <strong>random sample</strong> of size <span class="math inline">\(n\)</span> from the common distribution.</p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.4 (Statistics)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> denote a sample on a random variable <span class="math inline">\(X\)</span>. Let <span class="math inline">\(T=T(X_1,\ldots,X_n)\)</span> be a function of the sample. <span class="math inline">\(T\)</span> is called a <strong>statistic</strong>. Once a sample is drawn, <span class="math inline">\(t=T(x_1,\ldots,x_n)\)</span> is called the <em>realization</em> of <span class="math inline">\(T\)</span>.</p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.5 (Sampling distribution)</strong></span> &nbsp;</p>
+<ul>
+<li>The distribution of <span class="math inline">\(T\)</span> is called the <strong>sampling distribution</strong>.</li>
+<li>The standard deviation of the sampling distribution is called the <strong>standard error of estimate</strong>.</li>
+</ul>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.1 (The Central Limit Theorem)</strong></span> For large sample sizes, the mean <span class="math inline">\(\bar{y}\)</span> of a sample from a population with mean <span class="math inline">\(\mu\)</span> and a standard deviation <span class="math inline">\(\sigma\)</span> has a sampling distribution that is approximately normal.</p>
+</div>
+</section>
+<section id="point-estimation" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">2.2.2</span> Point estimation</h3>
+<p>Assume that the distribution of <span class="math inline">\(X\)</span> is known down to an unknown parameter <span class="math inline">\(\theta\)</span> where <span class="math inline">\(\theta\)</span> can be a vector. Then the pdf of <span class="math inline">\(X\)</span> can be written as <span class="math inline">\(f(x;\theta)\)</span>. In this case we might find some statistic <span class="math inline">\(T\)</span> to estimate <span class="math inline">\(\theta\)</span>. This is called a <strong>point estimator</strong> of <span class="math inline">\(\theta\)</span>. A realization <span class="math inline">\(t\)</span> is called an <strong>estimate</strong> of <span class="math inline">\(\theta\)</span>.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.6 (Unbiasedness)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> is a sample on a random varaible <span class="math inline">\(X\)</span> with pdf <span class="math inline">\(f(x;\theta)\)</span>. Let <span class="math inline">\(T\)</span> be a statistic. We say that <span class="math inline">\(T\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\theta\)</span> if <span class="math inline">\(E(T)=\theta\)</span>.</p>
+</div>
+<p>Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are iid. Therefore <span class="math inline">\(\Exp\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\Var\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, N\)</span>.</p>
+<p>Consider the following statistics:</p>
+<ul>
+<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span>,</li>
+<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span>.</li>
+</ul>
+<div id="lem-" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 2.1</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\Exp(\bar{\mu})=\mu\)</span>.</li>
+<li><span class="math inline">\(\Exp(\bar{\sigma}^2)=\sigma^2\)</span>.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{aligned}
+\Exp\qty(\bar{\mu})&amp;=\Exp\qty(\frac1N\sum_{i=1}^NX_i)=\frac1N\sum_{i=1}^N\Exp\qty(X_i)=\frac1N\sum_{i=1}^N\mu=\mu,\\
+\Exp\qty(\bar{\sigma}^2)&amp;=\frac{1}{N-1}\Exp\qty[\sum_{i=1}^N(X_i-\bar{\mu})^2]=\frac{1}{N-1}\sum_{i=1}^N\Exp\mqty[\qty(X_i-\bar{\mu})^2]\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(X_i-\bar{\mu})+\qty(\Exp\qty(X_i-\bar{\mu}))^2)\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(\frac{N-1}{N}X_i-\frac1NX_1-\ldots-\frac1NX_N)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{\mu}))^2)\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\Var\qty(X_i)+\frac1{N^2}\Var\qty(X_1)+\ldots+\frac1{N^2}\Var\qty(X_N))\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\sigma^2+\frac1{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2)\\
+&amp;=\frac{N}{N-1}\frac{(N-1)^2+N-1}{N^2}\sigma^2=\sigma^2.
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.7</strong></span> The following are the unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> of <span class="math inline">\(X\)</span>.</p>
+<ol type="1">
+<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span> is called the <em>sample mean</em> of the samples.</li>
+<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span> is called the <em>sample variance</em> of the samples.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please pay attention to the denominator of the sample variance. The <span class="math inline">\(N-1\)</span> is due to the degree of freedom: all <span class="math inline">\(X_i\)</span>’s and <span class="math inline">\(\bar{\mu}\)</span> are not independent to each other.</p>
+</div>
+</div>
+</section>
+<section id="confidence-intervals" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">2.2.3</span> Confidence intervals</h3>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.8 (Confidence interval)</strong></span> Consider a sample of <span class="math inline">\(X\)</span>. Fix a number <span class="math inline">\(0&lt;\alpha&lt;1\)</span>. Let <span class="math inline">\(L\)</span> and <span class="math inline">\(U\)</span> be two statistics. We say the interval <span class="math inline">\((L,U)\)</span> is a <span class="math inline">\((1-\alpha)100\%\)</span> <strong>confidence interval</strong> for <span class="math inline">\(\theta\)</span> if</p>
+<p><span class="math display">\[
+1-\alpha=\Pr[\theta\in(L,U)].
+\]</span></p>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.2 (Large-Sample <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence interval)</strong></span> <span class="math display">\[
+L,U=\bar{\mu}\pm z_{\alpha/2}\qty(\frac{\bar{\sigma}}{\sqrt{n}}),
+\]</span> where <span class="math inline">\(z_{\alpha/2}=1.96\)</span> if <span class="math inline">\(\alpha=5\%\)</span>.</p>
+</div>
+<ul>
+<li>For any <span class="math inline">\(n\)</span>, if <span class="math inline">\(X_i\sim \mathcal N(\mu, \sigma^2)\)</span>, <span class="math inline">\(T_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}\)</span> has a Student’s <span class="math inline">\(t\)</span>-distribution of degree of freedom <span class="math inline">\(n-1\)</span>.</li>
+<li>When <span class="math inline">\(n\)</span> is big enough, for any distribution <span class="math inline">\(X_i\)</span>, <span class="math inline">\(Z_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}\)</span> is approximately <span class="math inline">\(\mathcal N(0,1)\)</span>.</li>
+<li>Student’s <span class="math inline">\(t\)</span>-distribution of degree of freedom <span class="math inline">\(n-1\)</span> is approaching <span class="math inline">\(\mathcal N(0,1)\)</span> when <span class="math inline">\(n\)</span> is increasing. When <span class="math inline">\(n=30\)</span> they are very close to each other. Therefore in many cases Statisticians require sample size <span class="math inline">\(\geq30\)</span>.</li>
+<li>For large sample or small sample, the coefficients to compute confidence intervals are <span class="math inline">\(z_{\alpha/2}\)</span> or <span class="math inline">\(t_{\alpha/2}\)</span>. These two numbers come from normal distribution or Student’s <span class="math inline">\(t\)</span>-distribution.</li>
+</ul>
+</section>
+</section>
+<section id="hypothesis-test" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="hypothesis-test"><span class="header-section-number">2.3</span> Hypothesis test</h2>
+<p>Elements of a Statistical Test of Hypothesis</p>
+<ul>
+<li>Null Hypothesis <span class="math inline">\(𝐻_0\)</span></li>
+<li>Alternative Hypothesis <span class="math inline">\(𝐻_𝑎\)</span></li>
+<li>Test Statistic</li>
+<li>Level of significance <span class="math inline">\(\alpha\)</span></li>
+<li>Rejection Region</li>
+<li><span class="math inline">\(𝑃\)</span>-Value</li>
+<li>Conclusion</li>
+</ul>
+<p>Given some data, we would like to know whether these data are “exotic” enough–under the assumption that the null hypothesis <span class="math inline">\(H_0\)</span> is true–to justify rejecting <span class="math inline">\(H_0\)</span>. In other words, we compute the probability of obtaining a test statistic at least as extreme as the observed value, assuming <span class="math inline">\(H_0\)</span> is true. This probability is called the <em>p-value</em>. Once the p-value is smaller than the chosen level of significance <span class="math inline">\(\alpha\)</span>, we reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Consider a test statistic <span class="math inline">\(T(X)\)</span> and we observe <span class="math inline">\(T(X)=t_{\text{obs}}\)</span>. Then</p>
+<p><span class="math display">\[
+p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
+\]</span> is the p-value for a right-tailed test. The key idea in constructing a hypohesis test is to choose a test statistic and a rejection region so that</p>
+<p><span class="math display">\[
+\Pr(\text{the statistic falls in the rejection region}\mid H_0\text{ is true})=\alpha.
+\]</span> This ensures the test has expected Type I error rate <span class="math inline">\(\alpha\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Type I error vs Type II error
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Type I error: rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is actually true.</li>
+<li>Type II error: failing to reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is actually false.</li>
+</ul>
+<p>Hypothesis test is designed to control Type I error rate (which is to reduce false positive rate, and which is to increase precision), since the significance level <span class="math inline">\(\alpha\)</span> is the probability of Type I errors.</p>
+<p><span class="math display">\[
+\alpha=\Pr(\text{reject }H_0\mid H_0\text{ is true}).
+\]</span></p>
+<p>When using Hypothesis test, the scenario is usually that people capture some signals in order to prove an effect happens. The null hypothesis (<span class="math inline">\(H_0\)</span>) is assumed to be the default case, and they want to make sure that once the signal is captured, the effect happens. In this case it is ok to miss some events that happens without the signal. In other words, people prioritize not making a false claim than missing an opportunity.</p>
+<p>We could balance Type I and Type II errors by controlling <span class="math inline">\(\alpha\)</span>.</p>
+<ul>
+<li>Reduing <span class="math inline">\(\alpha\)</span> will make the test less likely to make Type I errors but increase the likelihood of Type II errors.</li>
+<li>Increasing sample size reduces probability of making both types of errors, which can improve the test’s reliability.</li>
+</ul>
+</div>
+</div>
+<section id="t-test" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="t-test"><span class="header-section-number">2.3.1</span> t-test</h3>
+<p>A t-test is used to test a hypothesis about a population mean when the population standard deviation is unknown and the sample size is small or moderate. In our case, we consider the standard one-sample t-test: given a set of random observations, we want to determine whether the population mean of the underlying random variable is equal to 0 or not.</p>
+<p>Assume that the given values are <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span>, and the underlying random variable is <span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span>. The hypotheses are</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu=0\)</span>.</li>
+<li><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu\neq0\)</span>.</li>
+</ul>
+<p>We have the following statistics:</p>
+<ul>
+<li>Sample mean: <span class="math inline">\(\bar{x}=\frac1n\sum_{i=1}^nx_i\)</span>.</li>
+<li>Sample standard deviation: <span class="math inline">\(s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar x)^2}\)</span></li>
+<li>Sample size: <span class="math inline">\(n\)</span>.</li>
+</ul>
+<p>These statistics have sampling distributions that can be described exactly under the normality assumption.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Theorem (Normal Sample Mean–Variance)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Consider</p>
+<ul>
+<li><span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
+<li><span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
+</ul>
+<p>Then - <span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span> - <span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span> - <span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</p>
+</div>
+</div>
+<p>The t-test is based on the Student’s t-distribution theorem.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Theorem (Student’s t-Distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let</p>
+<ul>
+<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
+<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
+<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
+</ul>
+<p>Then <span class="math display">\[
+T=\frac{Z}{\sqrt{U/\nu}}
+\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
+</div>
+</div>
+<p>Put the two theorems together.</p>
+<ul>
+<li><span class="math inline">\(Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)\)</span></li>
+<li><span class="math inline">\(U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span></li>
+<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent, and the degree of freedom of <span class="math inline">\(U\)</span> is <span class="math inline">\(\nu = n-1\)</span>,</li>
+</ul>
+<p><span class="math display">\[
+t \;=\; \frac{Z}{\sqrt{U/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\sqrt{\dfrac{(n-1)s^2}{\sigma^2}/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\dfrac s{\sigma}}
+\;=\; \frac{\bar X-\mu}{s/\sqrt n}
+\;\sim\; t_{n-1}.
+\]</span></p>
+<p>To find the rejection region, note that since the alternative hypothesis is <span class="math inline">\(\mu\neq0\)</span>, we need to consider both tails, corresponding to <span class="math inline">\(\mu&gt;0\)</span> and <span class="math inline">\(\mu&lt;0\)</span>. Therefore the boundary of the rejection region is chosen so that each tail has probability <span class="math inline">\(\alpha/2\)</span>. In other words, the critical value <span class="math inline">\(t_{1-\alpha/2,n-1}\)</span> satisfies, under <span class="math inline">\(H_0\)</span>, <span class="math display">\[
+\Pr(|t|&gt;t_{1-\alpha/2,n-1})=\alpha.
+\]</span> This critical value <span class="math inline">\(t_{1-\alpha/2,n-1}\)</span> is usually found from a t-distribution table or via the inverse c.d.f. of the t-distribution.</p>
 
 
+<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="ref-Men2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Mendenhall</span>, W. and <span class="smallcaps">Sincich</span>, T. (2020). <em>A second course in statistics: Regression analyisis</em>. Pearson Education, Inc, [Hoboken, New Jersey].</div>
+</div>
+<div id="ref-Hog2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -849,13 +1227,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/2/project1.html" class="pagination-link" aria-label="Project 1: Boston housing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span>
+      <a href="../../contents/1/basics.html" class="pagination-link" aria-label="Basics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/3/mlr.html" class="pagination-link" aria-label="MLR">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">MLR</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/2/intro.html" class="pagination-link" aria-label="Simple Linear regression">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

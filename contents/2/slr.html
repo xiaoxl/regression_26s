@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Review – Regression 26 Spring</title>
+<title>4&nbsp; slr – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/0/basics.html" rel="next">
-<link href="../../index.html" rel="prev">
+<link href="../../contents/2/misc.html" rel="next">
+<link href="../../contents/2/intro.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -251,7 +315,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Review</h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">slr</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -286,58 +350,111 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../contents/0/intro.html" class="sidebar-item-text sidebar-link active">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Review</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/0/basics.html" class="sidebar-item-text sidebar-link">
+  <a href="../../contents/1/basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/0/inferences.html" class="sidebar-item-text sidebar-link">
+  <a href="../../contents/1/inferences.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Inferences</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Stats reviews</span></span>
-  </li>
-        <li class="sidebar-item">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">SLR</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+  <a href="../../contents/2/slr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">slr</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/4/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Building models</span></span></a>
+  <a href="../../contents/2/misc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">MLR</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">MLR</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Building models</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/app/data.html" class="sidebar-item-text sidebar-link">
@@ -351,8 +468,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#probabilistic-model-for-y" id="toc-probabilistic-model-for-y" class="nav-link active" data-scroll-target="#probabilistic-model-for-y"><span class="header-section-number">4.1</span> Probabilistic model for <span class="math inline">\(y\)</span></a></li>
+  <li><a href="#slr" id="toc-slr" class="nav-link" data-scroll-target="#slr"><span class="header-section-number">4.2</span> SLR</a>
+  <ul class="collapse">
+  <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model"><span class="header-section-number">4.2.1</span> Fitting the model</a></li>
+  </ul></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">4.3</span> estimation</a></li>
+  <li><a href="#beta_1" id="toc-beta_1" class="nav-link" data-scroll-target="#beta_1"><span class="header-section-number">4.4</span> <span class="math inline">\(\beta_1\)</span></a></li>
+  <li><a href="#coeffcient-of-correlation" id="toc-coeffcient-of-correlation" class="nav-link" data-scroll-target="#coeffcient-of-correlation"><span class="header-section-number">4.5</span> coeffcient of correlation</a></li>
+  <li><a href="#coefficient-of-determination" id="toc-coefficient-of-determination" class="nav-link" data-scroll-target="#coefficient-of-determination"><span class="header-section-number">4.6</span> coefficient of determination</a></li>
+  <li><a href="#predicted-interval-and-confidence-interval" id="toc-predicted-interval-and-confidence-interval" class="nav-link" data-scroll-target="#predicted-interval-and-confidence-interval"><span class="header-section-number">4.7</span> predicted interval and confidence interval</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -360,7 +492,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Review</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">slr</span></h1>
 </div>
 
 
@@ -377,8 +509,329 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<p>We want to use sample data to investigate the relationships among a group of variables, ultimately to create a model for some variable that can be used to predict its value in the futre.</p>
+<p>Language:</p>
+<ul>
+<li>Predicting the value of <span class="math inline">\(X\)</span> by <span class="math inline">\(\Exp(X)\)</span> is tantamount to using <span class="math inline">\(\Exp(X)\)</span> as a <strong>model</strong> for the true <span class="math inline">\(X\)</span>.</li>
+<li>The variable to be modeled is called the <strong>dependent</strong> (or <strong>reponse</strong>) variable.</li>
+</ul>
+<section id="probabilistic-model-for-y" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="probabilistic-model-for-y"><span class="header-section-number">4.1</span> Probabilistic model for <span class="math inline">\(y\)</span></h2>
+<p>The <strong>probabilistic model</strong> for <span class="math inline">\(y\)</span> is <span class="math display">\[
+y=\Exp(y)+\text{Random error}.
+\]</span> It is called <em>probabilistic</em> since we can make a probability statement about the magnitude of the deviation between <span class="math inline">\(y\)</span> and <span class="math inline">\(\Exp(y)\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>General Form of Probabilistic Model in Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+y=\Exp(y)+\varepsilon
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(y\)</span>: Dependent variable</li>
+<li><span class="math inline">\(\Exp(y)\)</span>: Mean value of <span class="math inline">\(y\)</span></li>
+<li><span class="math inline">\(\varepsilon\)</span>: Unexplainable or random error</li>
+</ul>
+<p>This model suggests that y will come back to its mean evautually. This is why it is called <strong>regression</strong> model.</p>
+</div>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1</strong></span> The variables used to predict <span class="math inline">\(y\)</span> are called <strong>independent variables</strong> and are denoted by <span class="math inline">\(x_i\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Regression Modeling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Hypothesize the form of the model for <span class="math inline">\(\Exp(y)\)</span>.</li>
+<li>Collect the sample data.</li>
+<li>Use the sample data to estimate unknown parameters in the model.</li>
+<li>Specify the probability distribution of <span class="math inline">\(\varepsilon\)</span>, and estimate any unknown parameters of this distribution.</li>
+<li>Statistically check the usefulness of the model.</li>
+<li>Check the validity of the assumptions on <span class="math inline">\(\varepsilon\)</span>, and make model modifications if necessary.</li>
+<li>When satisfied that the model is useful, and assumptions are met, use the model to make inferences.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="slr" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="slr"><span class="header-section-number">4.2</span> SLR</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A First-Order Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+y=\beta_0+\beta_1x+\varepsilon
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(y\)</span>: The <strong>response</strong> variable</li>
+<li><span class="math inline">\(x\)</span>: The <strong>independent</strong> variable (variable used as a <strong>predictor</strong> of <span class="math inline">\(y\)</span>)</li>
+<li><span class="math inline">\(\Exp(y)=\beta_0+\beta_1x\)</span>: Deterministic component</li>
+<li><span class="math inline">\(\varepsilon\)</span>: Random error component</li>
+<li><span class="math inline">\(\beta_0\)</span>: <strong><span class="math inline">\(y\)</span>-intercept</strong></li>
+<li><span class="math inline">\(\beta_1\)</span>: <strong>Slope</strong></li>
+</ul>
+</div>
+</div>
+<section id="fitting-the-model" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="fitting-the-model"><span class="header-section-number">4.2.1</span> Fitting the model</h3>
+<p>MLE=LSE under the assumption that e is normal</p>
+<p>different estimators</p>
+<p>first assuming that <span class="math inline">\(\sigma\)</span> is constant.</p>
+<ul>
+<li>Sum of squares of deviations for the <span class="math inline">\(x\)</span>s: <span class="math inline">\(SS_{xx}=\sum(x_i-\bar{x})^2\)</span></li>
+<li>Sum of squares of deviations for the <span class="math inline">\(y\)</span>s: <span class="math inline">\(SS_{yy}=\sum(y_i-\bar{y})^2\)</span></li>
+<li>Sum of cross-products: <span class="math inline">\(SS_{xy}=\sum(x_i-\bar{x})(y_i-\bar{y})\)</span></li>
+</ul>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.1</strong></span> Estimate <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\sigma^2\)</span>. The NLL is <span class="math display">\[
+NLL = -\frac{n}{2}\ln\qty(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum\qty(y_i-\beta_0-\beta_1x_i)^2.
+\]</span></p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span><span class="math display">\[
+\begin{split}
+\pdv{NLL}{\beta_0}&amp;=
+\end{split}
+\]</span></p>
+</div>
+</section>
+</section>
+<section id="estimation" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="estimation"><span class="header-section-number">4.3</span> estimation</h2>
+<p>b0, b1 are estimations</p>
+<ol type="1">
+<li>b0, b1 formula</li>
+<li>E(b0) E(b1)</li>
+<li>Var(b0), Var(b1)</li>
+<li>relations to y: b1, ybar independent, b0, b1 are independent</li>
+</ol>
+<p><span class="math display">\[
+\hat{\beta}_1=\frac{S_{xy}}{S_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
+\]</span></p>
+<p><span class="math display">\[
+\Var(y_i-\bar{y})=\Var(y_i-\frac1n\sum y_j)=\Var(\frac{n-1}{n}y_i-\sum_{j\neq i}\frac1ny_j)=\frac{(n-1)^2}{n^2}\sigma^2+\frac{n-1}{n^2}\sigma^2=\frac{n-1}{n}\sigma^2.
+\]</span></p>
+<p>Since <span class="math inline">\(\sum_i (x_i-\bar{x})=\sum_i (y_i-\bar{y})=0\)</span>, we have <span class="math display">\[
+\sum_i (x_i-\bar{x})\bar{x}=\sum_i (x_i-\bar{x})\bar{y}=\sum_i (y_i-\bar{y})\bar{x}=\sum_i (y_i-\bar{y})\bar{y}=0.
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Var(S_{xy})&amp;=\Var\qty[\sum_i (x_i-\bar{x})(y_i-\bar{y})]=\Var\qty[\sum_i (x_i-\bar{x})y_i-\sum_i (x_i-\bar{x})\bar{y}]=\Var\qty[\sum_i (x_i-\bar{x})y_i]\\
+&amp;=\sum(x_i-\bar{x})^2\Var(y_i)=\sum(x_i-\bar{x})^2\sigma^2=S_{xx}\sigma^2.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
+\]</span></p>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.2 (Uncorrelation)</strong></span> <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\bar y\)</span> are uncorrelated.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[
+\begin{split}
+\Cov(\hat{\beta}_1,\bar{y})=&amp;\Cov\qty(\frac{1}{S_{xx}}\sum_i(x_i-\bar x)(y_i-\bar y), \sum\frac{1}{n} y_j)=\sum_{i,j}\frac{(x_i-\bar x)}{nS_{xx}}\Cov(y_i,y_j)\\
+=&amp;\sum_{i}\frac{(x_i-\bar x)}{nS_{xx}}\sigma^2=0.
+\end{split}
+\]</span> Since <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\bar y\)</span> are both normal, the uncorrelation implies that they are also indepedent.</p>
+</div>
+<p><span class="math display">\[
+\begin{split}
+\Var(\hat{\beta}_0)&amp;=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp\qty(y_i-\hat{y}_i)^2&amp;=\Exp\qty(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)^2
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\Exp\qty(\sum(y_i-\hat{y}_i)^2)=\Exp\qty(\sum(y_i-\bar{y}_i)^2) - \Exp(S_{xy}^2) =(n-2)\sigma^2.
+\]</span></p>
+<p><span class="math display">\[
+\Var(y_i-\bar y)=\Var\qty(y_i-\sum\frac1n y_j)=\Var\qty(\sum_{j\neq i}\qty(-\frac1n)y_j+\frac{n-1}n y_i)=\sum_{j\neq i}\frac1{n^2}\Var(y_j)+\frac{(n-1)^2}{n^2}\Var{y_i}=\frac{n-1}{n}\sigma^2.
+\]</span></p>
+<p><span class="math display">\[
+\Exp\qty(y_i-\bar y)=\Exp(y_i)-\Exp(\bar y)=\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x)=\beta_1(x_i-\bar x).
+\]</span></p>
+<p><span class="math display">\[
+\sum\qty(\Exp\qty(y_i-\bar y))^2=\sum\qty(\Exp(y_i)-\Exp(\bar y))^2=\sum\qty(\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x))^2=\sum\qty(\beta_1(x_i-\bar x))^2=\beta_1^2S_{xx}.
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp\qty(\sum(y_i-\bar{y}_i)^2)&amp;=\sum\Exp\qty((y_i-\bar{y})^2)=\sum\qty(\Exp\qty(y_i-\bar{y}))^2+\sum\Var(y_i-\bar y) =\beta_1^2S_{xx}+(n-1)\sigma^2.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp(S_{xy})&amp;=\Exp\qty(\sum(x_i-\bar x)(y_i-\bar y))=\Exp\qty(\sum(x_i-\bar x)y_i)=\sum(x_i-\bar x)E(y_i)\\
+&amp;=\sum(x_i-\bar x)(\beta_0+\beta_1x_i)=\sum(x_i-\bar x)\beta_1x_i=\beta_1\sum(x_i-\bar x)x_i=\beta_1\sum(x_i-\bar x)^2\\
+&amp;=\beta_1S_{xx}.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp(S_{xy}^2)&amp;=\qty(\Exp(S_{xy}))^2+\Var(S_{xy})=\beta_1^2S_{xx}^2+S_{xx}\sigma^2.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp(\frac{S_{xy}^2}{S_{xx}})&amp;=\frac{1}{S_{xx}}\beta_1^2S_{xx}^2+\frac{1}{S_{xx}}S_{xx}\sigma^2=\beta_1^2S_{xx}+\sigma^2.
+\end{split}
+\]</span></p>
+<ol type="1">
+<li><p><span class="math inline">\(\Exp(S_{xy})=\beta_1S_{xx}\)</span>.</p></li>
+<li><p><span class="math inline">\(\Var(S_{xy})=S_{xx}\sigma^2\)</span>.</p></li>
+<li><p><span class="math inline">\(\Exp(S_{yy})=(n-2)\sigma^2\)</span>. <!-- 4. $\Var(S_{yy})=(n-2)\sigma^2$. --></p></li>
+<li><p><span class="math inline">\(\Exp(S_{xy})\)</span></p></li>
+<li><p><span class="math inline">\(\Var(\S_{xy})\)</span></p></li>
+<li><p><span class="math inline">\(SST=SSE+SSR\)</span></p></li>
+<li><p><span class="math inline">\(\Exp(SST)\)</span></p></li>
+<li><p><span class="math inline">\(\Exp(SSR)\)</span></p></li>
+<li><p><span class="math inline">\(\Exp(SSE)\)</span></p></li>
+<li><p><span class="math inline">\(\Var(SST)\)</span></p></li>
+<li><p><span class="math inline">\(\Var(SSR)\)</span></p></li>
+<li><p><span class="math inline">\(\Var(SSR)\)</span></p></li>
+</ol>
+</section>
+<section id="beta_1" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="beta_1"><span class="header-section-number">4.4</span> <span class="math inline">\(\beta_1\)</span></h2>
+<p>hypotheis: <span class="math inline">\(\beta_1\neq0\)</span></p>
+<p><span class="math inline">\(\hat{\beta}_1\)</span> is normal, so t-test:</p>
+<p><span class="math display">\[
+t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{S_{xx}}},\quad s^2=\frac{SSE}{n-2}
+\]</span></p>
+<ul>
+<li>one tailed test:
+<ul>
+<li>Ha: <span class="math inline">\(\beta_1&lt;0\)</span>: <span class="math inline">\(t&lt;-t_{\alpha}\)</span>: <span class="math inline">\(p=\Pr(t&lt;t_c)\)</span>, <span class="math inline">\(t_c&lt;0\)</span></li>
+<li>Ha: <span class="math inline">\(\beta_1&gt;0\)</span>: <span class="math inline">\(t&gt;t_{\alpha}\)</span>: <span class="math inline">\(p=\Pr(t&gt;t_c)\)</span>, <span class="math inline">\(t_c&gt;0\)</span></li>
+</ul></li>
+<li>two tailed test:
+<ul>
+<li>Ha: <span class="math inline">\(\beta_1\neq0\)</span>: <span class="math inline">\(\abs{t}&gt;t_{\alpha/2}\)</span>: <span class="math inline">\(p=2\Pr(t&gt;t_c)\)</span>, <span class="math inline">\(t_c&gt;0\)</span></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(t_c\)</span> is the computed value</p>
+<p><span class="math inline">\(\Pr(t&gt;t_{\alpha})=\alpha=\Pr(\text{Type I error})=\Pr(\text{Reject }H_0\mid H_0\text{ is true.})\)</span></p>
+</section>
+<section id="coeffcient-of-correlation" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="coeffcient-of-correlation"><span class="header-section-number">4.5</span> coeffcient of correlation</h2>
+<p><span class="math display">\[
+r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
+\]</span></p>
+<p>it is related to COV</p>
+<p><span class="math inline">\(\rho\)</span> population coefficient of correlation, is estimated by <span class="math inline">\(r\)</span></p>
+<p>Hypothesis:</p>
+<p><span class="math inline">\(t=r\sqrt{n-2}/{sqrt{1-r^2}}\)</span></p>
+</section>
+<section id="coefficient-of-determination" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="coefficient-of-determination"><span class="header-section-number">4.6</span> coefficient of determination</h2>
+<p><span class="math display">\[
+r^2=\frac{S_{yy}-SSE}{S_{yy}}=1-\frac{SSE}{S_{yy}}
+\]</span></p>
+<p>proportion of total saple variability of the y explained by the linear relationship between y and x</p>
+<p>About 100(r2)% of the sample variation in y (measured by the total sum of squares of deviations of the sample y-values about their mean ji) can be explained by (or attributed to) using x to predict yin the straight-line model.</p>
+<p><span class="math display">\[
+SSR=\sum(\hat y_i-\bar y)^2=\frac{S_{xy}^2}{S_{xx}}
+\]</span></p>
+</section>
+<section id="predicted-interval-and-confidence-interval" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="predicted-interval-and-confidence-interval"><span class="header-section-number">4.7</span> predicted interval and confidence interval</h2>
+<p><span class="math inline">\(\sigma_{\hat y}\)</span></p>
+<p>Since <span class="math inline">\(\bar y\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are independent, we have <span class="math display">\[
+\begin{split}
+\Var(\hat y(x))&amp;=\Var(\hat{\beta}_0+\hat{\beta}_1x)=\Var(\bar y-\hat{\beta}_1(x-\bar x))=\Var(\bar y)+(x-\bar x)^2\Var(\hat{\beta}_1)\\
+&amp;=\frac1n\sigma^2+(x-\bar x)^2\frac1{S_{xx}}\sigma^2=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\Var(y-\hat y)=\sigma^2+\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}]=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat, <span class="at">data=</span>Boston)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">40</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'prediction'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Both <code>pred.int</code> and <code>conf.int</code> are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">1</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="slr_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -796,13 +1249,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="../../contents/2/intro.html" class="pagination-link" aria-label="Simple Linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/0/basics.html" class="pagination-link" aria-label="Basics">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/2/misc.html" class="pagination-link" aria-label="Variable selection">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variable selection</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
