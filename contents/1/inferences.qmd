@@ -104,7 +104,7 @@ Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider 
 
 Consider the following statistics:
 
-- $\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i$,
+- $\bar{x}=\dfrac1N\sum_{i=1}^NX_i$,
 - $\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2$.
 
 
@@ -248,7 +248,8 @@ Let $X_1,\ldots,X_n\sim N(\mu,\sigma^2)$ i.i.d. Consider
 - $\bar X=\frac1n\sum_{i=1}^nX_i$
 - $s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2$
 
-Then 
+Then
+
 - $\bar X\sim N(\mu,\frac{\sigma^2}n)$
 - $\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$
 - $\bar X$ and $s^2$ are independent.
