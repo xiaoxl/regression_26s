@@ -35,7 +35,6 @@ format:
   bookup-html:
         toc: true
         toc-depth: 3
-        css: styles.css
   # html:
   #   theme: cosmo
   #   code-block-bg: true
@@ -50,11 +49,25 @@ book:
   date: last-modified
   chapters: 
     - index.qmd
-    - contents/0/intro.qmd
-    - contents/1/intro.qmd
-    - contents/2/intro.qmd
-    - contents/3/intro.qmd
-    - contents/4/intro.qmd
+    - part: "Review"
+      chapters:
+      - contents/1/basics.qmd
+      - contents/1/inferences.qmd
+      # - contents/0/prob.qmd
+      # - contents/0/statsmodels.qmd
+    - part: "SLR"
+      chapters: 
+      - contents/2/intro.qmd
+      - contents/2/slr.qmd
+      - contents/2/misc.qmd
+      - contents/2/project1.qmd
+    - part: "MLR"
+      chapters:
+      - contents/3/intro.qmd
+      - contents/3/mlr.qmd
+    - part: "Building models"
+      chapters:
+      - contents/4/intro.qmd
   appendices:
     - contents/app/data.qmd
   sidebar:

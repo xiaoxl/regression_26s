@@ -85,7 +85,7 @@ Let $X_1,\ldots,X_n$ denote a sample on a random variable $X$. Let $T=T(X_1,\ldo
 
 ::: {#thm-}
 # The Central Limit Theorem
-For large sample sizes, the mean $\bar{y}$ of a sample from a population with mean $\mu$ and a standard deviation $\sigma$ has a sampling distribution that is approximately normal.
+For large sample sizes, the mean $\bar{x}$ of a sample from a population with mean $\mu$ and a standard deviation $\sigma$ has a sampling distribution that is approximately normal, regardless of the probability distribution of the sampled population.
 :::
 
 ### Point estimation
@@ -187,19 +187,24 @@ Elements of a Statistical Test of Hypothesis
 - $𝑃$-Value 
 - Conclusion
 
-Given some data, we would like to know whether these data are "exotic" enough--under the assumption that the null hypothesis $H_0$ is true--to justify rejecting $H_0$. In other words, we compute the probability of obtaining data at least as extreme as what we observed when assuming $H_0$ is true. This probability is called the p-value. Once the p-value is smaller than the chosen level of significance $\alpha$, we reject $H_0$. 
+Given some data, we would like to know whether these data are "exotic" enough--under the assumption that the null hypothesis $H_0$ is true--to justify rejecting $H_0$. In other words, we compute the probability of obtaining a test statistic at least as extreme as the observed value, assuming $H_0$ is true. This probability is called the *p-value*. Once the p-value is smaller than the chosen level of significance $\alpha$, we reject $H_0$. 
 
 Consider a test statistic $T(X)$ and we observe $T(X)=t_{\text{obs}}$. Then
 
 $$
 p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
 $$
-is the p-value for a right-tailed test.
+is the p-value for a right-tailed test. The key idea in constructing a hypohesis test is to choose a test statistic and a rejection region so that 
+
+$$
+\Pr(\text{the statistic falls in the rejection region}\mid H_0\text{ is true})=\alpha.
+$$
+This ensures the test has expected Type I error rate $\alpha$.
 
 
 
 ::: {.callout-note}
-# Type I error vs Type II error
+## Type I error vs Type II error
 
 - Type I error: rejecting $H_0$ when $H_0$ is actually true.
 - Type II error: failing to reject $H_0$ when $H_0$ is actually false.
@@ -212,16 +217,79 @@ $$
 
 When using Hypothesis test, the scenario is usually that people capture some signals in order to prove an effect happens. The null hypothesis ($H_0$) is assumed to be the default case, and they want to make sure that once the signal is captured, the effect happens. In this case it is ok to miss some events that happens without the signal. In other words, people prioritize not making a false claim than missing an opportunity.
 
-<!-- In many scientific contexts, the emphasis is on avoiding false claims of an effect. Thus, researchers often prefer to minimize Type I errors even at the cost of accepting a higher risk of Type II errors. In other words, it is usually considered worse to declare an effect that does not exist than to miss an effect that actually exists. -->
-
 We could balance Type I and Type II errors by controlling $\alpha$. 
 
 - Reduing $\alpha$ will make the test less likely to make Type I errors but increase the likelihood of Type II errors. 
 - Increasing sample size reduces probability of making both types of errors, which can improve the test's reliability.
 :::
 
-how to perform h test.
+
+
+### t-test
+A t-test is used to test a hypothesis about a population mean when the population standard deviation is unknown and the sample size is small or moderate. In our case, we consider the standard one-sample t-test: given a set of random observations, we want to determine whether the population mean of the underlying random variable is equal to 0 or not.
+
+Assume that the given values are $\{x_1,x_2,\ldots,x_n\}$, and the underlying random variable is $X\sim N(\mu, \sigma^2)$. The hypotheses are
+
+- $H_0$: $\mu=0$.
+- $H_a$: $\mu\neq0$.
+
+We have the following statistics:
+
+- Sample mean: $\bar{x}=\frac1n\sum_{i=1}^nx_i$.
+- Sample standard deviation: $s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar x)^2}$
+- Sample size: $n$.
+
+These statistics have sampling distributions that can be described exactly under the normality assumption.
+
+::: {.callout-note}
+## Theorem (Normal Sample Mean–Variance)
+Let $X_1,\ldots,X_n\sim N(\mu,\sigma^2)$ i.i.d. Consider
+
+- $\bar X=\frac1n\sum_{i=1}^nX_i$
+- $s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2$
+
+Then 
+- $\bar X\sim N(\mu,\frac{\sigma^2}n)$
+- $\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$
+- $\bar X$ and $s^2$ are independent.
+:::
 
 
 
+The t-test is based on the Student's t-distribution theorem.
 
+::: {.callout-note}
+## Theorem (Student's t-Distribution)
+Let 
+
+- $Z\sim N(0,1)$ be a standard normal random variable
+- $U\sim \chi_{\nu}^2$ be a chi-square random variable with $\nu$ degrees of freedom. 
+- $Z$ and $U$ are independent.
+
+Then
+$$
+T=\frac{Z}{\sqrt{U/\nu}}
+$$
+has a Student's t-distribution with $\nu$ degrees of freedom: $T\sim t_{\nu}$.
+:::
+
+Put the two theorems together. 
+
+- $Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$
+- $U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$
+- $Z$ and $U$ are independent, and the degree of freedom of $U$ is $\nu = n-1$,
+
+$$
+t \;=\; \frac{Z}{\sqrt{U/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\sqrt{\dfrac{(n-1)s^2}{\sigma^2}/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\dfrac s{\sigma}}
+\;=\; \frac{\bar X-\mu}{s/\sqrt n}
+\;\sim\; t_{n-1}.
+$$
+
+
+To find the rejection region, note that since the alternative hypothesis is $\mu\neq0$, we need to consider both tails, corresponding to $\mu>0$ and $\mu<0$. Therefore the boundary of the rejection region is chosen so that each tail has probability $\alpha/2$. In other words, the critical value $t_{1-\alpha/2,n-1}$ satisfies, under $H_0$,
+$$
+\Pr(|t|>t_{1-\alpha/2,n-1})=\alpha.
+$$
+This critical value $t_{1-\alpha/2,n-1}$ is usually found from a t-distribution table or via the inverse c.d.f. of the t-distribution.
