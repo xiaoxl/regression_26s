@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Review – Regression 26 Spring</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../contents/1/intro.html" rel="next">
+<link href="../../index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0e3b29b5fa97dc5090eff3fd9e71dcd2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-98d67fd4a94d75c92ed86be1e8f4ff03.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/bookup_fonts_gwf-0.0/fonts-embed.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review</span></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Regression 26 Spring</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/0/intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/1/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Stats reviews</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Building models</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#basics" id="toc-basics" class="nav-link active" data-scroll-target="#basics"><span class="header-section-number">2</span> Basics</a>
+  <ul class="collapse">
+  <li><a href="#population-vs-sample" id="toc-population-vs-sample" class="nav-link" data-scroll-target="#population-vs-sample"><span class="header-section-number">2.1</span> Population vs Sample</a></li>
+  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">2.2</span> Data structure</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization"><span class="header-section-number">2.3</span> Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#qualitative-categorical-data" id="toc-qualitative-categorical-data" class="nav-link" data-scroll-target="#qualitative-categorical-data"><span class="header-section-number">2.3.1</span> Qualitative (categorical) data</a></li>
+  <li><a href="#quantitative-numerical-data" id="toc-quantitative-numerical-data" class="nav-link" data-scroll-target="#quantitative-numerical-data"><span class="header-section-number">2.3.2</span> Quantitative (numerical) data</a></li>
+  <li><a href="#relations-among-multiple-variables" id="toc-relations-among-multiple-variables" class="nav-link" data-scroll-target="#relations-among-multiple-variables"><span class="header-section-number">2.3.3</span> Relations among multiple variables</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#inferences" id="toc-inferences" class="nav-link" data-scroll-target="#inferences"><span class="header-section-number">3</span> Inferences</a>
+  <ul class="collapse">
+  <li><a href="#inferential-statistics" id="toc-inferential-statistics" class="nav-link" data-scroll-target="#inferential-statistics"><span class="header-section-number">3.1</span> Inferential statistics</a></li>
+  <li><a href="#estimators" id="toc-estimators" class="nav-link" data-scroll-target="#estimators"><span class="header-section-number">3.2</span> Estimators</a>
+  <ul class="collapse">
+  <li><a href="#sampling" id="toc-sampling" class="nav-link" data-scroll-target="#sampling"><span class="header-section-number">3.2.1</span> Sampling</a></li>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">3.2.2</span> Point estimation</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">3.2.3</span> Confidence intervals</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test"><span class="header-section-number">3.3</span> Hypothesis test</a>
+  <ul class="collapse">
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test"><span class="header-section-number">3.3.1</span> t-test</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#probability-theory" id="toc-probability-theory" class="nav-link" data-scroll-target="#probability-theory"><span class="header-section-number">4</span> Probability theory</a>
+  <ul class="collapse">
+  <li><a href="#notations" id="toc-notations" class="nav-link" data-scroll-target="#notations"><span class="header-section-number">4.1</span> Notations</a></li>
+  <li><a href="#random-variables-1" id="toc-random-variables-1" class="nav-link" data-scroll-target="#random-variables-1"><span class="header-section-number">4.2</span> Random variables</a>
+  <ul class="collapse">
+  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">4.2.1</span> R code</a></li>
+  </ul></li>
+  <li><a href="#random-vectors" id="toc-random-vectors" class="nav-link" data-scroll-target="#random-vectors"><span class="header-section-number">4.3</span> Random vectors</a>
+  <ul class="collapse">
+  <li><a href="#relations-to-single-variable-case" id="toc-relations-to-single-variable-case" class="nav-link" data-scroll-target="#relations-to-single-variable-case"><span class="header-section-number">4.3.1</span> Relations to single variable case</a></li>
+  </ul></li>
+  <li><a href="#maximal-likelihood-estimation" id="toc-maximal-likelihood-estimation" class="nav-link" data-scroll-target="#maximal-likelihood-estimation"><span class="header-section-number">4.4</span> Maximal likelihood estimation</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">4.5</span> </a></li>
+  </ul></li>
+  <li><a href="#stats-models" id="toc-stats-models" class="nav-link" data-scroll-target="#stats-models"><span class="header-section-number">5</span> stats models</a>
+  <ul class="collapse">
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">5.1</span> Estimation</a></li>
+  <li><a href="#build-a-model-that-fits-the-data" id="toc-build-a-model-that-fits-the-data" class="nav-link" data-scroll-target="#build-a-model-that-fits-the-data"><span class="header-section-number">5.2</span> build a model that fits the data</a></li>
+  <li><a href="#estimators-1" id="toc-estimators-1" class="nav-link" data-scroll-target="#estimators-1"><span class="header-section-number">5.3</span> Estimators</a></li>
+  <li><a href="#mle" id="toc-mle" class="nav-link" data-scroll-target="#mle"><span class="header-section-number">5.4</span> MLE</a></li>
+  <li><a href="#msevarbias" id="toc-msevarbias" class="nav-link" data-scroll-target="#msevarbias"><span class="header-section-number">5.5</span> MSE=Var+bias</a></li>
+  <li><a href="#batch-means" id="toc-batch-means" class="nav-link" data-scroll-target="#batch-means"><span class="header-section-number">5.6</span> Batch means</a></li>
+  <li><a href="#correlated-data" id="toc-correlated-data" class="nav-link" data-scroll-target="#correlated-data"><span class="header-section-number">5.7</span> correlated data</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="basics" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Basics</h1>
+<section id="population-vs-sample" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="population-vs-sample"><span class="header-section-number">2.1</span> Population vs Sample</h2>
+<ul>
+<li><strong>Population</strong>: the set of all elements of interest in a particular study.</li>
+<li><strong>Sample</strong>: is a subset of the population</li>
+<li><strong>Statistical Inference</strong>: The process of using data collected on a sample to draw conclusions about a population is called statistical inference.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: <code>gssr</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>According to a previous national media report, the <em>average age</em> of U.S. adults who watch national TV news is <strong>60 years</strong>. A data analyst hypothesizes that the <strong>average age of frequent TV-news watchers</strong> is <strong>greater than 60</strong>. To test this, she uses the <strong>General Social Survey (GSS)</strong>, accessible via the <code>gssr</code> R package <span class="citation" data-cites="gssr">[<a href="../../index.html#ref-gssr" role="doc-biblioref">1</a>]</span>, to draw a <strong>sample of 500 respondents</strong> and record their ages.</p>
+<ol type="a">
+<li><strong>Describe the population</strong>: All U.S. adults who watch TV news <strong>several times a week or more often</strong>, as defined by the GSS survey question on TV-news frequency.</li>
+<li><strong>Describe the sample</strong>: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.</li>
+<li><strong>Sample size</strong>: <span class="math inline">\(n = 500\)</span></li>
+<li><strong>Describe the statistical inference</strong>: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="data-structure" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">2.2</span> Data structure</h2>
+<p>A dataset is a collection of <em>values</em>. Values are organized in two ways. Every value belongs to a <em>variable</em> and an <em>observation</em>.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.1 (Variables and Observations <span class="citation" data-cites="Wickham2014">[<a href="../../index.html#ref-Wickham2014" role="doc-biblioref">2</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li>A <strong>variable</strong> contains all values that measure the same underlying attribute (like height, temperature, duration) across units.</li>
+<li>An <strong>observation</strong> contains all values measured on the same unit (like a person, or a day, or a race) across attributes.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Researchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see <a href="../app/data.html#sec-app_possum" class="quarto-xref"><span>Section A.1</span></a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     chest belly</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## C3   28.0    36</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## C5   28.5    33</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## C10  30.0    34</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## C15  28.0    34</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## C23  28.5    33</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">## C24  30.0    32</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The dimension of the dataset is</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(possum)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 104  14</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this example, there are 14 varaibles, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>hdlngth</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.2 (Quantitative and Qualitative <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li><strong>Quantitative data</strong> are observations measured on a naturally occurring numerical scale. It is also called <em>numerical data</em>.</li>
+<li><strong>Qualitative data</strong> are nonnumerical data that can only be classified into one of a group of categories. It is also called <em>categorical data</em>.</li>
+</ul>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.3 (Discrete and Continuous)</strong></span> &nbsp;</p>
+<ul>
+<li>Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…</li>
+<li>Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.</li>
+</ul>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[All Variables] --&gt; B[Numerical]
+    A --&gt; C[Categorical]
+    B --&gt; D[Continuous]
+    B --&gt; E[Discrete]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Random variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A variable in a dataset can be modeled by a <em>random variable</em>. The probability density function / probability mass function of the random variable can describe the distribution of all possible values of the variable in a dataset.</p>
+<p>Then to make a mearuement is the same as to take a sample from the random variable.</p>
+</div>
+</div>
+</section>
+<section id="data-visualization" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data-visualization"><span class="header-section-number">2.3</span> Data Visualization</h2>
+<section id="qualitative-categorical-data" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="qualitative-categorical-data"><span class="header-section-number">2.3.1</span> Qualitative (categorical) data</h3>
+<p>Usually the most important is the <strong>class relative frequency</strong>: <span class="math display">\[
+\text{class relative frequency}=\frac{\text{class frequency}}{n}.
+\]</span></p>
+<p>To display it, we could use table, bar chart or pie chart.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here we still consider the <code>possum</code> dataset.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     chest belly</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## C3   28.0    36</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## C5   28.5    33</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## C10  30.0    34</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## C15  28.0    34</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## C23  28.5    33</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## C24  30.0    32</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The variable <code>Pop</code> (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable <code>Pop</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   Vic other </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    46    58</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>or relative frequency talbe:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)<span class="sc">/</span><span class="fu">length</span>(possum<span class="sc">$</span>Pop)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       Vic     other </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.4423077 0.5576923</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then we could draw the barplot of this variable:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>and the pie plot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that <code>table</code> is handling the statistics, while <code>barplot</code> and <code>pie</code> draw on top of the result from <code>table</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="quantitative-numerical-data" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="quantitative-numerical-data"><span class="header-section-number">2.3.2</span> Quantitative (numerical) data</h3>
+<p>For a quantitative data, we would like to see the histogram, as well as computing some statistics: minx, max, quartiles, median and mean.</p>
+<ul>
+<li><strong>Histogram</strong> is an approximation of the distribution. In other words, we split the range into small segments (called <em>bins</em>), and count the frequency or relative frequency of data falling into these bins.</li>
+<li><strong>Box plot</strong> consists of a box, two lines and possibly some points:
+<ul>
+<li>The box in the box plot extends from the lower quartile to the upper quartile. The difference between the upper quartile and the lower quartile is called the inter-quartile range (IQR).</li>
+<li>The lines, known as <em>whiskers</em>, extends to one and a half times the interquartile range, but then they are limited to reaching actual data points.</li>
+<li>The points, considered as <em>outliers</em>, are those which are not covered by the box and the lines.</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We still consider the <code>possum</code> dataset. We could use <code>summary</code> to compute the major statistics.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(possum)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       case             site          Pop     sex         age       </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 52.50   Median :3.000                     Median :3.000  </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 52.50   Mean   :3.625                     Mean   :3.833  </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :104.00   Max.   :7.000                     Max.   :9.000  </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##                                                     NA's   :2      </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">##     hdlngth           skullw         totlngth         taill      </span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  </span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 92.80   Median :56.35   Median :88.00   Median :37.00  </span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  </span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  </span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">##                                                                  </span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="do">##     footlgth        earconch          eye            chest          belly      </span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  </span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  </span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  </span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  </span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  </span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA's   :1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The variable <code>hdlngth</code> (head length) is quantitative. We first show the histogram. We could use <code>breaks</code> to control the number of bins. Note that the function <code>hist</code> does not just draw the histogram. It also provide many infomation we might need.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">hist</span>(possum<span class="sc">$</span>hdlngth, <span class="at">breaks=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $breaks</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  82  84  86  88  90  92  94  96  98 100 102 104</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## $counts</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1  6  2 12 22 27 22  7  3  0  2</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $density</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $mids</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  83  85  87  89  91  93  95  97  99 101 103</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $xname</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "possum$hdlngth"</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $equidist</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,"class")</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "histogram"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(possum<span class="sc">$</span>hdlngth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="relations-among-multiple-variables" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="relations-among-multiple-variables"><span class="header-section-number">2.3.3</span> Relations among multiple variables</h3>
+<p>We could show the relation between two variables in a scatter plot.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The cases that both variables are numerical continuous:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(possum<span class="sc">$</span>hdlngth, possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The cases that one variable is categorical:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop), possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category.</p>
+<p>We can see pairwise plots for each pair of variables. Note that before the plot, we have to cast <code>pop</code> and <code>sex</code> into factors.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>sex)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pair plot is very important since it can easily help us to find the expected relations between variables. We will use it a lot in regression analysis.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="inferences" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Inferences</h1>
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<section id="inferential-statistics" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="inferential-statistics"><span class="header-section-number">3.1</span> Inferential statistics</h2>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.1 (Population and sample <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li>A <strong>population data set</strong> is a collection (or set) of data measured on all experimental units of interest to you.</li>
+<li>A <strong>sample</strong> is a subset of data selected from a population.</li>
+<li>A <strong>random sample</strong> of <span class="math inline">\(n\)</span> experimental units is one selected from the population in such a way that every different sample of size <span class="math inline">\(n\)</span> has an equal probability of selection.</li>
+</ul>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.2 (Statistical inference <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span>)</strong></span> &nbsp;</p>
+<ul>
+<li>A <strong>statistical inference</strong> is an estimate, prediction, or some other generatlization about a population based on information contianed in a sample.</li>
+<li>A <strong>measure of reliability</strong> is a statement about the degree of uncertainty associated with a statistical inference.</li>
+</ul>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Inferential statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Identify <strong>population</strong></li>
+<li>Identify <strong>variable(s)</strong></li>
+<li>Collect <strong>sample</strong> data</li>
+<li><strong>Inference</strong> about population based on sample</li>
+<li><strong>Measure</strong> of reliability for inference</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="estimators" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="estimators"><span class="header-section-number">3.2</span> Estimators</h2>
+<p>Cited from <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">4</a>, Chapter 4]</span>.</p>
+<section id="sampling" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sampling"><span class="header-section-number">3.2.1</span> Sampling</h3>
+<p>Consider a random variable <span class="math inline">\(X\)</span> with an unknown distribution. Our information about the distribution of <span class="math inline">\(X\)</span> comes from a sample on <span class="math inline">\(X\)</span>: <span class="math inline">\(\qty{X_1,\ldots,X_n}\)</span>.</p>
+<ul>
+<li>The sample ovservations <span class="math inline">\(\qty{X_1,\ldots,X_n}\)</span> have the same distribution as <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(n\)</span> denotes the <strong>sample size</strong>.</li>
+<li>When the sample is actually drawn, we use <span class="math inline">\(x_1,\ldots,x_n\)</span> as the <strong>realizations</strong> of the sample.</li>
+</ul>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.3 (Random sample)</strong></span> If the random variables <span class="math inline">\(X_1,\ldots, X_n\)</span> are iid, then these random variable constitute a <strong>random sample</strong> of size <span class="math inline">\(n\)</span> from the common distribution.</p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.4 (Statistics)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> denote a sample on a random variable <span class="math inline">\(X\)</span>. Let <span class="math inline">\(T=T(X_1,\ldots,X_n)\)</span> be a function of the sample. <span class="math inline">\(T\)</span> is called a <strong>statistic</strong>. Once a sample is drawn, <span class="math inline">\(t=T(x_1,\ldots,x_n)\)</span> is called the <em>realization</em> of <span class="math inline">\(T\)</span>.</p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.5 (Sampling distribution)</strong></span> &nbsp;</p>
+<ul>
+<li>The distribution of <span class="math inline">\(T\)</span> is called the <strong>sampling distribution</strong>.</li>
+<li>The standard deviation of the sampling distribution is called the <strong>standard error of estimate</strong>.</li>
+</ul>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.1 (The Central Limit Theorem)</strong></span> For large sample sizes, the mean <span class="math inline">\(\bar{y}\)</span> of a sample from a population with mean <span class="math inline">\(\mu\)</span> and a standard deviation <span class="math inline">\(\sigma\)</span> has a sampling distribution that is approximately normal.</p>
+</div>
+</section>
+<section id="point-estimation" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">3.2.2</span> Point estimation</h3>
+<p>Assume that the distribution of <span class="math inline">\(X\)</span> is known down to an unknown parameter <span class="math inline">\(\theta\)</span> where <span class="math inline">\(\theta\)</span> can be a vector. Then the pdf of <span class="math inline">\(X\)</span> can be written as <span class="math inline">\(f(x;\theta)\)</span>. In this case we might find some statistic <span class="math inline">\(T\)</span> to estimate <span class="math inline">\(\theta\)</span>. This is called a <strong>point estimator</strong> of <span class="math inline">\(\theta\)</span>. A realization <span class="math inline">\(t\)</span> is called an <strong>estimate</strong> of <span class="math inline">\(\theta\)</span>.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.6 (Unbiasedness)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> is a sample on a random varaible <span class="math inline">\(X\)</span> with pdf <span class="math inline">\(f(x;\theta)\)</span>. Let <span class="math inline">\(T\)</span> be a statistic. We say that <span class="math inline">\(T\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\theta\)</span> if <span class="math inline">\(E(T)=\theta\)</span>.</p>
+</div>
+<p>Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are iid. Therefore <span class="math inline">\(\Exp\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\Var\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, N\)</span>.</p>
+<p>Consider the following statistics:</p>
+<ul>
+<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span>,</li>
+<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span>.</li>
+</ul>
+<div id="lem-" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 3.1</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\Exp(\bar{\mu})=\mu\)</span>.</li>
+<li><span class="math inline">\(\Exp(\bar{\sigma}^2)=\sigma^2\)</span>.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{aligned}
+\Exp\qty(\bar{\mu})&amp;=\Exp\qty(\frac1N\sum_{i=1}^NX_i)=\frac1N\sum_{i=1}^N\Exp\qty(X_i)=\frac1N\sum_{i=1}^N\mu=\mu,\\
+\Exp\qty(\bar{\sigma}^2)&amp;=\frac{1}{N-1}\Exp\qty[\sum_{i=1}^N(X_i-\bar{\mu})^2]=\frac{1}{N-1}\sum_{i=1}^N\Exp\mqty[\qty(X_i-\bar{\mu})^2]\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(X_i-\bar{\mu})+\qty(\Exp\qty(X_i-\bar{\mu}))^2)\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(\frac{N-1}{N}X_i-\frac1NX_1-\ldots-\frac1NX_N)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{\mu}))^2)\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\Var\qty(X_i)+\frac1{N^2}\Var\qty(X_1)+\ldots+\frac1{N^2}\Var\qty(X_N))\\
+&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\sigma^2+\frac1{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2)\\
+&amp;=\frac{N}{N-1}\frac{(N-1)^2+N-1}{N^2}\sigma^2=\sigma^2.
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.7</strong></span> The following are the unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> of <span class="math inline">\(X\)</span>.</p>
+<ol type="1">
+<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span> is called the <em>sample mean</em> of the samples.</li>
+<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span> is called the <em>sample variance</em> of the samples.</li>
+</ol>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please pay attention to the denominator of the sample variance. The <span class="math inline">\(N-1\)</span> is due to the degree of freedom: all <span class="math inline">\(X_i\)</span>’s and <span class="math inline">\(\bar{\mu}\)</span> are not independent to each other.</p>
+</div>
+</div>
+</section>
+<section id="confidence-intervals" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">3.2.3</span> Confidence intervals</h3>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.8 (Confidence interval)</strong></span> Consider a sample of <span class="math inline">\(X\)</span>. Fix a number <span class="math inline">\(0&lt;\alpha&lt;1\)</span>. Let <span class="math inline">\(L\)</span> and <span class="math inline">\(U\)</span> be two statistics. We say the interval <span class="math inline">\((L,U)\)</span> is a <span class="math inline">\((1-\alpha)100\%\)</span> <strong>confidence interval</strong> for <span class="math inline">\(\theta\)</span> if</p>
+<p><span class="math display">\[
+1-\alpha=\Pr[\theta\in(L,U)].
+\]</span></p>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.2 (Large-Sample <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence interval)</strong></span> <span class="math display">\[
+L,U=\bar{\mu}\pm z_{\alpha/2}\qty(\frac{\bar{\sigma}}{\sqrt{n}}),
+\]</span> where <span class="math inline">\(z_{\alpha/2}=1.96\)</span> if <span class="math inline">\(\alpha=5\%\)</span>.</p>
+</div>
+<ul>
+<li>For any <span class="math inline">\(n\)</span>, if <span class="math inline">\(X_i\sim \mathcal N(\mu, \sigma^2)\)</span>, <span class="math inline">\(T_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}\)</span> has a Student’s <span class="math inline">\(t\)</span>-distribution of degree of freedom <span class="math inline">\(n-1\)</span>.</li>
+<li>When <span class="math inline">\(n\)</span> is big enough, for any distribution <span class="math inline">\(X_i\)</span>, <span class="math inline">\(Z_n=\dfrac{\bar{X}-\mu}{S/\sqrt{n}}\)</span> is approximately <span class="math inline">\(\mathcal N(0,1)\)</span>.</li>
+<li>Student’s <span class="math inline">\(t\)</span>-distribution of degree of freedom <span class="math inline">\(n-1\)</span> is approaching <span class="math inline">\(\mathcal N(0,1)\)</span> when <span class="math inline">\(n\)</span> is increasing. When <span class="math inline">\(n=30\)</span> they are very close to each other. Therefore in many cases Statisticians require sample size <span class="math inline">\(\geq30\)</span>.</li>
+<li>For large sample or small sample, the coefficients to compute confidence intervals are <span class="math inline">\(z_{\alpha/2}\)</span> or <span class="math inline">\(t_{\alpha/2}\)</span>. These two numbers come from normal distribution or Student’s <span class="math inline">\(t\)</span>-distribution.</li>
+</ul>
+</section>
+</section>
+<section id="hypothesis-test" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="hypothesis-test"><span class="header-section-number">3.3</span> Hypothesis test</h2>
+<p>Elements of a Statistical Test of Hypothesis</p>
+<ul>
+<li>Null Hypothesis <span class="math inline">\(𝐻_0\)</span></li>
+<li>Alternative Hypothesis <span class="math inline">\(𝐻_𝑎\)</span></li>
+<li>Test Statistic</li>
+<li>Level of significance <span class="math inline">\(\alpha\)</span></li>
+<li>Rejection Region</li>
+<li><span class="math inline">\(𝑃\)</span>-Value</li>
+<li>Conclusion</li>
+</ul>
+<p>Given some data, we would like to know whether these data are “exotic” enough–under the assumption that the null hypothesis <span class="math inline">\(H_0\)</span> is true–to justify rejecting <span class="math inline">\(H_0\)</span>. In other words, we compute the probability of obtaining a test statistic at least as extreme as the observed value, assuming <span class="math inline">\(H_0\)</span> is true. This probability is called the <em>p-value</em>. Once the p-value is smaller than the chosen level of significance <span class="math inline">\(\alpha\)</span>, we reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Consider a test statistic <span class="math inline">\(T(X)\)</span> and we observe <span class="math inline">\(T(X)=t_{\text{obs}}\)</span>. Then</p>
+<p><span class="math display">\[
+p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
+\]</span> is the p-value for a right-tailed test. The key idea in constructing a hypohesis test is to choose a test statistic and a rejection region so that</p>
+<p><span class="math display">\[
+\Pr(\text{the statistic falls in the rejection region}\mid H_0\text{ is true})=\alpha.
+\]</span> This ensures the test has expected Type I error rate <span class="math inline">\(\alpha\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Type I error vs Type II error
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Type I error: rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is actually true.</li>
+<li>Type II error: failing to reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is actually false.</li>
+</ul>
+<p>Hypothesis test is designed to control Type I error rate (which is to reduce false positive rate, and which is to increase precision), since the significance level <span class="math inline">\(\alpha\)</span> is the probability of Type I errors.</p>
+<p><span class="math display">\[
+\alpha=\Pr(\text{reject }H_0\mid H_0\text{ is true}).
+\]</span></p>
+<p>When using Hypothesis test, the scenario is usually that people capture some signals in order to prove an effect happens. The null hypothesis (<span class="math inline">\(H_0\)</span>) is assumed to be the default case, and they want to make sure that once the signal is captured, the effect happens. In this case it is ok to miss some events that happens without the signal. In other words, people prioritize not making a false claim than missing an opportunity.</p>
+<p>We could balance Type I and Type II errors by controlling <span class="math inline">\(\alpha\)</span>.</p>
+<ul>
+<li>Reduing <span class="math inline">\(\alpha\)</span> will make the test less likely to make Type I errors but increase the likelihood of Type II errors.</li>
+<li>Increasing sample size reduces probability of making both types of errors, which can improve the test’s reliability.</li>
+</ul>
+</div>
+</div>
+<section id="t-test" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="t-test"><span class="header-section-number">3.3.1</span> t-test</h3>
+<p>A t-test is used to test a hypothesis about a population mean when the population standard deviation is unknown and the sample size is small or moderate. In our case, we consider the standard one-sample t-test: given a set of random observations, we want to determine whether the population mean of the underlying random variable is equal to 0 or not.</p>
+<p>Assume that the given values are <span class="math inline">\(\{x_1,x_2,\ldots,x_n\}\)</span>, and the underlying random variable is <span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span>. The hypotheses are</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu=0\)</span>.</li>
+<li><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu\neq0\)</span>.</li>
+</ul>
+<p>We have the following statistics:</p>
+<ul>
+<li>Sample mean: <span class="math inline">\(\bar{x}=\frac1n\sum_{i=1}^nx_i\)</span>.</li>
+<li>Sample standard deviation: <span class="math inline">\(s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar x)^2}\)</span></li>
+<li>Sample size: <span class="math inline">\(n\)</span>.</li>
+</ul>
+<p>These statistics have sampling distributions that can be described exactly under the normality assumption.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Theorem (Normal Sample Mean–Variance)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Consider</p>
+<ul>
+<li><span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
+<li><span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
+</ul>
+<p>Then - <span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span> - <span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span> - <span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</p>
+</div>
+</div>
+<p>The t-test is based on the Student’s t-distribution theorem.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Theorem (Student’s t-Distribution)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let</p>
+<ul>
+<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
+<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
+<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
+</ul>
+<p>Then <span class="math display">\[
+T=\frac{Z}{\sqrt{U/\nu}}
+\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
+</div>
+</div>
+<p>Put the two theorems together.</p>
+<ul>
+<li><span class="math inline">\(Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)\)</span></li>
+<li><span class="math inline">\(U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span></li>
+<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent, and the degree of freedom of <span class="math inline">\(U\)</span> is <span class="math inline">\(\nu = n-1\)</span>,</li>
+</ul>
+<p><span class="math display">\[
+t \;=\; \frac{Z}{\sqrt{U/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\sqrt{\dfrac{(n-1)s^2}{\sigma^2}/(n-1)}}
+\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\dfrac s{\sigma}}
+\;=\; \frac{\bar X-\mu}{s/\sqrt n}
+\;\sim\; t_{n-1}.
+\]</span></p>
+<p>To find the rejection region, note that since the alternative hypothesis is <span class="math inline">\(\mu\neq0\)</span>, we need to consider both tails, corresponding to <span class="math inline">\(\mu&gt;0\)</span> and <span class="math inline">\(\mu&lt;0\)</span>. Therefore the boundary of the rejection region is chosen so that each tail has probability <span class="math inline">\(\alpha/2\)</span>. In other words, the critical value <span class="math inline">\(t_{1-\alpha/2,n-1}\)</span> satisfies, under <span class="math inline">\(H_0\)</span>, <span class="math display">\[
+\Pr(|t|&gt;t_{1-\alpha/2,n-1})=\alpha.
+\]</span> This critical value <span class="math inline">\(t_{1-\alpha/2,n-1}\)</span> is usually found from a t-distribution table or via the inverse c.d.f. of the t-distribution.</p>
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+</section>
+</section>
+</section>
+<section id="probability-theory" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Probability theory</h1>
+<section id="notations" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="notations"><span class="header-section-number">4.1</span> Notations</h2>
+<ul>
+<li><span class="math inline">\(Y\)</span>: a random variable (captial letters)</li>
+<li><span class="math inline">\(y\)</span>: a sample of <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(\Pr\qty(Y\in A\mid\theta)\)</span>: the probability of <span class="math inline">\(Y\)</span> being in <span class="math inline">\(A\)</span></li>
+<li><span class="math inline">\(p(y\mid\theta)=\Pr\qty(Y=y\mid\theta)\)</span>: the discrete probability density function</li>
+<li><span class="math inline">\(f(y\mid\theta)=\displaystyle\dv{y}\Pr\qty(Y\leq y\mid\theta)\)</span>: the continuous probability density function</li>
+<li><span class="math inline">\(\Exp\qty(Y)\)</span>: the expectation of <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(\Var\qty(Y)\)</span>: the variance of <span class="math inline">\(Y\)</span></li>
+</ul>
+</section>
+<section id="random-variables-1" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="random-variables-1"><span class="header-section-number">4.2</span> Random variables</h2>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1 (Expectation)</strong></span> <span class="math display">\[
+\Exp\mqty[u(X)] = \int_{-\infty}^{\infty}u(x)f(x)\dl3x.
+\]</span></p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.2</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\mu=\Exp(X)\)</span> is called the <strong>mean value</strong> of <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(\sigma^2=\Var(X)=\Exp\mqty[(X-\mu)^2]\)</span> is called the <strong>variance</strong> of <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(M_X(t)=\Exp\mqty[\me^{tX}]\)</span> is called the <strong>moment generating function</strong> of <span class="math inline">\(X\)</span>.</li>
+</ol>
+</div>
+<div id="prp-" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.1</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\Exp\mqty[ag(X)+bh(X)]=a\Exp\mqty[g(X)]+b\Exp\mqty[h(X)]\)</span>.</li>
+<li><span class="math inline">\(\Var\mqty[X]=\Exp\mqty[(X-\mu)^2]=\Exp(X^2)-\mu^2\)</span>.</li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[
+\begin{split}
+\Exp\mqty[ag(X)+bh(X)]&amp;=\int_{-\infty}^{\infty}\mqty[ag(x)+bh(x)]f(x)\dl3x\\
+                 &amp;=a\int_{-\infty}^{\infty}g(x)f(x)\dl3x+b\int_{-\infty}^{\infty}h(x)f(x)\dl3x\\
+                 &amp;=a\Exp\mqty[g(X)]+b\Exp\mqty[h(X)].
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\Exp\mqty[(X-\mu)^2]&amp;=\Exp\mqty[\qty(X^2-2\mu X+\mu^2)]=\Exp(X^2)-2\mu\Exp(X)+\Exp(\mu^2)\\
+&amp;=\Exp(X^2)-2\mu\mu+\mu^2=\Exp(X^2)-\mu^2.
+\end{split}
+\]</span></p>
+</div>
+<section id="r-code" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="r-code"><span class="header-section-number">4.2.1</span> R code</h3>
+<p>R has built-in random variables with different distributions. The naming convention is a prefix <code>d-</code>, <code>p-</code>, <code>q-</code> and <code>r-</code> together with the name of distribution.</p>
+<ul>
+<li><code>d-</code>: density function of the given distribution;</li>
+<li><code>p-</code>: cumulative density function of the given distribution;</li>
+<li><code>q-</code>: quantile function of the given distribution (which is the inverse of <code>p-</code> function);</li>
+<li><code>r-</code>: random sampling from the given distribution.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Examples: normal distribution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">0</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -Inf</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.5</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] Inf</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.79927571 -0.08654065  0.67770833 -0.64877475  0.02885692 -0.03531345</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -1.00046528  0.07461336  0.26779683  0.11312808</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="random-vectors" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="random-vectors"><span class="header-section-number">4.3</span> Random vectors</h2>
+<div id="def-randomvector" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.3 (Random vector)</strong></span> Given a random experiment with a sample space <span class="math inline">\(\mathcal C\)</span>, consider two random variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, which assign to each element <span class="math inline">\(c\)</span> of <span class="math inline">\(\mathcal C\)</span> one and only one ordered pair of numbers <span class="math inline">\(X_1(c)=x_1\)</span>, <span class="math inline">\(X_2(c)=x_2\)</span>. Then we say that <span class="math inline">\((X_1, X_2)\)</span> is a <strong>random vector</strong>. The <strong>space</strong> of <span class="math inline">\((X_1, X_2)\)</span> is the set of orderd pairs <span class="math inline">\(\mathcal D=\set{(x_1, x_2)\mid x_1=X_1(c), x_2=X_2(c), c\in\mathcal C}\)</span>.</p>
+</div>
+<div id="def-cdf" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.4 (Joint Cumulative Distribution Function)</strong></span> <strong>The joint cumulative distribution function</strong> of <span class="math inline">\((X_1, X_2)\)</span> is defined as follows.</p>
+<!-- $$
+F_{X_1,X_2}(x_1,x_2)=\pr\sqb{\set{X_1\leq x_1}\cap\set{X_2\leq x_2}}.
+$$
+In continuous case,  -->
+<p><span class="math display">\[
+F_{X_1,X_2}(x_1,x_2)=\int_{-\infty}^{x_1}\int_{-\infty}^{x_2}f_{X_1,X_2}(w_1,w_2)\dl3w_1\dl3w_2.
+\]</span></p>
+</div>
+<!-- ::: {#def-pdf}
+# Joint probability mass function (pmf)
+In discrete random vector case, the **pmf** is defined as  
+$$
+p_{X_1,X_2}(x_1,x_2)=\pr\sqb{X_1=x_1,X_2=x_2}.
+$$
+::: -->
+<div id="def-cdf" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.5 (Joint probability density function (pdf))</strong></span> In continuous random vector case, the <strong>pdf</strong> is defined as<br>
+<span class="math display">\[
+f_{X_1, X_2}(x_1, x_2)=\frac{\partial^2F_{X_1, X_2}(x_1,x_2)}{\partial x_1\partial x_2}.
+\]</span></p>
+</div>
+<div id="def-marginal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.6 (Marginal pdf)</strong></span> Assume <span class="math inline">\((X_1, X_2)\)</span> be a continuous random vector. The <strong>marginal pdf</strong> is <span class="math display">\[
+f_{X_1}(x_1)=\int_{-\infty}^{\infty}f(x_1, x_2)\dl3x_2.
+\]</span></p>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.7 (Expectation)</strong></span> Assume that <span class="math inline">\(Y=g(X_1, X_2)\)</span>. Then <span class="math display">\[
+\Exp(Y)=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} g(x_1, x_2) f_{X_1, X_2}(x_1,x_2)\dl3x_1\dl3x_2.
+\]</span></p>
+</div>
+<div id="def-conditionaldistribution" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.8 (Conditional probability)</strong></span> The conditional pdf is defined as follows: <span class="math display">\[
+f_{X_1\mid X_2}(x_1\mid x_2)=\frac{f_{X_1,X_2}(x_1,x_2)}{f_{X_1}(x_1)}=\frac{f_{X_1,X_2}(x_1,x_2)}{\int_{-\infty}^{\infty} f_{X_1,X_2}(x_1,w)\dl3w},
+\]</span> and the corresponding conditional probability is defined as <span class="math display">\[
+\Pr(X_1\in A\mid X_2=x_2)=\int_Af_{X_1\mid X_2}(x_1\mid x_2)\dl3x_1.
+\]</span> Thus <span class="math inline">\(f_{X_1\mid X_2}(x_1\mid x_2)\)</span> is a pdf of a random function of <span class="math inline">\(X_1\)</span>.</p>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.1</strong></span> Let <span class="math inline">\((X_1, X_2)\)</span> be a random vector such that <span class="math inline">\(\Var(X_2)\)</span> is finite. <span class="math inline">\(\Exp(X_2\mid X_1=x_1)\)</span> and <span class="math inline">\(\Var(X_2\mid X_1=x_1)\)</span> can be seen as random functions of <span class="math inline">\(X_1\)</span>. Then</p>
+<ol type="a">
+<li><span class="math inline">\(\Exp\mqty[\Exp(X_2\mid X_1)]=\Exp(X_2)\)</span>.</li>
+<li><span class="math inline">\(\Var\mqty[\Var(X_2\mid X_1)]\leq\Var(X_2)\)</span>.</li>
+</ol>
+</div>
+<section id="relations-to-single-variable-case" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="relations-to-single-variable-case"><span class="header-section-number">4.3.1</span> Relations to single variable case</h3>
+<p>Under the assumption of two variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, when only talking about one variable <span class="math inline">\(X\)</span> (resp. <span class="math inline">\(Y\)</span>), we are actually talking about the random variable corresponding to the marginal pdf. The ignoring the other variable part is handled by the integration part.</p>
+<div id="prp-" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 4.2</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\Exp_X\mqty[u(X)]=\Exp\mqty[u(X)]\)</span>.</li>
+<li><span class="math inline">\(\Var_X(X)=\Var(X)\)</span>.</li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[
+\begin{aligned}
+\Exp\mqty[u(X)]&amp;=\iint u(x)f(x,y)\dl3x\dl3y=\int u(x) \mqty[\displaystyle\int f(x,y)\dl3y]\dl3x=\int u(x)f_X(x)\dl3x=\Exp_X\mqty[u(X)],\\
+\Var(X)&amp;=\Exp\mqty[(X-\mu)^2]=\Exp(X^2)-\mu^2=\Exp_X(X^2)-\mu^2=\Var_X(X).
+\end{aligned}
+\]</span></p>
+</div>
+</section>
+</section>
+<section id="maximal-likelihood-estimation" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="maximal-likelihood-estimation"><span class="header-section-number">4.4</span> Maximal likelihood estimation</h2>
+<p>Consider the Bayes’ Theorem</p>
+<p><span class="math display">\[
+    p(\vb w\mid \mathcal D)=\frac{p(\mathcal D\mid \vb w)p(\vb w)}{p(\mathcal D)}.
+\]</span></p>
+<p><span class="math inline">\(p(\mathcal D\mid \vb w)\)</span> is called the <em>likelihood function</em>, <span class="math inline">\(p(\vb w)\)</span> is called the <em>prior probability</em> and <span class="math inline">\(p(\vb w\mid \mathcal D)\)</span> is called the <em>posterior probability</em>. A widely used frequentist estimator is <em>maximum likelihood</em>, in which <span class="math inline">\(\vb w\)</span> is set to the value that maximizes the likelihood function <span class="math inline">\(p(\mathcal D\mid \vb w)\)</span>. Sometimes the likelihood function is changed to be the <em>error function</em> <span class="math inline">\(-\ln p\)</span> and to maximize the likelihood function is the same as to minimize the error function.</p>
+<p>Consider a data set of observations <span class="math inline">\(\vb x=(x_1,x_2,\ldots,x_N)^T\)</span>. These data are i.i.d., with respect to the Gaussian distribution <span class="math inline">\(\mathcal N(\mu,\sigma^2)\)</span>. Then we have the <em>likelihood function</em> if it is treated as a function of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>:</p>
+<p><span class="math display">\[
+    p(\vb x\mid \mu,\sigma^2)=\prod_{n=1}^N\mathcal N(x_n\mid \mu,\sigma^2).
+\]</span> We want to find <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> to maximize the likelihood function. To do so, we would like to consider the error function</p>
+<p><span class="math display">\[
+\begin{split}
+    -\ln p(\vb x\mid \mu,\sigma^2)&amp;=-\ln \prod_{n=1}^N\frac{1}{\sqrt{2\pi\sigma^2}}\exp{-\frac{1}{2\sigma^2}(x_n-\mu)^2}=\sum_{n=1}^N\qty(\frac12\ln(2\pi\sigma^2)+\frac{1}{2\sigma^2}(x_n-\mu)^2)\\
+    &amp;=\frac{1}{2\sigma^2}\sum_{n=1}^N(x_n-\mu)^2+\frac{N}{2}\ln(\sigma^2)+\frac{N}{2}\ln(2\pi).
+\end{split}
+\]</span></p>
+<p>Take the derivative of it. We have</p>
+<p><span class="math display">\[
+   \begin{split}
+       \pdv{ \qty(-\ln p(\vb x\mid \mu,\sigma^2))}{\mu}&amp;=\frac{1}{2\sigma^2}\sum_{n=1}^N2(x_n-\mu)(-1)=-\frac{1}{\sigma^2}\qty(N\mu-\sum_{n=1}^Nx_n),\\
+             \pdv{ \qty(-\ln p(\vb x\mid \mu,\sigma^2))}{\sigma^2}&amp;=\frac12(-1)(\sigma^2)^{-2}\qty(\sum_{n=1}^N(x_n-\mu)^2)+\frac{N}{2}\frac{1}{\sigma^2}\\
+             &amp;=-\frac N{2(\sigma^2)^2}\qty(\frac1N\sum_{n-1}^N(x_n-\mu)^2-\sigma^2).
+   \end{split}
+\]</span> To minimize the error function we need to let them be <span class="math inline">\(0\)</span>. Then we have</p>
+<p><span class="math display">\[
+    \mu_{ML}=\sum_{n=1}^Nx_n,\quad \sigma^2_{ML}=\frac1N\sum_{n=1}^N(x_n-\mu_{ML})^2.
+\]</span> <!-- These are called the *sample mean* and the *sample variance* of the data. Note that the sample variance is measured with respect to the sample mean. --></p>
+<p>Compute <span class="math inline">\(\Exp\mqty[\mu_{ML}]\)</span> and <span class="math inline">\(\Exp\mqty[\sigma^2_{ML}]\)</span>.</p>
+<p><span class="math display">\[
+    \Exp\mqty[\mu_{ML}]=\Exp\mqty[\frac1N\sum_{n=1}^Nx_n]=\frac1N\sum_{n=1}^N\Exp\mqty[x_n]=\frac1NN\mu=\mu.
+\]</span> Since <span class="math inline">\(\Var\mqty[kx]=\Exp\mqty[(kx)^2]-(\Exp\mqty[kx])^2=k^2\Exp\mqty[x^2]-k^2\Exp\mqty[x]^2=k^2\Var\mqty[x]\)</span>, we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \Var\mqty[\mu_{ML}]&amp;=\Var\mqty[\frac1N\sum_{n=1}^Nx_n]=\frac1{N^2}\Var\mqty[\sum_{n=1}^Nx_n]=\frac{1}{N^2}\sum_{n=1}^N\Var\mqty[x_n]\\
+    &amp;=\frac{1}{N^2}(N\sigma^2)=\frac{1}{N}\sigma^2,\\
+    \Var\mqty[x_n-\mu_{ML}]&amp;=\Var\mqty[\frac{N-1}{N}x_n-\frac1Nx_1-\ldots-\frac1Nx_N]\\
+    &amp;=\frac{(N-1)^2}{N^2}\sigma^2+\frac{1}{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2\\
+    &amp;=\frac{N-1}{N}\sigma^2.
+\end{aligned}
+\]</span> Then</p>
+<p><span class="math display">\[
+\begin{split}
+    \Exp\mqty[\sigma^2_{ML}]&amp;=\Exp\mqty[\frac1N\sum_{n=1}^N(x_n-\mu_{ML})^2]=\frac1N\sum_{n=1}^N\Exp\mqty[(x_n-\mu_{ML})^2]\\
+    &amp;=\frac1N\sum_{n=1}^N\qty(\Var\mqty[x_n-\mu_{ML}]+(\Exp\mqty[x_n-\mu_{ML}])^2)=\frac{N-1}{N}\sigma^2.
+\end{split}
+\]</span></p>
+<p>Therefore <span class="math inline">\(\sigma^2_{ML}\)</span> is biased, and the unbiased variance estimation is</p>
+<p><span class="math display">\[
+    \tilde{\sigma}^2=\frac{1}{N-1}\sum_{n=1}^N(x_n-\mu_{ML})^2.
+\]</span></p>
+</section>
+<section id="section" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="section"><span class="header-section-number">4.5</span> </h2>
+<div id="thm-bayesthm" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.2</strong></span> <span class="math display">\[
+f_{X\mid Y=y}(x)=\frac{f_{Y\mid X=x}(y\mid x)f_X(x)}{f_Y(y)}
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(f_{X\mid Y}(x\mid y)\)</span> is a pdf w.r.t <span class="math inline">\(X\)</span>, not a pdf w.r.t <span class="math inline">\(Y\)</span>.</p>
+</div>
+</div>
+<div class="cell-output-stdout">
+<pre><code># Heading 1
+
+## Heading 2
+</code></pre>
+</div>
+</section>
+</section>
+<section id="stats-models" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> stats models</h1>
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<p><span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span></p>
+<p>The process of finding the model that relates <span class="math inline">\(y\)</span> to <span class="math inline">\(x\)</span> and best fits the data is called <em>regression analysis</em>.</p>
+<ul>
+<li>The variable <span class="math inline">\(y\)</span> to be modeled is called the <strong>dependent variable</strong> (or <strong>response variable</strong>). Its expected value is denoted <span class="math inline">\(\Exp(y)\)</span>.</li>
+</ul>
+<p><strong>General Form of probabilistic Model in Regression</strong> is <span class="math display">\[
+y=E(y)+\varepsilon
+\]</span></p>
+<section id="estimation" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="estimation"><span class="header-section-number">5.1</span> Estimation</h2>
+<p>a statistic whose sampling distribution has the mean around the proposed value and a small variance. If the means are equal: unbiased estimator. No: biased.</p>
+</section>
+<section id="build-a-model-that-fits-the-data" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="build-a-model-that-fits-the-data"><span class="header-section-number">5.2</span> build a model that fits the data</h2>
+<p>predicted value: <span class="math inline">\(\hat{y}\)</span>, <span class="math inline">\(\hat{\beta}\)</span>, …</p>
+<ul>
+<li>model: <span class="math inline">\(y=\Exp(y)+\varepsilon\)</span></li>
+</ul>
+<p><span class="citation" data-cites="Jam2023">[<a href="../../index.html#ref-Jam2023" role="doc-biblioref">5</a>]</span></p>
+<ul>
+<li>want to estimate <span class="math inline">\(f\)</span>: <span class="math inline">\(Y=f(X)+\varepsilon\)</span></li>
+<li>want to use <span class="math inline">\(\hat{f}\)</span> to estimate <span class="math inline">\(f\)</span>: <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span>.</li>
+</ul>
+</section>
+<section id="estimators-1" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="estimators-1"><span class="header-section-number">5.3</span> Estimators</h2>
+<ol type="1">
+<li>unbiased: E(X)=m</li>
+<li>consistent: X converges in probability to m as n-&gt;infty
+<ol type="1">
+<li>lim Pr(|X-m|&gt;e)=0 The two are different:</li>
+</ol></li>
+<li>biased but consistent: example: sample variance with ddof=0 (It is also MLE of mean?)</li>
+<li>unbiased but inconsistent: when the variance is not reduced when n grows: example: sample max is unbiased estimator of the mean in an uniform distribution U[0, t], but it does not converge to the upper bound t as n-&gt;infty.</li>
+</ol>
+<ul>
+<li>Efficiency: An estimator is efficient if it has the lowest possible variance among all unbiased estimators for a given parameter.</li>
+<li>Sufficiency: An estimator is sufficient if it captures all the information in the data about a parameter.
+<ul>
+<li><img src="assests/img/20250219102913.png" class="img-fluid"></li>
+</ul></li>
+<li>Asymptotic Normality: An estimator is asymptotically normal if its distribution approaches a normal distribution a
+<ul>
+<li><img src="assests/img/20250219102949.png" class="img-fluid"></li>
+</ul></li>
+<li>Robustness: An estimator is robust if it performs well even when assumptions (like normality) are violated or if outliers exist.
+<ul>
+<li>Example: Median vs.&nbsp;Mean
+<ul>
+<li>The sample median is a robust estimator of the center because it is not affected by extreme values.</li>
+<li>The sample mean is not robust, since a single extreme outlier can significantly change its value.</li>
+</ul></li>
+</ul></li>
+<li>Scale Invariance: An estimator is scale-invariant if multiplying all data points by a constant does not change its relative properties (linear).
+<ul>
+<li>Example:
+<ul>
+<li>mean is invariant</li>
+<li>variance is not</li>
+<li><img src="assests/img/20250219103658.png" class="img-fluid"></li>
+</ul></li>
+</ul></li>
+<li>Bias-Variance Tradeoff: Bias and variance are two competing sources of error in an estimator:
+<ul>
+<li>Bias: Systematic deviation from the true value.</li>
+<li>Variance: Fluctuations in the estimator due to sample randomness.</li>
+<li>Optimal Estimator:
+<ul>
+<li>Low bias, low variance → Best estimator</li>
+<li>Low bias, high variance → Can improve by averaging (e.g., mean)</li>
+<li>High bias, low variance → May still be useful if consistent</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><img src="assests/img/20250219103305.png" class="img-fluid"></p>
+<p>BLUE: Best Linear Unbiased Estimator The acronym BLUE stands for Best Linear Unbiased Estimator. It refers to an estimator that is:</p>
+<p>Linear: The estimator is a linear function of the data. Unbiased: The expected value of the estimator is equal to the true parameter value. Best: It has the minimum variance among all unbiased estimators. (efficient)</p>
+<p>The Gauss-Markov theorem guarantees that under certain conditions, the Ordinary Least Squares (OLS) estimator is BLUE. These conditions are:</p>
+<ul>
+<li>The model is linear.</li>
+<li>The errors have a mean of zero and constant variance (homoscedasticity).</li>
+<li>The errors are uncorrelated. If these conditions hold, then the OLS estimator is the best linear unbiased estimator in terms of minimum variance.</li>
+<li></li>
+</ul>
+</section>
+<section id="mle" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="mle"><span class="header-section-number">5.4</span> MLE</h2>
+<p>invariance</p>
+</section>
+<section id="msevarbias" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="msevarbias"><span class="header-section-number">5.5</span> MSE=Var+bias</h2>
+</section>
+<section id="batch-means" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="batch-means"><span class="header-section-number">5.6</span> Batch means</h2>
+</section>
+<section id="correlated-data" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="correlated-data"><span class="header-section-number">5.7</span> correlated data</h2>
+<ul>
+<li>violate assumptions so many calculations cannot be done</li>
+<li>if you really want to do, the estimation is still unbiased, but the vairance is wrong, which will effect many things.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="ref-gssr" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Healy</span>, K. (2025). <em><a href="http://kjhealy.github.io/gssrdoc">Gssrdoc: General social survey documentation for use in r</a></em>.</div>
+</div>
+<div id="ref-Wickham2014" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline"><span class="smallcaps">Wickham</span>, H. (2014). <a href="https://doi.org/10.18637/jss.v059.i10">Tidy data</a>. <em>Journal of Statistical Software</em> <strong>59</strong>.</div>
+</div>
+<div id="ref-Men2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline"><span class="smallcaps">Mendenhall</span>, W. and <span class="smallcaps">Sincich</span>, T. (2020). <em>A second course in statistics: Regression analyisis</em>. Pearson Education, Inc, [Hoboken, New Jersey].</div>
+</div>
+<div id="ref-Hog2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
+</div>
+<div id="ref-Jam2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline"><span class="smallcaps">James</span>, G. (2023). <em>An introduction to statistical learning: With applications in python</em>. D. Witten, T. Hastie, R. Tibshirani and J. E. Taylor, ed Springer, Cham.</div>
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../contents/1/intro.html" class="pagination-link" aria-label="Stats reviews">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Stats reviews</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
