@@ -35,6 +35,7 @@ format:
   bookup-html:
         toc: true
         toc-depth: 3
+        css: styles/blocks.css
   # html:
   #   theme: cosmo
   #   code-block-bg: true
@@ -87,8 +88,5 @@ book:
   #       - contents/index.qmd
   page-navigation: true
   bread-crumbs: false
-
-    
-
-
  
+   

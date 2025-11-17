@@ -100,18 +100,18 @@ Let $X_1,\ldots,X_n$ is a sample on a random varaible $X$ with pdf $f(x;\theta)$
 
 
 
-Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider a sample $\set{X_i}$ of size $n$. By definition all $X_i$'s are iid. Therefore $\Exp\qty(X_i)=\mu$, and $\Var\qty(X_i)=\sigma^2$ for any $i=1,\ldots, N$.
+Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider a sample $\set{X_i}$ of size $n$. By definition all $X_i$'s are iid. Therefore $\Exp\qty(X_i)=\mu$, and $\Var\qty(X_i)=\sigma^2$ for any $i=1,\ldots, n$.
 
 Consider the following statistics:
 
-- $\bar{x}=\dfrac1N\sum_{i=1}^NX_i$,
-- $\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2$.
+- $\bar{X}=\dfrac1n\sum_{i=1}^nX_i$,
+- $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$.
 
 
 ::: {#lem-}
 
-1. $\Exp(\bar{\mu})=\mu$.
-2. $\Exp(\bar{\sigma}^2)=\sigma^2$.
+1. $\Exp(\bar{X})=\mu$.
+2. $\Exp(s^2)=\sigma^2$.
 :::
 
 
@@ -119,13 +119,13 @@ Consider the following statistics:
 # Proof
 $$
 \begin{aligned}
-\Exp\qty(\bar{\mu})&=\Exp\qty(\frac1N\sum_{i=1}^NX_i)=\frac1N\sum_{i=1}^N\Exp\qty(X_i)=\frac1N\sum_{i=1}^N\mu=\mu,\\
-\Exp\qty(\bar{\sigma}^2)&=\frac{1}{N-1}\Exp\qty[\sum_{i=1}^N(X_i-\bar{\mu})^2]=\frac{1}{N-1}\sum_{i=1}^N\Exp\mqty[\qty(X_i-\bar{\mu})^2]\\
-&=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(X_i-\bar{\mu})+\qty(\Exp\qty(X_i-\bar{\mu}))^2)\\
-&=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(\frac{N-1}{N}X_i-\frac1NX_1-\ldots-\frac1NX_N)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{\mu}))^2)\\
-&=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\Var\qty(X_i)+\frac1{N^2}\Var\qty(X_1)+\ldots+\frac1{N^2}\Var\qty(X_N))\\
-&=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\sigma^2+\frac1{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2)\\
-&=\frac{N}{N-1}\frac{(N-1)^2+N-1}{N^2}\sigma^2=\sigma^2.
+\Exp\qty(\bar{X})&=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
+\Exp\qty(s^2)&=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
+&=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
 \end{aligned}
 $$
 
@@ -135,15 +135,15 @@ $$
 ::: {#def-}
 The following are the unbiased estimators of $\mu$ and $\sigma^2$ of $X$.
 
-1. $\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i$ is called the *sample mean* of the samples. 
-2. $\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2$ is called the *sample variance* of the samples.
+1. $\bar{X}=\dfrac1n\sum_{i=1}^nX_i$ is called the *sample mean* of the samples. 
+2. $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$ is called the *sample variance* of the samples.
 
 
 :::
 
 
 ::: {.callout-caution}
-Please pay attention to the denominator of the sample variance. The $N-1$ is due to the degree of freedom: all $X_i$'s and $\bar{\mu}$ are not independent to each other.
+Please pay attention to the denominator of the sample variance. The $n-1$ is due to the degree of freedom: all $X_i$'s and $\bar{X}$ are not independent to each other.
 :::
 
 
@@ -163,7 +163,7 @@ $$
 ::: {#thm-}
 # Large-Sample $100(1-\alpha)\%$ Confidence interval
 $$
-L,U=\bar{\mu}\pm z_{\alpha/2}\qty(\frac{\bar{\sigma}}{\sqrt{n}}),
+L,U=\bar{X}\pm z_{\alpha/2}\qty(\frac{s}{\sqrt{n}}),
 $$
 where $z_{\alpha/2}=1.96$ if $\alpha=5\%$.
 
@@ -233,46 +233,18 @@ Assume that the given values are $\{x_1,x_2,\ldots,x_n\}$, and the underlying ra
 - $H_0$: $\mu=0$.
 - $H_a$: $\mu\neq0$.
 
-We have the following statistics:
+The values can be treated as realizations of i.i.d random variables $X_i$'s'. We have the following statistics:
 
-- Sample mean: $\bar{x}=\frac1n\sum_{i=1}^nx_i$.
-- Sample standard deviation: $s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar x)^2}$
+- Sample mean: $\bar{X}=\frac1n\sum_{i=1}^nX_i$.
+- Sample standard deviation: $s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2}$
 - Sample size: $n$.
 
 These statistics have sampling distributions that can be described exactly under the normality assumption.
-
-::: {.callout-note}
-## Theorem (Normal Sample Mean–Variance)
-Let $X_1,\ldots,X_n\sim N(\mu,\sigma^2)$ i.i.d. Consider
-
-- $\bar X=\frac1n\sum_{i=1}^nX_i$
-- $s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2$
-
-Then
-
-- $\bar X\sim N(\mu,\frac{\sigma^2}n)$
-- $\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$
-- $\bar X$ and $s^2$ are independent.
-:::
 
 
 
 The t-test is based on the Student's t-distribution theorem.
 
-::: {.callout-note}
-## Theorem (Student's t-Distribution)
-Let 
-
-- $Z\sim N(0,1)$ be a standard normal random variable
-- $U\sim \chi_{\nu}^2$ be a chi-square random variable with $\nu$ degrees of freedom. 
-- $Z$ and $U$ are independent.
-
-Then
-$$
-T=\frac{Z}{\sqrt{U/\nu}}
-$$
-has a Student's t-distribution with $\nu$ degrees of freedom: $T\sim t_{\nu}$.
-:::
 
 Put the two theorems together. 
 

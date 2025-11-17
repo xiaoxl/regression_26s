@@ -1,0 +1,66 @@
+/* =============== COMMON BLOCK STYLE (THM / DEF / EXM) =============== */
+
+.theorem,
+.definition,
+.example {
+  padding: 0.5rem 1.2rem;
+  margin: 0.1rem;
+  border-radius: 6px;
+  border-left-width: 6px;
+  border-left-style: solid;
+  background-color: #ffffff;     /* pure white for max contrast */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+/* Titles */
+.theorem .theorem-title,
+.definition .definition-title,
+.example .example-title {
+  font-weight: 700;
+  font-size: 1.07rem;
+  margin-bottom: 0.1rem;
+  display: block;
+}
+
+.theorem .theorem-number,
+.definition .definition-number,
+.example .example-number {
+  font-weight: 800;
+  margin-right: 0.3rem;
+}
+
+.theorem .theorem-name,
+.definition .definition-name,
+.example .example-name {
+  font-style: italic;
+  margin-left: 0.3rem;
+}
+
+/* =============== STRONG, DISTINCT COLOR THEMES =============== */
+
+/* --- THEOREM (deep academic purple) --- */
+.theorem {
+  border-left-color: #5a189a;
+  background-color: #f8f1ff;
+}
+.theorem .theorem-title {
+  color: #3c0d6e;
+}
+
+/* --- DEFINITION (dark authoritative green) --- */
+.definition {
+  border-left-color: #006400;
+  background-color: #f0fff2;
+}
+.definition .definition-title {
+  color: #004b00;
+}
+
+/* --- EXAMPLE (bright amber/gold) --- */
+.example {
+  border-left-color: #d98c00;
+  background-color: #fff8e1;
+}
+.example .example-title {
+  color: #a66a00;
+}
