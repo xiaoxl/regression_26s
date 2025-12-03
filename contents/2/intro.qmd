@@ -2,3 +2,9 @@
 
 slr
 hi
+
+
+```{r}
+library(reticulate)
+py_config()
+```
