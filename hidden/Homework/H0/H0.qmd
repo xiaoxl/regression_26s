@@ -1,0 +1,32 @@
+---
+title: "HW 0"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        include-in-header:
+        - text: |
+            \AtBeginDocument{
+                \renewcommand{\theexercise}{\arabic{exercise}}
+            }
+crossref:
+    chapters: false
+---
+
+
+::: {#exr-}
+Write a helloworld quarto document. submit both qmd file and pdf file. I will grade it based on the pdf file, with qmd as supplement.
+
+In the file, there should be 
+
+- sections
+- lists
+- texts
+- codes
+
+
+:::
+
+
+
+

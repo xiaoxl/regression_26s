@@ -1,0 +1,27 @@
+---
+title: "HW 7"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{7}
+---
+
+ 
+::: {#exr-}
+## Finding and plotting residuals (Data set: EX8\_2)
+- Question 8.2 on Page 406
+- Question 8.10 on Page 417 
+:::
+
+
+
+::: {#exr-}
+## A rubber additive made from cashew nut shells (Data set: GRAFTING)
+- Question 8.4 on Page 406
+::: 
+

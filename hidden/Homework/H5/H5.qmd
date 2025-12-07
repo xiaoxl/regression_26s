@@ -1,0 +1,108 @@
+---
+title: "HW 5"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{5}
+---
+
+
+
+::: {#exr-}
+## Reality TV and cosmetic surgery
+(Refer to Page 201 Question 4.30 and Page 236 Question 4.68, Data set: BDYIMG)
+
+(Page 201 Question 4.30) Refer to the *Body Image: An International Journal of Research* (March 2010) study of the impact of reality TV shows on a college student's decision to undergo cosmetic surgery (Exercise 4.12 p. 189). Recall that the data for the study (simulated based on statistics reported in the journal article) are saved in the file. Consider the interaction model, $E(y)=\beta_0+\beta_1x_1+\beta_2x_4+\beta_3x_1x_4$, where 
+
+- $y$: desire to have cosmetic surgery (25-point scale)
+- $x_1$: {1 if male, 0 if female}
+- $x_4$: impression of reality TV (7-point scale). 
+
+The model was fit to the data and the resulting printout appears below.
+
+a. Give the least squares prediction equation.
+b. Find the predicted level of desire ($y$) for a male college student with an impression-of-reality-TV-scale score of 5.
+c. Conduct a test of overall model adequacy. Use $\alpha=0.10$.
+d. Give a practical interpretation of $R^2_a$.
+e. Give a practical interpretation of $s$.
+f. Conduct a test (at $\alpha=0.10$) to determine if gender ($x_1$) and impression of reality TV show ($x_4$) interact in the prediction of level of desire for cosmetic surgery ($y$).
+
+
+|Model|R|R Square|Adjusted R Square|Std. Error of the Estimate|
+|:---:|:---:|:---:|:---:|:---:|
+|1|.670|.449|.439|2.350|
+
+: Model Summary 
+
+|Model||Sum of Squares|df|Mean Square|F|Sig.|
+|--|:---|:---:|:---:|:---:|:---:|:---:|
+|1|Regression|747.001|3|249.000| 45.086|0.000|
+||Residual|916.787|166|5.523| ||
+||Total|1663.788|169|| ||
+
+: ANOVA
+
+
+
+
+|Model||Unstandardized Beta|Unstandardized Std. Error|Standardized Beta|t|Sig.|
+|--|:---|:---:|:---:|:---:|:---:|:---:|
+|1|(Constant)|11.779|0.674| | 17.486|0.000|
+||GENDER|-1.972|1.179|-0.303| -1.672|0.096|
+||IMPREAL|0.585|0.162|0.258| 3.617|0.000|
+||GENDER_IMPREAL|-0.553|0.276|-0.378|-2.004 |0.047|
+
+: Coefficients {tbl-colwidths="[5, 30, 20, 20, 20, 10, 10]"}
+
+- Predictors: (Constant), GENDER_IMPREAL, IMPREAL, GENDER
+- Dependent Variable: DESIRE
+
+
+
+
+(Page 236 Question 4.68) Recall that psychologists modeled desire to have cosmtic surgery ($y$) as a function of gender ($x_1$), self-esteem ($x_2$), body satisfaction ($x_3$), and impression of reality TV ($x_4$). The psychologists theorized that one's impression of reality TV will "moderate" the impact that each of the first three independent variables has on one's desire to have cosmetic surgery. If so, then $x_4$ will interact with each of the other independent variables.
+
+a. Give the equation of the model for $E(y)$ that matches the theory.
+b. Fit the model, part a, to the simulated data saved in the file.
+<!-- Evaluate the overall utility of the model. -->
+c. Give the null hypothesis for testing the psychologists' theory.
+d. Conduct a nested model F-test to test the theory. What do you conclude?
+
+:::
+
+
+::: {#exr-}
+## Commercial refrigeration systems
+
+(Question 4.40 on Page 209) The role of maintenance in energy saving in commercial regrigeration was the topic of an article in the *Journal of Quality in Maintenance Engineering* (Vol. 18, 2012). The authors provided the following illustration of data relating the efficiency (relative performance) of a refrigeration system to the fraction of total charges for cooling the system required for optimal performance. Based on the data shown in the graph, hypothesize an appropriate model for relative performance ($y$) as a function of fraction of charge ($x$). What is the hypothesized sign (positive or negative) of the $\beta_2$ parameter in the model?
+
+![](assests/img/20250408165916.png)
+
+
+:::
+
+
+::: {#exr-}
+## Shopping on Black Friday
+(Page 210 Question 4.44, Data set: BLKFRIDAY)
+
+The *International Journal of Retail and Distribution Management* (Vol. 39, 2011) published a study of shopping on Black Friday (the day after Thanksgiving). Researchers conducted interviews with a sample of 38 women shopping on Black Friday to gauge their shopping habits. Two of the variables measured for each shopper were age ($x$) and number of years shopping on Black Friday ($y$). Data set is BLKFRIDAY.
+
+a. Fit the quadratic model, $E(y)=\beta_0+\beta_1x+\beta_2x^2$. Given the prediction equation.
+b. Conduct a test of the overall adequacy of the model. Use $\alpha=0.01$.
+c. Conduct a test to determine if the relationship between age ($x$) and number of years shopping on Black Friday ($y$) is best represented by a linear or quadratic function. Use $\alpha=0.01$.
+
+:::
+
+
+::: {#exr-}
+## Homework assistance for accounting students
+(Refer to Page 228 Question 4.58, Data set: ACCHW)
+
+- Questions 4.58 (a) – (c)
+:::

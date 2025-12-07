@@ -1,0 +1,30 @@
+---
+title: "HW 6"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{6}
+---
+
+
+::: {#exr-}
+## Accuracy of software effort estimates
+- Question 6.4 on Page 351 
+:::
+
+
+
+::: {#exr-}
+## Clerical staff work hours (Data set: CLERICAL)
+- Question 6.8 on Page 352 
+::: 
+
+::: {#exr-}
+## Cooling method for gas turbines (Data set: GASTURBINE)
+- Question 6.10 on Page 353 
+:::

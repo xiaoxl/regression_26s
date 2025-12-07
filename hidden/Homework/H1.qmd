@@ -1,0 +1,150 @@
+---
+title: "Homework 1"
+# author: "Type Your Name Here"
+date: today
+format: pdf
+---
+
+
+## Question 1. Predicting home sales price (HOMESALES.csv)
+
+(a) Write down the straight_line model.
+
+
+
+
+(b) 
+- Draw the scatter plot of Sale_Price vs Market_val in R. 
+
+```{r}
+
+### Read the data set in .csv
+
+
+### Plot the scatter plot
+
+```
+
+- Does it appear that a straight-line model will be an appropriate fit to the data?
+
+
+
+(c) 
+
+-Fit the regression model in R. 
+
+```{r}
+### Fit the model and find the summary and anova table
+
+```
+
+
+- Write down the equation of the best-fitting line through the data.
+
+
+
+
+
+(d) Interpret the $y$-intercept of the least squares line. Does it hava a practical meaning for this application? Explain.
+
+
+
+
+
+(e) 
+
+- Interpret the slope of the least squares line.
+
+
+
+
+
+- Over what range of $x$ is the interpretation meaningful?
+
+
+
+(f) Use the least squares model fitted to estimate the mean sale price of a property appraised at \$300,000.
+
+
+
+
+
+## Question 2. Game performance of water polo players (POLO.csv)
+
+(a) Find the equation of the least squares line.
+
+```{r}
+
+
+
+
+```
+
+- The estimated regression equation is:
+
+
+(b) Give a practical interpretation (if possible) of the $y$-intercept of the line.
+
+
+
+
+
+(c) Give a practical interpretaiton (if possible) of the slope of the line.
+
+
+
+
+
+
+## Question 3. Spreading rate of spilled liquid (LIQUIDSPILL.csv)
+
+```{r}
+### Read the data set in .csv and draw scatter plot
+
+```
+
+
+- Do the data indicate that the mass of the spill tends to diminish as time increase?
+
+
+
+```{r}
+### Fit the simple linear regression model
+
+```
+
+- If the data indicate the trend, how much will the mass diminish each minutes?
+
+
+
+
+
+
+
+## Question 4. Sweetness of orange juice (OJUICE.csv)
+
+(a) Fit the model and find the values of SSE, $s^2$, and $s$ for this regression.
+
+```{r}
+
+```
+
+
+- SSE =
+- $s^2$ =
+- $s$ =
+
+
+(b) Estimate $\sigma^2$, the variance of the random error term in the model.
+
+
+
+(c) Estimate $\sigma$, the standard deviation of the random error term in the model. 
+
+
+(d) Explain why it is difficult to give a practical interpretation to $s^2$, the estimate of $\sigma^2$.
+
+
+
+(e) Give a practical interpretation of the value of $s$. 
+

@@ -1,0 +1,38 @@
+---
+title: "HW 3"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{3}
+---
+
+
+
+::: {#exr-}
+## Reality TV and cosmetic surgery (Data set: BDYIMG)
+(a) Fit the first-order model, $E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4$, to the data in the file. Give the least squares prediction equation
+(b) Interpret the $\beta$ estimates in the words of the problem. (Yes, you need to find the values of $\hat\beta_0, \hat\beta_1, \hat\beta_2, \hat\beta_3, \hat\beta_4$ and interpret them one by one.)
+(c) Is the overall model statistically useful for predicting desire to have cosmetic surgery? Test using $\alpha=.01$. (When performing the hypothesis testing, do not forget to write down the hypotheses first!)
+:::
+
+
+
+
+::: {#exr-}
+## Arsenic in groundwater (Data set: ASWELLS)
+
+- (a) Write a first-order model for arsenic level ($y$) as a function of latitude, longitude, and depth.)
+- (b) Fit the model to the data using the method of least squares.
+- (c) Find the value of $\hat\beta_2$ and give a practical interpretation of $\hat\beta_2$.
+- (d) Find the model standard deviation, $s$, and interpret its value.
+- (f) Conduct a test of overall model utility at $\alpha=.05$. (When performing the hypothesis testing, do not forget to write down the hypotheses first!)
+:::
+
+
+
+

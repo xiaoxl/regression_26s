@@ -1,0 +1,84 @@
+---
+title: "HW 1"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        include-in-header:
+        - text: |
+            \AtBeginDocument{
+                \renewcommand{\theexercise}{\arabic{exercise}}
+            }
+params:
+    show_solution: true
+filters:
+    - solution-filter.lua
+crossref:
+    chapters: false
+---
+
+
+
+# Exercises
+
+
+::: {#exr-}
+## Learning the mechanics. 
+Use the method of least squares to fit a straight line to these six data points:
+
+| x | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| y | 2 | 4 | 5 | 4 | 2 | 8 |
+
+
+a. What are the least squares estimates of $\beta_0$ and $\beta_1$?
+b. Plot the data points and graph the least squares line on the scatterplot.
+:::
+
+::: answer
+sdfasdfsd
+:::
+
+:::{.answer}
+The answer is 4.
+:::
+
+
+
+::: {#exr-}
+## Predicting home sales price. 
+Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Data on sale prices and total appraised values of 76 residential properties sold in an upscale Tampa, Florida, neighborhood named Tampa Palms are saved in the TAMP ALMS file. The first five and last five observations of the data set are listed in the accompanying table.
+
+a. Propose a straight-line model to relate the appraised property value x to the sale price y
+for residential properties in this neighborhood.
+b. A MINITAB scatterplot of the data is shown below. [Note: Both sale price and total market
+value are shown in thousands of dollars.] Does it appear that a straight-line model will be an
+appropriate fit to the data?
+c. A MINITAB simple linear regression printout is also shown below. Find the equation of the best-fitting line through the data on the printout.
+d. Interpret the y-intercept of the least squares line. Does it have a practical meaning for this
+application? Explain.
+e. Interpret the slope of the least squares line. Over what range of x is the interpretation
+meaningful?
+f. Use the least squares model to estimate the mean sale price of a property appraised at $300,000.
+:::
+
+
+::: {#exr-}
+Page 104, Problem 3.10 (Dataset: POLO)
+:::
+
+
+::: {#exr-}
+Page 106, Problem 3.16 (Dataset: LIQUIDSPILL)
+:::
+
+
+::: {#exr-}
+Page 112, Problem 3.23 (Dataset: OJUICE)
+
+(a) Find the values of $SSE$, $s^2$, and $s$ for this regression.
+(b) Estimate $\sigma^2$, the variance of the random error term in the model.
+(c) Estimate $\sigma$, the standard deviation of the random error term in the model.
+(d) Explain why it is difficult to give a practical interpretation to $s^2$, the estimate of $\sigma^2$.
+(e) Give a practical interpretation of the value of $s$.
+:::

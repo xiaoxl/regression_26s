@@ -1,0 +1,85 @@
+---
+title: "HW 4"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{4}
+---
+
+
+
+::: {#exr-}
+## Reality TV and cosmetic surgery 
+(Refer to Page 189 Question 4.12 and Page 194 Question 4.22, Data set: BDYIMG)
+
+(Page 189 Question 4.12) How much influence does the media have on one's decision to undergo cosmetic surgery? This was the question of interest in *Body Image: An International Journal of Research* (March 2010). In the study, 170 college students answered questions about their impressions of reality TV shows featuring cosmetic surgery. The five variables analyzed in the study were measured as follws:
+
+- DESIRE: scale ranging from 5 to 25, where the higher the value, the greater the interest in having cosmetic surgery
+- GENDER: 1 if male, 0 if female
+- SELFESTM: scale ranging from 4 to 40, where the higher the value, the greater the level of selfesteem
+- BODYSAT: scale ranging from 1 to 9, where the higher the value, the greater the satisfaction with one's own body
+- IMPREAL: scale ranging from 1 to 7, where the higher the value, the more one believes reality television shows featuring cosmetic surgery are realistic
+
+The data for the study (simulated based on statistics reported in the journal article) are saved in the BDYIMG file. Selected observations are listed in the accompoanying table. Multiple regression was used to model desire to have cosmetic surgery ($y$) as a function of gender ($x_1$), self-esteem ($x_2$), body satisfaction ($x_3$), and impression of reality TV ($x_4$).
+
+
+```{r}
+#| echo: false
+df <- read.csv('assests/BDYIMG.csv')
+head(df)
+```
+
+
+<!-- a. Fit the first-order model, $E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4$, to the data in the file. Give the least squares prediction equation.
+b. Interpret the $\beta$ estimates in the words of the problem.
+c. Is the overall model statistically useful for predicting desire to have cosmetic surgery? Test using $\alpha=0.01$. -->
+d. Which statistic, $R^2$ or $R^2_a$, is the preferred measure of model fit? Practically interpret the value of this statistic.
+e. Conduct a test to determine whether desire to have cosmetic surgery decreases linearly as level of body satisfaction increases. Use $\alpha=0.05$.
+f. Find a $95\%$ confidence interval for $\beta_4$. Practically interpret the result.
+
+
+---
+
+(Page 194 Question 4.22) The table below shows a confidence interval for $E(y)$ for each of the first five students in the study.
+
+
+<!-- a. Interpret the confidence interval for $E(y)$ for student 1. -->
+b. Interpret the confidence interval for $E(y)$ for student 4.
+
+```{r}
+#| echo: false
+df <- read.csv('assests/422.csv')
+df
+```
+
+:::
+
+
+
+
+::: {#exr-}
+## Arsenic in groundwater 
+(Refer to Page 190 Question 4.14, Data set: ASWELLS)
+
+- Questions (e), (g)
+:::
+
+
+
+
+::: {#exr-}
+## Cooling method for gas turbines
+(Refer to Page 190 Question 4.15 and Page 195 Question 4.24, Data set: GASTURBINE)
+
+- Question 4.15 (a), (b), (e), (f)
+- Questions 4.24 (a), (b), (c)
+:::
+
+
+
+

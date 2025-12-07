@@ -1,0 +1,26 @@
+---
+title: "HW 8"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{8}
+---
+
+
+::: {#exr-}
+## Arsenic in groundwater (Data set: ASWELLS)
+- Question 8.12 on Page 417 
+:::
+
+
+::: {#exr-}
+## Cooling method for gas turbines (Data set: GASTURBINE)
+- Question 8.13 on Page 417
+- Question 8.22 on Page 423
+- Question 8.34 on Page 435
+:::
