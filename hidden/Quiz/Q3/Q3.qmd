@@ -1,0 +1,27 @@
+---
+title: "Quiz 3"
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{3}
+---
+
+# Exercises
+
+The dataset is from Page 102, Problem 3.6.
+
+::: {#exr-}
+Does the data provide sufficient evidence to indicate that $x$ and $y$ are significantly related? Use $\alpha = 0.05$. 
+<!-- Please use both critical value method and $p$-value method for this question. -->
+:::
+
+
+
+::: {#exr-}
+Find a 95% confidence interval for the slope, $\beta_1$, on the printout. Interpret the result practically.
+:::
+
+

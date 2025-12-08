@@ -1,0 +1,40 @@
+---
+title: "Quiz 6"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{6}
+---
+A power company wants to use daily high temperature, $x$, to model daily peak power load, $y$, during the summer months when demand is greatest.
+
+Although the company expects peak load to increase as the temperature increases, the rate of increase in $E(y)$ might not remain constant as $x$ increases. For example, a 1-unit increase in high temperature from 100 °F to 101 °F might result in a larger increase in power demand than would a 1-unit increase from 80 °F to 81 °F. Therefore, the company postulates that the model for $E(y)$ will include a second-order (quadratic) term and, possibly, a third-order (cubic) term.
+
+A random sample of 25 summer days is selected and both the peak load (measured in megawatts) and high temperature (in degrees) recorded for each day. The R output is attached.
+
+
+::: {#exr-}
+Fit the third-order model, $E(y) = \beta_0 + \beta_1x + \beta_2x^2+\beta_3x^3$, to the data. Is there evidence that the cubic term, $\beta_3x^3$, contributes information for the prediction of peak power load? Test at $\alpha = .05$.
+:::
+
+::: {#exr-ref}
+Fit the third-order model, $E(y) = \beta_0 + \beta_1x + \beta_2x^2$, to the data.  Test the hypothesis that the power load increases at an increasing rate with temperature. In other words, is the curve concave upward? Use $\alpha = .05$.
+:::
+
+
+::: {#exr-}
+Give the prediction equation for the second-order model, in @exr-ref. Are you satisfied with using this model to predict peak power loads?
+:::
+
+
+![](assests/img/20250302180514.png)
+
+![](assests/img/20250302180536.png)
+
+![](assests/img/20250302180549.png)
+

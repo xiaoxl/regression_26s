@@ -1,0 +1,7 @@
+1. - [c] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\epsilon$
+2. - [a] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\beta_4x_1^2+\beta_5x_2^2+\epsilon$
+3. 25310639
+4. 19370350
+5. - [a] $\displaystyle F=\frac{\frac{25310639-19370350}{2}}{\frac{19370350}{61}}$
+6. - [a] 2.39
+7. - [b] We prefer the full model.

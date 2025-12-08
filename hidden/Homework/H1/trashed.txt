@@ -1,0 +1,5 @@
+
+::: {#exr-}
+## Spreading rate of spilled liquid. 
+A researcher studied the rate at which a spilled liquid will spread across a surface ( Chemicial Engineering Progress, January 2005). Assume 50 gallons of methanol spills onto a level surface outdoors. The engineer used derived empirical formulas (assuming a state of turbulent free convection) to calculate the mass (in pounds) of the spill after a period of time ranging from 0 to 60 minutes. The calculated mass values are given in the table above. Do the data indicate that the mass of the spill tends to diminish as time increases? If so, how much will the mass diminish each minute? 
+:::

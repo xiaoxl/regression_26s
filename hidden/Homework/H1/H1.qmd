@@ -10,7 +10,7 @@ format:
                 \renewcommand{\theexercise}{\arabic{exercise}}
             }
 params:
-    show_solution: true
+    show_solution: false
 filters:
     - solution-filter.lua
 crossref:
@@ -28,53 +28,128 @@ Use the method of least squares to fit a straight line to these six data points:
 
 | x | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|
-| y | 2 | 4 | 5 | 4 | 2 | 8 |
+| y | 2 | 4 | 5 | 4 | 2 | 7 |
 
 
-a. What are the least squares estimates of $\beta_0$ and $\beta_1$?
-b. Plot the data points and graph the least squares line on the scatterplot.
+(a) What are the least squares estimates of $\beta_0$ and $\beta_1$?
+(b) Plot the data points and graph the least squares line on the scatterplot.
 :::
 
-::: answer
-sdfasdfsd
+
+::: {.answer}
+(a)
+- With hand:
+  - $\bar x=3.5$, $\bar y=4$.
+  
+   | $x-\bar x$ | -2.5 | -1.5 | -0.5 | 0.5 | 1.5 | 2.5 |
+    |---|---|---|---|---|---|---|
+    | $y-\bar y$ | -2 | 0 | 1 | 0 | -2 | 3 |
+  - $S_{xy}=\sum (x_i-\bar x)(y_i-\bar y)=9$, $S_{xx}=\sum (x_i-\bar x)^2=17.5$.
+  - $\hat\beta_1=9/17.5\approx 0.5143$, $\hat\beta_0=\bar y-\beta_1\bar x=4-9/17.5\times3.5=2.2$.
+- With R
+```{r}
+x <- c(1, 2, 3, 4, 5, 6)
+y <- c(2, 4, 5, 4, 2, 7)
+fit <- lm(y~x)
+summary(fit)
+```
+
+(b) Ploting with R code.
+
+```{r}
+plot(x, y)
+abline(coef = fit$coefficients, col='red')
+```
+
 :::
 
-:::{.answer}
-The answer is 4.
-:::
+
 
 
 
 ::: {#exr-}
 ## Predicting home sales price. 
-Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Data on sale prices and total appraised values of 76 residential properties sold in an upscale Tampa, Florida, neighborhood named Tampa Palms are saved in the TAMP ALMS file. The first five and last five observations of the data set are listed in the accompanying table.
+Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Please look at the provided dataset [`MARKET.csv`](./datasets/market.csv). The first five and last five observations of the data set are listed in the accompanying table.
 
-a. Propose a straight-line model to relate the appraised property value x to the sale price y
-for residential properties in this neighborhood.
-b. A MINITAB scatterplot of the data is shown below. [Note: Both sale price and total market
-value are shown in thousands of dollars.] Does it appear that a straight-line model will be an
-appropriate fit to the data?
-c. A MINITAB simple linear regression printout is also shown below. Find the equation of the best-fitting line through the data on the printout.
-d. Interpret the y-intercept of the least squares line. Does it have a practical meaning for this
-application? Explain.
-e. Interpret the slope of the least squares line. Over what range of x is the interpretation
-meaningful?
-f. Use the least squares model to estimate the mean sale price of a property appraised at $300,000.
+(a) Propose a simple linear model to relate the appraised market value $x$ to the sale price $y$.
+(b) A scatterplot of the data is shown below. Does it appear that a straight-line model will be an appropriate fit to the data?
+(c) A R simple linear regression printout is also shown below. Find the equation of the best-fitting line through the data on the printout.
+(d) Interpret the $y$-intercept of the least squares line. Does it have a practical meaning for this application? Explain.
+(e) Interpret the slope of the least squares line. Over what range of $x$ is the interpretation meaningful?
+(f) Use the least squares model to estimate the mean sale price of a property appraised at $300,000.
+
+```{r}
+#| echo: false
+
+df <- read.csv("datasets/MARKET.csv")
+attach(df)
+plot(market_value, sale_price)
+```
+```{r}
+#| echo: false
+
+fit <- lm(sale_price~market_value)
+summary(fit)
+```
 :::
 
 
 ::: {#exr-}
-Page 104, Problem 3.10 (Dataset: POLO)
+A study shows that during a certain sport the mean heart rate $y$ and the maximal oxygen uptake $x$ might have relations. The dataset `SPORTHR.csv` shows $y$ (expressed as a percentage of maximum heart rate) and $x$
+($V0_2$max). The data are shown in the table.
+
+
+```{r}
+#| echo: false
+
+df <- read.csv("datasets/SPORTHR.csv")
+print(df, row.names=FALSE)
+```
+
+
+(a) Find the equation of the least squares line.
+(b) Give a practical interpretation (if possible) of the $y$-intercept of the line.
+(c) Give a practical interpretation (if possible) of the slope of the line.
 :::
 
 
+
+
+
+
+
 ::: {#exr-}
-Page 106, Problem 3.16 (Dataset: LIQUIDSPILL)
+## Spreading rate of spilled liquid. 
+A researcher studied the rate at which a spilled liquid will spread across a surface. The mass (in pounds) of the spill after a period of time ranging from 0 to 60 minutes is recorded and shown below (based on the dataset `SPILLS.csv`). Do the data indicate that the mass of the spill tends to diminish as time increases? If so, how much will the mass diminish each minute?
+
+```{r}
+#| echo: false
+
+df <- read.csv("datasets/SPILLS.csv")
+print(df, row.names=FALSE)
+```
 :::
 
 
+
+
+
+
+
+
 ::: {#exr-}
-Page 112, Problem 3.23 (Dataset: OJUICE)
+## Sweetness of orange juice. 
+To study the sweetness of orange juices, researchers collect some data on the sweetness index ($y$) and the amount of pectin ($x$) in the orange juice (in $g/L$). The dataset is `ORANGEJUICE.csv`.
+
+
+```{r}
+#| echo: false
+
+df <- read.csv("datasets/ORANGEJUICE.csv")
+print(df, row.names=FALSE)
+```
+
+
 
 (a) Find the values of $SSE$, $s^2$, and $s$ for this regression.
 (b) Estimate $\sigma^2$, the variance of the random error term in the model.

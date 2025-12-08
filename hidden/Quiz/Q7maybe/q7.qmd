@@ -1,0 +1,23 @@
+---
+title: "Quiz 7"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{7}
+---
+
+In the project of faculty salary equity study, there is a variable named `Academic Rank`, which includes 5 levels: `Instructor`, `Assistant Professor`, `Associate Professor`,
+`Professor`, and `Distinguished Professor`.
+
+
+::: {#exr-}
+1. How many dummy variables are required for Academic Rank?
+2. Set up the dummy variables.
+3. Use a table to show the values of each dummy variable for each level of Academic Rank.
+:::

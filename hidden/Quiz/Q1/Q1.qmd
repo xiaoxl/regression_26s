@@ -1,0 +1,89 @@
+---
+title: "Quiz Review"
+# author: "Type Your Name Here"
+date: today
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{1}
+---
+
+{{< include ../math.qmd >}}
+
+
+::: {#exr-}
+Colleges and universities are requiring an increasing amount of information about applicants before making acceptance and financial aid decisions. Select all the variables below which are quantitative.
+
+- [ ] High school GPA
+- [ ] Country of citizenship
+- [ ] Applicant's score on the SAT or ACT
+- [ ] Gender of applicant
+- [ ] Parents' income
+- [ ] Age of applicant
+:::
+
+
+
+::: {#exr-}
+Use R to calculate the mean, variance, standard deviation of the following data table. The table below gives the number of shafts buried at each of 13 recently discovered gravesites.
+
+
+```{.bash}
+1, 2, 3, 1, 5, 6, 2, 4, 1, 2, 4, 2, 9
+```
+ 
+**Hint**: Please creat a vector in R with the values above, use `mean()`, `var()`, `sd()` to find the mean, variance, and standard deviation, respectively.
+:::
+
+
+
+
+
+::: {#exr-}
+Given that the random variable $z$ has the standard normal probability distribution, write the R code is correct in finding the following probability $\Pr(z >= -1)$.
+:::
+
+
+
+::: {#exr-}
+Given that the random variable $z$ has the standard normal probability distribution, write the R code in finding the following probability $\Pr(-1.96 <= z <= 1.96)$.
+:::
+
+
+::: {#exr-}
+Given that the random variable $y$ has a normal probability distribution with mean 100 and variance 64, write the R code in finding the following probability $\Pr(y <=92)$.
+:::
+
+
+
+::: {#exr-}
+Given that the random variable $y$ has a normal probability distribution with mean 100 and variance 64, write the R code in finding the following probability $\Pr(76<=y <=124)$.
+:::
+
+<!-- 
+::: {#exr-}
+As the natural state, Arkansas has 7 national parks and 52 state parks. How many national or state parks in total at Arkansas? Why the code below doesn’t work?
+
+```{r}
+#| eval: false
+num_natl_parks='seven'
+num_state_parks=52
+
+num_total_parks=num_natl_parks+num_state_parks
+```
+Please modify the code above to make it work.
+::: -->
+
+<!-- 
+
+::: {#exr-}
+Complete the following tasks. 
+
+1. Please download the `titanic_train.csv` dataset from Blackboard and import the dataset to R. Save it as Titanic. 
+2. Display the first 5 rows of Titanic. 
+3. Find the average number of siblings/spouse saboard the Titanic (variable name `SibSp`) 
+4. Find the average of age. Why `mean(Titanic$age)` doesn’t work? Please add `na.rm=TRUE` in `mean()` and retry.
+::: -->

@@ -1,0 +1,28 @@
+
+
+```{r, echo=TRUE, results="hide"}
+#| echo: true
+#| output: false
+fit <- lm(mpg ~ wt + hp, data = mtcars)
+s <- capture.output(summary(fit))
+```
+
+
+```{r}
+#| echo: false
+#| output: asis
+
+# if (params$show_solution) {
+#   s_out <- s        # 答案版：不改
+# } else {
+  s_out <- gsub(
+    "Multiple R-squared:\\s*[0-9\\.]+",
+    "Multiple R-squared:  1. _______",
+    s
+  )
+# }
+
+cat("\\begin{verbatim}\n")
+cat(paste(s_out, collapse = "\n"))
+cat("\n\\end{verbatim}\n")
+```

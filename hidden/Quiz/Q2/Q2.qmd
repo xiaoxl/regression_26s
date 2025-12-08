@@ -1,0 +1,77 @@
+---
+title: "Quiz 2: R basis"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{2}
+---
+<!-- 
+# Instruction {.unnumbered}
+
+- Please create a qmd file for the following questions.
+- Once you have finished, please upload the rendered pdf onto Blackboard. -->
+
+
+<!-- # Exercises -->
+
+::: {#exr-}
+Recall given the radius of a circle $r$, we can calculate the perimeter by using formula $C = 2\pi r$, and the area by using formula $A = \pi r^2$. Assume $r = 3$. Calculate the value of perimeter and area.
+:::
+
+
+
+::: {#exr-}
+As the natural state, Arkansas has 7 national parks and 52 state parks. How many national or state parks in total at Arkansas? 
+
+- Why the code below doesn’t work?
+```{r}
+#| eval: false
+num_natl_parks = 'seven'
+num_state_parks = 52
+num_total_parks = num_natl_parks + num_state_parks
+```
+
+- Please modify the code above.
+:::
+
+
+::: {#exr-}
+a. Use function `length()` to find how many values in the vector a defined below?
+a. How many values are greater than 1000?
+a. What is the percentage of values in the vector greater than 1000?
+
+```{r}
+a = c(275, 2168.36, 2931.5, 275.5, 399.93, 2, 545.128, 209.76, 400, 50.1499, 150, 1595.978)
+```
+:::
+
+
+::: {#exr-}
+Complete the following tasks.
+
+a. Install and load the package `nycflights13`.
+a. Load the data set `flights`.
+a. Find the variable names of `flights`.
+a. Find the dimension of `flights`.
+a. Display the first 3 rows of `flights`.
+:::
+
+
+::: {#exr-}
+Complete the following tasks.
+
+a. Please download the `titanic_train.csv` dataset and import the data set to R. Save it as `Titanic`.
+a. Display the first 5 rows of `Titanic`.
+a. Find the average number of siblings / spouses aboard the Titanic (variable name `SibSp`)
+a. Find the average of `age`. Why `mean(Titanic$age)` doesn’t work? Please add `na.rm=TRUE` in `mean()` and retry. Please explain the behavior.
+
+:::
+
+
+

@@ -1,0 +1,75 @@
+---
+title: "Quiz 7"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{7}
+---
+
+From the software output below,
+
+![](completevsreducedmodel.jpg)
+
+::: {#exr-}
+What is the reduced model?
+
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\beta_4x_1^2+\beta_5x_2^2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1^2+\epsilon$
+:::
+
+
+::: {#exr-}
+What is the full model?
+
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\beta_4x_1^2+\beta_5x_2^2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\epsilon$
+- [ ] $y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1^2+\epsilon$
+:::
+
+
+::: {#exr-}
+What is the $SSE_R$? That is, the SSE of the reduced model.
+:::
+
+::: {#exr-}
+What is the $SSE_F$? That is, the SSE of the full model.
+:::
+
+
+::: {#exr-}
+Which one is the correct formula to cauclate the F-statistics?
+
+- [ ] $\displaystyle F=\frac{\frac{25310639-19370350}{2}}{\frac{19370350}{61}}$
+- [ ] $\displaystyle F=\frac{\frac{25310639-19370350}{2}}{\frac{19370350}{61}}$
+- [ ] $\displaystyle F=\frac{\frac{25310639-19370350}{2}}{\frac{19370350}{61}}$
+- [ ] $\displaystyle F=\frac{\frac{25310639-19370350}{2}}{\frac{19370350}{61}}$
+:::
+
+
+
+::: {#exr-}
+Let $\alpha=0.1$, what is $F_{\alpha}$?
+
+- [ ] 2.39
+- [ ] 2.18
+- [ ] 3.62
+- [ ] 1.94
+:::
+
+
+::: {#exr-}
+	
+What is the conclusion of the Partial F-test?
+
+- [ ] We prefer the reduced model.
+- [ ] We prefer the full model.
+:::

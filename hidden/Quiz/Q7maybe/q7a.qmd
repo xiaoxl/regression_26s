@@ -1,0 +1,16 @@
+---
+# title: "Quiz 7"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+# include-in-header:
+#   - text: 
+#      \setcounter{section}{7}
+---
+
+![](assests/img/20250302202334.png)
+![](assests/img/20250302202347.png)

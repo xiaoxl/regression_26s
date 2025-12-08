@@ -1,0 +1,95 @@
+---
+title: "Quiz 5"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{5}
+---
+
+In industry cooling applications (e.g., cooling of nuclear reactors), a process called subcooled flow boiling is often employed. Subcooled flow boiling is susceptible to small bubbles that occur near the heated surface. The characteristics of these bubbles were investigated in Heat Transfer Engineering (Vol. 34, 2013). A series of experiments was conducted to measure two important bubble behaviors-bubble diameter (millimeters) and bubble density (liters per meters squared). The mass flux (kilograms per meters squared per second) and heat flux (megawatts per meters squared) were varied for each experiment. The data obtained at a set pressure are listed in the following table.
+
+![](bubbledataset.jpg)
+
+### diameter
+Consider the multiple regression model of predicting the bubble diameter, 
+$$
+E(y_1)=\beta_0+\beta_1x_1+\beta_2x_2,
+$$
+ where $y_1$ = bubble diameter, $x_1$ = mass flux, $x_2$ = heat flux. To conduct a test of overall model utility at $\alpha=0.05$. We conduct a test of overall model utility at $\alpha=0.05$. The output is shown below. 
+
+![](bubblemodel1anova_summary.jpg)
+
+::: {#exr-}
+What is the null hypothesis?
+
+- [ ] $H_0: \beta_0=\beta_1=\beta_2=0$.
+- [ ] $H_0: \beta_1=\beta_2=0$.
+- [ ] $H_0: \beta_0=0$.
+- [ ] $H_0: \beta_1=0$.
+- [ ] $H_0: \beta_2=0$.
+
+:::
+
+
+
+::: {#exr-}
+What is the alternative hypothesis?
+
+- [ ] $H_a: \beta_0\neq0,\beta_1\neq0, \beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0, \beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0$ or $\beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0$.
+- [ ] $H_a: \beta_2\neq0$.
+:::
+
+
+::: {#exr-}
+Find the value of F-statistic (round to 3 decimal places)
+:::
+
+
+::: {#exr-}
+Find the P-value for F-statistic (round to 3 decimal places)
+:::
+
+### density
+Consider the multiple regression model of predicting the bubble diameter, $E(y_2)=\beta_0+\beta_1x_1+\beta_2x_2$, where $y_2$ = bubble density, $x_1$ = mass flux, $x_2$ = heat flux. We conduct a test of overall model utility at $\alpha=0.05$. The output is shown below. 
+![](bubblemodel2anova_summary.jpg)
+
+
+::: {#exr-}
+What is the alternative hypothesis?
+
+- [ ] $H_a: \beta_0\neq0,\beta_1\neq0, \beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0, \beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0$ or $\beta_2\neq0$.
+- [ ] $H_a: \beta_1\neq0$.
+- [ ] $H_a: \beta_2\neq0$.
+:::
+
+
+
+::: {#exr-}
+Which is correct? Use critical value method or p-value method to draw a conclusion.
+
+- [ ] Because p-value < $\alpha$, we reject $H_0$. The overall model appears to be statitically useful for predicting bubble density.
+- [ ] Because p-value > $\alpha$, we reject $H_0$. The overall model does not appear to be statitically useful for predicting bubble density.
+- [ ] Because p-value < $\alpha$, we fail to reject $H_0$. The overall model appears to be statitically useful for predicting bubble density.
+- [ ] Because p-value > $\alpha$, we fail to reject $H_0$. The overall model does not appear to be statitically useful for predicting bubble density.
+
+ 
+:::
+
+
+::: {#exr-}
+Which of the two dependent variables, diameter ($y_1$) or density ($y_2$), is better predicted by mass flux ($x_1$) and heat flux ($x_2$)?
+
+- [ ] diameter ($y_1$)
+- [ ] density ($y_1$)
+:::

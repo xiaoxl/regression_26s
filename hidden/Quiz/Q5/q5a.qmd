@@ -1,0 +1,7 @@
+1. - [b] $H_0: \beta_1=\beta_2=0$.
+2. - [c] $H_a: \beta_1\neq0$ or $\beta_2\neq0$.
+3. 1.0001
+4. 0.39111
+5. - [c] $H_a: \beta_1\neq0$ or $\beta_2\neq0$.
+6. - [a] Because p-value < $\alpha$, we reject $H_0$. The overall model appears to be statitically useful for predicting bubble density.
+7. - [b] density ($y_1$)

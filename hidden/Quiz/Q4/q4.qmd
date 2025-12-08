@@ -1,0 +1,75 @@
+---
+title: "Quiz 4"
+# author: "Type Your Name Here"
+# date: today
+
+format: 
+    pdf:
+        pdf-engine: pdflatex
+
+include-in-header:
+  - text: 
+     \setcounter{section}{4}
+---
+
+
+::: {#exr-}
+The following regression model is known as 
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_5+\beta_6x_6+\epsilon.
+$$
+
+- [ ] Sixth order model with one predictor
+- [ ] First order model with one predictor
+- [ ] First order model with six predictors
+- [ ] Sixth order model with six predictors
+:::
+
+
+
+::: {#exr-}
+The following regression model is known as 
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_1^2+\beta_3x_1^3+\epsilon.
+$$
+
+- [ ] First order model with three predictors
+- [ ] First order model with one predictor
+- [ ] Third order model with one predictor
+- [ ] Third order model with three predictors
+:::
+
+
+::: {#exr-}
+Interpret the $\hat{\beta}_2$ in the following model 
+$$
+\hat y = -0.0304+2.006x_1+5.006x_2.
+$$
+:::
+
+
+::: {#exr-}
+A 10-year study conducted by the American Heart Association provided data on how age, blood pressure, and smoking related to the risk of strokes.
+ 
+- Risk of a stroke ($y$): the probability (times 100) that the patient will have a stroke over the next 10-year period.
+- Age ($x_1$): patient's age
+- Blood pressure ($x_2$): patient's blood pressure
+- Smoking ($x_3$): 1 indicating a smoker and 0 indicating a nonsmoker.
+The estimated regression equation that relates risk of a stroke to the person’s age, blood pressure, and whether the person is a smoker as follows:
+
+$$
+\hat y=-91.8+1.08x_1+0.252x_2+8.74x_3.
+$$
+ 
+Give a practical interpretation of $\hat{\beta}_1$.
+
+- [ ] When patient's age increase 1 year, the risk of stroke increases 1.08%.
+- [ ] When patient's age increase 1 year, the risk of stroke increases 1.08%, while the other two variables (blood pressure and smoke) are hold constant.
+- [ ] The patient's age increases 1.08, if the risk of stroke increase 1 unit.
+- [ ] The patient's age increases 1.08, if the risk of stroke increase 1 unit, while the other two variables (blood pressure and smoke) are hold constant.
+:::
+
+
+

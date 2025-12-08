@@ -1,0 +1,4 @@
+1. [c] First order model with six predictors
+2. [c] Third order model with one predictor
+3. Holding $x_1$ constant, for each 1-unit increase in $x_2$, $\hat y$ increases by 5.006.
+4. [b] When patient's age increase 1 year, the risk of stroke increases 1.08%, while the other two variables (blood pressure and smoke) are hold constant.
