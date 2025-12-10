@@ -1,4 +1,4 @@
-# Inferences
+# Inferences {#sec-inference}
 
 
 {{< include ../math.qmd >}}
