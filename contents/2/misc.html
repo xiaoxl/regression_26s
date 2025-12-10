@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Variable selection – Regression 26 Spring</title>
+<title>6&nbsp; Variable selection – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -316,7 +316,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variable selection</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable selection</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -366,8 +366,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../contents/1/prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../contents/1/inferences.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Inferences</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferences</span></span></a>
   </div>
 </li>
       </ul>
@@ -384,25 +390,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/slr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">slr</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">slr</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/misc.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span></a>
   </div>
 </li>
       </ul>
@@ -419,13 +425,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/mlr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">MLR</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MLR</span></span></a>
   </div>
 </li>
       </ul>
@@ -442,7 +448,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/4/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Building models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building models</span></span></a>
   </div>
 </li>
       </ul>
@@ -474,23 +480,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#step-wise" id="toc-step-wise" class="nav-link active" data-scroll-target="#step-wise"><span class="header-section-number">5.1</span> Step-wise</a></li>
-  <li><a href="#best-of-subsets" id="toc-best-of-subsets" class="nav-link" data-scroll-target="#best-of-subsets"><span class="header-section-number">5.2</span> best of subsets</a></li>
-  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">6</span> Residual analysis</a>
+  <li><a href="#step-wise" id="toc-step-wise" class="nav-link active" data-scroll-target="#step-wise"><span class="header-section-number">6.1</span> Step-wise</a></li>
+  <li><a href="#best-of-subsets" id="toc-best-of-subsets" class="nav-link" data-scroll-target="#best-of-subsets"><span class="header-section-number">6.2</span> best of subsets</a></li>
+  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">7</span> Residual analysis</a>
   <ul class="collapse">
-  <li><a href="#residual-analysis-1" id="toc-residual-analysis-1" class="nav-link" data-scroll-target="#residual-analysis-1"><span class="header-section-number">6.1</span> Residual analysis</a>
+  <li><a href="#residual-analysis-1" id="toc-residual-analysis-1" class="nav-link" data-scroll-target="#residual-analysis-1"><span class="header-section-number">7.1</span> Residual analysis</a>
   <ul class="collapse">
-  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots"><span class="header-section-number">6.1.1</span> Plots</a></li>
-  <li><a href="#partial-residual-plot" id="toc-partial-residual-plot" class="nav-link" data-scroll-target="#partial-residual-plot"><span class="header-section-number">6.1.2</span> Partial residual plot</a></li>
-  <li><a href="#homoscedastic-vs-heteroscedastic" id="toc-homoscedastic-vs-heteroscedastic" class="nav-link" data-scroll-target="#homoscedastic-vs-heteroscedastic"><span class="header-section-number">6.1.3</span> Homoscedastic vs Heteroscedastic</a></li>
-  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality"><span class="header-section-number">6.1.4</span> Normality</a></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots"><span class="header-section-number">7.1.1</span> Plots</a></li>
+  <li><a href="#partial-residual-plot" id="toc-partial-residual-plot" class="nav-link" data-scroll-target="#partial-residual-plot"><span class="header-section-number">7.1.2</span> Partial residual plot</a></li>
+  <li><a href="#homoscedastic-vs-heteroscedastic" id="toc-homoscedastic-vs-heteroscedastic" class="nav-link" data-scroll-target="#homoscedastic-vs-heteroscedastic"><span class="header-section-number">7.1.3</span> Homoscedastic vs Heteroscedastic</a></li>
+  <li><a href="#normality" id="toc-normality" class="nav-link" data-scroll-target="#normality"><span class="header-section-number">7.1.4</span> Normality</a></li>
   </ul></li>
-  <li><a href="#detecting-outliers" id="toc-detecting-outliers" class="nav-link" data-scroll-target="#detecting-outliers"><span class="header-section-number">6.2</span> Detecting outliers</a>
+  <li><a href="#detecting-outliers" id="toc-detecting-outliers" class="nav-link" data-scroll-target="#detecting-outliers"><span class="header-section-number">7.2</span> Detecting outliers</a>
   <ul class="collapse">
-  <li><a href="#standardized-residuals" id="toc-standardized-residuals" class="nav-link" data-scroll-target="#standardized-residuals"><span class="header-section-number">6.2.1</span> Standardized residuals</a></li>
-  <li><a href="#influential-observations" id="toc-influential-observations" class="nav-link" data-scroll-target="#influential-observations"><span class="header-section-number">6.2.2</span> influential observations</a></li>
+  <li><a href="#standardized-residuals" id="toc-standardized-residuals" class="nav-link" data-scroll-target="#standardized-residuals"><span class="header-section-number">7.2.1</span> Standardized residuals</a></li>
+  <li><a href="#influential-observations" id="toc-influential-observations" class="nav-link" data-scroll-target="#influential-observations"><span class="header-section-number">7.2.2</span> influential observations</a></li>
   </ul></li>
-  <li><a href="#plotfit" id="toc-plotfit" class="nav-link" data-scroll-target="#plotfit"><span class="header-section-number">6.3</span> <code>plot(fit)</code></a></li>
+  <li><a href="#plotfit" id="toc-plotfit" class="nav-link" data-scroll-target="#plotfit"><span class="header-section-number">7.3</span> <code>plot(fit)</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -501,7 +507,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Variable selection</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Variable selection</span></h1>
 </div>
 
 
@@ -518,16 +524,16 @@ window.Quarto = {
 </header>
 
 
-<section id="step-wise" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="step-wise"><span class="header-section-number">5.1</span> Step-wise</h2>
+<section id="step-wise" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="step-wise"><span class="header-section-number">6.1</span> Step-wise</h2>
 <p><code>olsrr</code> <code>ols_step_both_p</code></p>
 </section>
-<section id="best-of-subsets" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="best-of-subsets"><span class="header-section-number">5.2</span> best of subsets</h2>
+<section id="best-of-subsets" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="best-of-subsets"><span class="header-section-number">6.2</span> best of subsets</h2>
 <p><code>leaps</code> <code>regsubsets</code></p>
 </section>
-<section id="residual-analysis" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Residual analysis</h1>
+<section id="residual-analysis" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Residual analysis</h1>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -547,8 +553,8 @@ window.Quarto = {
 </ol>
 </div>
 </div>
-<section id="residual-analysis-1" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="residual-analysis-1"><span class="header-section-number">6.1</span> Residual analysis</h2>
+<section id="residual-analysis-1" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="residual-analysis-1"><span class="header-section-number">7.1</span> Residual analysis</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -567,14 +573,14 @@ window.Quarto = {
 </div>
 <p><img src="assests/img/20250417205337.png" class="img-fluid"></p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 6.1</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Theorem 7.1</strong></span> &nbsp;</p>
 <ol type="1">
 <li>The mean of the residuals is equal to 0.</li>
 <li>The standard deviation of the residuals is the standard deviation of the fitted regression model <span class="math inline">\(s\)</span>: <span class="math inline">\(\sum \hat{\varepsilon}^2=SSE\)</span>, and <span class="math inline">\(s=\sqrt{SSE/(n-k-1)}\)</span>.</li>
 </ol>
 </div>
-<section id="plots" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="plots"><span class="header-section-number">6.1.1</span> Plots</h3>
+<section id="plots" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="plots"><span class="header-section-number">7.1.1</span> Plots</h3>
 <p>We use plots to display residuals, and detect departures from assumptions. If the assumptions concerning the error term 𝜀 are satisfied, we expect to see the residual plot that</p>
 <ul>
 <li>have no trends</li>
@@ -604,8 +610,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="partial-residual-plot" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="partial-residual-plot"><span class="header-section-number">6.1.2</span> Partial residual plot</h3>
+<section id="partial-residual-plot" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="partial-residual-plot"><span class="header-section-number">7.1.2</span> Partial residual plot</h3>
 <p>The set of <strong>partial regression residuals</strong> for the jth independent variable <span class="math inline">\(x_j\)</span> is calculated as follows:</p>
 <p><span class="math display">\[
 \hat{\varepsilon}^*=\hat{\varepsilon}+\hat{\beta}_jx_j
@@ -710,8 +716,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="homoscedastic-vs-heteroscedastic" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="homoscedastic-vs-heteroscedastic"><span class="header-section-number">6.1.3</span> Homoscedastic vs Heteroscedastic</h3>
+<section id="homoscedastic-vs-heteroscedastic" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="homoscedastic-vs-heteroscedastic"><span class="header-section-number">7.1.3</span> Homoscedastic vs Heteroscedastic</h3>
 <p>This part is about whether the variance is equal.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -838,8 +844,8 @@ Note
 </div>
 </div>
 </section>
-<section id="normality" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="normality"><span class="header-section-number">6.1.4</span> Normality</h3>
+<section id="normality" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="normality"><span class="header-section-number">7.1.4</span> Normality</h3>
 <p>The last topic to check the normality of the common distribution of the residuals. The most common tool is called <em>Q-Q plot</em> (Quantile-Quantile plot): a plot to compare the quantiles of your data to the quantiles of a standard normal distribution.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -929,17 +935,17 @@ y(\lambda)&amp;=\log(y)\quad\text{ for }\lambda=0
 <p>The peak is around <span class="math inline">\(\lambda=0\)</span>, so we will apply <span class="math inline">\(\log\)</span> transformation to <span class="math inline">\(y\)</span>.</p>
 </section>
 </section>
-<section id="detecting-outliers" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="detecting-outliers"><span class="header-section-number">6.2</span> Detecting outliers</h2>
-<section id="standardized-residuals" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="standardized-residuals"><span class="header-section-number">6.2.1</span> Standardized residuals</h3>
+<section id="detecting-outliers" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="detecting-outliers"><span class="header-section-number">7.2</span> Detecting outliers</h2>
+<section id="standardized-residuals" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="standardized-residuals"><span class="header-section-number">7.2.1</span> Standardized residuals</h3>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6.1</strong></span> The <strong>standardized residual</strong>, denoted <span class="math inline">\(z_i\)</span>, is <span class="math inline">\(z_i=\hat{\varepsilon}_i/s\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 7.1</strong></span> The <strong>standardized residual</strong>, denoted <span class="math inline">\(z_i\)</span>, is <span class="math inline">\(z_i=\hat{\varepsilon}_i/s\)</span>.</p>
 </div>
 <p>Outliers are points whose standarized residual is beyond 1, 2, 3, etc.. The threshold is based on the confidence level. Usually we use 2.</p>
 </section>
-<section id="influential-observations" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="influential-observations"><span class="header-section-number">6.2.2</span> influential observations</h3>
+<section id="influential-observations" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="influential-observations"><span class="header-section-number">7.2.2</span> influential observations</h3>
 <ol type="1">
 <li>leverage</li>
 <li>Cook’s distance</li>
@@ -985,7 +991,7 @@ y(\lambda)&amp;=\log(y)\quad\text{ for }\lambda=0
 <span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 1.665 on 4 and 19 DF,  p-value: 0.1996</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6.2 (Leverage)</strong></span> The <strong>leverage</strong> of the ith observation is the weight <span class="math inline">\(h_i\)</span> associated with <span class="math inline">\(y_i\)</span> in the equation</p>
+<p><span class="theorem-title"><strong>Definition 7.2 (Leverage)</strong></span> The <strong>leverage</strong> of the ith observation is the weight <span class="math inline">\(h_i\)</span> associated with <span class="math inline">\(y_i\)</span> in the equation</p>
 <p><span class="math display">\[
 \hat{y}_i=h_1y_1+h_2y_2+\ldots+h_iy_i+\ldots+h_ny_n
 \]</span> where <span class="math inline">\(h_1\)</span>, …, <span class="math inline">\(h_n\)</span> are functions of only the values of the independent variables in the model. It measures the influence of <span class="math inline">\(y_i\)</span> on its predicted value <span class="math inline">\(\hat{y_i}\)</span>.</p>
@@ -1005,7 +1011,7 @@ y(\lambda)&amp;=\log(y)\quad\text{ for }\lambda=0
 </div>
 <p>| Low Residual | High Residual Low Leverage | Unimportant | Small influence High Leverage | Maybe okay | ❗ High influence ❗</p>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 6.3 (Cook’s distance)</strong></span> <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 7.3 (Cook’s distance)</strong></span> <span class="math display">\[
 D_i=\frac{\sum (\hat{y}_j-\hat{y}_{j(i)})^2}{p\cdot MSE}
 \]</span> where - <span class="math inline">\(\hat y_j\)</span> = predicted value from full model - <span class="math inline">\(\hat{y}_{j(i)}\)</span> = predicted value without the i-th point - <span class="math inline">\(p\)</span> = number of parameters (including intercept) - <span class="math inline">\(MSE\)</span> = mean squared error</p>
 </div>
@@ -1049,8 +1055,8 @@ D_i=\frac{\sum (\hat{y}_j-\hat{y}_{j(i)})^2}{p\cdot MSE}
 </div>
 </section>
 </section>
-<section id="plotfit" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="plotfit"><span class="header-section-number">6.3</span> <code>plot(fit)</code></h2>
+<section id="plotfit" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="plotfit"><span class="header-section-number">7.3</span> <code>plot(fit)</code></h2>
 <p>We can use <code>plot(fit)</code> to directly get plots related to residual analysis.</p>
 <p>It contains several plots.</p>
 <div class="cell">
@@ -1521,12 +1527,12 @@ D_i=\frac{\sum (\hat{y}_j-\hat{y}_{j(i)})^2}{p\cdot MSE}
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../contents/2/slr.html" class="pagination-link" aria-label="slr">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">slr</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">slr</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../contents/2/project1.html" class="pagination-link" aria-label="Project 1: Boston housing">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
