@@ -53,8 +53,8 @@ book:
     - part: "Review"
       chapters:
       - contents/1/basics.qmd
-      - contents/1/inferences.qmd
-      # - contents/0/prob.qmd
+      - contents/1/prob.qmd
+      - contents/1/inferences.qmd      
       # - contents/0/statsmodels.qmd
     - part: "SLR"
       chapters: 

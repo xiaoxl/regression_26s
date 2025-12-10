@@ -44,14 +44,8 @@
 
 
 
-## Estimators
-
-
-
-
-
-
-Cited from [@Hog2019, pp. 206, Chapter 4].
+## Estimators 
+This section is based on [@Hog2019, pp. 206, Chapter 4].
 
 ### Sampling
 
@@ -65,7 +59,7 @@ Consider a random variable $X$ with an unknown distribution. Our information abo
 
 ::: {#def-}
 # Random sample
-If the random variables $X_1,\ldots, X_n$ are iid, then these random variable constitute a **random sample** of size $n$ from the common distribution.
+If the random variables $X_1,\ldots, X_n$ are i.i.d, then these random variable constitute a **random sample** of size $n$ from the common distribution.
 :::
 
 
@@ -85,7 +79,7 @@ Let $X_1,\ldots,X_n$ denote a sample on a random variable $X$. Let $T=T(X_1,\ldo
 
 ::: {#thm-}
 # The Central Limit Theorem
-For large sample sizes, the mean $\bar{x}$ of a sample from a population with mean $\mu$ and a standard deviation $\sigma$ has a sampling distribution that is approximately normal, regardless of the probability distribution of the sampled population.
+For large sample sizes, the sample mean $\bar{X}$ from a population with mean $\mu$ and a standard deviation $\sigma$ has a sampling distribution that is approximately normal, regardless of the probability distribution of the sampled population.
 :::
 
 ### Point estimation
@@ -98,23 +92,43 @@ Assume that the distribution of $X$ is known down to an unknown parameter $\thet
 Let $X_1,\ldots,X_n$ is a sample on a random varaible $X$ with pdf $f(x;\theta)$. Let $T$ be a statistic. We say that $T$ is an **unbiased** estimator of $\theta$ if $E(T)=\theta$.
 :::
 
+The typical example of estimators are sample mean and sample variance. Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider a sample $\set{X_i}$ of size $n$. By definition all $X_i$'s are i.i.d. Therefore $\Exp\qty(X_i)=\mu$, and $\Var\qty(X_i)=\sigma^2$ for any $i=1,\ldots, n$.
 
 
-Let $X$ be a random variable, with mean $\mu$ and variance $\sigma^2$. Consider a sample $\set{X_i}$ of size $n$. By definition all $X_i$'s are iid. Therefore $\Exp\qty(X_i)=\mu$, and $\Var\qty(X_i)=\sigma^2$ for any $i=1,\ldots, n$.
-
-Consider the following statistics:
-
-- $\bar{X}=\dfrac1n\sum_{i=1}^nX_i$,
-- $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$.
-
-
-
-::: {#def-}
+::: {#thm-}
 The following are the unbiased estimators of $\mu$ and $\sigma^2$ of $X$.
 
 1. $\bar{X}=\dfrac1n\sum_{i=1}^nX_i$ is called the *sample mean* of the samples. 
 2. $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$ is called the *sample variance* of the samples.
+
+They are the unbiased estimators of $\mu$ and $\sigma^2$, respectively.
+$$
+\Exp(\bar X)=\mu,\quad \Exp(s^2)=\sigma^2.
+$$
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+$$
+\begin{aligned}
+\Exp\qty(\bar{X})&=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
+\Exp\qty(s^2)&=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
+&=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
+\end{aligned}
+$$
+
+
+</details>
+
 :::
+ 
+
+
+
 
 
 ::: {.callout-important}
@@ -208,36 +222,25 @@ Assume that the given values are $\{x_1,x_2,\ldots,x_n\}$, and the underlying ra
 - $H_0$: $\mu=0$.
 - $H_a$: $\mu\neq0$.
 
-The values can be treated as realizations of i.i.d random variables $X_i$'s'. We have the following statistics:
+The values can be treated as realizations of i.i.d random variables $X_i$'s. We have the following statistics:
 
 - Sample mean: $\bar{X}=\frac1n\sum_{i=1}^nX_i$.
 - Sample standard deviation: $s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2}$
 - Sample size: $n$.
 
+
 These statistics have sampling distributions that can be described exactly under the normality assumption.
 
-
-
-The t-test is based on the Student's t-distribution theorem.
-
-
-Put the two theorems together. 
+Based on the discussion in @sec-t-dist, we have that 
 
 - $Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$
 - $U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}$
 - $Z$ and $U$ are independent, and the degree of freedom of $U$ is $\nu = n-1$,
-
-$$
-t \;=\; \frac{Z}{\sqrt{U/(n-1)}}
-\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\sqrt{\dfrac{(n-1)s^2}{\sigma^2}/(n-1)}}
-\;=\; \frac{\dfrac{\bar X-\mu}{\sigma/\sqrt n}}{\dfrac s{\sigma}}
-\;=\; \frac{\bar X-\mu}{s/\sqrt n}
-\;\sim\; t_{n-1}.
-$$
+- $t=\frac{Z}{\sqrt{U/(n-1)}}\sim t_{n-1}$.
 
 
-To find the rejection region, note that since the alternative hypothesis is $\mu\neq0$, we need to consider both tails, corresponding to $\mu>0$ and $\mu<0$. Therefore the boundary of the rejection region is chosen so that each tail has probability $\alpha/2$. In other words, the critical value $t_{1-\alpha/2,n-1}$ satisfies, under $H_0$,
+Since the alternative hypothesis is $\mu\neq0$, we need to consider both tails, corresponding to $\mu>0$ and $\mu<0$. Therefore the boundary of the rejection region is chosen so that each tail has probability $\alpha/2$. In other words, the critical value $t_{1-\alpha/2,n-1}$ satisfies, under $H_0$,
 $$
 \Pr(|t|>t_{1-\alpha/2,n-1})=\alpha.
 $$
-This critical value $t_{1-\alpha/2,n-1}$ is usually found from a t-distribution table or via the inverse c.d.f. of the t-distribution.
+This critical value $t_{1-\alpha/2,n-1}$ is usually found from a t-distribution table or via the inverse c.d.f. of the t-distribution. 
