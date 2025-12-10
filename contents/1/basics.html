@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.9">
+<meta name="generator" content="quarto-1.9.12">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -93,9 +93,9 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0e3b29b5fa97dc5090eff3fd9e71dcd2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bd72660a7ac1d74eb59e6013565e57c7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -163,6 +163,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../../styles/blocks.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -495,13 +496,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#population-vs-sample" id="toc-population-vs-sample" class="nav-link active" data-scroll-target="#population-vs-sample"><span class="header-section-number">1.1</span> Population vs Sample</a></li>
-  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">1.2</span> Data structure</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization"><span class="header-section-number">1.3</span> Data Visualization</a>
+  <li><a href="#quick-overview" id="toc-quick-overview" class="nav-link active" data-scroll-target="#quick-overview"><span class="header-section-number">1.1</span> Quick overview</a></li>
+  <li><a href="#population-vs-sample" id="toc-population-vs-sample" class="nav-link" data-scroll-target="#population-vs-sample"><span class="header-section-number">1.2</span> Population vs Sample</a></li>
+  <li><a href="#data-structure" id="toc-data-structure" class="nav-link" data-scroll-target="#data-structure"><span class="header-section-number">1.3</span> Data structure</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization"><span class="header-section-number">1.4</span> Data Visualization</a>
   <ul class="collapse">
-  <li><a href="#qualitative-categorical-data" id="toc-qualitative-categorical-data" class="nav-link" data-scroll-target="#qualitative-categorical-data"><span class="header-section-number">1.3.1</span> Qualitative (categorical) data</a></li>
-  <li><a href="#quantitative-numerical-data" id="toc-quantitative-numerical-data" class="nav-link" data-scroll-target="#quantitative-numerical-data"><span class="header-section-number">1.3.2</span> Quantitative (numerical) data</a></li>
-  <li><a href="#relations-among-multiple-variables" id="toc-relations-among-multiple-variables" class="nav-link" data-scroll-target="#relations-among-multiple-variables"><span class="header-section-number">1.3.3</span> Relations among multiple variables</a></li>
+  <li><a href="#qualitative-categorical-data" id="toc-qualitative-categorical-data" class="nav-link" data-scroll-target="#qualitative-categorical-data"><span class="header-section-number">1.4.1</span> Qualitative (categorical) data</a></li>
+  <li><a href="#quantitative-numerical-data" id="toc-quantitative-numerical-data" class="nav-link" data-scroll-target="#quantitative-numerical-data"><span class="header-section-number">1.4.2</span> Quantitative (numerical) data</a></li>
+  <li><a href="#relations-among-multiple-variables" id="toc-relations-among-multiple-variables" class="nav-link" data-scroll-target="#relations-among-multiple-variables"><span class="header-section-number">1.4.3</span> Relations among multiple variables</a></li>
+  </ul></li>
+  <li><a href="#probability-distribution" id="toc-probability-distribution" class="nav-link" data-scroll-target="#probability-distribution"><span class="header-section-number">1.5</span> Probability Distribution</a>
+  <ul class="collapse">
+  <li><a href="#normal-probability-distribution" id="toc-normal-probability-distribution" class="nav-link" data-scroll-target="#normal-probability-distribution"><span class="header-section-number">1.5.1</span> Normal Probability Distribution</a></li>
+  <li><a href="#students-t-distribution" id="toc-students-t-distribution" class="nav-link" data-scroll-target="#students-t-distribution"><span class="header-section-number">1.5.2</span> Student’s t-Distribution</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -529,38 +536,84 @@ window.Quarto = {
 </header>
 
 
-<section id="population-vs-sample" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="population-vs-sample"><span class="header-section-number">1.1</span> Population vs Sample</h2>
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\]</span></p>
+<!-- Probability -->
+<p><span class="math display">\[
+\newcommand{\Exp}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Mode}{\operatorname{mode}}
+\]</span></p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\]</span></p>
+</div>
+<section id="quick-overview" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="quick-overview"><span class="header-section-number">1.1</span> Quick overview</h2>
+<p>Given a set of observations of variables, we would like to understand the relationships among these variables.</p>
+<p>The standard procedure for developing a statistical model is as follows:</p>
+<ol type="1">
+<li>Build the model by hypothesizing a relationship based on the data and relevant domain knowledge.</li>
+<li>Estimating the parameters of the proposed model using the available data.</li>
+<li>Assessing the adequacy and quality of the fitted model.</li>
+<li>Revising the model based on the assessment results.</li>
+</ol>
+<p>There are two primary goals and related ways to assess the model:</p>
+<ol type="1">
+<li><strong>Prediction (Generalization):</strong> We evaluate the model performance on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.</li>
+<li><strong>Explanation (Inference):</strong> We evaluate the model using the original data with metrics such as <span class="math inline">\(R^2\)</span>, confidence intervals, and p-values. This assesses how well the model explains the observed data and allows us to draw conclusions about underlying relationships. This approach is central to traditional Statistical Modeling, such as Regression Analysis.</li>
+</ol>
+<p>Both Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.</p>
+</section>
+<section id="population-vs-sample" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="population-vs-sample"><span class="header-section-number">1.2</span> Population vs Sample</h2>
 <ul>
 <li><strong>Population</strong>: the set of all elements of interest in a particular study.</li>
 <li><strong>Sample</strong>: is a subset of the population</li>
 <li><strong>Statistical Inference</strong>: The process of using data collected on a sample to draw conclusions about a population is called statistical inference.</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Example: <code>gssr</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.1 (<code>gssr</code>)</strong></span> &nbsp;</p>
+<details>
+<summary>
+Click to expand.
+</summary>
 <p>According to a previous national media report, the <em>average age</em> of U.S. adults who watch national TV news is <strong>60 years</strong>. A data analyst hypothesizes that the <strong>average age of frequent TV-news watchers</strong> is <strong>greater than 60</strong>. To test this, she uses the <strong>General Social Survey (GSS)</strong>, accessible via the <code>gssr</code> R package <span class="citation" data-cites="gssr">[<a href="../../index.html#ref-gssr" role="doc-biblioref">1</a>]</span>, to draw a <strong>sample of 500 respondents</strong> and record their ages.</p>
 <ol type="a">
 <li><strong>Describe the population</strong>: All U.S. adults who watch TV news <strong>several times a week or more often</strong>, as defined by the GSS survey question on TV-news frequency.</li>
 <li><strong>Describe the sample</strong>: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.</li>
 <li><strong>Sample size</strong>: <span class="math inline">\(n = 500\)</span></li>
-<li><strong>Describe the statistical inference</strong>: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.</li>
+<li><strong>Describe the statistical inference</strong>: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.
+<hr></li>
 </ol>
-</div>
-</div>
+</details>
 </div>
 </section>
-<section id="data-structure" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">1.2</span> Data structure</h2>
+<section id="data-structure" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="data-structure"><span class="header-section-number">1.3</span> Data structure</h2>
 <p>A dataset is a collection of <em>values</em>. Values are organized in two ways. Every value belongs to a <em>variable</em> and an <em>observation</em>.</p>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1.1 (Variables and Observations <span class="citation" data-cites="Wickham2014">[<a href="../../index.html#ref-Wickham2014" role="doc-biblioref">2</a>]</span>)</strong></span> &nbsp;</p>
@@ -569,18 +622,12 @@ window.Quarto = {
 <li>An <strong>observation</strong> contains all values measured on the same unit (like a person, or a day, or a race) across attributes.</li>
 </ul>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.2 (<code>possum</code>)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
 <p>Researchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see <a href="../app/data.html#sec-app_possum" class="quarto-xref"><span>Section A.1</span></a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
@@ -619,8 +666,7 @@ window.Quarto = {
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div>
+</details>
 </div>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1.2 (Quantitative and Qualitative <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span>)</strong></span> &nbsp;</p>
@@ -630,7 +676,7 @@ window.Quarto = {
 </ul>
 </div>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 1.3 (Discrete and Continuous)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 1.3 (Discrete and Continuous <span class="citation" data-cites="Men2020">[<a href="../../index.html#ref-Men2020" role="doc-biblioref">3</a>]</span>)</strong></span> &nbsp;</p>
 <ul>
 <li>Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2…</li>
 <li>Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.</li>
@@ -667,26 +713,20 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="data-visualization" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="data-visualization"><span class="header-section-number">1.3</span> Data Visualization</h2>
-<section id="qualitative-categorical-data" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="qualitative-categorical-data"><span class="header-section-number">1.3.1</span> Qualitative (categorical) data</h3>
+<section id="data-visualization" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="data-visualization"><span class="header-section-number">1.4</span> Data Visualization</h2>
+<section id="qualitative-categorical-data" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="qualitative-categorical-data"><span class="header-section-number">1.4.1</span> Qualitative (categorical) data</h3>
 <p>Usually the most important is the <strong>class relative frequency</strong>: <span class="math display">\[
 \text{class relative frequency}=\frac{\text{class frequency}}{n}.
 \]</span></p>
 <p>To display it, we could use table, bar chart or pie chart.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.3 (<code>possum</code>)</strong></span> &nbsp;</p>
+<details>
+<summary>
+Click to expand.
+</summary>
 <p>Here we still consider the <code>possum</code> dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
@@ -744,12 +784,11 @@ window.Quarto = {
 </div>
 </div>
 <p>Note that <code>table</code> is handling the statistics, while <code>barplot</code> and <code>pie</code> draw on top of the result from <code>table</code>.</p>
-</div>
-</div>
+</details>
 </div>
 </section>
-<section id="quantitative-numerical-data" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="quantitative-numerical-data"><span class="header-section-number">1.3.2</span> Quantitative (numerical) data</h3>
+<section id="quantitative-numerical-data" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="quantitative-numerical-data"><span class="header-section-number">1.4.2</span> Quantitative (numerical) data</h3>
 <p>For a quantitative data, we would like to see the histogram, as well as computing some statistics: minx, max, quartiles, median and mean.</p>
 <ul>
 <li><strong>Histogram</strong> is an approximation of the distribution. In other words, we split the range into small segments (called <em>bins</em>), and count the frequency or relative frequency of data falling into these bins.</li>
@@ -760,18 +799,12 @@ window.Quarto = {
 <li>The points, considered as <em>outliers</em>, are those which are not covered by the box and the lines.</li>
 </ul></li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.4 (<code>possum</code>)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
 <p>We still consider the <code>possum</code> dataset. We could use <code>summary</code> to compute the major statistics.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
@@ -846,25 +879,18 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</div>
-</div>
+</details>
 </div>
 </section>
-<section id="relations-among-multiple-variables" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="relations-among-multiple-variables"><span class="header-section-number">1.3.3</span> Relations among multiple variables</h3>
+<section id="relations-among-multiple-variables" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="relations-among-multiple-variables"><span class="header-section-number">1.4.3</span> Relations among multiple variables</h3>
 <p>We could show the relation between two variables in a scatter plot.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Example: <code>possum</code>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.5 (<code>possum</code>)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
 <p>The cases that both variables are numerical continuous:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(possum<span class="sc">$</span>hdlngth, possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -902,8 +928,63 @@ window.Quarto = {
 </div>
 </div>
 <p>Pair plot is very important since it can easily help us to find the expected relations between variables. We will use it a lot in regression analysis.</p>
+</details>
 </div>
+</section>
+</section>
+<section id="probability-distribution" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="probability-distribution"><span class="header-section-number">1.5</span> Probability Distribution</h2>
+<section id="normal-probability-distribution" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="normal-probability-distribution"><span class="header-section-number">1.5.1</span> Normal Probability Distribution</h3>
+<div id="thm-norm" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1.1 (Theorem (Normal Sample Mean–Variance))</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Consider</p>
+<ul>
+<li><span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
+<li><span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
+</ul>
+<p>Then</p>
+<ul>
+<li><span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span></li>
+<li><span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span></li>
+<li><span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</li>
+</ul>
 </div>
+<div id="lem-" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1.1</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(\Exp(\bar{X})=\mu\)</span>.</li>
+<li><span class="math inline">\(\Exp(s^2)=\sigma^2\)</span>.</li>
+</ol>
+<details>
+<summary>
+<strong>Click for proof.</strong>
+</summary>
+<span class="math display">\[
+\begin{aligned}
+\Exp\qty(\bar{X})&amp;=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
+\Exp\qty(s^2)&amp;=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
+&amp;=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
+\end{aligned}
+\]</span>
+</details>
+</div>
+</section>
+<section id="students-t-distribution" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="students-t-distribution"><span class="header-section-number">1.5.2</span> Student’s t-Distribution</h3>
+<div id="thm-t" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1.2 (Theorem (Student’s t-Distribution))</strong></span> Let</p>
+<ul>
+<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
+<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
+<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
+</ul>
+<p>Then <span class="math display">\[
+T=\frac{Z}{\sqrt{U/\nu}}
+\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
 </div>
 
 

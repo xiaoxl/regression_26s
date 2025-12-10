@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.9">
+<meta name="generator" content="quarto-1.9.12">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -58,9 +58,9 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0e3b29b5fa97dc5090eff3fd9e71dcd2.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bbfe0a5b9fb228be1b45e71d50e4f997.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bd72660a7ac1d74eb59e6013565e57c7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -125,6 +125,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../../styles/blocks.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -591,7 +592,7 @@ window.Quarto = {
 </ul>
 </div>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.1 (The Central Limit Theorem)</strong></span> For large sample sizes, the mean <span class="math inline">\(\bar{y}\)</span> of a sample from a population with mean <span class="math inline">\(\mu\)</span> and a standard deviation <span class="math inline">\(\sigma\)</span> has a sampling distribution that is approximately normal.</p>
+<p><span class="theorem-title"><strong>Theorem 2.1 (The Central Limit Theorem)</strong></span> For large sample sizes, the mean <span class="math inline">\(\bar{x}\)</span> of a sample from a population with mean <span class="math inline">\(\mu\)</span> and a standard deviation <span class="math inline">\(\sigma\)</span> has a sampling distribution that is approximately normal, regardless of the probability distribution of the sampled population.</p>
 </div>
 </section>
 <section id="point-estimation" class="level3" data-number="2.2.2">
@@ -600,63 +601,30 @@ window.Quarto = {
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.6 (Unbiasedness)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> is a sample on a random varaible <span class="math inline">\(X\)</span> with pdf <span class="math inline">\(f(x;\theta)\)</span>. Let <span class="math inline">\(T\)</span> be a statistic. We say that <span class="math inline">\(T\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\theta\)</span> if <span class="math inline">\(E(T)=\theta\)</span>.</p>
 </div>
-<p>Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are iid. Therefore <span class="math inline">\(\Exp\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\Var\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, N\)</span>.</p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are iid. Therefore <span class="math inline">\(\Exp\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\Var\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, n\)</span>.</p>
 <p>Consider the following statistics:</p>
 <ul>
-<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span>,</li>
-<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span>.</li>
+<li><span class="math inline">\(\bar{X}=\dfrac1n\sum_{i=1}^nX_i\)</span>,</li>
+<li><span class="math inline">\(s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2\)</span>.</li>
 </ul>
-<div id="lem-" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 2.1</strong></span> &nbsp;</p>
-<ol type="1">
-<li><span class="math inline">\(\Exp(\bar{\mu})=\mu\)</span>.</li>
-<li><span class="math inline">\(\Exp(\bar{\sigma}^2)=\sigma^2\)</span>.</li>
-</ol>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{aligned}
-\Exp\qty(\bar{\mu})&amp;=\Exp\qty(\frac1N\sum_{i=1}^NX_i)=\frac1N\sum_{i=1}^N\Exp\qty(X_i)=\frac1N\sum_{i=1}^N\mu=\mu,\\
-\Exp\qty(\bar{\sigma}^2)&amp;=\frac{1}{N-1}\Exp\qty[\sum_{i=1}^N(X_i-\bar{\mu})^2]=\frac{1}{N-1}\sum_{i=1}^N\Exp\mqty[\qty(X_i-\bar{\mu})^2]\\
-&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(X_i-\bar{\mu})+\qty(\Exp\qty(X_i-\bar{\mu}))^2)\\
-&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\Var\qty(\frac{N-1}{N}X_i-\frac1NX_1-\ldots-\frac1NX_N)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{\mu}))^2)\\
-&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\Var\qty(X_i)+\frac1{N^2}\Var\qty(X_1)+\ldots+\frac1{N^2}\Var\qty(X_N))\\
-&amp;=\frac{1}{N-1}\sum_{i=1}^N\qty(\frac{(N-1)^2}{N^2}\sigma^2+\frac1{N^2}\sigma^2+\ldots+\frac1{N^2}\sigma^2)\\
-&amp;=\frac{N}{N-1}\frac{(N-1)^2+N-1}{N^2}\sigma^2=\sigma^2.
-\end{aligned}
-\]</span></p>
-</div>
-</div>
-</div>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.7</strong></span> The following are the unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> of <span class="math inline">\(X\)</span>.</p>
 <ol type="1">
-<li><span class="math inline">\(\bar{\mu}=\dfrac1N\sum_{i=1}^NX_i\)</span> is called the <em>sample mean</em> of the samples.</li>
-<li><span class="math inline">\(\bar{\sigma}^2=\dfrac{1}{N-1}\sum_{i=1}^N(X_i-\bar{\mu})^2\)</span> is called the <em>sample variance</em> of the samples.</li>
+<li><span class="math inline">\(\bar{X}=\dfrac1n\sum_{i=1}^nX_i\)</span> is called the <em>sample mean</em> of the samples.</li>
+<li><span class="math inline">\(s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2\)</span> is called the <em>sample variance</em> of the samples.</li>
 </ol>
 </div>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Caution
+Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Please pay attention to the denominator of the sample variance. The <span class="math inline">\(N-1\)</span> is due to the degree of freedom: all <span class="math inline">\(X_i\)</span>’s and <span class="math inline">\(\bar{\mu}\)</span> are not independent to each other.</p>
+<p>Please pay attention to the denominator of the sample variance. The <span class="math inline">\(n-1\)</span> is due to the degree of freedom: all <span class="math inline">\(X_i\)</span>’s and <span class="math inline">\(\bar{X}\)</span> are not independent to each other.</p>
 </div>
 </div>
 </section>
@@ -670,7 +638,7 @@ Caution
 </div>
 <div id="thm-" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 2.2 (Large-Sample <span class="math inline">\(100(1-\alpha)\%\)</span> Confidence interval)</strong></span> <span class="math display">\[
-L,U=\bar{\mu}\pm z_{\alpha/2}\qty(\frac{\bar{\sigma}}{\sqrt{n}}),
+L,U=\bar{X}\pm z_{\alpha/2}\qty(\frac{s}{\sqrt{n}}),
 \]</span> where <span class="math inline">\(z_{\alpha/2}=1.96\)</span> if <span class="math inline">\(\alpha=5\%\)</span>.</p>
 </div>
 <ul>
@@ -735,53 +703,14 @@ p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
 <li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu=0\)</span>.</li>
 <li><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mu\neq0\)</span>.</li>
 </ul>
-<p>We have the following statistics:</p>
+<p>The values can be treated as realizations of i.i.d random variables <span class="math inline">\(X_i\)</span>’s’. We have the following statistics:</p>
 <ul>
-<li>Sample mean: <span class="math inline">\(\bar{x}=\frac1n\sum_{i=1}^nx_i\)</span>.</li>
-<li>Sample standard deviation: <span class="math inline">\(s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(x_i-\bar x)^2}\)</span></li>
+<li>Sample mean: <span class="math inline">\(\bar{X}=\frac1n\sum_{i=1}^nX_i\)</span>.</li>
+<li>Sample standard deviation: <span class="math inline">\(s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2}\)</span></li>
 <li>Sample size: <span class="math inline">\(n\)</span>.</li>
 </ul>
 <p>These statistics have sampling distributions that can be described exactly under the normality assumption.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Theorem (Normal Sample Mean–Variance)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Consider</p>
-<ul>
-<li><span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
-<li><span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
-</ul>
-<p>Then - <span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span> - <span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span> - <span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</p>
-</div>
-</div>
 <p>The t-test is based on the Student’s t-distribution theorem.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Theorem (Student’s t-Distribution)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Let</p>
-<ul>
-<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
-<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
-<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
-</ul>
-<p>Then <span class="math display">\[
-T=\frac{Z}{\sqrt{U/\nu}}
-\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
-</div>
-</div>
 <p>Put the two theorems together.</p>
 <ul>
 <li><span class="math inline">\(Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)\)</span></li>
