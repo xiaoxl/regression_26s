@@ -4,7 +4,7 @@
 .definition,
 .example {
   padding: 0.5rem 1.2rem;
-  margin: 0.1rem;
+  margin: 1.2rem 0rem;
   border-radius: 6px;
   border-left-width: 6px;
   border-left-style: solid;
@@ -49,8 +49,8 @@
 
 /* --- DEFINITION (dark authoritative green) --- */
 .definition {
-  border-left-color: #006400;
-  background-color: #f0fff2;
+  border-left-color: #cfeede;
+  background-color: #fafefa;
 }
 .definition .definition-title {
   color: #004b00;

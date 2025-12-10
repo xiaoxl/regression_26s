@@ -2,7 +2,26 @@
 # Basics 
 
 
+{{< include ../math.qmd >}}
 
+
+## Quick overview
+
+Given a set of observations of variables, we would like to understand the relationships among these variables. 
+
+The standard procedure for developing a statistical model is as follows:
+
+1.  Build the model by hypothesizing a relationship based on the data and relevant domain knowledge.
+2.  Estimating the parameters of the proposed model using the available data.
+3.  Assessing the adequacy and quality of the fitted model.
+4.  Revising the model based on the assessment results.
+
+There are two primary goals and related ways to assess the model:
+
+1. **Prediction (Generalization):** We evaluate the model performance on unseen data, using metrics like MSE or classification error. This assesses the model’s generalization ability, which is the primary focus of subjects like Statistical Learning or Machine Learning.
+2. **Explanation (Inference):** We evaluate the model using the original data with metrics such as $R^2$, confidence intervals, and p-values. This assesses how well the model explains the observed data and allows us to draw conclusions about underlying relationships. This approach is central to traditional Statistical Modeling, such as Regression Analysis.
+
+Both Statistical Learning and specific methods like Regression Analysis may use both assessment strategies, but the emphasis differs. In this course, the focus is on the principles of modeling and statistical inference, with prediction discussed but not treated as the primary objective.
 
 
 
@@ -15,14 +34,20 @@
 
 
 
-::: {.callout-tip collapse="true"}
-## Example: `gssr`
+::: {#exm-}
+## `gssr`
+
+<details>
+<summary>Click to expand.</summary>
 According to a previous national media report, the *average age* of U.S. adults who watch national TV news is **60 years**. A data analyst hypothesizes that the **average age of frequent TV-news watchers** is **greater than 60**. To test this, she uses the **General Social Survey (GSS)**, accessible via the `gssr` R package @gssr, to draw a **sample of 500 respondents** and record their ages.
 
 a. **Describe the population**: All U.S. adults who watch TV news **several times a week or more often**, as defined by the GSS survey question on TV-news frequency.
 b. **Describe the sample**: A random sample of 500 GSS respondents who meet the above criterion and have valid age data.
 c. **Sample size**: $n = 500$
 d. **Describe the statistical inference**: We want to determine whether the mean age of frequent TV-news watchers is greater than 60 based on the sampled data.
+<hr>
+</details>
+
 :::
 
 
@@ -38,9 +63,11 @@ A dataset is a collection of *values*. Values are organized in two ways. Every v
 :::
  
 
+::: {#exm-}
+## `possum`
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
-::: {.callout-tip collapse="true"}
-## Example: `possum`
 Researchers collected body measurements for bushtail possums in Eastern Australia. They trapped 104 possums and recorded location where possum was trapped, age, gender, head length, skull width, total length, tail length, etc. for each possum. For more details see @sec-app_possum.
 
 ```{r}
@@ -60,6 +87,8 @@ In this example, there are 14 varaibles, and 104 observations. Each column is a 
 possum$hdlngth
 ```
 
+</details>
+
 :::
 
 
@@ -75,7 +104,7 @@ possum$hdlngth
 
 
 ::: {#def-}
-# Discrete and Continuous
+# Discrete and Continuous @Men2020
 - Discrete random variable: A random variable that assumes either a finite number of values or an infinite sequence of values such as 0, 1, 2...
 - Continuous random variable: A random variable that may assume any numerical value in an interval or collection of intervals.
 :::
@@ -101,7 +130,6 @@ Then to make a mearuement is the same as to take a sample from the random variab
 
 
 
-
 ## Data Visualization
 ### Qualitative (categorical) data
 Usually the most important is the **class relative frequency**: 
@@ -112,12 +140,12 @@ $$
 To display it, we could use table, bar chart or pie chart.
 
 
-::: {#exm- }
+::: {#exm-}
+## `possum`
 
+<details>
+<summary>Click to expand.</summary>
 
-
-
-## Example: `possum`
 Here we still consider the `possum` dataset. 
 
 ```{r}
@@ -148,6 +176,8 @@ pie(table(possum$Pop))
 
 Note that `table` is handling the statistics, while `barplot` and `pie` draw on top of the result from `table`.
 
+</details>
+
 :::
 
 ### Quantitative (numerical) data
@@ -165,7 +195,7 @@ For a quantitative data, we would like to see the histogram, as well as computin
 ::: {#exm-}
 ## `possum`
 <details>
-<summary><strong>Expand for details</strong></summary>
+<summary><strong>Click to expand.</strong></summary>
 
 We still consider the `possum` dataset. We could use `summary` to compute the major statistics.
 
@@ -198,8 +228,11 @@ boxplot(possum$hdlngth)
 We could show the relation between two variables in a scatter plot.
 
 
-::: {.callout-tip collapse="true"}
-## Example: `possum`
+::: {#exm-}
+## `possum`
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
 The cases that both variables are numerical continuous:
 ```{r}
@@ -224,6 +257,8 @@ pairs(possum)
 ```
 Pair plot is very important since it can easily help us to find the expected relations between variables. We will use it a lot in regression analysis.
 
+</details>
+
 :::
 
 
@@ -246,13 +281,32 @@ Then
 :::
 
 
+::: {#lem-}
+
+1. $\Exp(\bar{X})=\mu$.
+2. $\Exp(s^2)=\sigma^2$.
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+$$
+\begin{aligned}
+\Exp\qty(\bar{X})&=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
+\Exp\qty(s^2)&=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
+&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
+&=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
+\end{aligned}
+$$
+</details>
+
+:::
+
+
 
 ### Student's t-Distribution
 
-
-@thm-t
-
-@thm-norm
 
 ::: {#thm-t}
 ## Theorem (Student's t-Distribution)

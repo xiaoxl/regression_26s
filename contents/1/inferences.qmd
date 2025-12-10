@@ -108,41 +108,16 @@ Consider the following statistics:
 - $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$.
 
 
-::: {#lem-}
-
-1. $\Exp(\bar{X})=\mu$.
-2. $\Exp(s^2)=\sigma^2$.
-:::
-
-
-::: {.callout-tip collapse="true"}
-# Proof
-$$
-\begin{aligned}
-\Exp\qty(\bar{X})&=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
-\Exp\qty(s^2)&=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
-&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
-&=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
-&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
-&=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
-&=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
-\end{aligned}
-$$
-
-:::
-
 
 ::: {#def-}
 The following are the unbiased estimators of $\mu$ and $\sigma^2$ of $X$.
 
 1. $\bar{X}=\dfrac1n\sum_{i=1}^nX_i$ is called the *sample mean* of the samples. 
 2. $s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2$ is called the *sample variance* of the samples.
-
-
 :::
 
 
-::: {.callout-caution}
+::: {.callout-important}
 Please pay attention to the denominator of the sample variance. The $n-1$ is due to the degree of freedom: all $X_i$'s and $\bar{X}$ are not independent to each other.
 :::
 
