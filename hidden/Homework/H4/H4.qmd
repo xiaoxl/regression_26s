@@ -4,11 +4,17 @@ title: "HW 4"
 # date: today
 format: 
     pdf:
-        pdf-engine: pdflatex
-
-include-in-header:
-  - text: 
-     \setcounter{section}{4}
+        include-in-header:
+        - text: |
+            \AtBeginDocument{
+                \renewcommand{\theexercise}{\arabic{exercise}}
+            }
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
 ---
 
 

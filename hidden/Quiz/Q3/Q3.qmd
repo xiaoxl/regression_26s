@@ -2,11 +2,17 @@
 title: "Quiz 3"
 format: 
     pdf:
-        pdf-engine: pdflatex
-
-include-in-header:
-  - text: 
-     \setcounter{section}{3}
+        include-in-header:
+        - text: |
+            \AtBeginDocument{
+                \renewcommand{\theexercise}{\arabic{exercise}}
+            }
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
 ---
 
 # Exercises

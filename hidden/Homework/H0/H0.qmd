@@ -22,7 +22,8 @@ In the file, there should be
 - sections
 - lists
 - texts
-- codes
+- codes (computations)
+- codes (read file and plot)
 
 
 :::

@@ -5,11 +5,17 @@ title: "Quiz 5"
 
 format: 
     pdf:
-        pdf-engine: pdflatex
-
-include-in-header:
-  - text: 
-     \setcounter{section}{5}
+        include-in-header:
+        - text: |
+            \AtBeginDocument{
+                \renewcommand{\theexercise}{\arabic{exercise}}
+            }
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
 ---
 
 In industry cooling applications (e.g., cooling of nuclear reactors), a process called subcooled flow boiling is often employed. Subcooled flow boiling is susceptible to small bubbles that occur near the heated surface. The characteristics of these bubbles were investigated in Heat Transfer Engineering (Vol. 34, 2013). A series of experiments was conducted to measure two important bubble behaviors-bubble diameter (millimeters) and bubble density (liters per meters squared). The mass flux (kilograms per meters squared per second) and heat flux (megawatts per meters squared) were varied for each experiment. The data obtained at a set pressure are listed in the following table.

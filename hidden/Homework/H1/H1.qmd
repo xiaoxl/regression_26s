@@ -12,7 +12,7 @@ format:
 params:
     show_solution: false
 filters:
-    - solution-filter.lua
+    - ../../solution-filter.lua
 crossref:
     chapters: false
 ---
