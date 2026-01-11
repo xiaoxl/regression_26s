@@ -9,21 +9,37 @@ format:
             \AtBeginDocument{
                 \renewcommand{\theexercise}{\arabic{exercise}}
             }
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
 crossref:
     chapters: false
 ---
 
 
 ::: {#exr-}
-Write a helloworld quarto document. submit both qmd file and pdf file. I will grade it based on the pdf file, with qmd as supplement.
+Write a helloworld quarto document. Submit the `qmd` file, the generated `pdf` file and the `data.csv` file stated below. I will grade it based on the `pdf` file, with `qmd` and `csv` as supplements.
 
-In the file, there should be 
+In the document file, there should be 
 
 - sections
 - lists
 - texts
 - codes (computations)
 - codes (read file and plot)
+
+The data should be a csv file with name `data.csv` stored in the working folder. You need to manually create the `data.csv` file and your file should be able to work with `data.csv`. The data is as below. 
+
+| x | y |
+|---|---|
+| 1 | 2 |
+| 2 | 4 |
+| 3 | 5 |
+| 4 | 4 |
+| 5 | 2 |
+| 6 | 7 |
+
 
 
 :::
