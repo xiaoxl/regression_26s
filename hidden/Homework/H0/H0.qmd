@@ -4,11 +4,15 @@ title: "HW 0"
 # date: today
 format: 
     pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        documentclass: scrartcl
         include-in-header:
-        - text: |
-            \AtBeginDocument{
-                \renewcommand{\theexercise}{\arabic{exercise}}
-            }
+            text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
 params:
     show_solution: false
 filters:

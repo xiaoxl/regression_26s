@@ -4,6 +4,9 @@ title: "HW 7"
 # date: today
 format: 
     pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
         include-in-header:
         - text: |
             \AtBeginDocument{

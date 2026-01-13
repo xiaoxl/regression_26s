@@ -2,6 +2,9 @@
 title: "Quiz 3"
 format: 
     pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
         include-in-header:
         - text: |
             \AtBeginDocument{

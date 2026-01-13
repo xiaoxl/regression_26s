@@ -5,6 +5,9 @@ title: "Quiz 5"
 
 format: 
     pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
         include-in-header:
         - text: |
             \AtBeginDocument{

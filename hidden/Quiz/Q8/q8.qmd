@@ -1,10 +1,13 @@
 ---
-title: "Quiz 7"
+title: "Quiz 8"
 # author: "Type Your Name Here"
 # date: today
 
 format: 
     pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
         include-in-header:
         - text: |
             \AtBeginDocument{

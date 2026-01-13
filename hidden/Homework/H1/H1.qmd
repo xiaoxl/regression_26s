@@ -3,7 +3,11 @@ title: "HW 1"
 # author: "Type Your Name Here"
 # date: today
 format: 
-    pdf:
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        documentclass: scrartcl
         include-in-header:
         - text: |
             \AtBeginDocument{
