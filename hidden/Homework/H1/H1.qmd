@@ -23,11 +23,9 @@ crossref:
 
 
 
-# Exercises
-
 
 ::: {#exr-}
-## Learning the mechanics. 
+# Learning the mechanics. 
 Use the method of least squares to fit a straight line to these six data points:
 
 | x | 1 | 2 | 3 | 4 | 5 | 6 |
@@ -35,12 +33,13 @@ Use the method of least squares to fit a straight line to these six data points:
 | y | 2 | 4 | 5 | 4 | 2 | 7 |
 
 
-(a) What are the least squares estimates of $\beta_0$ and $\beta_1$?
+(a) What are the least squares estimates of $\beta_0$ and $\beta_1$? Compute manually.
 (b) Plot the data points and graph the least squares line on the scatterplot.
 :::
 
 
 ::: {.answer}
+# Learning the mechanics. 
 (a)
 - With hand:
   - $\bar x=3.5$, $\bar y=4$.
@@ -50,19 +49,26 @@ Use the method of least squares to fit a straight line to these six data points:
     | $y-\bar y$ | -2 | 0 | 1 | 0 | -2 | 3 |
   - $S_{xy}=\sum (x_i-\bar x)(y_i-\bar y)=9$, $S_{xx}=\sum (x_i-\bar x)^2=17.5$.
   - $\hat\beta_1=9/17.5\approx 0.5143$, $\hat\beta_0=\bar y-\beta_1\bar x=4-9/17.5\times3.5=2.2$.
-- With R
+- With R (manually)
 ```{r}
 x <- c(1, 2, 3, 4, 5, 6)
 y <- c(2, 4, 5, 4, 2, 7)
-fit <- lm(y~x)
-summary(fit)
+xbar <- mean(x)
+ybar <- mean(y)
+n <- length(x)
+sxy <- sum((x - xbar) * (y - ybar)) / (n - 1)
+sxx <- sum((x - xbar) ^ 2) / (n - 1)
+b1hat <- sxy / sxx
+b0hat <- ybar - b1hat * xbar
+print(b1hat)
+print(b0hat)
 ```
 
 (b) Ploting with R code.
 
 ```{r}
 plot(x, y)
-abline(coef = fit$coefficients, col='red')
+abline(coef = c(b0hat, b1hat), col='red')
 ```
 
 :::
@@ -72,15 +78,16 @@ abline(coef = fit$coefficients, col='red')
 
 
 ::: {#exr-}
-## Predicting home sales price. 
-Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Please look at the provided dataset [`MARKET.csv`](./datasets/market.csv). The first five and last five observations of the data set are listed in the accompanying table.
+# Predicting home sales price. 
+Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Please look at the provided dataset [`MARKET.csv`](./datasets/market.csv). All the money are in 1000 dollars.
 
 (a) Propose a simple linear model to relate the appraised market value $x$ to the sale price $y$.
 (b) A scatterplot of the data is shown below. Does it appear that a straight-line model will be an appropriate fit to the data?
 (c) A R simple linear regression printout is also shown below. Find the equation of the best-fitting line through the data on the printout.
 (d) Interpret the $y$-intercept of the least squares line. Does it have a practical meaning for this application? Explain.
-(e) Interpret the slope of the least squares line. Over what range of $x$ is the interpretation meaningful?
-(f) Use the least squares model to estimate the mean sale price of a property appraised at $300,000.
+(e) Interpret the slope of the least squares line. 
+(f) Over what range of $x$ is the interpretation meaningful?
+(g) Use the least squares model to estimate the mean sale price of a property appraised at $300,000.
 
 ```{r}
 #| echo: false
@@ -98,9 +105,20 @@ summary(fit)
 :::
 
 
+::: {.answer}
+(a) $y=\beta_0+\beta_1 x+\epsilon$.
+(b) Yes, the data appears to demonstrate a straight-line relationship.
+(c) $\hat y =10.721+1.053x$, or `sale_price`=10.721+1.053*`market_value`.
+(d) The estimated intercept $\hat\beta_0=10.721$ represents the expected sale price when the market value $x=0$. Because a market value of $0$ is not observed in the data and is not realistic in this application, the $y$-intercept should not be interpreted in a practical sense. Instead, it serves primarily as a mathematical component of the fitted regression line.
+(e) The estimated slope $\hat\beta_1=1.053$ represents the expected change in the sale price for a one-unit increase in the market value. Specifically, for each \$1000 increase in the market value, the sale price is expected to increases by \$1053.
+(f) About the range, within $200k to $500k, where most of the data points are clustered, could be the interpretation meaningful.
+(g) When the market value is 300k, we know that $x=300$. Then `sale_price`=10.721+1.053*300=326.621. So the sales price is estimated to be around \$326621.
+:::
+
+
 ::: {#exr-}
-A study shows that during a certain sport the mean heart rate $y$ and the maximal oxygen uptake $x$ might have relations. The dataset `SPORTHR.csv` shows $y$ (expressed as a percentage of maximum heart rate) and $x$
-($V0_2$max). The data are shown in the table.
+# Heart rate
+A study shows that during a certain sport the mean heart rate $y$ and the maximal oxygen uptake $x$ might have relations. The dataset `SPORTHR.csv` shows $y$ (expressed as a percentage of maximum heart rate) and $x$ (VO2max). The data are shown in the table.
 
 
 ```{r}
@@ -117,13 +135,26 @@ print(df, row.names=FALSE)
 :::
 
 
+::: {.answer}
+(a) 
+
+```{r}
+attach(df)
+fit <- lm(meanHR~VO2max, data=df)
+fit$coefficients
+```
+So the equation is $\hat y=30.6546+0.2697x$.
+
+(b) Since $x=0$ corresponds to a maximal oxygen uptake of zero, which is physiologically impossible, the $y$-intercept doesn't have a practical interpretation.
+(c) For each unit increase in the value of VO2Max, the mean HR is estimated to increase by `{r} fit$coefficients['VO2max']`.
+:::
 
 
 
 
 
 ::: {#exr-}
-## Spreading rate of spilled liquid. 
+# Spreading rate of spilled liquid. 
 A researcher studied the rate at which a spilled liquid will spread across a surface. The mass (in pounds) of the spill after a period of time ranging from 0 to 60 minutes is recorded and shown below (based on the dataset `SPILLS.csv`). Do the data indicate that the mass of the spill tends to diminish as time increases? If so, how much will the mass diminish each minute?
 
 ```{r}
@@ -131,18 +162,34 @@ A researcher studied the rate at which a spilled liquid will spread across a sur
 
 df <- read.csv("datasets/SPILLS.csv")
 print(df, row.names=FALSE)
+
 ```
 :::
 
 
 
 
+::: {.answer}
+First we plot the data.
+
+```{r}
+plot(df$time_min, df$mass_lb)
+```
+As time increase, the mass of the spill tends to diminish in a nonlinear way. The scatterplot in this problem clearly shows a significant nonlinear trend. Therefore, the linear model is not the best to describe the data in this scatter plot.
+
+
+```{r}
+fit <- lm(mass_lb~time_min, data=df)
+summary(fit)
+```
+If we fit the linear model, the fitted regression line is $\hat y$=`{r} fit$coefficients['(Intercept)']` - `{r} abs(fit$coefficients['time_min'])`$x$. Since the slope is negative, and the corresponding p-value is very small, there is evidence that the mass of the spill tends to decrease as time increases. Therefore the spill tends to diminish as time increases. Fo each minute increased, the mass is expcted to decrease by `{r} abs(fit$coefficients['time_min'])` lb.
+:::
 
 
 
 
 ::: {#exr-}
-## Sweetness of orange juice. 
+# Sweetness of orange juice. 
 To study the sweetness of orange juices, researchers collect some data on the sweetness index ($y$) and the amount of pectin ($x$) in the orange juice (in $g/L$). The dataset is `ORANGEJUICE.csv`.
 
 
@@ -160,4 +207,35 @@ print(df, row.names=FALSE)
 (c) Estimate $\sigma$, the standard deviation of the random error term in the model.
 (d) Explain why it is difficult to give a practical interpretation to $s^2$, the estimate of $\sigma^2$.
 (e) Give a practical interpretation of the value of $s$.
+:::
+
+
+
+::: {.answer}
+(a) 
+
+```{r}
+fit <- lm(sweetness ~ pectin, data=df)
+summary(fit)
+```
+
+
+```{r}
+anova(fit)
+```
+
+```{r}
+#| echo: false
+#| output: false
+
+sf <- summary(fit)
+af <- anova(fit)
+```
+
+So $SSE$=`{r} af[1,2]`, $s^2$=`{r} af[2,3]` and $s$=`{r} sf$sigma`.
+
+(b) $\sigma^2$ is estimated by $s^2$, which is `{r} af[2,3]`.
+(c) $\sigma$ is estimated by $s$, which is `{r} sf$sigma`.
+(d) The units of measure for $s^2$ are square units. It is very difficulty to interpret units such as $\$^2$, $\text{minutes}^2$, etc.
+(e) We would expect most of the observed values to fall within $2s$ or 2(`{r} sf$sigma`)=`{r} 2*sf$sigma` units of the least squares line.
 :::
