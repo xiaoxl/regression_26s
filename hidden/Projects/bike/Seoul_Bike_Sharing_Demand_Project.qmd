@@ -1,0 +1,42 @@
+---
+title: "Seoul Bike Sharing Demand Project"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        documentclass: scrartcl
+crossref:
+    chapters: false
+---
+
+
+Currently Rental bikes are introduced in many urban cities for the enhancement of mobility comfort. It is important to make the rental bike available and
+accessible to the public at the right time as it lessens the waiting time. Eventually, providing the city with a stable supply of rental bikes becomes a major
+concern. The crucial part is the prediction of bike count required at each hour for the stable supply of rental bikes.
+
+The dataset SeoulBikeData.csv contains count of public bikes rented at each hour in Seoul Bike haring System with the corresponding Weather data and Holidays information. The variables contain weather information (Temperature, Humidity, Windspeed, Visibility, Dewpoint, Solar radiation, Snowfall, Rainfall), the number of bikes rented per hour, and date information. 
+
+
+| Variable Name            | Description / Unit |
+|--------------------------|--------------------|
+| Date                     | Year–month–day |
+| Rented Bike count        | Count of bikes rented at each hour |
+| Hour                     | Hour of the day |
+| Temperature              | Temperature (°C) |
+| Humidity                 | Relative humidity (%) |
+| Windspeed                | Wind speed (m/s) |
+| Visibility               | Visibility (10 m units) |
+| Dew point temperature    | Dew point temperature (°C) |
+| Solar radiation          | Solar radiation (MJ/m²) |
+| Rainfall                 | Rainfall (mm) |
+| Snowfall                 | Snowfall (cm) |
+| Seasons                  | Winter, Spring, Summer, Autumn |
+| Holiday                  | Holiday / No holiday |
+| Functional Day           | NoFunc (Non-functional hours), Fun (Functional hours) |
+
+Data Source:
+
+- http://data.seoul.go.kr/ SOUTH KOREA PUBLIC HOLIDAYS. URL: publicholidays.go.kr
