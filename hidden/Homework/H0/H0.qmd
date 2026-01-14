@@ -7,7 +7,6 @@ format:
         pdf-engine: lualatex
         template-partials:
             - ../../doc-class.tex
-        documentclass: scrartcl
         include-in-header:
             text: |
                 \AtBeginDocument{
@@ -21,6 +20,7 @@ crossref:
     chapters: false
 ---
 
+# Exercises
 
 ::: {#exr-helloworld}
 Write a helloworld quarto document. Submit the `qmd` file, the generated `pdf` file and the `data.csv` file stated below. I will grade it based on the `pdf` file, with `qmd` and `csv` as supplements.

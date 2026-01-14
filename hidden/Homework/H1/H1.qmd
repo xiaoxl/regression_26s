@@ -7,12 +7,11 @@ format:
         pdf-engine: lualatex
         template-partials:
             - ../../doc-class.tex
-        documentclass: scrartcl
         include-in-header:
-        - text: |
-            \AtBeginDocument{
-                \renewcommand{\theexercise}{\arabic{exercise}}
-            }
+            - text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
 params:
     show_solution: false
 filters:
@@ -21,7 +20,9 @@ crossref:
     chapters: false
 ---
 
-::: {#exr-}
+# Exercises
+
+::: {#exr-learning}
 ## Learning the mechanics. 
 Use the method of least squares to fit a straight line to these six data points:
 
@@ -71,9 +72,8 @@ abline(coef = c(b0hat, b1hat), col='red')
 
 
 
-
-::: {#exr-}
-## Predicting home sales price. 
+::: {#exr-market}
+## Home sales price. 
 Real estate investors, homebuyers, and homeowners often use the appraised (or market) value of a property as a basis for predicting sale price. Please look at the provided dataset [`MARKET.csv`](./datasets/market.csv). All the money are in 1000 dollars.
 
 (a) Propose a simple linear model to relate the appraised market value $x$ to the sale price $y$.
@@ -111,10 +111,9 @@ summary(fit)
 
 
 
-
-::: {#exr-}
+::: {#exr-hr}
 ## Heart rate
-A study shows that during a certain sport the mean heart rate $y$ and the maximal oxygen uptake $x$ might have relations. The dataset `SPORTHR.csv` shows $y$ (expressed as a percentage of maximum heart rate) and $x$ (VO2max). The data are shown in the table.
+A study shows that during a certain sport the mean heart rate $y$ and the maximal oxygen uptake $x$ might have relations. The dataset `SPORTHR.csv` shows $y$ (expressed as a percentage of maximum heart rate) and $x$ (VO2max).
 
 
 ```{r}
@@ -122,7 +121,7 @@ A study shows that during a certain sport the mean heart rate $y$ and the maxima
 #| results: asis
 
 df <- read.csv("datasets/SPORTHR.csv")
-# knitr::kable(df, format = "pipe")
+knitr::kable(df, format = "pipe")
 ```
 
 
@@ -147,17 +146,15 @@ So the equation is $\hat y=30.6546+0.2697x$.
 ::: 
 
 
-
-
-::: {#exr-}
-## Spreading rate of spilled liquid. 
+::: {#exr-spilled}
+## Spilled liquid. 
 A researcher studied the rate at which a spilled liquid will spread across a surface. The mass (in pounds) of the spill after a period of time ranging from 0 to 60 minutes is recorded and shown below (based on the dataset `SPILLS.csv`). Do the data indicate that the mass of the spill tends to diminish as time increases? If so, how much will the mass diminish each minute?
 
 ```{r}
 #| echo: false
-
+#| results: asis
 df <- read.csv("datasets/SPILLS.csv")
-# knitr::kable(df, format = "pipe")
+knitr::kable(df, format = "pipe")
 ```
 :::
 
@@ -181,16 +178,20 @@ If we fit the linear model, the fitted regression line is $\hat y$=`{r} fit$coef
 ::: 
 
 
-::: {#exr-}
+
+
+
+::: {#exr-juice}
 ## Sweetness of orange juice. 
 To study the sweetness of orange juices, researchers collect some data on the sweetness index ($y$) and the amount of pectin ($x$) in the orange juice (in $g/L$). The dataset is `ORANGEJUICE.csv`.
 
 
 ```{r}
 #| echo: false
+#| results: asis
 
 df <- read.csv("datasets/ORANGEJUICE.csv")
-# knitr::kable(df, format = "pipe")
+knitr::kable(df, format = "pipe")
 ```
 
 

@@ -2,37 +2,42 @@
 title: "Quiz 2: R basis"
 # author: "Type Your Name Here"
 # date: today
-
 format: 
-    pdf:
+    pdf:        
         pdf-engine: lualatex
         template-partials:
             - ../../doc-class.tex
         include-in-header:
-        - text: |
-            \AtBeginDocument{
-                \renewcommand{\theexercise}{\arabic{exercise}}
-            }
+            - ../../math.tex
+            - text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
 params:
-    show_solution: false
+    show_solution: true
 filters:
     - ../../solution-filter.lua
 crossref:
     chapters: false
 ---
-<!-- 
-# Instruction {.unnumbered}
-
-- Please create a qmd file for the following questions.
-- Once you have finished, please upload the rendered pdf onto Blackboard. -->
 
 
-<!-- # Exercises -->
+
+# Problems
 
 ::: {#exr-}
 Recall given the radius of a circle $r$, we can calculate the perimeter by using formula $C = 2\pi r$, and the area by using formula $A = \pi r^2$. Assume $r = 3$. Calculate the value of perimeter and area.
 :::
 
+::: {.answer}
+
+```{r}
+r <- 3
+cir <- 2 * pi * r
+area <- pi * (r ^ 2)
+```
+
+:::
 
 
 ::: {#exr-}
@@ -50,10 +55,16 @@ num_total_parks = num_natl_parks + num_state_parks
 :::
 
 
+::: {.answer}
+- `seven` is a string, which cannot be computed directly.
+- `num_natl_parks <- 7`.
+:::
+
+
 ::: {#exr-}
 a. Use function `length()` to find how many values in the vector a defined below?
-a. How many values are greater than 1000?
-a. What is the percentage of values in the vector greater than 1000?
+b. How many values are greater than 1000?
+c. What is the percentage of values in the vector greater than 1000?
 
 ```{r}
 a = c(275, 2168.36, 2931.5, 275.5, 399.93, 2, 545.128, 209.76, 400, 50.1499, 150, 1595.978)
@@ -65,10 +76,10 @@ a = c(275, 2168.36, 2931.5, 275.5, 399.93, 2, 545.128, 209.76, 400, 50.1499, 150
 Complete the following tasks.
 
 a. Install and load the package `nycflights13`.
-a. Load the data set `flights`.
-a. Find the variable names of `flights`.
-a. Find the dimension of `flights`.
-a. Display the first 3 rows of `flights`.
+b. Load the data set `flights`.
+c. Find the variable names of `flights`.
+d. Find the dimension of `flights`.
+e. Display the first 3 rows of `flights`.
 :::
 
 
@@ -76,9 +87,9 @@ a. Display the first 3 rows of `flights`.
 Complete the following tasks.
 
 a. Please download the `titanic_train.csv` dataset and import the data set to R. Save it as `Titanic`.
-a. Display the first 5 rows of `Titanic`.
-a. Find the average number of siblings / spouses aboard the Titanic (variable name `SibSp`)
-a. Find the average of `age`. Why `mean(Titanic$age)` doesn’t work? Please add `na.rm=TRUE` in `mean()` and retry. Please explain the behavior.
+b. Display the first 5 rows of `Titanic`.
+c. Find the average number of siblings / spouses aboard the Titanic (variable name `SibSp`)
+d. Find the average of `age`. Why `mean(Titanic$age)` doesn’t work? Please add `na.rm=TRUE` in `mean()` and retry. Please explain the behavior.
 
 :::
 

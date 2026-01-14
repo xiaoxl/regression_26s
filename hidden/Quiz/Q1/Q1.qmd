@@ -1,17 +1,18 @@
 ---
 title: "Quiz Review"
 # author: "Type Your Name Here"
-date: today
+# date: today
 format: 
-    pdf:
+    pdf:        
         pdf-engine: lualatex
         template-partials:
             - ../../doc-class.tex
         include-in-header:
-        - text: |
-            \AtBeginDocument{
-                \renewcommand{\theexercise}{\arabic{exercise}}
-            }
+            - ../../math.tex
+            - text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
 params:
     show_solution: false
 filters:
@@ -20,7 +21,9 @@ crossref:
     chapters: false
 ---
 
-{{< include ../math.qmd >}}
+# Problems
+
+<!-- {{< include ../../math.qmd >}} -->
 
 
 ::: {#exr-}
@@ -34,6 +37,15 @@ Colleges and universities are requiring an increasing amount of information abou
 - [ ] Age of applicant
 :::
 
+::: {.answer}
+- [x] High school GPA
+- [ ] Country of citizenship
+- [x] Applicant's score on the SAT or ACT
+- [ ] Gender of applicant
+- [x] Parents' income
+- [x] Age of applicant
+
+:::
 
 
 ::: {#exr-}
@@ -48,6 +60,22 @@ Use R to calculate the mean, variance, standard deviation of the following data 
 :::
 
 
+::: {.answer}
+
+```{r}
+x <- c(1, 2, 3, 1, 5, 6, 2, 4, 1, 2, 4, 2, 9)
+mean(x)
+```
+
+```{r}
+var(x)
+```
+
+```{r}
+sd(x)
+```
+
+:::
 
 
 
@@ -56,11 +84,32 @@ Given that the random variable $z$ has the standard normal probability distribut
 :::
 
 
+::: {.answer}
+
+```{r}
+1 - pnorm(-1, 0, 1)
+```
+or
+
+```{r}
+pnorm(-1, lower.tail = FALSE)
+```
+
+
+:::
 
 ::: {#exr-}
 Given that the random variable $z$ has the standard normal probability distribution, write the R code in finding the following probability $\Pr(-1.96 <= z <= 1.96)$.
 :::
 
+
+::: {.answer}
+
+```{r}
+pnorm(1.96, 0, 1) - pnorm(-1.96, 0, 1)
+```
+
+:::
 
 ::: {#exr-}
 Given that the random variable $y$ has a normal probability distribution with mean 100 and variance 64, write the R code in finding the following probability $\Pr(y <=92)$.
@@ -68,8 +117,29 @@ Given that the random variable $y$ has a normal probability distribution with me
 
 
 
+::: {.answer}
+
+```{r}
+pnorm(92, 100, 8)
+```
+or 
+
+
+
+
+:::
+
 ::: {#exr-}
 Given that the random variable $y$ has a normal probability distribution with mean 100 and variance 64, write the R code in finding the following probability $\Pr(76<=y <=124)$.
+:::
+
+
+::: {.answer}
+
+```{r}
+pnorm(124, 100, 8) - pnorm(76, 100, 8)
+```
+
 :::
 
 <!-- 

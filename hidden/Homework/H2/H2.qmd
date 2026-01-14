@@ -3,15 +3,15 @@ title: "HW 2"
 # author: "Type Your Name Here"
 # date: today
 format: 
-    pdf:
+    pdf:        
         pdf-engine: lualatex
         template-partials:
             - ../../doc-class.tex
         include-in-header:
-        - text: |
-            \AtBeginDocument{
-                \renewcommand{\theexercise}{\arabic{exercise}}
-            }
+            - text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
 params:
     show_solution: false
 filters:
@@ -19,7 +19,6 @@ filters:
 crossref:
     chapters: false
 ---
-
 
 
 ::: {#exr-}
