@@ -131,6 +131,131 @@ rnorm(10)
 
 
 
+## Some relations
+
+
+### Covariance
+
+Assuming we have two random variables $X$ and $Y$, and we have two sets of realizations $x_1,\ldots, x_n$ and $y_1,\ldots, y_n$. 
+
+The sum of squares and cross-products are defined as
+
+- $SS_{xx}=\sum_{i=1}^n(x_i-\bar x)^2$
+- $SS_{yy}=\sum_{i=1}^n(y_i-\bar y)^2$
+- $SS_{xy}=\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)$
+
+where $\bar x$ and $\bar y$ are sample mean. Note that if we normalize these quantities by $n-1$, we will get the usual unbiased sample varaince and covariance.
+
+
+::: {#def-}
+## Covariance and sample covariance
+
+- $\Cov(X,Y)=\Exp[(X-\mu_X)(Y-\mu_Y)]$, where $\mu_X=\Exp(X)$ and $\mu_Y=\Exp(Y)$.
+- $s_{xy}=\frac1{n-1}SS_{xy}=\frac1{n-1}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)$.
+:::
+
+
+### Pearson correlation coefficient
+
+
+
+
+::: {#def-}
+## Pearson correlation coefficient $r$
+$$
+r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
+$$
+:::
+
+
+::: {#thm-}
+## Properties of Correlation
+1. $-1\leq r\leq 1$.
+2. 
+   - $r>0$ means positive correlation. 
+   - $r<0$ means negative correlation.
+   - $r=0$ means no positive or negative linear correlation.
+3. $\cor(x,y)=\cor(y, x)$
+4. The correlation coefficient $r$ is scaleless (which means that it doesn't depend on the units of measurement used for the variables).
+:::
+
+The Pearson correlation coefficient is used to measure the correlation of the two variables. If the relation is more closely stick to a straight line, the relation is stronger, and the resulted $r$ will be bigger. If $r=1$, $X$ and $Y$ will have a perfectly linear relation. This is not the same as the slope.
+
+
+
+::: {#exm-}
+Let $x_i=i$ and $y_i=0.001x_i$. Then the slope is $0.001$ and the $r=1$. We may add a small noise to it so $y_i=0.001x_i+\varepsilon_i$ while $\varepsilon_i\sim N(0,0.001)$. Then the slope is $0.001$ but $r$ is still close to $1$.
+
+
+```{r}
+x <- seq(1, 100)
+y <- 0.001 * x + rnorm(100, 0, 1e-3)
+plot(x, y)
+abline(0, 0.001, col='red')
+cor(x, y)
+
+```
+
+
+
+:::
+
+
+### Independence
+
+Independence is the relation between two random variables.
+
+::: {#def-}
+## Independence
+Random variables $X$ and $𝑌$ are said to be independent if their joint distribution factorizes into the product of their marginal distributions. That is, for all $x$, $y$
+$$
+F_{X,Y}(x,y)=F_X(x)F_Y(y).
+$$
+
+If a joint density exists, this is equivalently written as
+
+$$
+f_{X,Y}(x,y)=f_X(x)f_Y(y).
+$$
+
+It is equivalent to say that for all measurable functions $g$ and $h$,
+
+$$
+\Exp[g(X)h(Y)]=\Exp[g(X)]\Exp[h(Y)].
+$$
+
+:::
+
+Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from $\Cov$ and $\cor$.
+
+
+::: {#thm-}
+If $X$ and $Y$ are independent, then $\Cov(X,Y)=0$ and $\cor(X,Y)=0$. The converse is not true in general.
+:::
+
+
+
+
+
+$\Cov(X,Y)=0$ (equivalently, $\cor(X,Y)=0$) means that $X$ and $Y$ have no positive or negative linear relationship. However, this does not imply that $X$ and $Y$ are unrelated; they may still exhibit a nonlinear dependence.
+
+
+
+::: {#exm-}
+
+```{r}
+x <- seq(-10, 10)
+y <- abs(x)
+cov(x, y)
+cor(x, y)
+plot(x, y)
+```
+They are not independent because $y$ is literally defined as a function of $x$. But their covariance and correlation are $0$s.
+:::
+
+
+
+
 
 ## Some important distributions
 
@@ -203,3 +328,6 @@ In other words, if we standardize the sample mean using the sample standard devi
 ::: {.callout-note}
 The normal distribution and the t-distribution are both bell-shaped and symmetric. When the sample size is large (typically \(n > 30\)), the t-distribution becomes very similar to the standard normal distribution, so the normal approximation is usually acceptable. When the sample size is small, however, the t-distribution has noticeably heavier tails, and it is better to use the t-distribution directly for inference.
 :::
+
+
+

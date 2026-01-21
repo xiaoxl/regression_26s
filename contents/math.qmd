@@ -18,7 +18,9 @@ $$
 $$
  \newcommand{\Exp}{\operatorname{E}}
  \newcommand{\Var}{\operatorname{Var}}
+  \newcommand{\Cov}{\operatorname{Cov}}
  \newcommand{\Mode}{\operatorname{mode}}
+ \newcommand{\cor}{\operatorname{cor}}
 $$
 
 <!-- Distributions pdf -->

@@ -1,64 +1,11 @@
-# slr
+# Simple Linear regression
 
 {{< include ../math.qmd >}}
-
-
-We want to use sample data to investigate the relationships among a group of variables, ultimately to create a model for some variable that can be used to predict its value in the futre. 
-
-Language:
- 
-- Predicting the value of $X$ by $\Exp(X)$ is tantamount to using $\Exp(X)$ as a **model** for the true $X$.
-- The variable to be modeled is called the **dependent** (or **reponse**) variable.
-
-## Probabilistic model for $y$
-
-The **probabilistic model** for $y$ is
-$$
-y=\Exp(y)+\text{Random error}.
-$$
-It is called *probabilistic* since we can make a probability statement about the magnitude of the deviation between $y$ and $\Exp(y)$.
-
-
-::: {.callout-note}
-# General Form of Probabilistic Model in Regression
-$$
-y=\Exp(y)+\varepsilon
-$$
-where
-
-- $y$: Dependent variable
-- $\Exp(y)$: Mean value of $y$
-- $\varepsilon$: Unexplainable or random error
-
-This model suggests that y will come back to its mean evautually. This is why it is called **regression** model.
-:::
-
-
-
-
-
-::: {#def-}
-The variables used to predict $y$ are called **independent variables** and are denoted by $x_i$.
-:::
-
-
-::: {.callout-tip}
-# Regression Modeling
-
-1. Hypothesize the form of the model for $\Exp(y)$.
-2. Collect the sample data.
-3. Use the sample data to estimate unknown parameters in the model.
-4. Specify the probability distribution of $\varepsilon$, and estimate any unknown parameters of this distribution.
-5. Statistically check the usefulness of the model.
-6. Check the validity of the assumptions on $\varepsilon$, and make model modifications if necessary.
-7. When satisfied that the model is useful, and assumptions are met, use the model to make inferences.
-:::
-
 
 ## SLR
 
 
-::: {.callout-note}
+::: {#def-}
 # A First-Order Model
 $$
 y=\beta_0+\beta_1x+\varepsilon
@@ -71,11 +18,42 @@ where
 - $\varepsilon$: Random error component
 - $\beta_0$: **$y$-intercept**
 - $\beta_1$: **Slope**
+
+For $\varepsilon$, we have the following assumptions:
+
+- $\varepsilon$ follows Normal distribution for all $x$.
+- The mean is constant to be $0$.
+- The variance is constant $\sigma^2$ (homoscedastic).
+- The errors associated with two observations are independent.
+
+In other words, $\varepsilon_i\sim N(0,\sigma^2)$ i.i.d.
 :::
 
+
+::: {#def-}
+## Regression equation
+Simple linear regression equation is
+$$
+\Exp(y)=\beta_0+\beta_1x.
+$$
+:::
+
+
+::: {#def-}
+## Estimated regression equation
+The estimated simple linear regression equation is
+$$
+\hat y=\hat\beta_0+\hat\beta_1x.
+$$
+$\hat\beta_0$ and $\hat\beta_1$ are estimators of $\beta_0$ and $\beta_1$.
+:::
+
+The purpose of the section is to estimate $\beta_0$, $\beta_1$ as well as $\sigma^2$. 
+
+<!-- 
 ### Fitting the model
 
-MLE=LSE under the assumption that e is normal
+MLE=LSE under the assumption that $\epsilon$ is normal
 
 
 different estimators 
@@ -107,143 +85,88 @@ $$
 \pdv{NLL}{\beta_0}&=
 \end{split}
 $$
-:::
+::: -->
 
 
 
-## estimation
+## Estimation
 
-b0, b1 are estimations
+<!-- b0, b1 are estimations
 
 1. b0, b1 formula
 2. E(b0) E(b1)
 3. Var(b0), Var(b1)
-4. relations to y: b1, ybar independent, b0, b1 are independent
+4. relations to y: b1, ybar independent, b0, b1 are independent -->
    
+
+
+::: {#thm-}
 
 $$
 \hat{\beta}_1=\frac{S_{xy}}{S_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
 $$
 
-$$
-\Var(y_i-\bar{y})=\Var(y_i-\frac1n\sum y_j)=\Var(\frac{n-1}{n}y_i-\sum_{j\neq i}\frac1ny_j)=\frac{(n-1)^2}{n^2}\sigma^2+\frac{n-1}{n^2}\sigma^2=\frac{n-1}{n}\sigma^2.
-$$
 
+<details>
+<summary><strong>Click for proof.</strong></summary>
 
-Since $\sum_i (x_i-\bar{x})=\sum_i (y_i-\bar{y})=0$, we have
-$$
-\sum_i (x_i-\bar{x})\bar{x}=\sum_i (x_i-\bar{x})\bar{y}=\sum_i (y_i-\bar{y})\bar{x}=\sum_i (y_i-\bar{y})\bar{y}=0.
-$$
-
-
-
-$$
-\begin{split}
-\Var(S_{xy})&=\Var\qty[\sum_i (x_i-\bar{x})(y_i-\bar{y})]=\Var\qty[\sum_i (x_i-\bar{x})y_i-\sum_i (x_i-\bar{x})\bar{y}]=\Var\qty[\sum_i (x_i-\bar{x})y_i]\\
-&=\sum(x_i-\bar{x})^2\Var(y_i)=\sum(x_i-\bar{x})^2\sigma^2=S_{xx}\sigma^2.
-\end{split}
-$$
-
-
-$$
-\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
-$$
+</details>
+:::
 
 
 
 
 ::: {#thm-}
-## Uncorrelation 
-$\hat{\beta}_0$ and $\bar y$ are uncorrelated.
-:::
 
-::: {.proof}
 $$
-\begin{split}
-\Cov(\hat{\beta}_1,\bar{y})=&\Cov\qty(\frac{1}{S_{xx}}\sum_i(x_i-\bar x)(y_i-\bar y), \sum\frac{1}{n} y_j)=\sum_{i,j}\frac{(x_i-\bar x)}{nS_{xx}}\Cov(y_i,y_j)\\
-=&\sum_{i}\frac{(x_i-\bar x)}{nS_{xx}}\sigma^2=0.
-\end{split}
+s^2=, 
 $$
-Since $\hat{\beta}_1$ and $\bar y$ are both normal, the uncorrelation implies that they are also indepedent.
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+</details>
 :::
 
 
+
+::: {#thm-}
+
+$$
+\Var(\hat{\beta}_0)=, \quad \Var(\hat{\beta}_1)=, 
+$$
+:::
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+$$
+\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
+$$
 $$
 \begin{split}
 \Var(\hat{\beta}_0)&=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2.
 \end{split}
 $$
+</details>
 
-
-
-$$
-\begin{split}
-\Exp\qty(y_i-\hat{y}_i)^2&=\Exp\qty(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)^2
-\end{split}
-$$
+::: {#thm-}
 
 $$
-\Exp\qty(\sum(y_i-\hat{y}_i)^2)=\Exp\qty(\sum(y_i-\bar{y}_i)^2) - \Exp(S_{xy}^2) =(n-2)\sigma^2.
+\Var(s^2)=
 $$
 
-$$
-\Var(y_i-\bar y)=\Var\qty(y_i-\sum\frac1n y_j)=\Var\qty(\sum_{j\neq i}\qty(-\frac1n)y_j+\frac{n-1}n y_i)=\sum_{j\neq i}\frac1{n^2}\Var(y_j)+\frac{(n-1)^2}{n^2}\Var{y_i}=\frac{n-1}{n}\sigma^2.
-$$
+<details>
+<summary><strong>Click for proof.</strong></summary>
 
-$$
-\Exp\qty(y_i-\bar y)=\Exp(y_i)-\Exp(\bar y)=\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x)=\beta_1(x_i-\bar x).
-$$
-
-$$
-\sum\qty(\Exp\qty(y_i-\bar y))^2=\sum\qty(\Exp(y_i)-\Exp(\bar y))^2=\sum\qty(\beta_0+\beta_1x_i-\qty(\beta_0+\beta_1\bar x))^2=\sum\qty(\beta_1(x_i-\bar x))^2=\beta_1^2S_{xx}.
-$$
-
-$$
-\begin{split}
-\Exp\qty(\sum(y_i-\bar{y}_i)^2)&=\sum\Exp\qty((y_i-\bar{y})^2)=\sum\qty(\Exp\qty(y_i-\bar{y}))^2+\sum\Var(y_i-\bar y) =\beta_1^2S_{xx}+(n-1)\sigma^2.
-\end{split}
-$$
+</details>
+:::
 
 
 
-$$ 
-\begin{split}
-\Exp(S_{xy})&=\Exp\qty(\sum(x_i-\bar x)(y_i-\bar y))=\Exp\qty(\sum(x_i-\bar x)y_i)=\sum(x_i-\bar x)E(y_i)\\
-&=\sum(x_i-\bar x)(\beta_0+\beta_1x_i)=\sum(x_i-\bar x)\beta_1x_i=\beta_1\sum(x_i-\bar x)x_i=\beta_1\sum(x_i-\bar x)^2\\
-&=\beta_1S_{xx}.
-\end{split}
-$$
 
 
 
-$$ 
-\begin{split}
-\Exp(S_{xy}^2)&=\qty(\Exp(S_{xy}))^2+\Var(S_{xy})=\beta_1^2S_{xx}^2+S_{xx}\sigma^2.
-\end{split}
-$$
 
-$$ 
-\begin{split}
-\Exp(\frac{S_{xy}^2}{S_{xx}})&=\frac{1}{S_{xx}}\beta_1^2S_{xx}^2+\frac{1}{S_{xx}}S_{xx}\sigma^2=\beta_1^2S_{xx}+\sigma^2.
-\end{split}
-$$
-
-
-1. $\Exp(S_{xy})=\beta_1S_{xx}$.
-2. $\Var(S_{xy})=S_{xx}\sigma^2$.
-3. $\Exp(S_{yy})=(n-2)\sigma^2$.
-<!-- 4. $\Var(S_{yy})=(n-2)\sigma^2$. -->
-
-
-1. $\Exp(S_{xy})$
-2. $\Var(\S_{xy})$
-3. $SST=SSE+SSR$
-4. $\Exp(SST)$
-5. $\Exp(SSR)$
-6. $\Exp(SSE)$
-7. $\Var(SST)$
-8. $\Var(SSR)$
-9. $\Var(SSR)$
 
 
 

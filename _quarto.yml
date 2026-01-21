@@ -56,12 +56,11 @@ book:
       - contents/1/prob.qmd
       - contents/1/inferences.qmd      
       # - contents/0/statsmodels.qmd
-    # - part: "SLR"
-    #   chapters: 
-    #   - contents/2/intro.qmd
-    #   - contents/2/slr.qmd
-    #   - contents/2/misc.qmd
-    #   - contents/2/project1.qmd
+    - part: "SLR"
+      chapters: 
+      - contents/2/intro.qmd
+      # - contents/2/slr.qmd
+      # - contents/2/project1.qmd
     # - part: "MLR"
     #   chapters:
     #   - contents/3/intro.qmd
@@ -69,8 +68,10 @@ book:
     # - part: "Building models"
     #   chapters:
     #   - contents/4/intro.qmd
+      # - contents/4/misc.qmd
   appendices:
     - contents/app/data.qmd
+    - contents/app/r.qmd
   sidebar:
     style: "docked"
     # pinned: true

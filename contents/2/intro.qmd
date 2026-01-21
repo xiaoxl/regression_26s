@@ -1,1 +1,55 @@
-# Simple Linear regression
+# Intro to regression
+
+{{< include ../math.qmd >}}
+
+
+We want to use sample data to investigate the relationships among a group of variables, ultimately to create a model for some variable that can be used to predict its value in the futre. 
+
+Language:
+ 
+- Predicting the value of $X$ by $\Exp(X)$ is tantamount to using $\Exp(X)$ as a **model** for the true $X$.
+- The variable to be modeled is called the **dependent** (or **reponse**) variable.
+
+## Probabilistic model for $y$
+
+The **probabilistic model** for $y$ is
+$$
+y=\Exp(y)+\text{Random error}.
+$$
+It is called *probabilistic* since we can make a probability statement about the magnitude of the deviation between $y$ and $\Exp(y)$.
+
+
+::: {.callout-note}
+# General Form of Probabilistic Model in Regression
+$$
+y=\Exp(y)+\varepsilon
+$$
+where
+
+- $y$: Dependent variable
+- $\Exp(y)$: Mean value of $y$
+- $\varepsilon$: Unexplainable or random error
+
+This model suggests that y will come back to its mean evautually. This is why it is called **regression** model.
+:::
+
+
+
+
+
+::: {#def-}
+The variables used to predict $y$ are called **independent variables** and are denoted by $x_i$.
+:::
+
+
+::: {.callout-tip}
+# Regression Modeling
+
+1. Hypothesize the form of the model for $\Exp(y)$.
+2. Collect the sample data.
+3. Use the sample data to estimate unknown parameters in the model.
+4. Specify the probability distribution of $\varepsilon$, and estimate any unknown parameters of this distribution.
+5. Statistically check the usefulness of the model.
+6. Check the validity of the assumptions on $\varepsilon$, and make model modifications if necessary.
+7. When satisfied that the model is useful, and assumptions are met, use the model to make inferences.
+:::
