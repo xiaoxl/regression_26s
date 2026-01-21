@@ -400,7 +400,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">SLR</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -408,8 +408,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../contents/app/data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
   </div>
 </li>
       </ul>
@@ -429,10 +452,16 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">2.2.1</span> R code</a></li>
   </ul></li>
-  <li><a href="#some-important-distributions" id="toc-some-important-distributions" class="nav-link" data-scroll-target="#some-important-distributions"><span class="header-section-number">2.3</span> Some important distributions</a>
+  <li><a href="#some-relations" id="toc-some-relations" class="nav-link" data-scroll-target="#some-relations"><span class="header-section-number">2.3</span> Some relations</a>
   <ul class="collapse">
-  <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.3.1</span> Normal Distribution</a></li>
-  <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.3.2</span> Student’s t-Distribution</a></li>
+  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">2.3.1</span> Covariance</a></li>
+  <li><a href="#pearson-correlation-coefficient" id="toc-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">2.3.3</span> Independence</a></li>
+  </ul></li>
+  <li><a href="#some-important-distributions" id="toc-some-important-distributions" class="nav-link" data-scroll-target="#some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</a>
+  <ul class="collapse">
+  <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</a></li>
+  <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -474,7 +503,9 @@ window.Quarto = {
 <p><span class="math display">\[
 \newcommand{\Exp}{\operatorname{E}}
 \newcommand{\Var}{\operatorname{Var}}
+  \newcommand{\Cov}{\operatorname{Cov}}
 \newcommand{\Mode}{\operatorname{mode}}
+\newcommand{\cor}{\operatorname{cor}}
 \]</span></p>
 <!-- Distributions pdf -->
 <p><span class="math display">\[
@@ -620,19 +651,122 @@ Note
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.58816887 -0.19119097 -1.04581242 -1.06323842 -1.44962628  1.39717300</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -0.60509323 -0.20214579  0.64415165 -0.06536277</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.45553055 -0.23798670  0.25833195  1.41453132  0.01213193  0.49161460</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] -1.10011158  1.58892677 -1.18410964  0.55817316</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 </div>
 </section>
 </section>
-<section id="some-important-distributions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="some-important-distributions"><span class="header-section-number">2.3</span> Some important distributions</h2>
-<section id="normal-distribution-1" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="normal-distribution-1"><span class="header-section-number">2.3.1</span> Normal Distribution</h3>
+<section id="some-relations" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="some-relations"><span class="header-section-number">2.3</span> Some relations</h2>
+<section id="covariance" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="covariance"><span class="header-section-number">2.3.1</span> Covariance</h3>
+<p>Assuming we have two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we have two sets of realizations <span class="math inline">\(x_1,\ldots, x_n\)</span> and <span class="math inline">\(y_1,\ldots, y_n\)</span>.</p>
+<p>The sum of squares and cross-products are defined as</p>
+<ul>
+<li><span class="math inline">\(SS_{xx}=\sum_{i=1}^n(x_i-\bar x)^2\)</span></li>
+<li><span class="math inline">\(SS_{yy}=\sum_{i=1}^n(y_i-\bar y)^2\)</span></li>
+<li><span class="math inline">\(SS_{xy}=\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span></li>
+</ul>
+<p>where <span class="math inline">\(\bar x\)</span> and <span class="math inline">\(\bar y\)</span> are sample mean. Note that if we normalize these quantities by <span class="math inline">\(n-1\)</span>, we will get the usual unbiased sample varaince and covariance.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.3 (Covariance and sample covariance)</strong></span> &nbsp;</p>
+<ul>
+<li><span class="math inline">\(\Cov(X,Y)=\Exp[(X-\mu_X)(Y-\mu_Y)]\)</span>, where <span class="math inline">\(\mu_X=\Exp(X)\)</span> and <span class="math inline">\(\mu_Y=\Exp(Y)\)</span>.</li>
+<li><span class="math inline">\(s_{xy}=\frac1{n-1}SS_{xy}=\frac1{n-1}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="pearson-correlation-coefficient" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</h3>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.4 (Pearson correlation coefficient <span class="math inline">\(r\)</span>)</strong></span> <span class="math display">\[
+r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
+\]</span></p>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.1 (Properties of Correlation)</strong></span> &nbsp;</p>
+<ol type="1">
+<li><span class="math inline">\(-1\leq r\leq 1\)</span>.</li>
+<li><ul>
+<li><span class="math inline">\(r&gt;0\)</span> means positive correlation.</li>
+<li><span class="math inline">\(r&lt;0\)</span> means negative correlation.</li>
+<li><span class="math inline">\(r=0\)</span> means no positive or negative linear correlation.</li>
+</ul></li>
+<li><span class="math inline">\(\cor(x,y)=\cor(y, x)\)</span></li>
+<li>The correlation coefficient <span class="math inline">\(r\)</span> is scaleless (which means that it doesn’t depend on the units of measurement used for the variables).</li>
+</ol>
+</div>
+<p>The Pearson correlation coefficient is used to measure the correlation of the two variables. If the relation is more closely stick to a straight line, the relation is stronger, and the resulted <span class="math inline">\(r\)</span> will be bigger. If <span class="math inline">\(r=1\)</span>, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will have a perfectly linear relation. This is not the same as the slope.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.2</strong></span> Let <span class="math inline">\(x_i=i\)</span> and <span class="math inline">\(y_i=0.001x_i\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> and the <span class="math inline">\(r=1\)</span>. We may add a small noise to it so <span class="math inline">\(y_i=0.001x_i+\varepsilon_i\)</span> while <span class="math inline">\(\varepsilon_i\sim N(0,0.001)\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> but <span class="math inline">\(r\)</span> is still close to <span class="math inline">\(1\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.001</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">1e-3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="fl">0.001</span>, <span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prob_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.9995064</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="independence" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="independence"><span class="header-section-number">2.3.3</span> Independence</h3>
+<p>Independence is the relation between two random variables.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2.5 (Independence)</strong></span> Random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(𝑌\)</span> are said to be independent if their joint distribution factorizes into the product of their marginal distributions. That is, for all <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> <span class="math display">\[
+F_{X,Y}(x,y)=F_X(x)F_Y(y).
+\]</span></p>
+<p>If a joint density exists, this is equivalently written as</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y)=f_X(x)f_Y(y).
+\]</span></p>
+<p>It is equivalent to say that for all measurable functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>,</p>
+<p><span class="math display">\[
+\Exp[g(X)h(Y)]=\Exp[g(X)]\Exp[h(Y)].
+\]</span></p>
+</div>
+<p>Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from <span class="math inline">\(\Cov\)</span> and <span class="math inline">\(\cor\)</span>.</p>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.2</strong></span> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\Cov(X,Y)=0\)</span> and <span class="math inline">\(\cor(X,Y)=0\)</span>. The converse is not true in general.</p>
+</div>
+<p><span class="math inline">\(\Cov(X,Y)=0\)</span> (equivalently, <span class="math inline">\(\cor(X,Y)=0\)</span>) means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no positive or negative linear relationship. However, this does not imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are unrelated; they may still exhibit a nonlinear dependence.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.3</strong></span> &nbsp;</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">abs</span>(x)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="prob_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>They are not independent because <span class="math inline">\(y\)</span> is literally defined as a function of <span class="math inline">\(x\)</span>. But their covariance and correlation are <span class="math inline">\(0\)</span>s.</p>
+</div>
+</section>
+</section>
+<section id="some-important-distributions" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</h2>
+<section id="normal-distribution-1" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</h3>
 <div id="thm-norm" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.1 (Normal Sample Mean–Variance)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Define</p>
+<p><span class="theorem-title"><strong>Theorem 2.3 (Normal Sample Mean–Variance)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Define</p>
 <ul>
 <li>Sample mean: <span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
 <li>Sample variance: <span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
@@ -646,10 +780,10 @@ Note
 </div>
 <p>The complete proof is lengthy and out of scope of the course. Please refer to <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span> for details.</p>
 </section>
-<section id="sec-t-dist" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="sec-t-dist"><span class="header-section-number">2.3.2</span> Student’s t-Distribution</h3>
+<section id="sec-t-dist" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</h3>
 <div id="thm-t" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.2 (Student’s t-Distribution <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span>)</strong></span> Let</p>
+<p><span class="theorem-title"><strong>Theorem 2.4 (Student’s t-Distribution <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span>)</strong></span> Let</p>
 <ul>
 <li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
 <li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
