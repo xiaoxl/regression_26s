@@ -242,3 +242,84 @@ $f_{X\mid Y}(x\mid y)$ is a pdf w.r.t $X$, not a pdf w.r.t $Y$.
 ```
 :::
 
+
+
+
+
+## Miscs
+::: {.theorem #thm-empirical-rule}
+## Empirical Rule (Normal Data)
+
+If a random variable $X$ is approximately normally distributed with mean $\mu$
+and standard deviation $\sigma$, then:
+
+- About $68\%$ of observations lie within $1\sigma$ of the mean:
+  $$
+  \mu \pm 1\sigma
+  $$
+
+- About $95\%$ of observations lie within $2\sigma$ of the mean:
+  $$
+  \mu \pm 2\sigma
+  $$
+
+- About $99.7\%$ of observations lie within $3\sigma$ of the mean:
+  $$
+  \mu \pm 3\sigma
+  $$
+
+This is commonly known as the **68–95–99.7 rule**.
+:::
+
+
+::: {.remark #rem-empirical-approx}
+## Precision of the 95\% Rule
+
+The statement that “about $95\%$ of observations lie within $2\sigma$ of the mean”
+is an **approximation**.
+
+If
+$$
+X \sim \mathcal N(\mu,\sigma^2),
+$$
+then the exact probability statement is
+$$
+P\bigl(\mu - 1.96\sigma \le X \le \mu + 1.96\sigma\bigr) = 0.95.
+$$
+
+Thus, for normally distributed data:
+
+- The exact 95\% cutoff is $\pm 1.96\sigma$
+- The value $\pm 2\sigma$ is a convenient rounding
+:::
+
+
+::: {.remark #rem-why-use-2sd}
+## Why $\boldsymbol{2\sigma}$ Is Still Used
+
+The cutoff $\pm 2\sigma$ is widely used because:
+
+1. It is easy to remember and communicate.
+2. The difference from $1.96\sigma$ is small:
+   $$
+   P(|Z|\le 2) \approx 0.9545.
+   $$
+3. It provides a useful mental model of variability.
+
+In contrast, the value $1.96$ arises naturally in
+formal statistical inference, such as confidence intervals
+and hypothesis testing.
+:::
+
+
+::: {.remark #rem-rule-vs-exact}
+## Rule-of-Thumb vs. Exact Normal Theory
+
+- The **68–95–99.7 rule** is a descriptive heuristic.
+- The values $1.645$, $1.96$, and $2.576$ come from exact normal quantiles.
+
+Understanding this distinction is essential for:
+- Confidence intervals
+- Hypothesis testing
+- Interpretation of statistical uncertainty
+:::
