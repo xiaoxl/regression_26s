@@ -21,6 +21,8 @@ $$
   \newcommand{\Cov}{\operatorname{Cov}}
  \newcommand{\Mode}{\operatorname{mode}}
  \newcommand{\cor}{\operatorname{cor}}
+
+ \newcommand{\nll}{\operatorname{nll}}
 $$
 
 <!-- Distributions pdf -->

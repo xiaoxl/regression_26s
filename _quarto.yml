@@ -59,8 +59,8 @@ book:
     - part: "SLR"
       chapters: 
       - contents/2/intro.qmd
-      # - contents/2/slr.qmd
-      # - contents/2/project1.qmd
+      - contents/2/slr.qmd
+      - contents/2/project1.qmd
     # - part: "MLR"
     #   chapters:
     #   - contents/3/intro.qmd

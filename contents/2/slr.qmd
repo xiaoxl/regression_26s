@@ -99,33 +99,94 @@ $$
 4. relations to y: b1, ybar independent, b0, b1 are independent -->
    
 
+### OLS estimators
+
+The standard approach is known as ordinary least squares (OLS) estimation. In this method, model parameters are chosen to minimize the sum of squared residuals between the observed responses and the values predicted by the model. From an optimization perspective, OLS minimizes a loss function that measures the discrepancy between the data and the fitted model. The loss function is called negative log loss likelihood function.
+
+Here is more details.
+
+Consider the linear regression model 
+$$
+y_i=\beta_0+\beta_1x_i+\varepsilon_i,\quad i=1,\ldots, n.
+$$
+
+In order to find the best parameters, we need to minimize the sum of square errors 
+$$
+L(\beta_0, \beta_1) = \sum_{i=1}^n\varepsilon_i^2=\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
+$$
+Since this loss can be treated as a function of $\beta_0$ and $\beta_1$, to minimize it, we could consider the critical point, which is 
+
+$$
+\pdv{L}{\beta_0}=0,\quad \pdv{L}{\beta_1}=0.
+$$
+In other words, we have
+
+$$
+\begin{split}
+\pdv{L}{\beta_0}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-1)=-\sum_{i=1}^ny_i-n\beta_0-\beta_1(\sum_{i=1}^nx_i)=-n(\bar y-\beta_0-\beta_1\bar x)=0,\\
+\pdv{L}{\beta_1}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i).
+\end{split}
+$$
+The first equation gives us $\beta_0=\bar y-\beta_1\bar x$. Then the second equation is
+$$
+\begin{split}
+\pdv{L}{\beta_1}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i)=-2\sum_{i=1}^n(y_i-\bar y+\beta_1\bar x-\beta_1x_i)(x_i)\\
+&=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i)=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i-\bar x)\\
+&=-2\qty(\sum_{i=1}^n(y_i-\bar y)(x_i-\bar x)-\beta_1\sum_{i=1}^n(x_i-\bar x)(x_i-\bar x))\\
+&=-2\qty(SS_{yy}-\beta_1SS_{xx})=0.
+\end{split}
+$$
+
+Therefore, the solution to the equations, which is the best parameters that minimize the sum of square errors, is
 
 ::: {#thm-}
 
 $$
-\hat{\beta}_1=\frac{S_{xy}}{S_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
+\hat{\beta}_1=\frac{SS_{xy}}{SS_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
 $$
 
-
-<details>
-<summary><strong>Click for proof.</strong></summary>
-
-</details>
 :::
 
 
+### MLE estimators
 
+
+Since we assume $\varepsilon_i\sim mathcal N(0,\sigma^2)$ i.i.d, we could actually compute the likelihood function explicitly. Recall that $y_i=\beta_0+\beta_1x_i+\varepsilon_i$, then
+$$
+\begin{split}
+p(y_i\mid x_i,\beta_0,\beta_1,\sigma^2)=\frac{1}{\sqrt{2\pi \sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
+\end{split}
+$$
+Take all data into consideration. Let $\mathbf x=(x_1,\ldots,x_n)$ and $\mathbf y=(y_1,\ldots,y_n)$. Assuming that all $\varepsilon_i$'s be independent, then the likelihood function is
+$$
+L(\beta_0,\beta_1,\sigma^2\mid \mathbf x, \mathbf y)=\prod_{i=1}^n\frac1{\sqrt{2\pi\sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
+$$
+We could take negative log to make it simpler
+$$
+\nll(\beta_0,\beta_1,\sigma^2\mid \mathbf x, \mathbf y)=\frac n2\ln\qty(2\pi\sigma^2)+\frac1{2\sigma^2}\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
+$$
+This derived loss function is called the negative log-likelihood (NLL). Maximizing the likelihood is equivalent to minimizing $\nll$.
+
+For fixed $\sigma^2$, minimizing $\nll$ over $(\beta_0,\beta_1)$ is equivalent to minimizing $\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2$, so the MLE of $(\beta_0,\beta_1)$ is the same as the OLS estimator. 
+
+To estimate $\sigma^2$, treat $\sigma^2$ as a variable and differentiate:
+$$
+\pdv{\nll}{\sigma^2}=\frac{n}2\frac1{\sigma^2}-\frac12\frac{1}{(\sigma^2)^2}\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2=0.
+$$
+Setting this derivative to zero yields
 
 ::: {#thm-}
 
 $$
-s^2=, 
+\hat\sigma_{MLE}^2=\frac1n\sum_{i=1}^n(y_i-\hat\beta_0-\hat\beta_1x_i)^2=\frac{SSE}{n}. 
 $$
-<details>
-<summary><strong>Click for proof.</strong></summary>
 
-</details>
 :::
+Similar to the sample variance scenario, the unbiased estimator of the error variance is 
+$$
+s^2=\frac{SSE}{n-2}.
+$$
+
 
 
 
