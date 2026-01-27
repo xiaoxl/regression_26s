@@ -101,16 +101,16 @@ $$
 
 ### OLS estimators
 
-The standard approach is known as ordinary least squares (OLS) estimation. In this method, model parameters are chosen to minimize the sum of squared residuals between the observed responses and the values predicted by the model. From an optimization perspective, OLS minimizes a loss function that measures the discrepancy between the data and the fitted model. The loss function is called negative log loss likelihood function.
+The standard approach is known as ordinary least squares (OLS) estimation. In this method, model parameters are chosen to minimize the sum of squared residuals between the observed responses and the values predicted by the model. From an optimization perspective, OLS minimizes a loss function that measures the discrepancy between the data and the fitted model. 
 
-Here is more details.
+Here are more details.
 
 Consider the linear regression model 
 $$
 y_i=\beta_0+\beta_1x_i+\varepsilon_i,\quad i=1,\ldots, n.
 $$
 
-In order to find the best parameters, we need to minimize the sum of square errors 
+In order to find the best parameters, we need to minimize the sum of squared errors 
 $$
 L(\beta_0, \beta_1) = \sum_{i=1}^n\varepsilon_i^2=\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
 $$
@@ -123,7 +123,7 @@ In other words, we have
 
 $$
 \begin{split}
-\pdv{L}{\beta_0}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-1)=-\sum_{i=1}^ny_i-n\beta_0-\beta_1(\sum_{i=1}^nx_i)=-n(\bar y-\beta_0-\beta_1\bar x)=0,\\
+\pdv{L}{\beta_0}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-1)=-2\qty(\sum_{i=1}^ny_i-n\beta_0-\beta_1(\sum_{i=1}^nx_i))=-2n(\bar y-\beta_0-\beta_1\bar x)=0,\\
 \pdv{L}{\beta_1}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i).
 \end{split}
 $$
@@ -133,7 +133,7 @@ $$
 \pdv{L}{\beta_1}&=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i)=-2\sum_{i=1}^n(y_i-\bar y+\beta_1\bar x-\beta_1x_i)(x_i)\\
 &=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i)=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i-\bar x)\\
 &=-2\qty(\sum_{i=1}^n(y_i-\bar y)(x_i-\bar x)-\beta_1\sum_{i=1}^n(x_i-\bar x)(x_i-\bar x))\\
-&=-2\qty(SS_{yy}-\beta_1SS_{xx})=0.
+&=-2\qty(SS_{xy}-\beta_1SS_{xx})=0.
 \end{split}
 $$
 
@@ -151,13 +151,13 @@ $$
 ### MLE estimators
 
 
-Since we assume $\varepsilon_i\sim mathcal N(0,\sigma^2)$ i.i.d, we could actually compute the likelihood function explicitly. Recall that $y_i=\beta_0+\beta_1x_i+\varepsilon_i$, then
+Since we assume $\varepsilon_i\sim \mathcal N(0,\sigma^2)$ i.i.d, we could actually compute the likelihood function explicitly. Recall that $y_i=\beta_0+\beta_1x_i+\varepsilon_i$, then
 $$
 \begin{split}
 p(y_i\mid x_i,\beta_0,\beta_1,\sigma^2)=\frac{1}{\sqrt{2\pi \sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
 \end{split}
 $$
-Take all data into consideration. Let $\mathbf x=(x_1,\ldots,x_n)$ and $\mathbf y=(y_1,\ldots,y_n)$. Assuming that all $\varepsilon_i$'s be independent, then the likelihood function is
+Take all data into consideration. Let $\mathbf x=(x_1,\ldots,x_n)$ and $\mathbf y=(y_1,\ldots,y_n)$. Assuming that all $\varepsilon_i$'s are independent, then the likelihood function is
 $$
 L(\beta_0,\beta_1,\sigma^2\mid \mathbf x, \mathbf y)=\prod_{i=1}^n\frac1{\sqrt{2\pi\sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
 $$
@@ -182,10 +182,64 @@ $$
 $$
 
 :::
-Similar to the sample variance scenario, the unbiased estimator of the error variance is 
+Similar to the sample variance scenario, the MLE estimator for variance is biased. The unbiased estimator of the error variance is the sample variance of the residuals. 
 $$
 s^2=\frac{SSE}{n-2}.
 $$
+
+
+
+### Properties of these estimators
+
+
+::: {#thm-}
+$$
+\Exp(\hat{\beta}_0)=\beta_0, \quad \Exp(\hat{\beta}_1)=\beta_1,\quad \Exp(s^2)=\sigma^2. 
+$$
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+The key point is to treat all $x_i$'s as constants, and $y_i=\beta_0+\beta_1x_i+\varepsilon_i$ is a random variable due to $\varepsilon_i$. Note that $\Exp(y_i)=\beta_0+\beta_1x_i$ and $\Exp(\bar y)=\frac1n\sum_{i=1}^n\Exp(y_i)=\beta_0+\beta_1\bar x$.
+$$
+\begin{split}
+\Exp(SS_{xy})&=\Exp\qty(\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y))\\
+&=\sum_{i=1}^n(x_i-\bar x)(\Exp(y_i)-\Exp(\bar y))\\
+&=\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i-\beta_0-\beta_1\bar x)\\
+&=\sum_{i=1}^n(x_i-\bar x)\beta_1(x_i-\bar x)\\
+&=\beta_1SS_{xx}.
+\end{split}
+$$
+Therefore 
+$$
+\Exp(\hat\beta_1)=\Exp\qty(\frac{SS_{xy}}{SS_{xx}})=\beta_1.
+$$
+We now show that $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
+Recall that
+$$
+\hat\beta_0 = \bar y - \hat\beta_1 \bar x.
+$$
+Taking expectations and using linearity of expectation,
+$$
+\begin{aligned}
+\Exp(\hat\beta_0)
+&= \Exp(\bar y) - \bar x\,\Exp(\hat\beta_1) \\
+&= (\beta_0 + \beta_1 \bar x) - \bar x\,\beta_1 \\
+&= \beta_0.
+\end{aligned}
+$$
+Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
+
+For $s^2$, it requires more knowledge from $\chi^22$ distribution. 
+
+- $\varepsilon_i\sim \mathcal N(0,\sigma^2)$ i.i.d, and $x_i$'s are all constants.
+- $e_i=y_i-\hat y_i=\varepsilon_i-(\hat\beta_0-\beta_0)+(\hat\beta_1-\beta_1)x_i$. Note that $\hat\beta_0-\beta_0$ and $\hat\beta_1-\beta_1$ are functions of all $\varepsilon_i$'s so each residual depends on the entire error vector.
+- Since $SSE=\sum_{i=1}^ne_i^2$, by @thm-norm, one can show that $\frac{SSE}{\sigma^2}\sim \chi_{n-2}^2$. The loss of 2 degrees of freedom comes from estimating $\beta_0$ and $\beta_1$.
+- Therefore $\Exp\qty(\frac{SSE}{\sigma^2})=n-2$.
+- Therefore $\Exp(s^2)=\frac1{n-2}\Exp(SSE)=\sigma^2$.
+
+</details>
+:::
 
 
 
@@ -193,10 +247,8 @@ $$
 ::: {#thm-}
 
 $$
-\Var(\hat{\beta}_0)=, \quad \Var(\hat{\beta}_1)=, 
+\Var(\hat{\beta}_0)=\frac{\sigma^2}{S_{xx}}, \quad \Var(\hat{\beta}_1)=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2. 
 $$
-:::
-
 
 <details>
 <summary><strong>Click for proof.</strong></summary>
@@ -209,6 +261,15 @@ $$
 \end{split}
 $$
 </details>
+
+
+
+:::
+
+
+
+
+
 
 ::: {#thm-}
 
