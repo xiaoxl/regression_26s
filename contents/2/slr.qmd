@@ -245,43 +245,36 @@ For $s^2$, it requires more knowledge from $\chi^22$ distribution.
 
 
 ::: {#thm-}
-
 $$
-\Var(\hat{\beta}_0)=\frac{\sigma^2}{S_{xx}}, \quad \Var(\hat{\beta}_1)=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2. 
+\Var(\hat{\beta}_1)=\frac{\sigma^2}{SS_{xx}}, \quad \Var(\hat{\beta}_0)=\qty(\frac{1}{n}+\frac{\bar x^2}{nSS_{xx}})\sigma^2, \quad \Var(s^2)=\frac{2\sigma^4}{n-2}.
 $$
 
 <details>
 <summary><strong>Click for proof.</strong></summary>
+
 $$
-\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
+\Var(\hat{\beta}_1)=\frac{1}{SS_{xx}^2}\Var(SS_{xy})=\frac{1}{SS_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{SS_{xx}^2}SS_{xx}\sigma^2=\frac{\sigma^2}{SS_{xx}}.
 $$
+
+Since $\Cov(\bar y ,\hat\beta_1)=0$, we have
 $$
 \begin{split}
-\Var(\hat{\beta}_0)&=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2.
+\Var(\hat{\beta}_0)&=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nSS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nSS_{xx}})\sigma^2.
 \end{split}
 $$
+
+Since $\frac{SSE}{\sigma^2}\sim\chi^2_{n-2}$, $\var(\frac{SSE}{\sigma^2})=2(n-2)$. Therefore
+$$
+\Var(s^2)=\Var(\frac{SSE}{n-2})=\frac1{(n-2)^2}\Var(SSE)=\frac1{(n-2)^2}(\sigma^2)^22(n-2)=\frac{2\sigma^4}{n-2}.
+$$
 </details>
 
 
 
 :::
 
+Note that these variance formulas involve $\sigma^2$. They come from a theoretical (population) analysis, so they can depend on unknown parameters. If we want numerical estimates of these variances from data, we must replace the unknown quantities with estimators and rebuild the variance calculations accordingly (typically by plugging in $s^2$ for $\sigma^2$, and using the sample versions of any other unknown terms).
 
-
-
-
-
-::: {#thm-}
-
-$$
-\Var(s^2)=
-$$
-
-<details>
-<summary><strong>Click for proof.</strong></summary>
-
-</details>
-:::
 
 
 
@@ -294,57 +287,159 @@ $$
 
 ## $\beta_1$
 
-hypotheis: $\beta_1\neq0$
+The most important question for $\beta_1$ is whether it is $0$. In other words, we want to know whether $X$ and $Y$ have a linear relation. 
 
-$\hat{\beta}_1$ is normal, so t-test:
+- **Null hypotheis**: $H_0: \beta_1=0$.
+- **Alternative hypotheis**: $H_a: \beta_1\neq0$.
 
-$$
-t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{S_{xx}}},\quad s^2=\frac{SSE}{n-2}
-$$
-
-- one tailed test:
-  - Ha: $\beta_1<0$: $t<-t_{\alpha}$: $p=\Pr(t<t_c)$, $t_c<0$
-  - Ha: $\beta_1>0$: $t>t_{\alpha}$: $p=\Pr(t>t_c)$, $t_c>0$
-- two tailed test:
-  - Ha: $\beta_1\neq0$: $\abs{t}>t_{\alpha/2}$: $p=2\Pr(t>t_c)$, $t_c>0$
-
-$t_c$ is the computed value
-
-$\Pr(t>t_{\alpha})=\alpha=\Pr(\text{Type I error})=\Pr(\text{Reject }H_0\mid H_0\text{ is true.})$
-
-
-
-## coeffcient of correlation
+Since $\hat{\beta}_1=\beta_1+\sum_{i=1}^n\qty(\dfrac{x_i-\bar x}{SS_{xx}})\varepsilon_i$ is normal, we could use a t-test.
 
 $$
-r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
+t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{SS_{xx}}},\quad s^2=\frac{SSE}{n-2}
 $$
 
-it is related to COV
-
-
-$\rho$ population coefficient of correlation, is estimated by $r$
-
-Hypothesis:
-
-$t=r\sqrt{n-2}/{sqrt{1-r^2}}$
-
-
-## coefficient of determination
-$$
-r^2=\frac{S_{yy}-SSE}{S_{yy}}=1-\frac{SSE}{S_{yy}}
-$$
-
-proportion of total saple variability of the y explained by the linear relationship between y and x
-
-About 100(r2)% of the sample variation in y (measured by the total sum
-of squares of deviations of the sample y-values about their mean ji) can be
-explained by (or attributed to) using x to predict yin the straight-line model.
-
+We mainly use a two-tailed test. Therefore we compute the corresponding p-value, which is the probability of getting a statistic at least as extreme as the observed value, assuming $H_0$ is true. Let $t_c=\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}$ be the observed test statistic. Then 
 
 $$
-SSR=\sum(\hat y_i-\bar y)^2=\frac{S_{xy}^2}{S_{xx}}
+p\text{-value} = \Pr(\abs{t}>\abs{t_c}\mid H_0),
 $$
+where $t\sim t_{n-2}$ under $H_0$. We reject $H_0$ if the p-value is smaller than or equal to $\alpha$.
+
+- If we reject $H_0$, there is sufficient statistical evidence at level $\alpha$ to conclude that $\beta_1\neq 0$. In this case, we say the linear relationship between $X$ and $Y$ is **statistically significant**.
+- If we fail to reject $H_0$, we do not have enough evidence to determine whether $\beta_1$ differs from $0$. In this case, we say the relationship is **not statistically significant**.
+
+::: {.callout-important}
+Failing to reject $H_0$ does not mean $\beta_1=0$. It means there is insufficient evidence, given the data and model, to conclude that $\beta_1\neq0$.
+:::
+
+
+
+### Confidence interval
+Since $\Var(\hat\beta_1)=\frac{\sigma^2}{SS+{xx}}\approx\frac{s^2}{SS_{xx}}$, the standard deviation of $\hat\beta_1$ can be estimated by $s_{\hat\beta_1}=s/\sqrt{SS_{xx}}$. Then the $(1-\alpha)\times 100\%$ confidence interval for $\beta_1$ is
+$$
+CI=\hat\beta_1\pm t_{\alpha/2,n-2}\cdot \frac{s}{\sqrt{SS_{xx}}}.
+$$
+In the hypothesis test described above, the null hypothesis is rejected if the observed $t_c$ is sufficiently extreme, that is,
+
+$$
+\abs{t_c}=\abs{\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}}>t_{\alpha/2, n-2}.
+$$
+Equivalently,
+$$
+\abs{\hat\beta_1}>t_{\alpha/2, n-2}\cdot \frac{s}{\sqrt{SS_{xx}}}.
+$$
+Therefore it means that rejecting null hypothesis is the same as the confidence interval of $\beta_1$ doesn't contain 0.
+
+
+
+## Sum of squares
+
+
+::: {#thm-}
+## The fundamental ANOVA identity
+Define
+
+- $SSE=\sum (y_i-\hat y_i)^2$: sum of squared errors
+- $SSR=\sum (\hat y_i-\bar y)^2$: sum of squares regression
+- $SST=\sum (y_i-\bar y)^2$: sum of squares total (also denoted $SS_{yy}$)
+
+These quantities satisfy 
+$$
+SST = SSR+SSE.
+$$
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+$$
+\begin{split}
+SSR&=\sum (\hat y_i-\bar y)^2=\sum (\hat\beta_0+\hat\beta_1x_i-\bar y)^2=\sum (\bar y-\hat\beta_1\bar x+\hat\beta_1x_i-\bar y)^2\\
+&=\sum (\hat\beta_1(x_i-\bar x))^2=(\hat\beta_1)^2\sum (x_i-\bar x)^2\\
+&=\frac{SS_{xy}^2}{SS_{xx}^2}SS_{xx}=\frac{SS_{xy}^2}{SS_{xx}},\\
+SSE&=\sum ( y_i-\hat y_i)^2=\sum (y_i-\hat\beta_0-\hat\beta_1x_i)^2=\sum (y_i-\bar y+\hat\beta_1\bar x-\hat\beta_1x_i)^2\\
+&=\sum ((y_i-\bar y)-\hat\beta_1(x_i-\bar x))^2=\sum (y_i-\bar y)^2-2\hat\beta_1(x_i-\bar x)(y_i-\bar y)+(\hat\beta_1(x_i-\bar x))^2\\
+&=\sum (y_i-\bar y)^2-2\hat\beta_1\sum(x_i-\bar x)(y_i-\bar y)+(\hat\beta_1)^2\sum(x_i-\bar x)^2\\
+&=SST-2\frac{SS_{xy}}{SS_{xx}}SS_{xy}+\qty(\frac{SS_{xy}}{SS_{xx}})^2SS_{xx}\\
+&=SST-2\frac{SS_{xy}^2}{SS_{xx}}+\frac{SS_{xy}^2}{SS_{xx}}=SST-\frac{SS_{xy}^2}{SS_{xx}}\\
+&=SST-SSR.
+\end{split}
+$$
+Therefore 
+$$
+SST=SSR+SSE.
+$$
+</details>
+
+:::
+
+
+These three qualities are essential in interepretating regression models. 
+
+- SST measures the total variability in the response variable.
+- SSR measures the variation explained by the regression model.
+- SSE measures the unexplained (residual) variation.
+
+SSR measures the variation explained by the regression model. Since this variation is captured by the fitted regression line, it is considered explained by the model. The total variance is described by SST. So we would like the portion that is explained by our model is as high as possible. In other words, we would like $SSR/SST$ is as high as possible. Since it is very important, we assign a variable to it.
+
+
+## Coefficient of Determination
+The coefficient of determination is defined as
+$$
+r^2=\frac{SST-SSE}{SST}=1-\frac{SSE}{SST}=\frac{SSR}{SST}
+$$
+It represents the proportion of the total sample variability in $𝑌$ that is explained by the linear relationship between $𝑌$ and $X$. Equivalently, we have the following statement.
+
+
+::: {.callout-note}
+## $r^2$ interpretation
+About $100(r^2)\%$ of the total variation in the sample $y$-values (measured by the total sum of squares about $\bar y$) can be explained by using $X$ to predict $Y$ in the simple linear regression model.
+:::
+
+
+
+## Coefficent of Correlation
+
+Recall that the Pearson coefficent of correlation is defined as follows.
+$$
+r=\frac{SS_{xy}}{\sqrt{SS_{xx}SS_{yy}}}.
+$$
+
+Since $\hat\beta_1=\frac{SS_{xy}}{SS_{xx}}$, we have
+
+$$
+r=\hat\beta_1\frac{\sqrt{SS_{xx}}}{\sqrt{SS_{yy}}}=\hat\beta_1\frac{s_x}{s_y}
+$$
+where $s_x$ and $s_y$ are the sample standard deviations of $X$ and $Y$. This suggests that $r$ is the standarized slope, while $\hat\beta_1$ dependes on the units of measurement of $X$ and $Y$. 
+
+This $r$ and the previous $r^2$ is related.
+$$
+\abs{r}=\frac{SS_{xy}}{\sqrt{SS_{xx}SS_{yy}}}=\sqrt{\frac{SS_{xy}^2}{SS_{xx}SS_{yy}}}=\sqrt{\frac{SSR}{SST}}=\sqrt{r^2}.
+$$
+This is the reason we choose these notations. Note that I ignore the sign of $r$ in this computation. When using $\sqrt{r^2}$ to compute $r$, we have to manually choose the sign for $r$ based on other indicators.
+
+
+Since $r$ and $\beta_1$ essentially describe the same linear relationship, we can also use $r$ to perform the hypothesis test. We have
+$$
+t=\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}=\frac{\hat\beta_1 \sqrt{SS_{xx}}}{s}=r \sqrt{\frac{SS_{yy}}{SSE/(n-2)}}=r\sqrt{n-2}/{\sqrt{1-r^2}}
+$$
+
+## The ANOVA table
+
+Now that we have defined these sums of squares, they are typically organized into an ANOVA Table. This table provides a convenient summary for assessing the overall significance of the regression model using the F-test.
+
+| Source      | df     | Sum of Squares (SS) | Mean Square (MS)        | F            |
+|-------------|--------|---------------------|--------------------------|--------------|
+| Regression  | 1      | SSR                 | MSR = SSR / 1            | F = MSR / MSE|
+| Error       | n − 2  | SSE                 | MSE = SSE / (n − 2)      |              |
+| Total       | n − 1  | SST                 |                          |              |
+
+The F-test examines whether the regression model, as a whole, explains a significant portion of the variability in the response variable. In the case of simple linear regression which only contains one independent variable, the F-test and the t-test are equivalent. In particular, the F-statistic is exactly the square of the corresponding t-statistic: 
+
+$$
+F=t^2.
+$$
+
+We will discuss the F-test in more details when we move on to multiple linear regression (MLR).
 
 
 
