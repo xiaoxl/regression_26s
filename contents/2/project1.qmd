@@ -1,1 +1,20 @@
 # Project 1: Boston housing
+
+
+When we look at a simple linear regression model, we need to pay attention to the following qualities and their intepretations.
+
+1. $\hat\beta_0$
+2. $\hat\beta_1$: 
+3. $\hat y$
+4. $E(y_i)=\hat\beta_0+\hat\beta_1x_i$
+5. $s^2$
+6. $r^2$
+7. significant: p-value for t
+8. significant: p-value for F
+9. SSE, SSR, SST
+10. Residuals $e_i=y_i-\hat y_i$
+11. CI for $\beta_1$(and $\beta_0$)
+12. $s_{\hat\beta_1}$
+13. dof: n-2
+14. range for x and ssxx
+15. CI for prediction
