@@ -444,48 +444,84 @@ We will discuss the F-test in more details when we move on to multiple linear re
 
 
 
-## predicted interval and confidence interval
+## Prediction interval and Confidence interval
+When using a regression model, we need to quantify how uncertain our predictions are. There are two different types of intervals, depending on what we wish to estimate:
 
-$\sigma_{\hat y}$
+- a **confidence interval** for the mean response $\Exp(Y\mid X=x)$
+- a **prediction interval** for a new individual observation $Y\mid X=x$.
 
-Since $\bar y$ and $\hat{\beta}_1$ are independent, we have
+
+
+### Estimate the variance
+First a preliminary result is that $\bar y$ and $\hat\beta_1$ as random variables are uncorrelated (covariance is 0).  
+
+
+::: {#lem-}
+$\Cov(\bar y, \hat\beta_1)=0$.
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
 $$
 \begin{split}
-\Var(\hat y(x))&=\Var(\hat{\beta}_0+\hat{\beta}_1x)=\Var(\bar y-\hat{\beta}_1(x-\bar x))=\Var(\bar y)+(x-\bar x)^2\Var(\hat{\beta}_1)\\
-&=\frac1n\sigma^2+(x-\bar x)^2\frac1{S_{xx}}\sigma^2=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\bar y&=\beta_0+\beta_1\bar x+\bar\varepsilon,\\
+\hat\beta_1&=\frac{1}{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)y_i\\
+&=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i+\varepsilon_i)\\
+&=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i)+\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)\varepsilon_i.
+\end{split}
+$$
+Since $\beta_0+\beta_1\bar x$ and $\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i)$ are considered as constants, we have
+$$
+\begin{split}
+\Cov(\bar y,\hat\beta_1)&=\Cov(\bar\varepsilon, \sum_{i=1}^n(x_i-\bar x)\varepsilon_i)=\Cov(\sum_{j=1}^n\varepsilon_j, \sum_{i=1}^n(x_i-\bar x)\varepsilon_i)\\
+&=\sum_{i,j=1}^n\Cov(\varepsilon_j, (x_i-\bar x)\varepsilon_i)=\sum_{i=1}^n\Cov(\varepsilon_i, (x_i-\bar x)\varepsilon_i)\\
+&=\sum_{i=1}^n(x_i-\bar x)=0.
 \end{split}
 $$
 
 
+
+</details>
+
+:::
+
+
+
+
+::: {#thm-}
+Let $x$ be a fixed value.
+
+1. The variance of the estimated mean response is
+   $$
+   \Var(\Exp(y))=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+   $$
+2. The variance of a new observation is
+   $$
+   \Var(y)=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+   $$
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+Since $\bar y$ and $\hat{\beta}_1$ are uncorrelated, we have
 $$
-\Var(y-\hat y)=\sigma^2+\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}]=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\begin{split}
+\Var(\Exp(y))&=\Var(\hat\beta_0+\hat\beta_1x)=\Var(\bar y+\hat\beta_1(x-\bar x))=\Var(\bar y)+(x-\bar x)^2\Var(\hat\beta_1)\\
+&=\frac1n\sigma^2+(x-\bar x)^2\frac{\sigma^2}{SS_{xx}}\\
+&=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{SS_{xx}}],\\
+\Var(y)&=\Var(\Exp(y)+\varepsilon)=\Var(\Exp(y))+\Var(\varepsilon)=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{SS_{xx}}]+\sigma^2\\
+&=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\end{split}
 $$
 
 
+</details>
 
+:::
+Therefore, these two variances lead to:
 
-```{r}
-library(MASS)
+- a confidence interval for $\Exp(Y\mid X=x)$
+- a prediction interval for a new $Y\mid X=x$.
 
-fit <- lm(medv~lstat, data=Boston)
-
-newx = data.frame(lstat=seq(1, 40, by=0.1))
-pred.int <- predict(fit, newx, interval='prediction')
-conf.int <- predict(fit, newx, interval='confidence')
-```
-
-Both `pred.int` and `conf.int` are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.
-
-
-```{r}
-plot(Boston$lstat, Boston$medv)
-
-lines(newx$lstat, pred.int[,1])
-
-lines(newx$lstat, pred.int[,2], col='red')
-lines(newx$lstat, pred.int[,3], col='red')
-
-lines(newx$lstat, conf.int[,2], col='blue')
-lines(newx$lstat, conf.int[,3], col='blue')
-```
+The prediction interval is always wider, because it includes both estimation uncertainty and irreducible error.
 
