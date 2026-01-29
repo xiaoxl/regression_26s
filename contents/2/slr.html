@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,7 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/2/project1.html" rel="next">
+<link href="../../contents/app/data.html" rel="next">
 <link href="../../contents/2/intro.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -399,12 +364,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -441,11 +400,24 @@ window.Quarto = {
    
   <ul>
   <li><a href="#slr" id="toc-slr" class="nav-link active" data-scroll-target="#slr"><span class="header-section-number">5.1</span> SLR</a></li>
-  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">5.2</span> Estimation</a></li>
-  <li><a href="#beta_1" id="toc-beta_1" class="nav-link" data-scroll-target="#beta_1"><span class="header-section-number">5.3</span> <span class="math inline">\(\beta_1\)</span></a></li>
-  <li><a href="#coeffcient-of-correlation" id="toc-coeffcient-of-correlation" class="nav-link" data-scroll-target="#coeffcient-of-correlation"><span class="header-section-number">5.4</span> coeffcient of correlation</a></li>
-  <li><a href="#coefficient-of-determination" id="toc-coefficient-of-determination" class="nav-link" data-scroll-target="#coefficient-of-determination"><span class="header-section-number">5.5</span> coefficient of determination</a></li>
-  <li><a href="#predicted-interval-and-confidence-interval" id="toc-predicted-interval-and-confidence-interval" class="nav-link" data-scroll-target="#predicted-interval-and-confidence-interval"><span class="header-section-number">5.6</span> predicted interval and confidence interval</a></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">5.2</span> Estimation</a>
+  <ul class="collapse">
+  <li><a href="#ols-estimators" id="toc-ols-estimators" class="nav-link" data-scroll-target="#ols-estimators"><span class="header-section-number">5.2.1</span> OLS estimators</a></li>
+  <li><a href="#mle-estimators" id="toc-mle-estimators" class="nav-link" data-scroll-target="#mle-estimators"><span class="header-section-number">5.2.2</span> MLE estimators</a></li>
+  <li><a href="#properties-of-these-estimators" id="toc-properties-of-these-estimators" class="nav-link" data-scroll-target="#properties-of-these-estimators"><span class="header-section-number">5.2.3</span> Properties of these estimators</a></li>
+  </ul></li>
+  <li><a href="#beta_1" id="toc-beta_1" class="nav-link" data-scroll-target="#beta_1"><span class="header-section-number">5.3</span> <span class="math inline">\(\beta_1\)</span></a>
+  <ul class="collapse">
+  <li><a href="#confidence-interval" id="toc-confidence-interval" class="nav-link" data-scroll-target="#confidence-interval"><span class="header-section-number">5.3.1</span> Confidence interval</a></li>
+  </ul></li>
+  <li><a href="#sum-of-squares" id="toc-sum-of-squares" class="nav-link" data-scroll-target="#sum-of-squares"><span class="header-section-number">5.4</span> Sum of squares</a></li>
+  <li><a href="#coefficient-of-determination" id="toc-coefficient-of-determination" class="nav-link" data-scroll-target="#coefficient-of-determination"><span class="header-section-number">5.5</span> Coefficient of Determination</a></li>
+  <li><a href="#coefficent-of-correlation" id="toc-coefficent-of-correlation" class="nav-link" data-scroll-target="#coefficent-of-correlation"><span class="header-section-number">5.6</span> Coefficent of Correlation</a></li>
+  <li><a href="#the-anova-table" id="toc-the-anova-table" class="nav-link" data-scroll-target="#the-anova-table"><span class="header-section-number">5.7</span> The ANOVA table</a></li>
+  <li><a href="#prediction-interval-and-confidence-interval" id="toc-prediction-interval-and-confidence-interval" class="nav-link" data-scroll-target="#prediction-interval-and-confidence-interval"><span class="header-section-number">5.8</span> Prediction interval and Confidence interval</a>
+  <ul class="collapse">
+  <li><a href="#estimate-the-variance" id="toc-estimate-the-variance" class="nav-link" data-scroll-target="#estimate-the-variance"><span class="header-section-number">5.8.1</span> Estimate the variance</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -483,13 +455,8 @@ window.Quarto = {
 \newcommand{\me}{{\mathrm e}}
 \]</span></p>
 <!-- Probability -->
-<p><span class="math display">\[
-\newcommand{\Exp}{\operatorname{E}}
-\newcommand{\Var}{\operatorname{Var}}
-  \newcommand{\Cov}{\operatorname{Cov}}
-\newcommand{\Mode}{\operatorname{mode}}
-\newcommand{\cor}{\operatorname{cor}}
-\]</span></p>
+<p>$$ </p>
+<p> $$</p>
 <!-- Distributions pdf -->
 <p><span class="math display">\[
 \newcommand{\pdfbinom}{{\tt binom}}
@@ -518,7 +485,7 @@ y=\beta_0+\beta_1x+\varepsilon
 <ul>
 <li><span class="math inline">\(y\)</span>: The <strong>response</strong> variable</li>
 <li><span class="math inline">\(x\)</span>: The <strong>independent</strong> variable (variable used as a <strong>predictor</strong> of <span class="math inline">\(y\)</span>)</li>
-<li><span class="math inline">\(\Exp(y)=\beta_0+\beta_1x\)</span>: Deterministic component</li>
+<li><span class="math inline">\(\operatorname{E}(y)=\beta_0+\beta_1x\)</span>: Deterministic component</li>
 <li><span class="math inline">\(\varepsilon\)</span>: Random error component</li>
 <li><span class="math inline">\(\beta_0\)</span>: <strong><span class="math inline">\(y\)</span>-intercept</strong></li>
 <li><span class="math inline">\(\beta_1\)</span>: <strong>Slope</strong></li>
@@ -534,7 +501,7 @@ y=\beta_0+\beta_1x+\varepsilon
 </div>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 5.2 (Regression equation)</strong></span> Simple linear regression equation is <span class="math display">\[
-\Exp(y)=\beta_0+\beta_1x.
+\operatorname{E}(y)=\beta_0+\beta_1x.
 \]</span></p>
 </div>
 <div id="def-" class="theorem definition">
@@ -588,139 +555,363 @@ $$
 2. E(b0) E(b1)
 3. Var(b0), Var(b1)
 4. relations to y: b1, ybar independent, b0, b1 are independent -->
+<section id="ols-estimators" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="ols-estimators"><span class="header-section-number">5.2.1</span> OLS estimators</h3>
+<p>The standard approach is known as ordinary least squares (OLS) estimation. In this method, model parameters are chosen to minimize the sum of squared residuals between the observed responses and the values predicted by the model. From an optimization perspective, OLS minimizes a loss function that measures the discrepancy between the data and the fitted model.</p>
+<p>Here are more details.</p>
+<p>Consider the linear regression model <span class="math display">\[
+y_i=\beta_0+\beta_1x_i+\varepsilon_i,\quad i=1,\ldots, n.
+\]</span></p>
+<p>In order to find the best parameters, we need to minimize the sum of squared errors <span class="math display">\[
+L(\beta_0, \beta_1) = \sum_{i=1}^n\varepsilon_i^2=\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
+\]</span> Since this loss can be treated as a function of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, to minimize it, we could consider the critical point, which is</p>
+<p><span class="math display">\[
+\pdv{L}{\beta_0}=0,\quad \pdv{L}{\beta_1}=0.
+\]</span> In other words, we have</p>
+<p><span class="math display">\[
+\begin{split}
+\pdv{L}{\beta_0}&amp;=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-1)=-2\qty(\sum_{i=1}^ny_i-n\beta_0-\beta_1(\sum_{i=1}^nx_i))=-2n(\bar y-\beta_0-\beta_1\bar x)=0,\\
+\pdv{L}{\beta_1}&amp;=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i).
+\end{split}
+\]</span> The first equation gives us <span class="math inline">\(\beta_0=\bar y-\beta_1\bar x\)</span>. Then the second equation is <span class="math display">\[
+\begin{split}
+\pdv{L}{\beta_1}&amp;=\sum_{i=1}^n2(y_i-\beta_0-\beta_1x_i)(-x_i)=-2\sum_{i=1}^n(y_i-\bar y+\beta_1\bar x-\beta_1x_i)(x_i)\\
+&amp;=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i)=-2\sum_{i=1}^n(y_i-\bar y-\beta_1(x_i-\bar x))(x_i-\bar x)\\
+&amp;=-2\qty(\sum_{i=1}^n(y_i-\bar y)(x_i-\bar x)-\beta_1\sum_{i=1}^n(x_i-\bar x)(x_i-\bar x))\\
+&amp;=-2\qty(SS_{xy}-\beta_1SS_{xx})=0.
+\end{split}
+\]</span></p>
+<p>Therefore, the solution to the equations, which is the best parameters that minimize the sum of square errors, is</p>
 <div id="thm-" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 5.1</strong></span> <span class="math display">\[
-\hat{\beta}_1=\frac{S_{xy}}{S_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
+\hat{\beta}_1=\frac{SS_{xy}}{SS_{xx}},\quad \hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}.
 \]</span></p>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-</details>
 </div>
+</section>
+<section id="mle-estimators" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="mle-estimators"><span class="header-section-number">5.2.2</span> MLE estimators</h3>
+<p>Since we assume <span class="math inline">\(\varepsilon_i\sim \mathcal N(0,\sigma^2)\)</span> i.i.d, we could actually compute the likelihood function explicitly. Recall that <span class="math inline">\(y_i=\beta_0+\beta_1x_i+\varepsilon_i\)</span>, then <span class="math display">\[
+\begin{split}
+p(y_i\mid x_i,\beta_0,\beta_1,\sigma^2)=\frac{1}{\sqrt{2\pi \sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
+\end{split}
+\]</span> Take all data into consideration. Let <span class="math inline">\(\mathbf x=(x_1,\ldots,x_n)\)</span> and <span class="math inline">\(\mathbf y=(y_1,\ldots,y_n)\)</span>. Assuming that all <span class="math inline">\(\varepsilon_i\)</span>’s are independent, then the likelihood function is <span class="math display">\[
+L(\beta_0,\beta_1,\sigma^2\mid \mathbf x, \mathbf y)=\prod_{i=1}^n\frac1{\sqrt{2\pi\sigma^2}}\exp\qty(-\frac{(y_i-\beta_0-\beta_1x_i)^2}{2\sigma^2}).
+\]</span> We could take negative log to make it simpler <span class="math display">\[
+\operatorname{nll}(\beta_0,\beta_1,\sigma^2\mid \mathbf x, \mathbf y)=\frac n2\ln\qty(2\pi\sigma^2)+\frac1{2\sigma^2}\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
+\]</span> This derived loss function is called the negative log-likelihood (NLL). Maximizing the likelihood is equivalent to minimizing <span class="math inline">\(\operatorname{nll}\)</span>.</p>
+<p>For fixed <span class="math inline">\(\sigma^2\)</span>, minimizing <span class="math inline">\(\operatorname{nll}\)</span> over <span class="math inline">\((\beta_0,\beta_1)\)</span> is equivalent to minimizing <span class="math inline">\(\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2\)</span>, so the MLE of <span class="math inline">\((\beta_0,\beta_1)\)</span> is the same as the OLS estimator.</p>
+<p>To estimate <span class="math inline">\(\sigma^2\)</span>, treat <span class="math inline">\(\sigma^2\)</span> as a variable and differentiate: <span class="math display">\[
+\pdv{\operatorname{nll}}{\sigma^2}=\frac{n}2\frac1{\sigma^2}-\frac12\frac{1}{(\sigma^2)^2}\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2=0.
+\]</span> Setting this derivative to zero yields</p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 5.2</strong></span> &nbsp;</p>
-<span class="math display">\[
-s^2=,
-\]</span>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-</details>
+<p><span class="theorem-title"><strong>Theorem 5.2</strong></span> <span class="math display">\[
+\hat\sigma_{MLE}^2=\frac1n\sum_{i=1}^n(y_i-\hat\beta_0-\hat\beta_1x_i)^2=\frac{SSE}{n}.
+\]</span></p>
 </div>
+<p>Similar to the sample variance scenario, the MLE estimator for variance is biased. The unbiased estimator of the error variance is the sample variance of the residuals. <span class="math display">\[
+s^2=\frac{SSE}{n-2}.
+\]</span></p>
+</section>
+<section id="properties-of-these-estimators" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="properties-of-these-estimators"><span class="header-section-number">5.2.3</span> Properties of these estimators</h3>
 <div id="thm-" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 5.3</strong></span> <span class="math display">\[
-\Var(\hat{\beta}_0)=, \quad \Var(\hat{\beta}_1)=,
+\operatorname{E}(\hat{\beta}_0)=\beta_0, \quad \operatorname{E}(\hat{\beta}_1)=\beta_1,\quad \operatorname{E}(s^2)=\sigma^2.
 \]</span></p>
-</div>
 <details>
 <summary>
 <strong>Click for proof.</strong>
 </summary>
-<span class="math display">\[
-\Var(\hat{\beta}_1)=\frac{1}{S_{xx}^2}\Var(S_{xy})=\frac{1}{S_{xx}^2}\Var\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{S_{xx}^2}S_{xx}\sigma^2=\frac{\sigma^2}{S_{xx}}.
-\]</span> <span class="math display">\[
+<p>The key point is to treat all <span class="math inline">\(x_i\)</span>’s as constants, and <span class="math inline">\(y_i=\beta_0+\beta_1x_i+\varepsilon_i\)</span> is a random variable due to <span class="math inline">\(\varepsilon_i\)</span>. Note that <span class="math inline">\(\operatorname{E}(y_i)=\beta_0+\beta_1x_i\)</span> and <span class="math inline">\(\operatorname{E}(\bar y)=\frac1n\sum_{i=1}^n\operatorname{E}(y_i)=\beta_0+\beta_1\bar x\)</span>. <span class="math display">\[
 \begin{split}
-\Var(\hat{\beta}_0)&amp;=\Var\qty(\bar y-\hat{\beta}_1\bar x)=\Var(\bar y)+\bar{x}^2\Var(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nS_{xx}})\sigma^2.
+\operatorname{E}(SS_{xy})&amp;=\operatorname{E}\qty(\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y))\\
+&amp;=\sum_{i=1}^n(x_i-\bar x)(\operatorname{E}(y_i)-\operatorname{E}(\bar y))\\
+&amp;=\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i-\beta_0-\beta_1\bar x)\\
+&amp;=\sum_{i=1}^n(x_i-\bar x)\beta_1(x_i-\bar x)\\
+&amp;=\beta_1SS_{xx}.
 \end{split}
-\]</span>
+\]</span> Therefore <span class="math display">\[
+\operatorname{E}(\hat\beta_1)=\operatorname{E}\qty(\frac{SS_{xy}}{SS_{xx}})=\beta_1.
+\]</span> We now show that <span class="math inline">\(\hat\beta_0\)</span> is an unbiased estimator of <span class="math inline">\(\beta_0\)</span>. Recall that <span class="math display">\[
+\hat\beta_0 = \bar y - \hat\beta_1 \bar x.
+\]</span> Taking expectations and using linearity of expectation, <span class="math display">\[
+\begin{aligned}
+\operatorname{E}(\hat\beta_0)
+&amp;= \operatorname{E}(\bar y) - \bar x\,\operatorname{E}(\hat\beta_1) \\
+&amp;= (\beta_0 + \beta_1 \bar x) - \bar x\,\beta_1 \\
+&amp;= \beta_0.
+\end{aligned}
+\]</span> Therefore, <span class="math inline">\(\hat\beta_0\)</span> is an unbiased estimator of <span class="math inline">\(\beta_0\)</span>.</p>
+<p>For <span class="math inline">\(s^2\)</span>, it requires more knowledge from <span class="math inline">\(\chi^22\)</span> distribution.</p>
+<ul>
+<li><span class="math inline">\(\varepsilon_i\sim \mathcal N(0,\sigma^2)\)</span> i.i.d, and <span class="math inline">\(x_i\)</span>’s are all constants.</li>
+<li><span class="math inline">\(e_i=y_i-\hat y_i=\varepsilon_i-(\hat\beta_0-\beta_0)+(\hat\beta_1-\beta_1)x_i\)</span>. Note that <span class="math inline">\(\hat\beta_0-\beta_0\)</span> and <span class="math inline">\(\hat\beta_1-\beta_1\)</span> are functions of all <span class="math inline">\(\varepsilon_i\)</span>’s so each residual depends on the entire error vector.</li>
+<li>Since <span class="math inline">\(SSE=\sum_{i=1}^ne_i^2\)</span>, by <a href="../1/prob.html#thm-norm" class="quarto-xref">Theorem&nbsp;<span>2.3</span></a>, one can show that <span class="math inline">\(\frac{SSE}{\sigma^2}\sim \chi_{n-2}^2\)</span>. The loss of 2 degrees of freedom comes from estimating <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</li>
+<li>Therefore <span class="math inline">\(\operatorname{E}\qty(\frac{SSE}{\sigma^2})=n-2\)</span>.</li>
+<li>Therefore <span class="math inline">\(\operatorname{E}(s^2)=\frac1{n-2}\operatorname{E}(SSE)=\sigma^2\)</span>.</li>
+</ul>
 </details>
+</div>
 <div id="thm-" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 5.4</strong></span> <span class="math display">\[
-\Var(s^2)=
+\operatorname{Var}(\hat{\beta}_1)=\frac{\sigma^2}{SS_{xx}}, \quad \operatorname{Var}(\hat{\beta}_0)=\qty(\frac{1}{n}+\frac{\bar x^2}{nSS_{xx}})\sigma^2, \quad \operatorname{Var}(s^2)=\frac{2\sigma^4}{n-2}.
 \]</span></p>
 <details>
 <summary>
 <strong>Click for proof.</strong>
 </summary>
+<p><span class="math display">\[
+\operatorname{Var}(\hat{\beta}_1)=\frac{1}{SS_{xx}^2}\operatorname{Var}(SS_{xy})=\frac{1}{SS_{xx}^2}\operatorname{Var}\qty[\sum x_i(y_i-\bar{y})]=\frac{1}{SS_{xx}^2}SS_{xx}\sigma^2=\frac{\sigma^2}{SS_{xx}}.
+\]</span></p>
+<p>Since <span class="math inline">\(\operatorname{Cov}(\bar y ,\hat\beta_1)=0\)</span>, we have <span class="math display">\[
+\begin{split}
+\operatorname{Var}(\hat{\beta}_0)&amp;=\operatorname{Var}\qty(\bar y-\hat{\beta}_1\bar x)=\operatorname{Var}(\bar y)+\bar{x}^2\operatorname{Var}(\hat{\beta}_1)=\frac{\sigma^2}{n}+\bar x^2\frac{\sigma^2}{nSS_{xx}}=\qty(\frac{1}{n}+\frac{\bar x^2}{nSS_{xx}})\sigma^2.
+\end{split}
+\]</span></p>
+Since <span class="math inline">\(\frac{SSE}{\sigma^2}\sim\chi^2_{n-2}\)</span>, <span class="math inline">\(\var(\frac{SSE}{\sigma^2})=2(n-2)\)</span>. Therefore <span class="math display">\[
+\operatorname{Var}(s^2)=\operatorname{Var}(\frac{SSE}{n-2})=\frac1{(n-2)^2}\operatorname{Var}(SSE)=\frac1{(n-2)^2}(\sigma^2)^22(n-2)=\frac{2\sigma^4}{n-2}.
+\]</span>
 </details>
 </div>
+<p>Note that these variance formulas involve <span class="math inline">\(\sigma^2\)</span>. They come from a theoretical (population) analysis, so they can depend on unknown parameters. If we want numerical estimates of these variances from data, we must replace the unknown quantities with estimators and rebuild the variance calculations accordingly (typically by plugging in <span class="math inline">\(s^2\)</span> for <span class="math inline">\(\sigma^2\)</span>, and using the sample versions of any other unknown terms).</p>
+</section>
 </section>
 <section id="beta_1" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="beta_1"><span class="header-section-number">5.3</span> <span class="math inline">\(\beta_1\)</span></h2>
-<p>hypotheis: <span class="math inline">\(\beta_1\neq0\)</span></p>
-<p><span class="math inline">\(\hat{\beta}_1\)</span> is normal, so t-test:</p>
-<p><span class="math display">\[
-t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{S_{xx}}},\quad s^2=\frac{SSE}{n-2}
-\]</span></p>
+<p>The most important question for <span class="math inline">\(\beta_1\)</span> is whether it is <span class="math inline">\(0\)</span>. In other words, we want to know whether <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a linear relation.</p>
 <ul>
-<li>one tailed test:
-<ul>
-<li>Ha: <span class="math inline">\(\beta_1&lt;0\)</span>: <span class="math inline">\(t&lt;-t_{\alpha}\)</span>: <span class="math inline">\(p=\Pr(t&lt;t_c)\)</span>, <span class="math inline">\(t_c&lt;0\)</span></li>
-<li>Ha: <span class="math inline">\(\beta_1&gt;0\)</span>: <span class="math inline">\(t&gt;t_{\alpha}\)</span>: <span class="math inline">\(p=\Pr(t&gt;t_c)\)</span>, <span class="math inline">\(t_c&gt;0\)</span></li>
-</ul></li>
-<li>two tailed test:
-<ul>
-<li>Ha: <span class="math inline">\(\beta_1\neq0\)</span>: <span class="math inline">\(\abs{t}&gt;t_{\alpha/2}\)</span>: <span class="math inline">\(p=2\Pr(t&gt;t_c)\)</span>, <span class="math inline">\(t_c&gt;0\)</span></li>
-</ul></li>
+<li><strong>Null hypotheis</strong>: <span class="math inline">\(H_0: \beta_1=0\)</span>.</li>
+<li><strong>Alternative hypotheis</strong>: <span class="math inline">\(H_a: \beta_1\neq0\)</span>.</li>
 </ul>
-<p><span class="math inline">\(t_c\)</span> is the computed value</p>
-<p><span class="math inline">\(\Pr(t&gt;t_{\alpha})=\alpha=\Pr(\text{Type I error})=\Pr(\text{Reject }H_0\mid H_0\text{ is true.})\)</span></p>
-</section>
-<section id="coeffcient-of-correlation" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="coeffcient-of-correlation"><span class="header-section-number">5.4</span> coeffcient of correlation</h2>
+<p>Since <span class="math inline">\(\hat{\beta}_1=\beta_1+\sum_{i=1}^n\qty(\dfrac{x_i-\bar x}{SS_{xx}})\varepsilon_i\)</span> is normal, we could use a t-test.</p>
 <p><span class="math display">\[
-r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
+t=\frac{\hat{\beta}_1-0}{s_{\hat{\beta}_1}}=\frac{\hat{\beta}_1}{s/\sqrt{SS_{xx}}},\quad s^2=\frac{SSE}{n-2}
 \]</span></p>
-<p>it is related to COV</p>
-<p><span class="math inline">\(\rho\)</span> population coefficient of correlation, is estimated by <span class="math inline">\(r\)</span></p>
-<p>Hypothesis:</p>
-<p><span class="math inline">\(t=r\sqrt{n-2}/{sqrt{1-r^2}}\)</span></p>
+<p>We mainly use a two-tailed test. Therefore we compute the corresponding p-value, which is the probability of getting a statistic at least as extreme as the observed value, assuming <span class="math inline">\(H_0\)</span> is true. Let <span class="math inline">\(t_c=\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}\)</span> be the observed test statistic. Then</p>
+<p><span class="math display">\[
+p\text{-value} = \Pr(\abs{t}&gt;\abs{t_c}\mid H_0),
+\]</span> where <span class="math inline">\(t\sim t_{n-2}\)</span> under <span class="math inline">\(H_0\)</span>. We reject <span class="math inline">\(H_0\)</span> if the p-value is smaller than or equal to <span class="math inline">\(\alpha\)</span>.</p>
+<ul>
+<li>If we reject <span class="math inline">\(H_0\)</span>, there is sufficient statistical evidence at level <span class="math inline">\(\alpha\)</span> to conclude that <span class="math inline">\(\beta_1\neq 0\)</span>. In this case, we say the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <strong>statistically significant</strong>.</li>
+<li>If we fail to reject <span class="math inline">\(H_0\)</span>, we do not have enough evidence to determine whether <span class="math inline">\(\beta_1\)</span> differs from <span class="math inline">\(0\)</span>. In this case, we say the relationship is <strong>not statistically significant</strong>.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Failing to reject <span class="math inline">\(H_0\)</span> does not mean <span class="math inline">\(\beta_1=0\)</span>. It means there is insufficient evidence, given the data and model, to conclude that <span class="math inline">\(\beta_1\neq0\)</span>.</p>
+</div>
+</div>
+<section id="confidence-interval" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="confidence-interval"><span class="header-section-number">5.3.1</span> Confidence interval</h3>
+<p>Since <span class="math inline">\(\operatorname{Var}(\hat\beta_1)=\frac{\sigma^2}{SS+{xx}}\approx\frac{s^2}{SS_{xx}}\)</span>, the standard deviation of <span class="math inline">\(\hat\beta_1\)</span> can be estimated by <span class="math inline">\(s_{\hat\beta_1}=s/\sqrt{SS_{xx}}\)</span>. Then the <span class="math inline">\((1-\alpha)\times 100\%\)</span> confidence interval for <span class="math inline">\(\beta_1\)</span> is <span class="math display">\[
+CI=\hat\beta_1\pm t_{\alpha/2,n-2}\cdot \frac{s}{\sqrt{SS_{xx}}}.
+\]</span> In the hypothesis test described above, the null hypothesis is rejected if the observed <span class="math inline">\(t_c\)</span> is sufficiently extreme, that is,</p>
+<p><span class="math display">\[
+\abs{t_c}=\abs{\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}}&gt;t_{\alpha/2, n-2}.
+\]</span> Equivalently, <span class="math display">\[
+\abs{\hat\beta_1}&gt;t_{\alpha/2, n-2}\cdot \frac{s}{\sqrt{SS_{xx}}}.
+\]</span> Therefore it means that rejecting null hypothesis is the same as the confidence interval of <span class="math inline">\(\beta_1\)</span> doesn’t contain 0.</p>
+</section>
+</section>
+<section id="sum-of-squares" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sum-of-squares"><span class="header-section-number">5.4</span> Sum of squares</h2>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.5 (The fundamental ANOVA identity)</strong></span> Define</p>
+<ul>
+<li><span class="math inline">\(SSE=\sum (y_i-\hat y_i)^2\)</span>: sum of squared errors</li>
+<li><span class="math inline">\(SSR=\sum (\hat y_i-\bar y)^2\)</span>: sum of squares regression</li>
+<li><span class="math inline">\(SST=\sum (y_i-\bar y)^2\)</span>: sum of squares total (also denoted <span class="math inline">\(SS_{yy}\)</span>)</li>
+</ul>
+<p>These quantities satisfy <span class="math display">\[
+SST = SSR+SSE.
+\]</span></p>
+<details>
+<summary>
+<strong>Click for proof.</strong>
+</summary>
+<span class="math display">\[
+\begin{split}
+SSR&amp;=\sum (\hat y_i-\bar y)^2=\sum (\hat\beta_0+\hat\beta_1x_i-\bar y)^2=\sum (\bar y-\hat\beta_1\bar x+\hat\beta_1x_i-\bar y)^2\\
+&amp;=\sum (\hat\beta_1(x_i-\bar x))^2=(\hat\beta_1)^2\sum (x_i-\bar x)^2\\
+&amp;=\frac{SS_{xy}^2}{SS_{xx}^2}SS_{xx}=\frac{SS_{xy}^2}{SS_{xx}},\\
+SSE&amp;=\sum ( y_i-\hat y_i)^2=\sum (y_i-\hat\beta_0-\hat\beta_1x_i)^2=\sum (y_i-\bar y+\hat\beta_1\bar x-\hat\beta_1x_i)^2\\
+&amp;=\sum ((y_i-\bar y)-\hat\beta_1(x_i-\bar x))^2=\sum (y_i-\bar y)^2-2\hat\beta_1(x_i-\bar x)(y_i-\bar y)+(\hat\beta_1(x_i-\bar x))^2\\
+&amp;=\sum (y_i-\bar y)^2-2\hat\beta_1\sum(x_i-\bar x)(y_i-\bar y)+(\hat\beta_1)^2\sum(x_i-\bar x)^2\\
+&amp;=SST-2\frac{SS_{xy}}{SS_{xx}}SS_{xy}+\qty(\frac{SS_{xy}}{SS_{xx}})^2SS_{xx}\\
+&amp;=SST-2\frac{SS_{xy}^2}{SS_{xx}}+\frac{SS_{xy}^2}{SS_{xx}}=SST-\frac{SS_{xy}^2}{SS_{xx}}\\
+&amp;=SST-SSR.
+\end{split}
+\]</span> Therefore <span class="math display">\[
+SST=SSR+SSE.
+\]</span>
+</details>
+</div>
+<p>These three qualities are essential in interepretating regression models.</p>
+<ul>
+<li>SST measures the total variability in the response variable.</li>
+<li>SSR measures the variation explained by the regression model.</li>
+<li>SSE measures the unexplained (residual) variation.</li>
+</ul>
+<p>SSR measures the variation explained by the regression model. Since this variation is captured by the fitted regression line, it is considered explained by the model. The total variance is described by SST. So we would like the portion that is explained by our model is as high as possible. In other words, we would like <span class="math inline">\(SSR/SST\)</span> is as high as possible. Since it is very important, we assign a variable to it.</p>
 </section>
 <section id="coefficient-of-determination" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="coefficient-of-determination"><span class="header-section-number">5.5</span> coefficient of determination</h2>
-<p><span class="math display">\[
-r^2=\frac{S_{yy}-SSE}{S_{yy}}=1-\frac{SSE}{S_{yy}}
+<h2 data-number="5.5" class="anchored" data-anchor-id="coefficient-of-determination"><span class="header-section-number">5.5</span> Coefficient of Determination</h2>
+<p>The coefficient of determination is defined as <span class="math display">\[
+r^2=\frac{SST-SSE}{SST}=1-\frac{SSE}{SST}=\frac{SSR}{SST}
+\]</span> It represents the proportion of the total sample variability in <span class="math inline">\(𝑌\)</span> that is explained by the linear relationship between <span class="math inline">\(𝑌\)</span> and <span class="math inline">\(X\)</span>. Equivalently, we have the following statement.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><span class="math inline">\(r^2\)</span> interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>About <span class="math inline">\(100(r^2)\%\)</span> of the total variation in the sample <span class="math inline">\(y\)</span>-values (measured by the total sum of squares about <span class="math inline">\(\bar y\)</span>) can be explained by using <span class="math inline">\(X\)</span> to predict <span class="math inline">\(Y\)</span> in the simple linear regression model.</p>
+</div>
+</div>
+</section>
+<section id="coefficent-of-correlation" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="coefficent-of-correlation"><span class="header-section-number">5.6</span> Coefficent of Correlation</h2>
+<p>Recall that the Pearson coefficent of correlation is defined as follows. <span class="math display">\[
+r=\frac{SS_{xy}}{\sqrt{SS_{xx}SS_{yy}}}.
 \]</span></p>
-<p>proportion of total saple variability of the y explained by the linear relationship between y and x</p>
-<p>About 100(r2)% of the sample variation in y (measured by the total sum of squares of deviations of the sample y-values about their mean ji) can be explained by (or attributed to) using x to predict yin the straight-line model.</p>
+<p>Since <span class="math inline">\(\hat\beta_1=\frac{SS_{xy}}{SS_{xx}}\)</span>, we have</p>
 <p><span class="math display">\[
-SSR=\sum(\hat y_i-\bar y)^2=\frac{S_{xy}^2}{S_{xx}}
+r=\hat\beta_1\frac{\sqrt{SS_{xx}}}{\sqrt{SS_{yy}}}=\hat\beta_1\frac{s_x}{s_y}
+\]</span> where <span class="math inline">\(s_x\)</span> and <span class="math inline">\(s_y\)</span> are the sample standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. This suggests that <span class="math inline">\(r\)</span> is the standarized slope, while <span class="math inline">\(\hat\beta_1\)</span> dependes on the units of measurement of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>This <span class="math inline">\(r\)</span> and the previous <span class="math inline">\(r^2\)</span> is related. <span class="math display">\[
+\abs{r}=\frac{SS_{xy}}{\sqrt{SS_{xx}SS_{yy}}}=\sqrt{\frac{SS_{xy}^2}{SS_{xx}SS_{yy}}}=\sqrt{\frac{SSR}{SST}}=\sqrt{r^2}.
+\]</span> This is the reason we choose these notations. Note that I ignore the sign of <span class="math inline">\(r\)</span> in this computation. When using <span class="math inline">\(\sqrt{r^2}\)</span> to compute <span class="math inline">\(r\)</span>, we have to manually choose the sign for <span class="math inline">\(r\)</span> based on other indicators.</p>
+<p>Since <span class="math inline">\(r\)</span> and <span class="math inline">\(\beta_1\)</span> essentially describe the same linear relationship, we can also use <span class="math inline">\(r\)</span> to perform the hypothesis test. We have <span class="math display">\[
+t=\frac{\hat\beta_1}{s/\sqrt{SS_{xx}}}=\frac{\hat\beta_1 \sqrt{SS_{xx}}}{s}=r \sqrt{\frac{SS_{yy}}{SSE/(n-2)}}=r\sqrt{n-2}/{\sqrt{1-r^2}}
 \]</span></p>
 </section>
-<section id="predicted-interval-and-confidence-interval" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="predicted-interval-and-confidence-interval"><span class="header-section-number">5.6</span> predicted interval and confidence interval</h2>
-<p><span class="math inline">\(\sigma_{\hat y}\)</span></p>
-<p>Since <span class="math inline">\(\bar y\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are independent, we have <span class="math display">\[
+<section id="the-anova-table" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="the-anova-table"><span class="header-section-number">5.7</span> The ANOVA table</h2>
+<p>Now that we have defined these sums of squares, they are typically organized into an ANOVA Table. This table provides a convenient summary for assessing the overall significance of the regression model using the F-test.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 9%">
+<col style="width: 25%">
+<col style="width: 31%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>df</th>
+<th>Sum of Squares (SS)</th>
+<th>Mean Square (MS)</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Regression</td>
+<td>1</td>
+<td>SSR</td>
+<td>MSR = SSR / 1</td>
+<td>F = MSR / MSE</td>
+</tr>
+<tr class="even">
+<td>Error</td>
+<td>n − 2</td>
+<td>SSE</td>
+<td>MSE = SSE / (n − 2)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>n − 1</td>
+<td>SST</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The F-test examines whether the regression model, as a whole, explains a significant portion of the variability in the response variable. In the case of simple linear regression which only contains one independent variable, the F-test and the t-test are equivalent. In particular, the F-statistic is exactly the square of the corresponding t-statistic:</p>
+<p><span class="math display">\[
+F=t^2.
+\]</span></p>
+<p>We will discuss the F-test in more details when we move on to multiple linear regression (MLR).</p>
+</section>
+<section id="prediction-interval-and-confidence-interval" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="prediction-interval-and-confidence-interval"><span class="header-section-number">5.8</span> Prediction interval and Confidence interval</h2>
+<p>When using a regression model, we need to quantify how uncertain our predictions are. There are two different types of intervals, depending on what we wish to estimate:</p>
+<ul>
+<li>a <strong>confidence interval</strong> for the mean response <span class="math inline">\(\operatorname{E}(Y\mid X=x)\)</span></li>
+<li>a <strong>prediction interval</strong> for a new individual observation <span class="math inline">\(Y\mid X=x\)</span>.</li>
+</ul>
+<section id="estimate-the-variance" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="estimate-the-variance"><span class="header-section-number">5.8.1</span> Estimate the variance</h3>
+<p>First a preliminary result is that <span class="math inline">\(\bar y\)</span> and <span class="math inline">\(\hat\beta_1\)</span> as random variables are uncorrelated (covariance is 0).</p>
+<div id="lem-" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 5.1</strong></span> <span class="math inline">\(\operatorname{Cov}(\bar y, \hat\beta_1)=0\)</span>.</p>
+<details>
+<summary>
+<strong>Click for proof.</strong>
+</summary>
+<p><span class="math display">\[
 \begin{split}
-\Var(\hat y(x))&amp;=\Var(\hat{\beta}_0+\hat{\beta}_1x)=\Var(\bar y-\hat{\beta}_1(x-\bar x))=\Var(\bar y)+(x-\bar x)^2\Var(\hat{\beta}_1)\\
-&amp;=\frac1n\sigma^2+(x-\bar x)^2\frac1{S_{xx}}\sigma^2=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\bar y&amp;=\beta_0+\beta_1\bar x+\bar\varepsilon,\\
+\hat\beta_1&amp;=\frac{1}{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)y_i\\
+&amp;=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i+\varepsilon_i)\\
+&amp;=\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i)+\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)\varepsilon_i.
+\end{split}
+\]</span> Since <span class="math inline">\(\beta_0+\beta_1\bar x\)</span> and <span class="math inline">\(\frac1{SS_{xx}}\sum_{i=1}^n(x_i-\bar x)(\beta_0+\beta_1x_i)\)</span> are considered as constants, we have <span class="math display">\[
+\begin{split}
+\operatorname{Cov}(\bar y,\hat\beta_1)&amp;=\operatorname{Cov}(\bar\varepsilon, \sum_{i=1}^n(x_i-\bar x)\varepsilon_i)=\operatorname{Cov}(\sum_{j=1}^n\varepsilon_j, \sum_{i=1}^n(x_i-\bar x)\varepsilon_i)\\
+&amp;=\sum_{i,j=1}^n\operatorname{Cov}(\varepsilon_j, (x_i-\bar x)\varepsilon_i)=\sum_{i=1}^n\operatorname{Cov}(\varepsilon_i, (x_i-\bar x)\varepsilon_i)\\
+&amp;=\sum_{i=1}^n(x_i-\bar x)=0.
 \end{split}
 \]</span></p>
-<p><span class="math display">\[
-\Var(y-\hat y)=\sigma^2+\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}]=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+</details>
+</div>
+<div id="thm-" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 5.6</strong></span> Let <span class="math inline">\(x\)</span> be a fixed value.</p>
+<ol type="1">
+<li>The variance of the estimated mean response is <span class="math display">\[
+\operatorname{Var}(\operatorname{E}(y))=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\]</span></li>
+<li>The variance of a new observation is <span class="math display">\[
+\operatorname{Var}(y)=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\]</span></li>
+</ol>
+<details>
+<summary>
+<strong>Click for proof.</strong>
+</summary>
+<p>Since <span class="math inline">\(\bar y\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are uncorrelated, we have <span class="math display">\[
+\begin{split}
+\operatorname{Var}(\operatorname{E}(y))&amp;=\operatorname{Var}(\hat\beta_0+\hat\beta_1x)=\operatorname{Var}(\bar y+\hat\beta_1(x-\bar x))=\operatorname{Var}(\bar y)+(x-\bar x)^2\operatorname{Var}(\hat\beta_1)\\
+&amp;=\frac1n\sigma^2+(x-\bar x)^2\frac{\sigma^2}{SS_{xx}}\\
+&amp;=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{SS_{xx}}],\\
+\operatorname{Var}(y)&amp;=\operatorname{Var}(\operatorname{E}(y)+\varepsilon)=\operatorname{Var}(\operatorname{E}(y))+\operatorname{Var}(\varepsilon)=\sigma^2\qty[\frac1n+\frac{(x-\bar x)^2}{SS_{xx}}]+\sigma^2\\
+&amp;=\sigma^2\qty[1+\frac1n+\frac{(x-\bar x)^2}{S_{xx}}].
+\end{split}
 \]</span></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat, <span class="at">data=</span>Boston)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">40</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'prediction'</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
-<p>Both <code>pred.int</code> and <code>conf.int</code> are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">1</span>])</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="slr_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>Therefore, these two variances lead to:</p>
+<ul>
+<li>a confidence interval for <span class="math inline">\(\operatorname{E}(Y\mid X=x)\)</span></li>
+<li>a prediction interval for a new <span class="math inline">\(Y\mid X=x\)</span>.</li>
+</ul>
+<p>The prediction interval is always wider, because it includes both estimation uncertainty and irreducible error.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1144,8 +1335,8 @@ SSR=\sum(\hat y_i-\bar y)^2=\frac{S_{xy}^2}{S_{xx}}
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/2/project1.html" class="pagination-link" aria-label="Project 1: Boston housing">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Project 1: Boston housing</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -377,6 +377,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/slr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -460,13 +466,8 @@ window.Quarto = {
 \newcommand{\me}{{\mathrm e}}
 \]</span></p>
 <!-- Probability -->
-<p><span class="math display">\[
-\newcommand{\Exp}{\operatorname{E}}
-\newcommand{\Var}{\operatorname{Var}}
-  \newcommand{\Cov}{\operatorname{Cov}}
-\newcommand{\Mode}{\operatorname{mode}}
-\newcommand{\cor}{\operatorname{cor}}
-\]</span></p>
+<p>$$ </p>
+<p> $$</p>
 <!-- Distributions pdf -->
 <p><span class="math display">\[
 \newcommand{\pdfbinom}{{\tt binom}}
@@ -557,7 +558,7 @@ window.Quarto = {
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3.6 (Unbiasedness)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\)</span> is a sample on a random varaible <span class="math inline">\(X\)</span> with pdf <span class="math inline">\(f(x;\theta)\)</span>. Let <span class="math inline">\(T\)</span> be a statistic. We say that <span class="math inline">\(T\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\theta\)</span> if <span class="math inline">\(E(T)=\theta\)</span>.</p>
 </div>
-<p>The typical example of estimators are sample mean and sample variance. Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are i.i.d. Therefore <span class="math inline">\(\Exp\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\Var\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, n\)</span>.</p>
+<p>The typical example of estimators are sample mean and sample variance. Let <span class="math inline">\(X\)</span> be a random variable, with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Consider a sample <span class="math inline">\(\set{X_i}\)</span> of size <span class="math inline">\(n\)</span>. By definition all <span class="math inline">\(X_i\)</span>’s are i.i.d. Therefore <span class="math inline">\(\operatorname{E}\qty(X_i)=\mu\)</span>, and <span class="math inline">\(\operatorname{Var}\qty(X_i)=\sigma^2\)</span> for any <span class="math inline">\(i=1,\ldots, n\)</span>.</p>
 <div id="thm-" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.2</strong></span> The following are the unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> of <span class="math inline">\(X\)</span>.</p>
 <ol type="1">
@@ -565,7 +566,7 @@ window.Quarto = {
 <li><span class="math inline">\(s^2=\dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2\)</span> is called the <em>sample variance</em> of the samples.</li>
 </ol>
 <p>They are the unbiased estimators of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, respectively. <span class="math display">\[
-\Exp(\bar X)=\mu,\quad \Exp(s^2)=\sigma^2.
+\operatorname{E}(\bar X)=\mu,\quad \operatorname{E}(s^2)=\sigma^2.
 \]</span></p>
 <details>
 <summary>
@@ -573,11 +574,11 @@ window.Quarto = {
 </summary>
 <p><span class="math display">\[
 \begin{aligned}
-\Exp\qty(\bar{X})&amp;=\Exp\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\Exp\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
-\Exp\qty(s^2)&amp;=\frac{1}{n-1}\Exp\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\Exp\mqty[\qty(X_i-\bar{X})^2]\\
-&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(X_i-\bar{X})+\qty(\Exp\qty(X_i-\bar{X}))^2)\\
-&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\Var\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\Exp\qty(X_i)-\Exp\qty(\bar{X}))^2)\\
-&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\Var\qty(X_i)+\frac1{n^2}\Var\qty(X_1)+\ldots+\frac1{n^2}\Var\qty(X_n))\\
+\operatorname{E}\qty(\bar{X})&amp;=\operatorname{E}\qty(\frac1n\sum_{i=1}^nX_i)=\frac1n\sum_{i=1}^n\operatorname{E}\qty(X_i)=\frac1n\sum_{i=1}^n\mu=\mu,\\
+\operatorname{E}\qty(s^2)&amp;=\frac{1}{n-1}\operatorname{E}\qty[\sum_{i=1}^n(X_i-\bar{X})^2]=\frac{1}{n-1}\sum_{i=1}^n\operatorname{E}\mqty[\qty(X_i-\bar{X})^2]\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\operatorname{Var}\qty(X_i-\bar{X})+\qty(\operatorname{E}\qty(X_i-\bar{X}))^2)\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\operatorname{Var}\qty(\frac{n-1}{n}X_i-\frac1nX_1-\ldots-\frac1nX_n)+\qty(\operatorname{E}\qty(X_i)-\operatorname{E}\qty(\bar{X}))^2)\\
+&amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\operatorname{Var}\qty(X_i)+\frac1{n^2}\operatorname{Var}\qty(X_1)+\ldots+\frac1{n^2}\operatorname{Var}\qty(X_n))\\
 &amp;=\frac{1}{n-1}\sum_{i=1}^n\qty(\frac{(n-1)^2}{n^2}\sigma^2+\frac1{n^2}\sigma^2+\ldots+\frac1{n^2}\sigma^2)\\
 &amp;=\frac{n}{n-1}\frac{(n-1)^2+n-1}{n^2}\sigma^2=\sigma^2.
 \end{aligned}

@@ -412,6 +412,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/slr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -463,6 +469,7 @@ window.Quarto = {
   <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</a></li>
   <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</a></li>
   </ul></li>
+  <li><a href="#miscs" id="toc-miscs" class="nav-link" data-scroll-target="#miscs"><span class="header-section-number">2.5</span> Miscs</a></li>
   </ul>
 </nav>
     </div>
@@ -651,8 +658,8 @@ Note
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1.5386296 -1.5220760 -0.3946904 -0.9951146 -1.0390346 -2.0513545</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  1.1761563 -0.2277870  0.2451588 -0.2204121</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.3832064  0.4811536  0.9407225  0.3473203  0.9705847  0.8000386</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  0.2221451  1.1320445 -1.9443368 -0.3623345</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 </div>
@@ -714,7 +721,7 @@ r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.9994872</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.9995427</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -820,6 +827,45 @@ Note
 <p>The normal distribution and the t-distribution are both bell-shaped and symmetric. When the sample size is large (typically (n &gt; 30)), the t-distribution becomes very similar to the standard normal distribution, so the normal approximation is usually acceptable. When the sample size is small, however, the t-distribution has noticeably heavier tails, and it is better to use the t-distribution directly for inference.</p>
 </div>
 </div>
+</section>
+</section>
+<section id="miscs" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="miscs"><span class="header-section-number">2.5</span> Miscs</h2>
+<div id="thm-empirical-rule" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2.5 (Empirical Rule (Normal Data))</strong></span> If a random variable <span class="math inline">\(X\)</span> is approximately normally distributed with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, then:</p>
+<ul>
+<li><p>About <span class="math inline">\(68\%\)</span> of observations lie within <span class="math inline">\(1\sigma\)</span> of the mean: [ ]</p></li>
+<li><p>About <span class="math inline">\(95\%\)</span> of observations lie within <span class="math inline">\(2\sigma\)</span> of the mean: [ ]</p></li>
+<li><p>About <span class="math inline">\(99.7\%\)</span> of observations lie within <span class="math inline">\(3\sigma\)</span> of the mean: [ ]</p></li>
+</ul>
+<p>This is commonly known as the <strong>68–95–99.7 rule</strong>.</p>
+</div>
+<div id="rem-empirical-approx" class="proof remark">
+<p><span class="proof-title"><em>Remark 2.1</em> (Precision of the 95% Rule). </span>The statement that “about <span class="math inline">\(95\%\)</span> of observations lie within <span class="math inline">\(2\sigma\)</span> of the mean” is an <strong>approximation</strong>.</p>
+<p>If [ X N(,^2), ] then the exact probability statement is [ P(- 1.96X + 1.96) = 0.95. ]</p>
+<p>Thus, for normally distributed data:</p>
+<ul>
+<li>The exact 95% cutoff is <span class="math inline">\(\pm 1.96\sigma\)</span></li>
+<li>The value <span class="math inline">\(\pm 2\sigma\)</span> is a convenient rounding</li>
+</ul>
+</div>
+<div id="rem-why-use-2sd" class="proof remark">
+<p><span class="proof-title"><em>Remark 2.2</em> (Why <span class="math inline">\(\boldsymbol{2\sigma}\)</span> Is Still Used). </span>The cutoff <span class="math inline">\(\pm 2\sigma\)</span> is widely used because:</p>
+<ol type="1">
+<li>It is easy to remember and communicate.</li>
+<li>The difference from <span class="math inline">\(1.96\sigma\)</span> is small: [ P(|Z|) . ]</li>
+<li>It provides a useful mental model of variability.</li>
+</ol>
+<p>In contrast, the value <span class="math inline">\(1.96\)</span> arises naturally in formal statistical inference, such as confidence intervals and hypothesis testing.</p>
+</div>
+<div id="rem-rule-vs-exact" class="proof remark">
+<p><span class="proof-title"><em>Remark 2.3</em> (Rule-of-Thumb vs.&nbsp;Exact Normal Theory). </span></p>
+<ul>
+<li>The <strong>68–95–99.7 rule</strong> is a descriptive heuristic.</li>
+<li>The values <span class="math inline">\(1.645\)</span>, <span class="math inline">\(1.96\)</span>, and <span class="math inline">\(2.576\)</span> come from exact normal quantiles.</li>
+</ul>
+<p>Understanding this distinction is essential for: - Confidence intervals - Hypothesis testing - Interpretation of statistical uncertainty</p>
+</div>
 
 
 <div id="refs" class="references csl-bib-body" role="list" style="display: none">
@@ -827,7 +873,6 @@ Note
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

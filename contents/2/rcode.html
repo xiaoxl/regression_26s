@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Intro to regression – Regression 26 Spring</title>
+<title>6&nbsp; R Code – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/2/slr.html" rel="next">
-<link href="../../contents/1/inferences.html" rel="prev">
+<link href="../../contents/2/project1.html" rel="next">
+<link href="../../contents/2/slr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -281,7 +316,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">R Code</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -354,7 +389,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/2/intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></span></a>
   </div>
 </li>
@@ -362,6 +397,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/slr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/rcode.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">R Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></span></a>
   </div>
 </li>
       </ul>
@@ -394,14 +441,8 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#probabilistic-model-for-y" id="toc-probabilistic-model-for-y" class="nav-link active" data-scroll-target="#probabilistic-model-for-y"><span class="header-section-number">4.1</span> Probabilistic model for <span class="math inline">\(y\)</span></a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -409,7 +450,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intro to regression</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">R Code</span></h1>
 </div>
 
 
@@ -426,97 +467,54 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
-<!-- Constants and basic symbols -->
-<p><span class="math display">\[
-\require{physics}
-\require{braket}
-\]</span></p>
-<p><span class="math display">\[
-\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
-\newcommand{\me}{{\mathrm e}}
-\]</span></p>
-<!-- Probability -->
-<p>$$ </p>
-<p> $$</p>
-<!-- Distributions pdf -->
-<p><span class="math display">\[
-\newcommand{\pdfbinom}{{\tt binom}}
-\newcommand{\pdfbeta}{{\tt beta}}
-\newcommand{\pdfpois}{{\tt poisson}}
-\newcommand{\pdfgamma}{{\tt gamma}}
-\newcommand{\pdfnormal}{{\tt norm}}
-  \newcommand{\pdfexp}{{\tt expon}}
-\]</span></p>
-<!-- Distributions -->
-<p><span class="math display">\[
-\newcommand{\distbinom}{\operatorname{B}}
-\newcommand{\distbeta}{\operatorname{Beta}}
-\newcommand{\distgamma}{\operatorname{Gamma}}
-\newcommand{\distexp}{\operatorname{Exp}}
-\newcommand{\distpois}{\operatorname{Poisson}}
-\newcommand{\distnormal}{\operatorname{\mathcal N}}
-\]</span></p>
-</div>
-<p>We want to use sample data to investigate the relationships among a group of variables, ultimately to create a model for some variable that can be used to predict its value in the futre.</p>
-<p>Language:</p>
-<ul>
-<li>Predicting the value of <span class="math inline">\(X\)</span> by <span class="math inline">\(\operatorname{E}(X)\)</span> is tantamount to using <span class="math inline">\(\operatorname{E}(X)\)</span> as a <strong>model</strong> for the true <span class="math inline">\(X\)</span>.</li>
-<li>The variable to be modeled is called the <strong>dependent</strong> (or <strong>reponse</strong>) variable.</li>
-</ul>
-<section id="probabilistic-model-for-y" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="probabilistic-model-for-y"><span class="header-section-number">4.1</span> Probabilistic model for <span class="math inline">\(y\)</span></h2>
-<p>The <strong>probabilistic model</strong> for <span class="math inline">\(y\)</span> is <span class="math display">\[
-y=\operatorname{E}(y)+\text{Random error}.
-\]</span> It is called <em>probabilistic</em> since we can make a probability statement about the magnitude of the deviation between <span class="math inline">\(y\)</span> and <span class="math inline">\(\operatorname{E}(y)\)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>General Form of Probabilistic Model in Regression
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-y=\operatorname{E}(y)+\varepsilon
-\]</span> where</p>
-<ul>
-<li><span class="math inline">\(y\)</span>: Dependent variable</li>
-<li><span class="math inline">\(\operatorname{E}(y)\)</span>: Mean value of <span class="math inline">\(y\)</span></li>
-<li><span class="math inline">\(\varepsilon\)</span>: Unexplainable or random error</li>
-</ul>
-<p>This model suggests that y will come back to its mean evautually. This is why it is called <strong>regression</strong> model.</p>
-</div>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4.1</strong></span> The variables used to predict <span class="math inline">\(y\)</span> are called <strong>independent variables</strong> and are denoted by <span class="math inline">\(x_i\)</span>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Regression Modeling
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<p>When we look at a simple linear regression model, we need to pay attention to the following qualities and their intepretations.</p>
 <ol type="1">
-<li>Hypothesize the form of the model for <span class="math inline">\(\operatorname{E}(y)\)</span>.</li>
-<li>Collect the sample data.</li>
-<li>Use the sample data to estimate unknown parameters in the model.</li>
-<li>Specify the probability distribution of <span class="math inline">\(\varepsilon\)</span>, and estimate any unknown parameters of this distribution.</li>
-<li>Statistically check the usefulness of the model.</li>
-<li>Check the validity of the assumptions on <span class="math inline">\(\varepsilon\)</span>, and make model modifications if necessary.</li>
-<li>When satisfied that the model is useful, and assumptions are met, use the model to make inferences.</li>
+<li><span class="math inline">\(\hat\beta_0\)</span></li>
+<li><span class="math inline">\(\hat\beta_1\)</span>:</li>
+<li><span class="math inline">\(\hat y\)</span></li>
+<li><span class="math inline">\(E(y_i)=\hat\beta_0+\hat\beta_1x_i\)</span></li>
+<li><span class="math inline">\(s^2\)</span></li>
+<li><span class="math inline">\(r^2\)</span></li>
+<li>significant: p-value for t</li>
+<li>significant: p-value for F</li>
+<li>SSE, SSR, SST</li>
+<li>Residuals <span class="math inline">\(e_i=y_i-\hat y_i\)</span></li>
+<li>CI for <span class="math inline">\(\beta_1\)</span>(and <span class="math inline">\(\beta_0\)</span>)</li>
+<li><span class="math inline">\(s_{\hat\beta_1}\)</span></li>
+<li>dof: n-2</li>
+<li>range for x and ssxx</li>
+<li>CI for prediction</li>
 </ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat, <span class="at">data=</span>Boston)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">40</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'prediction'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Both <code>pred.int</code> and <code>conf.int</code> are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">1</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rcode_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -934,13 +932,13 @@ y=\operatorname{E}(y)+\varepsilon
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/1/inferences.html" class="pagination-link" aria-label="Inferences">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferences</span></span>
+      <a href="../../contents/2/slr.html" class="pagination-link" aria-label="Simple Linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/2/slr.html" class="pagination-link" aria-label="Simple Linear regression">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simple Linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/2/project1.html" class="pagination-link" aria-label="A project">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
