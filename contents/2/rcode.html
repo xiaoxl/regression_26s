@@ -55,7 +55,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -65,7 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/2/project1.html" rel="next">
+<link href="../../contents/app/data.html" rel="next">
 <link href="../../contents/2/slr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -405,12 +424,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">R Code</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -441,8 +454,28 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#simulated-dataset" id="toc-simulated-dataset" class="nav-link active" data-scroll-target="#simulated-dataset"><span class="header-section-number">6.1</span> Simulated dataset</a></li>
+  <li><a href="#lm-function-and-reports" id="toc-lm-function-and-reports" class="nav-link" data-scroll-target="#lm-function-and-reports"><span class="header-section-number">6.2</span> <code>lm</code> function and reports</a>
+  <ul class="collapse">
+  <li><a href="#intercept-hatbeta_0" id="toc-intercept-hatbeta_0" class="nav-link" data-scroll-target="#intercept-hatbeta_0"><span class="header-section-number">6.2.1</span> Intercept (<span class="math inline">\(\hat\beta_0\)</span>)</a></li>
+  <li><a href="#slope-hatbeta_1" id="toc-slope-hatbeta_1" class="nav-link" data-scroll-target="#slope-hatbeta_1"><span class="header-section-number">6.2.2</span> Slope (<span class="math inline">\(\hat\beta_1\)</span>)</a></li>
+  <li><a href="#fitted-values-haty" id="toc-fitted-values-haty" class="nav-link" data-scroll-target="#fitted-values-haty"><span class="header-section-number">6.2.3</span> Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+  <li><a href="#sum-of-squares-sse-ssr-sst" id="toc-sum-of-squares-sse-ssr-sst" class="nav-link" data-scroll-target="#sum-of-squares-sse-ssr-sst"><span class="header-section-number">6.2.4</span> Sum of Squares (SSE, SSR, SST)</a></li>
+  <li><a href="#degrees-of-freedom" id="toc-degrees-of-freedom" class="nav-link" data-scroll-target="#degrees-of-freedom"><span class="header-section-number">6.2.5</span> Degrees of Freedom</a></li>
+  <li><a href="#residual-variance-s2-and-standard-error-s" id="toc-residual-variance-s2-and-standard-error-s" class="nav-link" data-scroll-target="#residual-variance-s2-and-standard-error-s"><span class="header-section-number">6.2.6</span> Residual Variance (<span class="math inline">\(s^2\)</span>) and Standard error (<span class="math inline">\(s\)</span>)</a></li>
+  <li><a href="#coefficient-of-determination-r2" id="toc-coefficient-of-determination-r2" class="nav-link" data-scroll-target="#coefficient-of-determination-r2"><span class="header-section-number">6.2.7</span> Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</a></li>
+  <li><a href="#standard-error-of-slope-s_hatbeta_1-and-t-test" id="toc-standard-error-of-slope-s_hatbeta_1-and-t-test" class="nav-link" data-scroll-target="#standard-error-of-slope-s_hatbeta_1-and-t-test"><span class="header-section-number">6.2.8</span> Standard Error of Slope (<span class="math inline">\(s_{\hat\beta_1}\)</span>) and t-test</a></li>
+  <li><a href="#overall-model-significance-f-test" id="toc-overall-model-significance-f-test" class="nav-link" data-scroll-target="#overall-model-significance-f-test"><span class="header-section-number">6.2.9</span> Overall Model Significance (F-test)</a></li>
+  <li><a href="#residuals-e_i-y_i---haty_i" id="toc-residuals-e_i-y_i---haty_i" class="nav-link" data-scroll-target="#residuals-e_i-y_i---haty_i"><span class="header-section-number">6.2.10</span> Residuals (<span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>)</a></li>
+  <li><a href="#confidence-and-prediction-intervals" id="toc-confidence-and-prediction-intervals" class="nav-link" data-scroll-target="#confidence-and-prediction-intervals"><span class="header-section-number">6.2.11</span> Confidence and Prediction Intervals</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -469,42 +502,26 @@ window.Quarto = {
 
 <p>When we look at a simple linear regression model, we need to pay attention to the following qualities and their intepretations.</p>
 <ol type="1">
-<li><span class="math inline">\(\hat\beta_0\)</span></li>
-<li><span class="math inline">\(\hat\beta_1\)</span>:</li>
-<li><span class="math inline">\(\hat y\)</span></li>
-<li><span class="math inline">\(E(y_i)=\hat\beta_0+\hat\beta_1x_i\)</span></li>
-<li><span class="math inline">\(s^2\)</span></li>
-<li><span class="math inline">\(r^2\)</span></li>
-<li>significant: p-value for t</li>
-<li>significant: p-value for F</li>
-<li>SSE, SSR, SST</li>
-<li>Residuals <span class="math inline">\(e_i=y_i-\hat y_i\)</span></li>
-<li>CI for <span class="math inline">\(\beta_1\)</span>(and <span class="math inline">\(\beta_0\)</span>)</li>
-<li><span class="math inline">\(s_{\hat\beta_1}\)</span></li>
-<li>dof: n-2</li>
-<li>range for x and ssxx</li>
-<li>CI for prediction</li>
+<li><strong>Parameter estimates</strong> (<span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat\beta_1\)</span>)</li>
+<li><strong>Fitted values and expected values</strong> (<span class="math inline">\(\hat y_i\)</span>’s)</li>
+<li><strong>Sum of Squares</strong>: SSE, SSR and SST</li>
+<li><strong>Degrees of Freedom</strong>: <span class="math inline">\(df_{residual}\)</span>, <span class="math inline">\(df_{model}\)</span> and <span class="math inline">\(df_{total}\)</span></li>
+<li><strong>Variance measures</strong> (<span class="math inline">\(s^2\)</span>, <span class="math inline">\(s\)</span> and <span class="math inline">\(R^2\)</span>)</li>
+<li><strong>Significance tests</strong> (<span class="math inline">\(t\)</span> and <span class="math inline">\(F\)</span>)</li>
+<li><strong>Residuals</strong> (<span class="math inline">\(e_i\)</span>’s)</li>
+<li><strong>Confidence Interval and Prediction Interval</strong></li>
 </ol>
+<section id="simulated-dataset" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="simulated-dataset"><span class="header-section-number">6.1</span> Simulated dataset</h2>
+<p>We’ll use a simulated dataset throughout to demonstrate each concept.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv<span class="sc">~</span>lstat, <span class="at">data=</span>Boston)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">lstat=</span><span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">40</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'prediction'</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, newx, <span class="at">interval=</span><span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Both <code>pred.int</code> and <code>conf.int</code> are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">1</span>])</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'red'</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">2</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[,<span class="dv">3</span>], <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -513,8 +530,492 @@ window.Quarto = {
 </div>
 </div>
 </div>
+</section>
+<section id="lm-function-and-reports" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="lm-function-and-reports"><span class="header-section-number">6.2</span> <code>lm</code> function and reports</h2>
+<p>In R, the model is described by the <em>formula language</em> <code>y~x</code>. It represents the model <span class="math inline">\(y=\beta_0+\beta_1x+\varepsilon\)</span>. The formula language will be discussed in more details in MLR.</p>
+<p>We then use the <code>lm</code> function to solve the model and perform the analysis. What is left is to extract important information from the variable <code>model</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Wilkinson–Rogers notation and Formula language
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>G. N. Wilkinson and C. E. Rogers introduced an algebraic system for describing the structure of linear and factorial models in <span class="citation" data-cites="Wilkinson1973">[<a href="../../index.html#ref-Wilkinson1973" role="doc-biblioref">1</a>]</span>. This system later became known as the <strong>Wilkinson–Rogers notation</strong>.</p>
+<p>John Chambers implemented this notation in the S language and developed the <strong>formula language</strong> for statistical model specification in the 1980s. This design was subsequently inherited by the R language.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">coef</span>(model), <span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rcode_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The main purpose is to understand the following two tables.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ x)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## -10.7147  -3.6014   0.0977   3.5281   9.4061 </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  23.2998     2.3323    9.99 9.84e-11 ***</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">## x             4.4834     0.3497   12.82 3.07e-13 ***</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 4.938 on 28 degrees of freedom</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.8545, Adjusted R-squared:  0.8493 </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 164.4 on 1 and 28 DF,  p-value: 3.073e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        Df     SS     MS     F          P</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Source  1 4008.3 4008.3 164.4 3.0734e-13</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Error  28  682.7   24.4                 </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Total  29 4691.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that we don’t use the built-in <code>anova</code> function since it doesn’t provide all info we need. We use an alternative version of the anova fucntion. It can also be downloaded from <a href="../../anova_alt.R">here</a>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Defind anova_alt function;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>anova_alt <span class="ot">&lt;-</span> <span class="cf">function</span>(object, <span class="at">reg_collapse =</span> <span class="cn">TRUE</span>, ...) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">list</span>(object, ...)) <span class="sc">&gt;</span> <span class="dv">1</span>L) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(<span class="fu">anova.lmlist</span>(object, ...))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(object, <span class="st">"lm"</span>)) {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(<span class="st">"calling anova.lm(&lt;fake-lm-object&gt;) ..."</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    w <span class="ot">&lt;-</span> object<span class="sc">$</span>weights</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    ssr <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="cf">if</span> (<span class="fu">is.null</span>(w)) object<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span> <span class="cf">else</span> w <span class="sc">*</span> object<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    mss <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="cf">if</span> (<span class="fu">is.null</span>(w)) {</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        object<span class="sc">$</span>fitted.values<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        w <span class="sc">*</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            object<span class="sc">$</span>fitted.values<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ssr <span class="sc">&lt;</span> <span class="fl">1e-10</span> <span class="sc">*</span> mss) {</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(<span class="st">"ANOVA F-tests on an essentially perfect fit are unreliable"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    dfr <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(object)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> object<span class="sc">$</span>rank</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p <span class="sc">&gt;</span> <span class="dv">0</span>L) {</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        p1 <span class="ot">&lt;-</span> <span class="dv">1</span>L<span class="sc">:</span>p</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        comp <span class="ot">&lt;-</span> object<span class="sc">$</span>effects[p1]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        asgn <span class="ot">&lt;-</span> object<span class="sc">$</span>assign[stats<span class="sc">:::</span><span class="fu">qr.lm</span>(object)<span class="sc">$</span>pivot][p1]</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        nmeffects <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"(Intercept)"</span>, <span class="fu">attr</span>(object<span class="sc">$</span>terms, <span class="st">"term.labels"</span>))</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        tlabels <span class="ot">&lt;-</span> nmeffects[<span class="dv">1</span> <span class="sc">+</span> <span class="fu">unique</span>(asgn)]</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        ss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">vapply</span>(<span class="fu">split</span>(comp<span class="sc">^</span><span class="dv">2</span>, asgn), sum, <span class="dv">1</span>), ssr)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">lengths</span>(<span class="fu">split</span>(asgn, asgn)), dfr)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (reg_collapse) {</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="fu">attr</span>(object<span class="sc">$</span>terms, <span class="st">"intercept"</span>)) {</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                collapse_p <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">:</span>(<span class="fu">length</span>(ss) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                ss <span class="ot">&lt;-</span> <span class="fu">c</span>(ss[<span class="dv">1</span>], <span class="fu">sum</span>(ss[collapse_p]), ss[<span class="fu">length</span>(ss)])</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                df <span class="ot">&lt;-</span> <span class="fu">c</span>(df[<span class="dv">1</span>], <span class="fu">sum</span>(df[collapse_p]), df[<span class="fu">length</span>(df)])</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                tlabels <span class="ot">&lt;-</span> <span class="fu">c</span>(tlabels[<span class="dv">1</span>], <span class="st">"Source"</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                collapse_p <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(ss) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                ss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sum</span>(ss[collapse_p]), ss[<span class="fu">length</span>(ss)])</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                df <span class="ot">&lt;-</span> <span class="fu">c</span>(df[<span class="dv">1</span>], <span class="fu">sum</span>(df[collapse_p]), df[<span class="fu">length</span>(df)])</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                tlabels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Regression"</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        ss <span class="ot">&lt;-</span> ssr</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> dfr</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        tlabels <span class="ot">&lt;-</span> <span class="fu">character</span>()</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (reg_collapse) {</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            collapse_p <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(ss) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>            ss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sum</span>(ss[collapse_p]), ss[<span class="fu">length</span>(ss)])</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">c</span>(df[<span class="dv">1</span>], <span class="fu">sum</span>(df[collapse_p]), df[<span class="fu">length</span>(df)])</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    ms <span class="ot">&lt;-</span> ss <span class="sc">/</span> df</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> ms <span class="sc">/</span> (ssr <span class="sc">/</span> dfr)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    P <span class="ot">&lt;-</span> <span class="fu">pf</span>(f, df, dfr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>    table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(df, ss, ms, f, P)</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>    table <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>        table,</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colSums</span>(table)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">attr</span>(object<span class="sc">$</span>terms, <span class="st">"intercept"</span>)) {</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        table<span class="sc">$</span>ss[<span class="fu">nrow</span>(table)] <span class="ot">&lt;-</span> table<span class="sc">$</span>ss[<span class="fu">nrow</span>(table)] <span class="sc">-</span> table<span class="sc">$</span>ss[<span class="dv">1</span>]</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    table<span class="sc">$</span>ms[<span class="fu">nrow</span>(table)] <span class="ot">&lt;-</span> table<span class="sc">$</span>ss[<span class="fu">nrow</span>(table)] <span class="sc">/</span> table<span class="sc">$</span>df[<span class="fu">nrow</span>(table)]</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    table[<span class="fu">length</span>(P)<span class="sc">:</span>(<span class="fu">length</span>(P) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    table[(<span class="fu">length</span>(P) <span class="sc">+</span> <span class="dv">1</span>), <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dimnames</span>(table) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(tlabels, <span class="st">"Error"</span>, <span class="st">"Total"</span>),</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Df"</span>, <span class="st">"SS"</span>, <span class="st">"MS"</span>, <span class="st">"F"</span>,</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>            <span class="st">"P"</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">attr</span>(object<span class="sc">$</span>terms, <span class="st">"intercept"</span>)) {</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>        table <span class="ot">&lt;-</span> table[<span class="sc">-</span><span class="dv">1</span>, ]</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>        table<span class="sc">$</span>MS[<span class="fu">nrow</span>(table)] <span class="ot">&lt;-</span> table<span class="sc">$</span>MS[<span class="fu">nrow</span>(table)] <span class="sc">*</span> (table<span class="sc">$</span>Df[<span class="fu">nrow</span>(table)]) <span class="sc">/</span> (table<span class="sc">$</span>Df[<span class="fu">nrow</span>(table)] <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>        table<span class="sc">$</span>Df[<span class="fu">nrow</span>(table)] <span class="ot">&lt;-</span> table<span class="sc">$</span>Df[<span class="fu">nrow</span>(table)] <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="fu">structure</span>(table,</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>        <span class="at">heading =</span> <span class="fu">c</span>(<span class="st">"Analysis of Variance Table</span><span class="sc">\n</span><span class="st">"</span>),</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>        <span class="at">class =</span> <span class="fu">c</span>(<span class="st">"anova"</span>, <span class="st">"data.frame"</span>)</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="intercept-hatbeta_0" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="intercept-hatbeta_0"><span class="header-section-number">6.2.1</span> Intercept (<span class="math inline">\(\hat\beta_0\)</span>)</h3>
+<p><span class="math inline">\(\hat\beta_0\)</span> is the estimated intercept. It represents the expected value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x = 0\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bhat_0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="st">'(Intercept)'</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bhat_0</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    23.29982</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It can also be read from the summary table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">'(Intercept)'</span>, <span class="st">'Estimate'</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 23.29982</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In some situations, the value <span class="math inline">\(x=0\)</span> has no real-world meaning or is far outside the observed range of the data. Consequently, the intercept <span class="math inline">\(\hat\beta_0\)</span>, which represents the predicted response when <span class="math inline">\(x=0\)</span>, lacks a practical interpretation, although it remains an essential component of the regression model.</p>
+</div>
+</div>
+</section>
+<section id="slope-hatbeta_1" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="slope-hatbeta_1"><span class="header-section-number">6.2.2</span> Slope (<span class="math inline">\(\hat\beta_1\)</span>)</h3>
+<p><span class="math inline">\(\hat\beta_1\)</span> is the estimated slope. It represents the expected change in <span class="math inline">\(y\)</span> for a one-unit increase in <span class="math inline">\(x\)</span>. In other words, for each increase of 1 in the value of <span class="math inline">\(x\)</span>, the value of <span class="math inline">\(y\)</span> will increase on average an amount equal to the slope.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bhat_1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="st">'x'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bhat_1</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">##        x </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.483374</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It can also be read from the summary table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">"x"</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4.483374</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fitted-values-haty" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="fitted-values-haty"><span class="header-section-number">6.2.3</span> Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</h3>
+<p><strong>Interpretation:</strong> Predicted values of <span class="math inline">\(y\)</span> based on the regression equation for each observed <span class="math inline">\(x\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(model)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3        4        5        6        7        8 </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 39.38705 59.59160 44.28556 63.41327 65.73140 29.62141 49.09245 63.79263 </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        9       10       11       12       13       14       15       16 </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 50.03380 46.20777 66.39177 46.07539 55.12342 50.88916 31.93624 64.09146 </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">##       17       18       19       20       21       22       23       24 </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 37.71292 29.48031 41.01492 66.29777 63.67643 55.73807 53.62788 67.90235 </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##       25       26       27       28       29       30 </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 54.24116 56.37266 49.73646 51.75704 39.45090 33.71928</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>These values are exactly <span class="math inline">\(\hat y_i=\hat\beta_0+\hat\beta_1x_i\)</span>. You may compare the numbers with the manuall computation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bhat_0<span class="sc">+</span>bhat_1<span class="sc">*</span>x</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 39.38705 59.59160 44.28556 63.41327 65.73140 29.62141 49.09245 63.79263</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [9] 50.03380 46.20777 66.39177 46.07539 55.12342 50.88916 31.93624 64.09146</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [17] 37.71292 29.48031 41.01492 66.29777 63.67643 55.73807 53.62788 67.90235</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [25] 54.24116 56.37266 49.73646 51.75704 39.45090 33.71928</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="sum-of-squares-sse-ssr-sst" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="sum-of-squares-sse-ssr-sst"><span class="header-section-number">6.2.4</span> Sum of Squares (SSE, SSR, SST)</h3>
+<ul>
+<li>SST (Total Sum of Squares): Total variation in <span class="math inline">\(y\)</span></li>
+<li>SSR (Regression Sum of Squares): Variation explained by the model</li>
+<li>SSE (Error Sum of Squares): Unexplained variation</li>
+<li>Relationship: <span class="math inline">\(SST = SSR + SSE\)</span></li>
+</ul>
+<p>They can all be directly read from the anova table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"SS"</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Error"</span>, <span class="st">"SS"</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Total"</span>, <span class="st">"SS"</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>SSR</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4008.298</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>SSE</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 682.6885</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>SST</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4690.986</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You may double check the values with the manual calculations.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> <span class="fu">fitted</span>(model)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>SSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((y_hat <span class="sc">-</span> y_mean)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> y_hat)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> y_mean)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>SSR</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4008.298</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>SSE</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 682.6885</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>SST</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4690.986</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We could also verify that SST=SSE+SSR.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SST <span class="sc">-</span> SSR <span class="sc">-</span> SSE</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.250555e-12</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="degrees-of-freedom" class="level3" data-number="6.2.5">
+<h3 data-number="6.2.5" class="anchored" data-anchor-id="degrees-of-freedom"><span class="header-section-number">6.2.5</span> Degrees of Freedom</h3>
+<p>In general,</p>
+<ul>
+<li><span class="math inline">\(df_{total}\)</span> = <span class="math inline">\(n-1\)</span></li>
+<li><span class="math inline">\(df_{model}\)</span> = number of predictors (excluding intercept)</li>
+<li><span class="math inline">\(df_{residual}\)</span> = <span class="math inline">\(n\)</span> - number of estimated parameters</li>
+</ul>
+<p>For simple linear regression, <span class="math inline">\(df_{residual} = n - 2\)</span> since we estimate 2 parameters: <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df_total <span class="ot">&lt;-</span> <span class="fu">length</span>(y) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_residual <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(model)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_model <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>df_total</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 29</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>df_residual</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 28</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>df_model</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The degree of freedom is also recorded in the anova table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_total <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Total"</span>, <span class="st">"Df"</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df_residual <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Error"</span>, <span class="st">"Df"</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df_model <span class="ot">&lt;-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"Df"</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>df_total</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 29</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>df_residual</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 28</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>df_model</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that <span class="math inline">\(df_{total}=df_{residual}+df_{model}\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_total <span class="sc">-</span> df_residual <span class="sc">-</span> df_model</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In addition, the third column in the anova table can be computed from <code>SS</code> column and <code>Df</code> column.</p>
+<ul>
+<li><span class="math inline">\(MSR=SSR/df_{model}\)</span></li>
+<li><span class="math inline">\(MSE=SSE/df_{residual}\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>SSR <span class="sc">/</span> df_model <span class="sc">-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"MS"</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 9.094947e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>SSE <span class="sc">/</span> df_residual <span class="sc">-</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Error"</span>, <span class="st">"MS"</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="residual-variance-s2-and-standard-error-s" class="level3" data-number="6.2.6">
+<h3 data-number="6.2.6" class="anchored" data-anchor-id="residual-variance-s2-and-standard-error-s"><span class="header-section-number">6.2.6</span> Residual Variance (<span class="math inline">\(s^2\)</span>) and Standard error (<span class="math inline">\(s\)</span>)</h3>
+<p><span class="math inline">\(s^2\)</span> measures the variance of observed values (<span class="math inline">\(\sigma^2\)</span>) from fitted values. Lower values indicate better fit. It is estimated by SSE/(n-2) which is MSE. Therefore it can be directly read from the anova table</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)[<span class="st">'Error'</span>, <span class="st">'MS'</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 24.38173</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The standard error <span class="math inline">\(s\)</span> is the square root of <span class="math inline">\(s^2\)</span>. Its interpretation is the same as the regular standard error: we expect most (approximately <span class="math inline">\(95\%\)</span>) of the observed <span class="math inline">\(𝑦\)</span>-values to lie within <span class="math inline">\(2𝑠\)</span> of their respective least squares predicted values <span class="math inline">\(\hat y\)</span>.</p>
+<p>The standard error can be directly read from the summary table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(model)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4.937786</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We could verify the relation between these two values.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)[<span class="st">"Error"</span>, <span class="st">"MS"</span>] <span class="sc">-</span> <span class="fu">sigma</span>(model)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="coefficient-of-determination-r2" class="level3" data-number="6.2.7">
+<h3 data-number="6.2.7" class="anchored" data-anchor-id="coefficient-of-determination-r2"><span class="header-section-number">6.2.7</span> Coefficient of Determination (<span class="math inline">\(R^2\)</span>)</h3>
+<p><span class="math inline">\(R^2\)</span> is the proportion of variance in <span class="math inline">\(y\)</span> explained by <span class="math inline">\(x\)</span>. It ranges from 0 to 1, with higher values indicating better fit.</p>
+<p><span class="math inline">\(R^2\)</span> (and the adjusted <span class="math inline">\(R^2\)</span> which will be discussed in MLR) can be read directly from the summary table. Note that in base R, <code>r.squared</code> and <code>adj.r.squared</code> don’t have their own functions. So we have to directly read the value from the summary table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>r.squared</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.854468</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8492704</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>On the other side, we could also estimate <span class="math inline">\(R^2\)</span> using SSR/SST based on the values from the avnoa table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>SSR<span class="sc">/</span>SST</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.854468</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="standard-error-of-slope-s_hatbeta_1-and-t-test" class="level3" data-number="6.2.8">
+<h3 data-number="6.2.8" class="anchored" data-anchor-id="standard-error-of-slope-s_hatbeta_1-and-t-test"><span class="header-section-number">6.2.8</span> Standard Error of Slope (<span class="math inline">\(s_{\hat\beta_1}\)</span>) and t-test</h3>
+<p>We estimate the variance of <span class="math inline">\(\hat\beta_1\)</span> and perform the t-test. The related statistics can be read directly from the summary table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">'x'</span>, ]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">##     Estimate   Std. Error      t value     Pr(&gt;|t|) </span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.483374e+00 3.496691e-01 1.282176e+01 3.073410e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We could access each statistic directly.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>s_beta1 <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">"x"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>t_statistic <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">"x"</span>, <span class="st">"t value"</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>p_value_beta1 <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">"x"</span>, <span class="st">"Pr(&gt;|t|)"</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>s_beta1</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.3496691</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>t_statistic</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 12.82176</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>p_value_beta1</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3.07341e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that once we have t-statistic and the degree of freedom, we can use the t-distribution formula to compute the p-value.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>t_statistic <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(model))[<span class="st">"x"</span>, <span class="st">"t value"</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dof_r <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(model)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="fu">abs</span>(t_statistic), dof_r, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_statistic), dof_r)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3.07341e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="overall-model-significance-f-test" class="level3" data-number="6.2.9">
+<h3 data-number="6.2.9" class="anchored" data-anchor-id="overall-model-significance-f-test"><span class="header-section-number">6.2.9</span> Overall Model Significance (F-test)</h3>
+<p>The F-test tests whether the regression model is significant overall. For simple linear regression, this is equivalent to the t-test for <span class="math inline">\(\beta_1\)</span>.</p>
+<p>The F-statistic can be found from both the summary table and the the anova table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)<span class="sc">$</span>fstatistic[<span class="st">"value"</span>]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    value </span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 164.3976</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If we only use the summary table, the corresponding p-value should be computed from the F-statistic.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>f_statistic <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>fstatistic[<span class="st">"value"</span>]</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>nof <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>fstatistic[<span class="st">"numdf"</span>]</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>dof_r <span class="ot">&lt;-</span> <span class="fu">summary</span>(model)<span class="sc">$</span>fstatistic[<span class="st">"dendf"</span>]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(f_statistic, nof, dof_r, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       value </span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3.07341e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The F-statistic and the p-value can also be found directly from the anova table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"F"</span>]</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 164.3976</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"P"</span>]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 3.07341e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It is also computed by MSR/MSE.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)[<span class="st">"Source"</span>, <span class="st">"MS"</span>] <span class="sc">/</span> <span class="fu">anova_alt</span>(model)[<span class="st">"Error"</span>, <span class="st">"MS"</span>]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 164.3976</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For simple linear regression, F-test only tests one variable. So it is equivalent to the t-test for <span class="math inline">\(\beta_1\)</span>. The relation is that in one variable case, the F-statistic is the square of the t-statistic.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>f_statistic <span class="sc">-</span> t_statistic<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        value </span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.136868e-13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In addition, the p-values for t-test and F-test are exactly the same in simple linear regression.</p>
+</section>
+<section id="residuals-e_i-y_i---haty_i" class="level3" data-number="6.2.10">
+<h3 data-number="6.2.10" class="anchored" data-anchor-id="residuals-e_i-y_i---haty_i"><span class="header-section-number">6.2.10</span> Residuals (<span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>)</h3>
+<p><span class="math inline">\(e_i\)</span> stands for the differences between observed and predicted values.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(model)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">##           1           2           3           4           5           6 </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   7.4885015   3.3713865 -10.7146876   4.8292907  -0.7743252  -7.9104910 </span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="do">##           7           8           9          10          11          12 </span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  -1.4175726  -3.7637969  -3.8636805  -3.7853000  -6.7677385   3.5135781 </span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          13          14          15          16          17          18 </span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   1.1341252  -5.8113444   3.9644430   3.5329812  -3.1143338   1.8879962 </span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          19          20          21          22          23          24 </span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.1321842   5.7628012   4.7960369   3.2076747  -0.1146320   0.3099803 </span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="do">##          25          26          27          28          29          30 </span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  -1.6367588  -2.9623235  -1.2930738  -6.3476343   9.4060724   3.9406407</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The residual analysis is a very important topic. The whole analysis can be summarized in the following plot. The details will be discussed in the last part of this course.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rcode_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-and-prediction-intervals" class="level3" data-number="6.2.11">
+<h3 data-number="6.2.11" class="anchored" data-anchor-id="confidence-and-prediction-intervals"><span class="header-section-number">6.2.11</span> Confidence and Prediction Intervals</h3>
+<ul>
+<li><strong>Confidence Interval</strong>: CI for the <em>mean</em> response at a given <span class="math inline">\(x\)</span> value</li>
+<li><strong>Prediction Interval</strong>: CI for an <em>individual</em> new observation (wider than the CI computed above)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by=</span><span class="fl">0.1</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, newx, <span class="at">interval=</span><span class="st">'prediction'</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, newx, <span class="at">interval=</span><span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Both <code>pred.int</code> and <code>conf.int</code> are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>x, pred.int[, <span class="st">'fit'</span>])</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>x, pred.int[, <span class="st">'lwr'</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>x, pred.int[, <span class="st">'upr'</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>x, conf.int[, <span class="st">'lwr'</span>], <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>x, conf.int[, <span class="st">'upr'</span>], <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rcode_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="ref-Wilkinson1973" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Wilkinson</span>, G. N. and <span class="smallcaps">Rogers</span>, C. E. (1973). <a href="https://doi.org/10.2307/2346786">Symbolic description of factorial models for analysis of variance</a>. <em>Applied Statistics</em> <strong>22</strong> 392.</div>
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -937,8 +1438,8 @@ window.Quarto = {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/2/project1.html" class="pagination-link" aria-label="A project">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
