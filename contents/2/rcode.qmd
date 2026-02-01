@@ -1,49 +1,498 @@
 # R Code
 
-
 When we look at a simple linear regression model, we need to pay attention to the following qualities and their intepretations.
 
-1. $\hat\beta_0$
-2. $\hat\beta_1$: 
-3. $\hat y$
-4. $E(y_i)=\hat\beta_0+\hat\beta_1x_i$
-5. $s^2$
-6. $r^2$
-7. significant: p-value for t
-8. significant: p-value for F
-9. SSE, SSR, SST
-10. Residuals $e_i=y_i-\hat y_i$
-11. CI for $\beta_1$(and $\beta_0$)
-12. $s_{\hat\beta_1}$
-13. dof: n-2
-14. range for x and ssxx
-15. CI for prediction
+1. **Parameter estimates** ($\hat\beta_0$, $\hat\beta_1$) 
+2. **Fitted values and expected values** ($\hat y_i$'s)
+3. **Sum of Squares**: SSE, SSR and SST 
+4. **Degrees of Freedom**: $df_{residual}$, $df_{model}$ and $df_{total}$
+5. **Variance measures** ($s^2$, $s$ and $R^2$) 
+6. **Significance tests** ($t$ and $F$)
+7. **Residuals** ($e_i$'s)
+8. **Confidence Interval and Prediction Interval**
+
+
+
+
+## Simulated dataset
+
+We'll use a simulated dataset throughout to demonstrate each concept.
+
+```{r}
+set.seed(123)
+n <- 30
+x <- runif(n, 1, 10)
+y <- 20 + 5 * x + rnorm(n, 0, 5)
+```
+
+```{r}
+plot(x, y)
+```
+ 
+
+## `lm` function and reports
+In R, the model is described by the *formula language* `y~x`. It represents the model $y=\beta_0+\beta_1x+\varepsilon$. The formula language will be discussed in more details in MLR.
+
+We then use the `lm` function to solve the model and perform the analysis. What is left is to extract important information from the variable `model`.
+
+```{r}
+model <- lm(y ~ x)
+```
+
+
+::: {.callout-tip}
+## Wilkinson–Rogers notation and Formula language
+G. N. Wilkinson and C. E. Rogers introduced an algebraic system for describing the structure of linear and factorial models in @Wilkinson1973. This system later became known as the **Wilkinson–Rogers notation**.
+
+John Chambers implemented this notation in the S language and developed the **formula language** for statistical model specification in the 1980s. This design was subsequently inherited by the R language.
+:::
+
+```{r}
+plot(x, y)
+abline(coef(model), col='red')
+```
+
+The main purpose is to understand the following two tables. 
+
+```{r}
+summary(model)
+```
+
+
+```{r}
+#| echo: false
+source('../../anova_alt.r')
+```
+
+
+```{r}
+anova_alt(model)
+```
+
+
+
+Note that we don't use the built-in `anova` function since it doesn't provide all info we need. We use an alternative version of the anova fucntion. It can also be downloaded from [here](../../anova_alt.R).
+
+
+```{r}
+#| code-fold: true
+### Defind anova_alt function;
+anova_alt <- function(object, reg_collapse = TRUE, ...) {
+    if (length(list(object, ...)) > 1L) {
+        return(anova.lmlist(object, ...))
+    }
+    if (!inherits(object, "lm")) {
+        warning("calling anova.lm(<fake-lm-object>) ...")
+    }
+    w <- object$weights
+    ssr <- sum(if (is.null(w)) object$residuals^2 else w * object$residuals^2)
+    mss <- sum(if (is.null(w)) {
+        object$fitted.values^2
+    } else {
+        w *
+            object$fitted.values^2
+    })
+    if (ssr < 1e-10 * mss) {
+        warning("ANOVA F-tests on an essentially perfect fit are unreliable")
+    }
+    dfr <- df.residual(object)
+    p <- object$rank
+    if (p > 0L) {
+        p1 <- 1L:p
+        comp <- object$effects[p1]
+        asgn <- object$assign[stats:::qr.lm(object)$pivot][p1]
+        nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
+        tlabels <- nmeffects[1 + unique(asgn)]
+        ss <- c(vapply(split(comp^2, asgn), sum, 1), ssr)
+        df <- c(lengths(split(asgn, asgn)), dfr)
+        if (reg_collapse) {
+            if (attr(object$terms, "intercept")) {
+                collapse_p <- 2:(length(ss) - 1)
+                ss <- c(ss[1], sum(ss[collapse_p]), ss[length(ss)])
+                df <- c(df[1], sum(df[collapse_p]), df[length(df)])
+                tlabels <- c(tlabels[1], "Source")
+            } else {
+                collapse_p <- 1:(length(ss) - 1)
+                ss <- c(sum(ss[collapse_p]), ss[length(ss)])
+                df <- c(df[1], sum(df[collapse_p]), df[length(df)])
+                tlabels <- c("Regression")
+            }
+        }
+    } else {
+        ss <- ssr
+        df <- dfr
+        tlabels <- character()
+        if (reg_collapse) {
+            collapse_p <- 1:(length(ss) - 1)
+            ss <- c(sum(ss[collapse_p]), ss[length(ss)])
+            df <- c(df[1], sum(df[collapse_p]), df[length(df)])
+        }
+    }
+
+    ms <- ss / df
+    f <- ms / (ssr / dfr)
+    P <- pf(f, df, dfr, lower.tail = FALSE)
+    table <- data.frame(df, ss, ms, f, P)
+    table <- rbind(
+        table,
+        colSums(table)
+    )
+    if (attr(object$terms, "intercept")) {
+        table$ss[nrow(table)] <- table$ss[nrow(table)] - table$ss[1]
+    }
+    table$ms[nrow(table)] <- table$ss[nrow(table)] / table$df[nrow(table)]
+    table[length(P):(length(P) + 1), 4:5] <- NA
+    table[(length(P) + 1), 3] <- NA
+    dimnames(table) <- list(
+        c(tlabels, "Error", "Total"),
+        c(
+            "Df", "SS", "MS", "F",
+            "P"
+        )
+    )
+    if (attr(object$terms, "intercept")) {
+        table <- table[-1, ]
+        table$MS[nrow(table)] <- table$MS[nrow(table)] * (table$Df[nrow(table)]) / (table$Df[nrow(table)] - 1)
+        table$Df[nrow(table)] <- table$Df[nrow(table)] - 1
+    }
+    structure(table,
+        heading = c("Analysis of Variance Table\n"),
+        class = c("anova", "data.frame")
+    )
+}
+```
+
+
+
+
+
+### Intercept ($\hat\beta_0$)
+
+$\hat\beta_0$ is the estimated intercept. It represents the expected value of $y$ when $x = 0$.
+
+```{r}
+bhat_0 <- coef(model)['(Intercept)']
+bhat_0
+```
+
+It can also be read from the summary table.
+
+```{r}
+coefficients(summary(model))['(Intercept)', 'Estimate']
+```
+
+
+::: {.callout-caution}
+In some situations, the value $x=0$ has no real-world meaning or is far outside the observed range of the data. Consequently, the intercept $\hat\beta_0$, which represents the predicted response when $x=0$, lacks a practical interpretation, although it remains an essential component of the regression model.
+:::
+
+
+
+### Slope ($\hat\beta_1$)
+
+$\hat\beta_1$ is the estimated slope. It represents the expected change in $y$ for a one-unit increase in $x$. In other words, for each increase of 1 in the value of $x$, the value of $y$ will increase on average an amount equal to the slope.
+
+```{r}
+bhat_1 <- coef(model)['x']
+bhat_1
+```
+
+It can also be read from the summary table.
+
+
+```{r}
+coefficients(summary(model))["x", "Estimate"]
+```
+
+
+### Fitted Values ($\hat{y}$)
+
+**Interpretation:** Predicted values of $y$ based on the regression equation for each observed $x$.
+
+```{r}
+fitted(model)
+```
+These values are exactly $\hat y_i=\hat\beta_0+\hat\beta_1x_i$. You may compare the numbers with the manuall computation.
+
+
+```{r}
+bhat_0+bhat_1*x
+```
+
+
+
+
+### Sum of Squares (SSE, SSR, SST)
+
+- SST (Total Sum of Squares): Total variation in $y$
+- SSR (Regression Sum of Squares): Variation explained by the model
+- SSE (Error Sum of Squares): Unexplained variation
+- Relationship: $SST = SSR + SSE$
+
+They can all be directly read from the anova table.
+
+```{r}
+SSR <- anova_alt(model)["Source", "SS"]
+SSE <- anova_alt(model)["Error", "SS"]
+SST <- anova_alt(model)["Total", "SS"]
+
+SSR
+SSE
+SST
+```
+
+You may double check the values with the manual calculations. 
+
+
+```{r}
+y_hat <- fitted(model)
+y_mean <- mean(y)
+SSR <- sum((y_hat - y_mean)^2)
+SSE <- sum((y - y_hat)^2)
+SST <- sum((y - y_mean)^2)
+
+SSR
+SSE
+SST
+```
+
+We could also verify that SST=SSE+SSR. 
+
+```{r}
+SST - SSR - SSE
+```
+
+
+
+### Degrees of Freedom
+
+
+In general, 
+
+- $df_{total}$ = $n-1$
+- $df_{model}$ = number of predictors (excluding intercept)
+- $df_{residual}$ = $n$ - number of estimated parameters 
+
+For simple linear regression, $df_{residual} = n - 2$ since we estimate 2 parameters: $\beta_0$ and $\beta_1$.
+
+```{r}
+df_total <- length(y) - 1
+df_residual <- df.residual(model)
+df_model <- 1
+
+df_total
+df_residual
+df_model
+```
+
+The degree of freedom is also recorded in the anova table.
+
+```{r}
+df_total <- anova_alt(model)["Total", "Df"]
+df_residual <- anova_alt(model)["Error", "Df"]
+df_model <- anova_alt(model)["Source", "Df"]
+
+df_total
+df_residual
+df_model
+```
+
+Note that $df_{total}=df_{residual}+df_{model}$.
+
+
+```{r}
+df_total - df_residual - df_model
+```
+
+
+In addition, the third column in the anova table can be computed from `SS` column and `Df` column.
+
+- $MSR=SSR/df_{model}$
+- $MSE=SSE/df_{residual}$
+
+
+```{r}
+SSR / df_model - anova_alt(model)["Source", "MS"]
+```
+
+
+```{r}
+SSE / df_residual - anova_alt(model)["Error", "MS"]
+```
+
+### Residual Variance ($s^2$) and Standard error ($s$)
+
+$s^2$ measures the variance of observed values ($\sigma^2$) from fitted values. Lower values indicate better fit. It is estimated by SSE/(n-2) which is MSE. Therefore it can be directly read from the anova table 
+```{r}
+anova_alt(model)['Error', 'MS']
+```
+
+
+The standard error $s$ is the square root of $s^2$. Its interpretation is the same as the regular standard error: 
+we expect most (approximately $95\%$) of the observed $𝑦$-values to lie within $2𝑠$ of their respective least squares predicted values $\hat y$.
+
+The standard error can be directly read from the summary table. 
+```{r}
+sigma(model)
+```
+
+We could verify the relation between these two values.
+
+```{r}
+anova_alt(model)["Error", "MS"] - sigma(model)^2
+```
+
+
+
+### Coefficient of Determination ($R^2$)
+
+$R^2$ is the proportion of variance in $y$ explained by $x$. It ranges from 0 to 1, with higher values indicating better fit.
+
+$R^2$ (and the adjusted $R^2$ which will be discussed in MLR) can be read directly from the summary table. Note that in base R, `r.squared` and `adj.r.squared` don't have their own functions. So we have to directly read the value from the summary table.
+
+```{r}
+summary(model)$r.squared
+summary(model)$adj.r.squared
+```
+
+On the other side, we could also estimate $R^2$ using SSR/SST based on the values from the avnoa table.
+
+
+```{r}
+SSR/SST
+```
+
+
+
+
+
+### Standard Error of Slope ($s_{\hat\beta_1}$) and t-test
+
+We estimate the variance of $\hat\beta_1$ and perform the t-test. The related statistics can be read directly from the summary table.
+
+
+```{r}
+coefficients(summary(model))['x', ]
+```
+
+We could access each statistic directly.
+```{r}
+s_beta1 <- coefficients(summary(model))["x", "Std. Error"]
+t_statistic <- coefficients(summary(model))["x", "t value"]
+p_value_beta1 <- coefficients(summary(model))["x", "Pr(>|t|)"]
+
+s_beta1
+t_statistic
+p_value_beta1
+```
+
+Note that once we have t-statistic and the degree of freedom, we can use the t-distribution formula to compute the p-value.
+
+```{r}
+t_statistic <- coefficients(summary(model))["x", "t value"]
+dof_r <- df.residual(model)
+pt(abs(t_statistic), dof_r, lower.tail = FALSE) + pt(-abs(t_statistic), dof_r)
+```
+
+
+### Overall Model Significance (F-test)
+
+The F-test tests whether the regression model is significant overall. For simple linear regression, this is equivalent to the t-test for $\beta_1$.
+
+The F-statistic can be found from both the summary table and the the anova table.
+
+
+```{r}
+summary(model)$fstatistic["value"]
+```
+If we only use the summary table, the corresponding p-value should be computed from the F-statistic.
+```{r}
+f_statistic <- summary(model)$fstatistic["value"]
+nof <- summary(model)$fstatistic["numdf"]
+dof_r <- summary(model)$fstatistic["dendf"]
+pf(f_statistic, nof, dof_r, lower.tail = FALSE)
+```
+
+
+The F-statistic and the p-value can also be found directly from the anova table.
+
+
+```{r}
+anova_alt(model)["Source", "F"]
+anova_alt(model)["Source", "P"]
+```
+
+It is also computed by MSR/MSE.
+
+```{r}
+anova_alt(model)["Source", "MS"] / anova_alt(model)["Error", "MS"]
+```
+
+
+For simple linear regression, F-test only tests one variable. So it is equivalent to the t-test for $\beta_1$. The relation is that in one variable case, the F-statistic is the square of the t-statistic.
+
+
+```{r}
+f_statistic - t_statistic^2
+```
+
+In addition, the p-values for t-test and F-test are exactly the same in simple linear regression.
+
+
+### Residuals ($e_i = y_i - \hat{y}_i$)
+
+$e_i$ stands for the differences between observed and predicted values.
+
+```{r}
+residuals(model)
+```
+
+
+The residual analysis is a very important topic. The whole analysis can be summarized in the following plot. The details will be discussed in the last part of this course.
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(model)
+par(mfrow = c(1, 1))
+```
+
+
+
+
+### Confidence and Prediction Intervals
+
+
+- **Confidence Interval**: CI for the *mean* response at a given $x$ value
+- **Prediction Interval**: CI for an *individual* new observation (wider than the CI computed above)
 
 
 
 
 ```{r}
-library(MASS)
-
-fit <- lm(medv~lstat, data=Boston)
-
-newx = data.frame(lstat=seq(1, 40, by=0.1))
-pred.int <- predict(fit, newx, interval='prediction')
-conf.int <- predict(fit, newx, interval='confidence')
+newx = data.frame(x=seq(0, 10, by=0.1))
+pred.int <- predict(model, newx, interval='prediction')
+conf.int <- predict(model, newx, interval='confidence')
 ```
 
 Both `pred.int` and `conf.int` are matrices, where the first column is the fitted value, the second column and the third column are the corresponding interval bounds.
 
 
 ```{r}
-plot(Boston$lstat, Boston$medv)
+plot(x, y)
 
-lines(newx$lstat, pred.int[,1])
+lines(newx$x, pred.int[, 'fit'])
 
-lines(newx$lstat, pred.int[,2], col='red')
-lines(newx$lstat, pred.int[,3], col='red')
+lines(newx$x, pred.int[, 'lwr'], col = "red")
+lines(newx$x, pred.int[, 'upr'], col = "red")
 
-lines(newx$lstat, conf.int[,2], col='blue')
-lines(newx$lstat, conf.int[,3], col='blue')
+lines(newx$x, conf.int[, 'lwr'], col = "blue")
+lines(newx$x, conf.int[, 'upr'], col = "blue")
 ```
+
+
+
+
+
+
 

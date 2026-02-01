@@ -60,7 +60,7 @@ book:
       chapters: 
       - contents/2/intro.qmd
       - contents/2/slr.qmd
-      # - contents/2/rcode.qmd
+      - contents/2/rcode.qmd
       # - contents/2/project1.qmd
     # - part: "MLR"
     #   chapters:
