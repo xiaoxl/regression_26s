@@ -20,17 +20,49 @@ crossref:
 
 # Exercises
 
-The dataset is from Page 102, Problem 3.6.
+Please use this dataset.
+
+| x | y |
+|---|---|
+| 1 | 2 |
+| 2 | 4 |
+| 3 | 5 |
+| 4 | 4 |
+| 5 | 6 |
+| 6 | 7 |
 
 ::: {#exr-}
 Does the data provide sufficient evidence to indicate that $x$ and $y$ are significantly related? Use $\alpha = 0.05$. 
-<!-- Please use both critical value method and $p$-value method for this question. -->
+
+:::
+
+
+::: {.answer}
+
+```{r}
+x <- c(1,2,3,4,5,6)
+y <- c(2,4,5,4,6,7)
+model <- lm(y~x)
+summary(model)
+```
+
+Since p-value<0.05, there is sufficient evidence to indicate that $x$ and $y$ are related.
+
+:::
+
+::: {#exr-}
+Find a 95% confidence interval for the slope, $\beta_1$. Interpret the result practically.
+
+
+::: {.answer}
+
+```{r}
+confint(model, level=0.95)['x',]
+```
 :::
 
 
 
-::: {#exr-}
-Find a 95% confidence interval for the slope, $\beta_1$, on the printout. Interpret the result practically.
 :::
 
 

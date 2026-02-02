@@ -46,7 +46,7 @@ knitr::kable(df, format = "pipe")
 ::: {#exr-}
 ## Car program
 
-A company bought a car or two each year. The data is shown in the file `companycar.csv`.
+A company bought a car or two each year. The data is shown in the file `COMPANYCAR.csv`.
 
 (a) Fit the simple linear regression model, $E(y)=\beta_0+\beta_1$, to the data.
 (b) List assumptions required for the regression analysis.
@@ -134,7 +134,7 @@ cat("\n\\end{verbatim}\n")
 ::: {#exr-}
 ## Position effects in memories
 
-Here is an experiment. There are 9 words on screen and participants are requested to recall these words as many as possible. The results are stored in the file `wordmemory.csv`: each row represens a word and the recall rate of the word at this position is recorded.
+Here is an experiment. There are 9 words on screen and participants are requested to recall these words as many as possible. The results are stored in the file `WORDMEMORY.csv`: each row represens a word and the recall rate of the word at this position is recorded.
 
 (a) Find a 99% confidence interval for the mean recall proportion for words in the fifth position. Interpret the result.
 (b) Find a 99% prediction interval for the recall proportion of a particular word in the fifth position. Interpret the result.
