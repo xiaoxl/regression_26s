@@ -1,0 +1,30 @@
+---
+title: "Exam 2"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        include-in-header:
+            - ../../math.tex
+            - text: |
+                \usepackage{xcolor} 
+                \usepackage{alltt}
+                \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
+                \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
+---
+
+## safdf
+
+sdf

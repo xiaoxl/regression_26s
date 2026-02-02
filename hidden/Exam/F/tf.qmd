@@ -1,0 +1,26 @@
+---
+title: "Final Exam"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        include-in-header:
+            - ../../math.tex
+            - text: |
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
+params:
+    show_solution: false
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
+---
+
+# Problems
+
+

@@ -1,0 +1,649 @@
+---
+title: "Exam 1"
+# author: "Type Your Name Here"
+# date: today
+format: 
+    pdf:        
+        pdf-engine: lualatex
+        template-partials:
+            - ../../doc-class.tex
+        include-in-header:
+            - ../../math.tex
+            - text: |
+                \usepackage{xcolor} 
+                \definecolor{AccessibleRed}{HTML}{8B0000}
+                \usepackage{alltt}
+                \usepackage[letterpaper,top=0.8in,bottom=0.8in,left=1in,right=1in]{geometry}
+                \AtBeginDocument{
+                    \renewcommand{\theexercise}{\arabic{exercise}}
+                }
+                \newcommand{\red}[1]{\textcolor{AccessibleRed}{\textbf{#1}}}
+params:
+    show_solution: true
+filters:
+    - ../../solution-filter.lua
+crossref:
+    chapters: false
+---
+
+# Problems
+
+::: {#exr-1}
+## 1 point
+
+In regression analysis, the model in the form  $y = \beta_0 + \beta_1 x + \varepsilon$ is called
+
+A. estimated simple linear regression equation  
+B. simple linear regression model  
+C. correlation equation  
+
+:::
+
+
+::: {.answer}
+B
+:::
+
+---
+
+
+
+::: {#exr-2}
+## 1 point
+
+
+A simple regression model has
+
+A. only one independent variable  
+B. more than one dependent variable  
+C. more than one independent variable  
+D. at least two dependent variables  
+
+:::
+
+::: {.answer}
+A
+:::
+
+---
+
+
+::: {#exr-3}
+# 1 point
+In regression analysis, the variable that is being predicted is called the *response variable*. It is also called the
+
+A. dependent variable  
+B. independent variable  
+C. intervening variable  
+D. usually $x$  
+
+:::
+
+::: {.answer}
+A
+:::
+
+
+---
+
+::: {#exr-4}
+## 1 point
+
+In simple linear regression (SLR), which of the following is **NOT** a required assumption about the error term $\varepsilon$?
+
+A. The expected value of the error term is one.  
+B. The variance of the error term is constant.  
+C. The values of the error term are independent.  
+D. The error term is normally distributed.  
+
+:::
+
+
+
+::: {.answer}
+A
+:::
+
+
+---
+
+::: {#exr-5}
+## 1 point
+
+
+A regression analysis between **sales** (measured in \$1000) and **price** (measured in dollars) resulted in the equation  $\hat{y} = 60 - 8x$. This equation implies that an
+
+A. increase of \$1 in sales is associated with an increase of \$8 in price  
+B. increase of \$1 in sales is associated with a decrease of \$52000 in price  
+C. increase of \$1 in price is associated with an increase of \$52 in sales  
+D. increase of \$1 in price is associated with a decrease of \$8000 in sales  
+:::
+
+
+::: {.answer}
+D
+:::
+
+
+
+
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
+
+
+
+
+
+
+
+
+
+::: {#exr-6}
+## 1 point
+
+The confidence interval estimate for an **average value of $y$** (in a linear regression model) will be ______ compared to the prediction interval estimate for a particular value.
+
+A. the same  
+B. wider  
+C. narrower  
+D. sometimes narrower, and sometimes wider  
+
+:::
+
+
+::: {.answer}
+C
+:::
+
+
+
+---
+
+
+::: {#exr-}
+## 1 point
+
+
+In simple linear regression analysis, which of the following is **NOT true**?
+
+A. MSE equals SSE divided by the degrees of freedom for error.  
+B. The F test and the t test have the same p-value, thus yield the same conclusion.  
+C. The F test and the t test do not have the same p-value, thus do not yield the same conclusion.  
+D. The relationship between $x$ and $y$ is represented by a straight line.  
+
+
+
+:::
+
+
+::: {.answer}
+C
+:::
+
+
+
+---
+
+
+::: {#exr-8}
+## 10 points
+
+At temperatures approaching absolute zero (-273 C), helium exhibits traits that seem to defy many laws of Newtonian physics. An experiment has been conducted with helium in solid form at various temperatures near absolute zero. The solid helium is placed in a dilution refrigerator along with a solid impure substance, and the fraction (in weight) of the impurity passing through the solid helium is recorded. (This phenomenon of solids passing directly through solids is known as quantum tunneling.) The data with 10 observations are given in the table. 
+
+Please fill in the blanks in the R output below.
+
+
+```{r}
+#| echo: false
+#| output: false
+TEMP <- c(
+    -262.0,
+    -265.0,
+    -256.0,
+    -267.0,
+    -270.0,
+    -272.0,
+    -272.4,
+    -272.7,
+    -272.8,
+    -272.9
+)
+
+PROPPASS <- c(
+    0.315,
+    0.202,
+    0.204,
+    0.620,
+    0.715,
+    0.935,
+    0.957,
+    0.906,
+    0.985,
+    0.987
+)
+
+source("../../../anova_alt.R")
+
+fit <- lm(PROPPASS ~ TEMP)
+s <- capture.output(summary(fit))
+a <- capture.output(anova_alt(fit))
+```
+
+
+
+```{r}
+#| echo: false
+#| output: asis
+
+a <- gsub(
+    "Error   8 0.14225 0.01778",
+    "Error \\\\red{1.___} 0.14225 \\\\red{2.____}",
+    a
+)
+
+
+s <- gsub(
+    "-6.836",
+    "\\\\red{3.____}",
+    s
+)
+
+s <- gsub(
+    "Residual standard error: 0.1333",
+    "Residual standard error: \\\\red{4.____}",
+    s
+)
+
+s <- gsub(
+    "F-statistic: 46.73 on 1 and 8 DF,  p-value: 0.0001329",
+    "F-statistic: \\\\red{5.___} on \\\\red{6.___} and \\\\red{7.___} DF,  p-value: \\\\red{8.___}",
+    s
+)
+
+cat("\\begin{alltt}\n")
+cat(paste(a, collapse = "\n"))
+cat("\n\\end{alltt}\n")
+
+cat("\\begin{alltt}\n")
+cat(paste(s, collapse = "\n"))
+cat("\n\\end{alltt}\n")
+
+# a_lines <- paste0("\\texttt{", a, "}")
+# s_lines <- paste0("\\texttt{", s, "}")
+
+# cat(paste(a_lines, collapse = "\\\\\n"))
+# cat("\n\n")
+# cat(paste(s_lines, collapse = "\\\\\n"))
+```
+
+
+:::
+
+
+::: {.answer}
+
+1. 8
+2. $0.14225 / 8 \approx 0.0178$
+3. $-0.052829 / 0.007728 \approx -6.836$
+4. $\sqrt{0.0178} \approx 0.133$
+5. 46.728
+6. 1
+7. 8
+8. $0.000133$
+:::
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
+
+
+
+
+::: {#exr-9}
+## 3 points
+
+Jason believes that the sales of coffee (cups sold) at his coffee shop depend upon the temperature. He has taken a sample of 6 days. Some of the values were calculated based on the data collected. 
+
+Use the following information for any calculations.
+
+$$
+\begin{split}
+\bar x&=75,\quad \bar y=160\\
+SS_{xy}=\sum(x_i-\bar x)(y_i-\bar y)&=-10400,\quad SS_{xx}=\sum(x_i-\bar x)^2=1750\\
+SS_{yy}=\sum(y_i-\bar y)^2&=68200,\quad SSE=\sum(y_i-\hat y_i)^2=6394
+\end{split}
+$$
+
+
+```{r}
+#| echo: false
+
+dat <- data.frame(
+    temperature = c(50, 60, 70, 80, 90, 100),
+    cups_sold = c(350, 200, 210, 100, 60, 40)
+)
+plot(
+    dat$temperature,
+    dat$cups_sold,
+    main = "Scatterplot of Cups of Coffee Sold vs Temperature",
+    pch = 19,
+    col = "red",
+    xlab = "Temperature",
+    ylab = "Cups of Coffee Sold"
+)
+```
+
+
+
+a. What does the scatter diagram (above) indicate about the relationship between cups of coffee sold and temperature?
+b. What is the coefficient of determination $r^2$? (Display in percentage form, round to 1 decimal place.)
+c. Interpret the coefficient of determination $r^2$.
+
+
+:::
+
+
+
+::: {.answer}
+a. They have an approximately negative linear relationship.
+b. 
+$$
+\begin{split}
+SSR &= SST - SSE = 68200 - 6394\\
+r^2 &= \dfrac{SSR}{SST} = \dfrac{68200 - 6394}{68200} \approx 0.906 = 90.6\%
+\end{split}
+$$
+c. About $90.6\%$ of the variance in coffee sales is explained by the model.
+
+
+:::
+
+---
+
+
+::: {#exr-10}
+## 11 points
+
+
+A group of 13 children and adolescents (considered healthy) participated in a psychological study designed to analyze the relationship between age and average total sleep time (ATST). To obtain a measure for ATST (in minutes), recordings were taken on each subject on three consecutive nights and then averaged. The results obtained are displayed in the following table.
+
+
+```{r}
+#| echo: false
+ATST <- c(
+    586.00,
+    461.75,
+    491.10,
+    565.00,
+    462.00,
+    532.10,
+    477.60,
+    515.20,
+    493.00,
+    528.30,
+    575.90,
+    532.50,
+    530.50
+)
+
+AGE <- c(
+    4.40,
+    14.00,
+    10.10,
+    6.70,
+    11.50,
+    9.60,
+    12.40,
+    8.90,
+    11.10,
+    7.75,
+    5.50,
+    8.60,
+    7.20
+)
+dat <- data.frame(
+    AGE = AGE,
+    ATST = ATST
+)
+knitr::kable(
+    dat,
+    col.names = c("Age (years)", "ATST (min / 24 h)"),
+    digits = 2
+)
+```
+
+The data is shown in the following plot. The r code output is also shown below.
+
+```{r}
+#| echo: false
+plot(
+    AGE,
+    ATST,
+    pch = 19,
+    xlab = "Age (years)",
+    ylab = "ATST (min / 24 h)",
+    col = "red"
+)
+```
+
+```{r}
+fit <- lm(ATST ~ AGE)
+summary(fit)
+```
+
+```{r}
+anova_alt(fit)
+```
+
+
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
+
+a. The psychologists were interested in the correlation between ATST ($y$) and AGE ($x$). Below is the scatterplot for these two variables. Do you observe a trend?
+b. The regression of ATST on Age R output is as follows. Calculate the coefficient of correlation $r$ relating ATST $y$ to AGE $x$ from the R output above (round to 3 decimal places).
+c. Interpret the coefficient of correlation $r$ you got in part (b). That is, is the linear relationship weak or strong? Is it a positive linear relationship or negative?
+d. Conduct a test to determine whether ATST $y$ is correlated with AGE $x$. Use $\alpha = .01$. What are your null and alternative hypotheses?
+
+    A. $H_0: \beta_1 \neq 0$, $H_a: \beta_1 = 0$  
+    B. $H_0: \beta_0 = 0$, $H_a: \beta_0 > 0$  
+    C. $H_0: \beta_1 = 0$, $H_a: \beta_1 \neq 0$  
+    D. $H_0: \beta_0 = 0$, $H_a: \beta_0 \neq 0$  
+    E. $H_0: \beta_1 > 0$, $H_a: \beta_1 = 0$  
+
+e. Conduct a test to determine whether ATST $y$ is correlated with AGE $x$. Use $\alpha = .01$. What is your conclusion?
+
+    A. As $p$-value is greater than $\alpha = .01$, we fail to reject the null hypothesis.  
+    B. As $p$-value is smaller than $\alpha = .01$, we fail to reject the null hypothesis.  
+    C. As $p$-value is greater than $\alpha = .01$, we reject the null hypothesis.  
+    D. As $p$-value is smaller than $\alpha = .01$, we reject the null hypothesis.  
+
+f. Using the conclusion drawn in the previous step, determine whether there is sufficient evidence to support the claim of a linear correlation between the ATST and the AGE. Choose the correct answer.
+
+    A. We conclude there is sufficient evidence to indicate the nonlinear correlation between the ATST and AGE at $\alpha = .01$.  
+    B. We conclude there is not enough evidence to indicate the linear correlation between the ATST and AGE at $\alpha = .01$.  
+    C. We conclude there is not enough evidence to indicate the nonlinear correlation between the ATST and AGE at $\alpha = .01$.  
+    D. We conclude there is sufficient evidence to indicate the linear correlation between the ATST and AGE at $\alpha = .01$.  
+
+g. Find $\hat{\sigma}^2$, the variance of the random error term in the model.
+h. SSE = ? (round to 2 decimal places)
+i. MSE = ? (round to 2 decimal places)
+j. SE = ? (round to 2 decimal places)
+k. Give a practical interpretation of the value of $s$.
+
+
+
+:::
+
+
+::: {.answer}
+
+a. There is an approximately negative linear trend.
+b. $-\sqrt{0.9054} \approx -0.952$
+c. A strong negative linear relationship.
+d. C
+e. D
+f. D
+g. 173
+h. 1902.80
+i. 173
+j. $\sqrt{173} \approx 13.15$
+k. It is an estimate of the standard deviation of the random error term. Roughly, about 68% of the observed responses are expected to fall within $s$ of the fitted value, and about 95% within $2s$ (assuming the error term is approximately normal).
+
+
+:::
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
+
+::: {#exr-11}
+## 4 points
+
+Scientists conducted a series of trials to investigate the feeding habits of a kind of birds. They were deprived of food until their guts were empty, then were allowed to feed for 6 hours. For each of 42 feeding trials, the change in the weight of the birds after 2.5 hours was recorded as a percentage of initial weight. The other variable recorded was digestion efficiency (measured as a percentage).
+
+The data for selected feeding trials are listed in the table below.
+
+
+```{r}
+#| echo: false
+trial = c(1, 2, 3, 4, 5, 38, 39, 40, 41, 42)
+weight_change = c(
+    -6.0,
+    -5.0,
+    -4.5,
+    0.0,
+    2.0,
+    9.0,
+    12.0,
+    8.5,
+    10.5,
+    14.0
+)
+DIGEFF = c(
+    0.0,
+    2.5,
+    5.0,
+    0.0,
+    0.0,
+    59.0,
+    52.5,
+    75.0,
+    72.5,
+    69.0
+)
+snowgeese <- data.frame(
+    trial = trial,
+    weight_change = weight_change,
+    digestion_efficiency = DIGEFF
+)
+dat <- read.csv("snow.csv")
+
+knitr::kable(
+    snowgeese,
+    col.names = c(
+        "Trial",
+        "Weight Change (%)",
+        "Digestion Efficiency (%)"
+    ),
+    digits = 1
+)
+```
+
+
+```{r}
+fit <- lm(weight_change ~ DIGEFF, data=dat)
+summary(fit)
+```
+
+```{r}
+anova_alt(fit)
+```
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```
+
+
+
+```{r}
+coef <- coefficients(summary(fit))
+coef_CI <- confint(fit, level=0.90)
+cbind(coef, coef_CI)
+```
+
+
+```{r}
+new_digeff <- data.frame(DIGEFF = c(27.5, 35))
+CI <- predict(fit, new_digeff, interval='confidence', level=0.90)
+cbind(new_digeff, CI)
+```
+
+
+```{r}
+PI <- predict(fit, new_digeff, interval='prediction', level=0.90)
+cbind(new_digeff, PI)
+```
+
+
+
+
+Snow geese feeding trial R output.
+
+a. Find a 90% confidence interval for the true slope of the line.
+b. Based on the 90% confidence interval from the previous question, what can you conclude?
+
+    A. The confidence interval contains 0. Then, $\beta_1$ is significantly different from 0.  
+    B. The confidence interval contains 0. Then, $\beta_1$ is not significantly different from 0.  
+    C. The confidence interval doesn't contain 0. Then, $\beta_1$ is significantly different from 0.  
+    D. The confidence interval doesn't contain 0. Then, $\beta_1$ is not significantly different from 0.  
+
+c. The researcher wants to estimate the average weight change of all the birds with digestion efficiency 35% (i.e., DIGEFF = 35). From the R output, find the values of the interval at the 90% confidence level that is desired by the researcher.
+d. Give a practical interpretation of the interval in part (c).
+
+
+:::
+
+
+
+::: {.answer}
+
+a. $(0.093,\ 0.190)$ (`{r} coef_CI['DIGEFF', '5 %']`, `{r} coef_CI['DIGEFF', '95 %']`)
+b. C
+c. $(0.714,\ 2.847)$ (`{r} CI[2, 'lwr']`, `{r} CI[2, 'upr']`)
+d. We are 90% confident that the true mean weight change for the birds with digestion efficiency 35% lies within this interval.
+
+
+:::

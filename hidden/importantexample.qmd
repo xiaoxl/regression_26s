@@ -26,3 +26,12 @@ cat("\\begin{verbatim}\n")
 cat(paste(s_out, collapse = "\n"))
 cat("\n\\end{verbatim}\n")
 ```
+
+
+```{r}
+#| echo: false
+#| results: asis
+if (!params$show_solution) {
+    cat("{{< pagebreak >}}")
+}
+```

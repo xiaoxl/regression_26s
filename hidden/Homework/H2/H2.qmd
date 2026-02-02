@@ -9,10 +9,12 @@ format:
             - ../../doc-class.tex
         include-in-header:
             - text: |
-                \usepackage{xcolor}
+                \usepackage{xcolor} 
+                \usepackage{alltt}
                 \AtBeginDocument{
                     \renewcommand{\theexercise}{\arabic{exercise}}
                 }
+                \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
 params:
     show_solution: false
 filters:
@@ -86,35 +88,35 @@ a <- capture.output(anova_alt(fit))
 
 s <- gsub(
     "12.295   <2e-16 \\*\\*\\*",
-    "1. ____   2. ____",
+    "\\\\red{1. ____}   \\\\red{2. ____}",
     s
 )
 
 s <- gsub(
     "Residual standard error:\\s*[0-9\\.]+",
-    "Residual standard error:  3. _______",
+    "Residual standard error:  \\\\red{3. _______}",
     s
 )
 
 a <- gsub(
     "29582640 29582640",
-    "29582640  4. _______",
+    "29582640  \\\\red{4. _______}",
     a
 )
 
 a <- gsub(
     " 195710",
-    "5. _______",
+    "\\\\red{5. _______}",
     a
 )
 
-cat("\\begin{verbatim}\n")
+cat("\\begin{alltt}\n")
 cat(paste(s, collapse = "\n"))
-cat("\n\\end{verbatim}\n")
+cat("\n\\end{alltt}\n")
 
-cat("\\begin{verbatim}\n")
+cat("\\begin{alltt}\n")
 cat(paste(a, collapse = "\n"))
-cat("\n\\end{verbatim}\n")
+cat("\n\\end{alltt}\n")
 ```
 
 
