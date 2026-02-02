@@ -363,6 +363,12 @@ SSR/SST
 ```
 
 
+By the way, $R^2$ is the square of the Pearson coefficient of correlation $r$.
+
+```{r}
+r <- cor(x, y)
+summary(model)$r.squared - r^2
+```
 
 
 
@@ -393,6 +399,26 @@ t_statistic <- coefficients(summary(model))["x", "t value"]
 dof_r <- df.residual(model)
 pt(abs(t_statistic), dof_r, lower.tail = FALSE) + pt(-abs(t_statistic), dof_r)
 ```
+
+
+By the way, t-statistic can also be computed by the formula $t=\hat\beta_1/s_{\hat\beta_1}$.
+
+```{r}
+bhat_1/s_beta1
+```
+
+
+### Confidence interval for the slope
+Since we have an estimator for $\beta_1$ and the standard error for the estimator $s_{\hat\beta_1}$, we could build the confidence interval for the estimation.
+
+In R, we could directly use `confint` to compute it.
+
+```{r}
+confint(model, level=0.95)
+```
+Its interpretation is as the regular confidence interval: we are 95% confident that for each unit increase in $x$, the estimated $y$ increases between `{r} confint(model, level=0.95)['x', '2.5 %']` to `{r} confint(model, level=0.95)['x', '97.5 %']`.
+
+
 
 
 ### Overall Model Significance (F-test)
