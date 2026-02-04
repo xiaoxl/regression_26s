@@ -11,6 +11,7 @@ $$
 $$
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
 $$
 
 <!-- Probability -->

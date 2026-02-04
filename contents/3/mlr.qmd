@@ -1,4 +1,4 @@
-# MLR
+# Multiple Linear regression
 
 
 {{< include ../math.qmd >}}
@@ -9,7 +9,7 @@
 
 ::: {#def-}
 $$
-y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k+\epsilon
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k+\varepsilon
 $$
 where
 
@@ -32,15 +32,15 @@ The steps are very similar to simple linear regression.
 1. Collect data.
 2. Hypothesize the form of the model.
 3. Estimate the unknown parameters $\beta_0,\ldots,\beta_k$.
-4. Specify the distribution of $\epsilon$ and estimate its $\sigma^2$.
+4. Specify the distribution of $\varepsilon$ and estimate its $\sigma^2$.
 5. Evaluate the utility of the model, like checking p-values and $R^2$.
-6. Verify the model by checking the assumptions on $\epsilon$.
+6. Verify the model by checking the assumptions on $\varepsilon$.
 7. Use the model. Analyze the prediction and make inferences.
 
 
 ::: {.callout-note}
-## Assumptions about $\epsilon$
-1. For any given $x_i$, $\epsilon\sim \distnormal(0,\sigma^2)$.
+## Assumptions about $\varepsilon$
+1. For any given $x_i$, $\varepsilon\sim \distnormal(0,\sigma^2)$.
 2. The random errors are independent.
 :::
 

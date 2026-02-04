@@ -56,16 +56,16 @@ book:
       - contents/1/prob.qmd
       - contents/1/inferences.qmd      
       # - contents/0/statsmodels.qmd
-    - part: "SLR"
+    - part: "Simple Linear regression"
       chapters: 
       - contents/2/intro.qmd
       - contents/2/slr.qmd
       - contents/2/rcode.qmd
       - contents/2/project1.qmd
-    # - part: "MLR"
-    #   chapters:
-    #   - contents/3/intro.qmd
-    #   - contents/3/mlr.qmd
+    - part: "Multiple Linear regression"
+      chapters:
+      - contents/3/mlr.qmd
+      # - contents/3/project2.qmd
     # - part: "Building models"
     #   chapters:
     #   - contents/4/intro.qmd

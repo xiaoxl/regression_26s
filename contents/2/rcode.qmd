@@ -73,6 +73,9 @@ anova_alt(model)
 
 Note that we don't use the built-in `anova` function since it doesn't provide all info we need. We use an alternative version of the anova fucntion. It can also be downloaded from [here](../../anova_alt.R).
 
+The table we produced is called *ANOVA table for linear regression*. Its purpose is to decompose the total variability of the response into two parts: the variability explained by the model and the variability due to noise (residuals). The built-in `anova()` function in base R, as well as other ANOVA-related functions in R, can produce different types of ANOVA tables, each serving a different purpose. These differences will become important in multiple linear regression (MLR) and will be discussed in more detail later.
+
+
 
 ```{r}
 #| code-fold: true

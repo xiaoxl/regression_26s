@@ -1,0 +1,42 @@
+# ANOVA
+
+## type 1/2/3
+
+for diagnoisis
+
+can be used to evaluate variables, but not var selection itself
+
+
+
+In simple linear regression, this ANOVA table is unique and unambiguous, since there is only one predictor.
+
+However, in multiple linear regression, the contribution of each predictor to the model is no longer uniquely defined.
+As a result, different conventions have been developed to allocate the explained variability among predictors, leading to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA.
+These types differ in how they account for the presence of other predictors and interaction terms in the model.
+
+
+```
+import numpy as np
+
+anova_table = pd.DataFrame({
+    "Source": ["Model", "Residual", "Total"],
+    "df": [
+        int(model.df_model),
+        int(model.df_resid),
+        int(model.df_model + model.df_resid)
+    ],
+    "SS": [
+        model.ess,                 # SSR
+        model.ssr,                 # SSE
+        model.ess + model.ssr      # SST
+    ]
+})
+
+anova_table["MS"] = anova_table["SS"] / anova_table["df"]
+anova_table.loc[0, "F"] = model.fvalue
+anova_table.loc[0, "Pr(>F)"] = model.f_pvalue
+
+anova_table
+
+
+```
