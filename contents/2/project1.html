@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; A project – Regression 26 Spring</title>
+<title>7&nbsp; Example: SLR phase – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,6 +130,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/blocks.css">
 </head>
@@ -252,7 +335,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -344,7 +427,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,8 +460,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-boston-housing-dataset" id="toc-the-boston-housing-dataset" class="nav-link active" data-scroll-target="#the-boston-housing-dataset"><span class="header-section-number">7.1</span> The Boston Housing Dataset</a></li>
+  <li><a href="#explore-the-boston-housing-dataset" id="toc-explore-the-boston-housing-dataset" class="nav-link" data-scroll-target="#explore-the-boston-housing-dataset"><span class="header-section-number">7.2</span> Explore the Boston Housing Dataset</a>
+  <ul class="collapse">
+  <li><a href="#data-type" id="toc-data-type" class="nav-link" data-scroll-target="#data-type"><span class="header-section-number">7.2.1</span> Data Type</a></li>
+  <li><a href="#summary-of-all-the-variables" id="toc-summary-of-all-the-variables" class="nav-link" data-scroll-target="#summary-of-all-the-variables"><span class="header-section-number">7.2.2</span> Summary of all the variables</a></li>
+  <li><a href="#histogram" id="toc-histogram" class="nav-link" data-scroll-target="#histogram"><span class="header-section-number">7.2.3</span> Histogram</a></li>
+  <li><a href="#scatter-plot" id="toc-scatter-plot" class="nav-link" data-scroll-target="#scatter-plot"><span class="header-section-number">7.2.4</span> Scatter plot</a></li>
+  </ul></li>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link" data-scroll-target="#simple-linear-regression"><span class="header-section-number">7.3</span> Simple Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#find-a-strongest-linear-correlation" id="toc-find-a-strongest-linear-correlation" class="nav-link" data-scroll-target="#find-a-strongest-linear-correlation"><span class="header-section-number">7.3.1</span> Find a strongest linear correlation</a></li>
+  <li><a href="#test-of-model-utility" id="toc-test-of-model-utility" class="nav-link" data-scroll-target="#test-of-model-utility"><span class="header-section-number">7.3.2</span> Test of model utility</a></li>
+  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">7.3.3</span> Residual Analysis</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -386,7 +488,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">A project</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></h1>
 </div>
 
 
@@ -403,8 +505,448 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="the-boston-housing-dataset" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="the-boston-housing-dataset"><span class="header-section-number">7.1</span> The Boston Housing Dataset</h2>
+<p>The Boston housing dataset originates from a hedonic price analysis of 506 census tracts in the Boston Standard Metropolitan Statistical Area conducted by Harrison and Rubinfeld to estimate households’ willingness to pay for improvements in air quality, particularly reductions in nitrogen oxides (NOx) concentrations <span class="citation" data-cites="Harrison1978">[<a href="../../index.html#ref-Harrison1978" role="doc-biblioref">1</a>]</span>. The data were assembled primarily from 1970 U.S. Census housing tabulations combined with modeled environmental pollution measures. Since its original publication, the dataset has been widely disseminated as the <code>Boston</code> dataset in econometrics, statistics, and machine learning, where it is commonly used to illustrate and evaluate linear regression methods. It was notably employed by Belsley, Kuh, and Welsch in Regression Diagnostics: Identifying Influential Data and Sources of Collinearity (pp.&nbsp;244–261) <span class="citation" data-cites="belsley1980regression">[<a href="../../index.html#ref-belsley1980regression" role="doc-biblioref">2</a>]</span> to demonstrate diagnostic techniques for detecting influential observations and multicollinearity, and has subsequently appeared in numerous methodological studies, including Quinlan’s work on combining instance-based and model-based learning <span class="citation" data-cites="quinlan1993combining">[<a href="../../index.html#ref-quinlan1993combining" role="doc-biblioref">3</a>]</span>.</p>
+<p>In R, the <code>MASS</code> library contains <code>Boston</code> data set, which has 506 rows and 14 columns. The dataset records <code>medv</code> (median house value) and 13 predictors for 506 neighborhoods around Boston.</p>
+</section>
+<section id="explore-the-boston-housing-dataset" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="explore-the-boston-housing-dataset"><span class="header-section-number">7.2</span> Explore the Boston Housing Dataset</h2>
+<p>First of all, let’s take a look at the variables in the dataset Boston.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Boston)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      crim zn indus chas   nox    rm  age    dis rad tax ptratio  black lstat</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 0.00632 18  2.31    0 0.538 6.575 65.2 4.0900   1 296    15.3 396.90  4.98</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 0.02731  0  7.07    0 0.469 6.421 78.9 4.9671   2 242    17.8 396.90  9.14</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 0.02729  0  7.07    0 0.469 7.185 61.1 4.9671   2 242    17.8 392.83  4.03</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 0.03237  0  2.18    0 0.458 6.998 45.8 6.0622   3 222    18.7 394.63  2.94</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 0.06905  0  2.18    0 0.458 7.147 54.2 6.0622   3 222    18.7 396.90  5.33</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 0.02985  0  2.18    0 0.458 6.430 58.7 6.0622   3 222    18.7 394.12  5.21</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##   medv</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 24.0</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 21.6</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 34.7</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 33.4</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 36.2</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 28.7</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Boston)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] "crim"    "zn"      "indus"   "chas"    "nox"     "rm"      "age"    </span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  [8] "dis"     "rad"     "tax"     "ptratio" "black"   "lstat"   "medv"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(Boston)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 506  14</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<blockquote class="blockquote">
+<ul>
+<li><code>names()</code> — print out all the variable names;</li>
+<li><code>head()</code> — print out the first 5 rows of the dataset;</li>
+<li><code>dim()</code> — print out the shape of the dataset.</li>
+</ul>
+</blockquote>
+<p>You may use <code>?Boston</code> to look at the brief describption.</p>
+<p>Since we would like to directly work with varibles in the dataset, it is better to attach it to the working space.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="data-type" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="data-type"><span class="header-section-number">7.2.1</span> Data Type</h3>
+<p>First we need to know the data type of every variable. Based on the information we have, we know</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 68%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>crim</code></td>
+<td>Per capita crime rate by town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>zn</code></td>
+<td>Proportion of residential land zoned for lots over 25,000 sq.ft.</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>indus</code></td>
+<td>Proportion of non-retail business acres per town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>chas</code></td>
+<td>Charles River dummy variable (1 if tract bounds river; 0 otherwise)</td>
+<td>Categorical, nominal</td>
+</tr>
+<tr class="odd">
+<td><code>nox</code></td>
+<td>Nitrogen oxides concentration (parts per 10 million)</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>rm</code></td>
+<td>Average number of rooms per dwelling</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>Proportion of owner-occupied units built prior to 1940</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>dis</code></td>
+<td>Weighted mean distance to five Boston employment centers</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>rad</code></td>
+<td>Index of accessibility to radial highways (larger = better accessibility)</td>
+<td>Categorical, ordinal</td>
+</tr>
+<tr class="even">
+<td><code>tax</code></td>
+<td>Full-value property-tax rate per $10,000</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>ptratio</code></td>
+<td>Pupil–teacher ratio by town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>black</code></td>
+<td><span class="math inline">\(1000(B_k - 0.63)^2\)</span>, where <span class="math inline">\(B_k\)</span> is the proportion of Black residents</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>lstat</code></td>
+<td>Percentage of lower-status population</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>medv</code></td>
+<td>Median value of owner-occupied homes (in $1,000s)</td>
+<td>Numerical, continuous</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary-of-all-the-variables" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="summary-of-all-the-variables"><span class="header-section-number">7.2.2</span> Summary of all the variables</h3>
+<p>Usually we would like to check two things: the distribution of each variable, and finding all missing values.</p>
+<p>Are there any missing values?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(Boston, anyNA)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    crim      zn   indus    chas     nox      rm     age     dis     rad     tax </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ptratio   black   lstat    medv </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   FALSE   FALSE   FALSE   FALSE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>From the output, we know there is no missing values in the <code>Boston</code> dataset.</p>
+<p>Next, we find the summary of all the 13 variables as follows. These summary shows a brief glance of the distributions of all variables.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       crim                zn             indus            chas        </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 0.25651   Median :  0.00   Median : 9.69   Median :0.00000  </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14   Mean   :0.06917  </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10   3rd Qu.:0.00000  </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74   Max.   :1.00000  </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       nox               rm             age              dis        </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">##       rad              tax           ptratio          black       </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="do">##      lstat            medv      </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 1.73   Min.   : 5.00  </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 6.95   1st Qu.:17.02  </span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :11.36   Median :21.20  </span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :12.65   Mean   :22.53  </span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:16.95   3rd Qu.:25.00  </span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :37.97   Max.   :50.00</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note that <code>chas</code> and <code>rad</code> are supposed to be categorical data. In this summary they are still treated as numerical. Therefore we could change their type if necessary.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>chas <span class="ot">&lt;-</span> <span class="fu">factor</span>(chas)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rad <span class="ot">&lt;-</span> <span class="fu">factor</span>(rad)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       crim                zn             indus            chas        </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   Min.   :0.00000  </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1st Qu.:0.00000  </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 0.25651   Median :  0.00   Median : 9.69   Median :0.00000  </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 3.61352   Mean   : 11.36   Mean   :11.14   Mean   :0.06917  </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10   3rd Qu.:0.00000  </span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :88.97620   Max.   :100.00   Max.   :27.74   Max.   :1.00000  </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="do">##       nox               rm             age              dis        </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :0.3850   Min.   :3.561   Min.   :  2.90   Min.   : 1.130  </span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:0.4490   1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100  </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :0.5380   Median :6.208   Median : 77.50   Median : 3.207  </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :0.5547   Mean   :6.285   Mean   : 68.57   Mean   : 3.795  </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:0.6240   3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188  </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :0.8710   Max.   :8.780   Max.   :100.00   Max.   :12.127  </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="do">##       rad              tax           ptratio          black       </span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 1.000   Min.   :187.0   Min.   :12.60   Min.   :  0.32  </span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 4.000   1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38  </span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 5.000   Median :330.0   Median :19.05   Median :391.44  </span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 9.549   Mean   :408.2   Mean   :18.46   Mean   :356.67  </span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:24.000   3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23  </span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :24.000   Max.   :711.0   Max.   :22.00   Max.   :396.90  </span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="do">##      lstat            medv      </span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 1.73   Min.   : 5.00  </span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 6.95   1st Qu.:17.02  </span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :11.36   Median :21.20  </span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :12.65   Mean   :22.53  </span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:16.95   3rd Qu.:25.00  </span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :37.97   Max.   :50.00</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="histogram" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="histogram"><span class="header-section-number">7.2.3</span> Histogram</h3>
+<p>We could draw histogram for a particular variable, say <code>medv</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(medv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We could also draw all the histogram for all numerical variables in the data frame <code>Boston</code> with the help of `Hmisc::hist.data.frame. Note that categorical data are automatically removed.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist.data.frame</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scatter-plot" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="scatter-plot"><span class="header-section-number">7.2.4</span> Scatter plot</h3>
+<p>Finally, the most import plot for regression should be the scatter plot. For example, let us see the relation between <code>lstat</code> and <code>medv</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="simple-linear-regression" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">7.3</span> Simple Linear Regression</h2>
+<p>We will seek to predict <code>medv</code> using 13 predictors such as <code>rm</code> (average number of rooms per house), <code>age</code> (proportion of the owner-occupied units built prior to 1940), or <code>lstat</code> (percent of households with low socioeconomic status).</p>
+<section id="find-a-strongest-linear-correlation" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="find-a-strongest-linear-correlation"><span class="header-section-number">7.3.1</span> Find a strongest linear correlation</h3>
+<p>In general there has to be a more complicated analysis about choosing the best variable. In this case in order to demonstrate the idea, we will only use the most correlted numerical variable.</p>
+<p>Here, we use corrlation matrix to find the independent variable which has the strongest linear correlation to the dependent variable.</p>
+<p>We first find out the numeric columns.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Boston_num <span class="ot">&lt;-</span> Boston[, <span class="fu">sapply</span>(Boston, is.numeric)] </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Then we compute the corrlation matrix. We would like to find the column that is most correlated to <code>medv</code>. We find that <code>lstat</code> and <code>medv</code> has the strongest linear correlation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(Boston_num)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cor_matrix, <span class="dv">2</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          crim    zn indus  chas   nox    rm   age   dis   rad   tax ptratio</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## crim     1.00 -0.20  0.41 -0.06  0.42 -0.22  0.35 -0.38  0.63  0.58    0.29</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## zn      -0.20  1.00 -0.53 -0.04 -0.52  0.31 -0.57  0.66 -0.31 -0.31   -0.39</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## indus    0.41 -0.53  1.00  0.06  0.76 -0.39  0.64 -0.71  0.60  0.72    0.38</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">## chas    -0.06 -0.04  0.06  1.00  0.09  0.09  0.09 -0.10 -0.01 -0.04   -0.12</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="do">## nox      0.42 -0.52  0.76  0.09  1.00 -0.30  0.73 -0.77  0.61  0.67    0.19</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## rm      -0.22  0.31 -0.39  0.09 -0.30  1.00 -0.24  0.21 -0.21 -0.29   -0.36</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## age      0.35 -0.57  0.64  0.09  0.73 -0.24  1.00 -0.75  0.46  0.51    0.26</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">## dis     -0.38  0.66 -0.71 -0.10 -0.77  0.21 -0.75  1.00 -0.49 -0.53   -0.23</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="do">## rad      0.63 -0.31  0.60 -0.01  0.61 -0.21  0.46 -0.49  1.00  0.91    0.46</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="do">## tax      0.58 -0.31  0.72 -0.04  0.67 -0.29  0.51 -0.53  0.91  1.00    0.46</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="do">## ptratio  0.29 -0.39  0.38 -0.12  0.19 -0.36  0.26 -0.23  0.46  0.46    1.00</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="do">## black   -0.39  0.18 -0.36  0.05 -0.38  0.13 -0.27  0.29 -0.44 -0.44   -0.18</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat    0.46 -0.41  0.60 -0.05  0.59 -0.61  0.60 -0.50  0.49  0.54    0.37</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="do">## medv    -0.39  0.36 -0.48  0.18 -0.43  0.70 -0.38  0.25 -0.38 -0.47   -0.51</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="do">##         black lstat  medv</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="do">## crim    -0.39  0.46 -0.39</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="do">## zn       0.18 -0.41  0.36</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="do">## indus   -0.36  0.60 -0.48</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="do">## chas     0.05 -0.05  0.18</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="do">## nox     -0.38  0.59 -0.43</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="do">## rm       0.13 -0.61  0.70</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="do">## age     -0.27  0.60 -0.38</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="do">## dis      0.29 -0.50  0.25</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="do">## rad     -0.44  0.49 -0.38</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="do">## tax     -0.44  0.54 -0.47</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="do">## ptratio -0.18  0.37 -0.51</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="do">## black    1.00 -0.37  0.33</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat   -0.37  1.00 -0.74</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="do">## medv     0.33 -0.74  1.00</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The matrix can be visualized. <code>lstat</code> is also the most obvious choice from the plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_matrix, <span class="at">hc.order =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For the next step, we will explore the linear relationship between the two variables. That is, <span class="math inline">\(y\)</span>=<code>medv</code>, <span class="math inline">\(x\)</span>=<code>lstat</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The data appears to demostrate a straight-line relationshiop. As the percentage of lower status of the population (<code>lstat</code>) increase, the median home value decrease, which fits with common sense. The scatterplot shows curvilinear relation, which suggests a curivilinear model might be a better fit. In this chapter, we fit the straight-line model using <code>lm</code>.</p>
+<p>Here is a quick glance about how <code>lm</code> works.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat, <span class="at">data =</span> Boston)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = medv ~ lstat, data = Boston)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)        lstat  </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       34.55        -0.95</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       lstat </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  34.5538409  -0.9500494</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The estimated regression equation by using least squares method is <span class="math inline">\(\hat{y}\)</span>=34.5538409<span class="math inline">\(+\)</span>(-0.9500494)<span class="math inline">\(x\)</span>.</p>
+</section>
+<section id="test-of-model-utility" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="test-of-model-utility"><span class="header-section-number">7.3.2</span> Test of model utility</h3>
+<p>We would like to see the output of the model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova_alt</span>(model)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">##         Df    SS      MS      F          P</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Source   1 23244 23243.9 601.62 5.0811e-88</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Error  504 19472    38.6                  </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Total  505 42716</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = medv ~ lstat, data = Boston)</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="do">## -15.168  -3.990  -1.318   2.034  24.500 </span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) 34.55384    0.56263   61.41   &lt;2e-16 ***</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat       -0.95005    0.03873  -24.53   &lt;2e-16 ***</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 6.216 on 504 degrees of freedom</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.5441, Adjusted R-squared:  0.5432 </span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let us check the confidence interval for <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine to display the coef and confidence interval for the parameters together;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>coef <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(<span class="fu">summary</span>(model))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>coef_CI <span class="ot">&lt;-</span> <span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(coef, coef_CI)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">##               Estimate Std. Error   t value      Pr(&gt;|t|)     2.5 %     97.5 %</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) 34.5538409 0.56262735  61.41515 3.743081e-236 33.448457 35.6592247</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat       -0.9500494 0.03873342 -24.52790  5.081103e-88 -1.026148 -0.8739505</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><strong>Significance</strong>: We test the <span class="math inline">\(H_0:\beta_1=0\)</span> vs <span class="math inline">\(H_a: \beta_1\neq 0\)</span>. For simple linear regression, the result would be the same as the correlation hypothesis test above. We will conclude percentage of lower status (<code>lstat</code>) is a significant predictor to the median house price (<code>medv</code>).</li>
+<li><strong>CI for <span class="math inline">\(\beta_1\)</span></strong>: The confidence interval for slope <span class="math inline">\(\beta_1\)</span> is (-1.0261482, -0.8739505). We are 95% confident that the mean median home price decreases around 0.874 to 1.026 thousands of dollors per additional percent increase in low-status of the population.</li>
+<li><strong>sd for <span class="math inline">\(\beta_1\)</span></strong>: The estimated standard deviation of <span class="math inline">\(\varepsilon\)</span> is <span class="math inline">\(s\)</span>=6.2157604, which implies that most of the observed median home price will fall within in approximately <span class="math inline">\(2s\)</span>=12.4 thousands of dollars of their respective predicted values when using the least squares line.</li>
+<li><strong><span class="math inline">\(R^2\)</span></strong>: The coefficient of determination is 0.544. This value implies that about 54% of the sample variation in median home price is explained by the low-status percent and the median home price. However, as we note that <span class="math inline">\(R^2\)</span> is not very high, we need to modify our model in the future.</li>
+<li><strong>Prediction</strong>: With relatively small <span class="math inline">\(2s\)</span>, significant linear relationship between <code>lstat</code> and <code>medv</code>, we could get confidence interval and prediction interval as follows.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, medv)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">lstat =</span> <span class="fu">seq</span>(<span class="fu">min</span>(lstat), <span class="fu">max</span>(lstat), <span class="at">by =</span> <span class="fl">0.1</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>pred.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, newx, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>conf.int <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, newx, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[, <span class="st">"fit"</span>])</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[, <span class="st">"lwr"</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, pred.int[, <span class="st">"upr"</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[, <span class="st">"lwr"</span>], <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(newx<span class="sc">$</span>lstat, conf.int[, <span class="st">"upr"</span>], <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="residual-analysis" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="residual-analysis"><span class="header-section-number">7.3.3</span> Residual Analysis</h3>
+<p>The detailed residual analysis will be covered in the future. Here we only show the very basic analysis, that is the plot of the residual vs the predictor variable <code>lstat</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">resid</span>(model)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lstat, res)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project1_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We could find that there is a clear u-shape in the residual plot. And the variance shows non-constant variance issue, as the size of the residuals decreases as the value of lstat increase. This residual plot indicates that a multiplicative model may be appropriate.</p>
 
 
+<div id="refs" class="references csl-bib-body" role="list" style="display: none">
+<div id="ref-Harrison1978" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Harrison</span>, D. and <span class="smallcaps">Rubinfeld</span>, D. L. (1978). <a href="https://doi.org/10.1016/0095-0696(78)90006-2">Hedonic housing prices and the demand for clean air</a>. <em>Journal of Environmental Economics and Management</em> <strong>5</strong> 81–102.</div>
+</div>
+<div id="ref-belsley1980regression" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline"><span class="smallcaps">Belsley</span>, D. A., <span class="smallcaps">Kuh</span>, E. and <span class="smallcaps">Welsch</span>, R. E. (1980). <em>Regression diagnostics: Identifying influential data and sources of collinearity</em>. John Wiley &amp; Sons, New York.</div>
+</div>
+<div id="ref-quinlan1993combining" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline"><span class="smallcaps">Quinlan</span>, J. R. (1993). Combining instance-based and model-based learning. In <em>Proceedings of the tenth international conference on machine learning</em> pp 236–43. Morgan Kaufmann, Amherst, Massachusetts.</div>
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
