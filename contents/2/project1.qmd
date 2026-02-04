@@ -1,534 +1,237 @@
-# A project
+# Example: SLR phase
 
 ## The Boston Housing Dataset
 
-The dataset was obtained from the [__StatLib archieve__](https://www.rdocumentation.org/packages/MASS/versions/7.3-51.6/topics/Boston). The Boston house-price data of Harrison, D. and Rubinfeld, D.L. 'Hedonic
- prices and the demand for clean air', J. Environ. Economics & Management,
- vol.5, 81-102, 1978.   Used in Belsley, Kuh & Welsch, 'Regression diagnostics
- ...', Wiley, 1980.   N.B. Various transformations are used in the table on
- pages 244-261 of the latter.
 
 
-In R, the MASS library contains Boston data set, which has 506 rows and 14 columns. The dataset records *medv* (median house value) and 13 predictors for 506 neighborhoods around Boston. The variable descriptions are as follows:
+The Boston housing dataset originates from a hedonic price analysis of 506 census tracts in the Boston Standard Metropolitan Statistical Area conducted by Harrison and Rubinfeld to estimate households’ willingness to pay for improvements in air quality, particularly reductions in nitrogen oxides (NOx) concentrations @Harrison1978. The data were assembled primarily from 1970 U.S. Census housing tabulations combined with modeled environmental pollution measures. Since its original publication, the dataset has been widely disseminated as the `Boston` dataset in econometrics, statistics, and machine learning, where it is commonly used to illustrate and evaluate linear regression methods. It was notably employed by Belsley, Kuh, and Welsch in Regression Diagnostics: Identifying Influential Data and Sources of Collinearity (pp. 244–261) @belsley1980regression to demonstrate diagnostic techniques for detecting influential observations and multicollinearity, and has subsequently appeared in numerous methodological studies, including Quinlan’s work on combining instance-based and model-based learning @quinlan1993combining.
 
-* crim ---per capita crime rate by town.
-
-* zn --- proportion of residential land zoned for lots over 25,000 sq.ft.
-
-* indus --- proportion of non-retail business acres per town.
-
-* chas --- Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
-
-* nox --- nitrogen oxides concentration (parts per 10 million).
-
-* rm --- average number of rooms per dwelling.
-
-* age --- proportion of owner-occupied units built prior to 1940.
-
-* dis --- weighted mean of distances to five Boston employment centres.
-
-* rad --- index of accessibility to radial highways.
-
-* tax --- full-value property-tax rate per $10,000.
-
-* ptratio --- pupil-teacher ratio by town.
-
-* black --- $1000 (Bk - 0.63)^2$ where $Bk$ is the proportion of blacks by town.
-
-* lstat --- lower status of the population (percent).
-
-* medv --- median value of owner-occupied homes in $1000s.
+In R, the `MASS` library contains `Boston` data set, which has 506 rows and 14 columns. The dataset records `medv` (median house value) and 13 predictors for 506 neighborhoods around Boston. 
 
 
 ## Explore the Boston Housing Dataset
 
 First of all, let's take a look at the variables in the dataset Boston.
 
-```{r Boston}
+```{r}
 library(MASS)
-names(Boston)
 head(Boston)
+names(Boston)
 dim(Boston)
 ```
 
-> * names() --- print out all the variable names;
-* head() --- print out the first 5 rows of the dataset.
+> - `names()` --- print out all the variable names;
+> - `head()` --- print out the first 5 rows of the dataset;
+> - `dim()` --- print out the shape of the dataset.
+
+You may use `?Boston` to look at the brief describption.
+
+
+Since we would like to directly work with varibles in the dataset, it is better to attach it to the working space.
+```{r}
+attach(Boston)
+```
+
 
 
 ### Data Type
 
-Then we need to know the data type of every variable. Based on the information we have, we know (variable name --- description --- variable type)
+First we need to know the data type of every variable. Based on the information we have, we know 
 
-* crim --- per capita crime rate by town --- **Numerical, continuous**
-
-* zn --- proportion of residential land zoned for lots over 25,000 sq.ft. --- **Numerical, continuous**
-
-* indus --- proportion of non-retail business acres per town. --- **Numerical, continuous**
-
-* chas --- Charles River dummy variable (= 1 if tract bounds river; 0 otherwise). --- **categorical, nominal**
-
-* nox --- nitrogen oxides concentration (parts per 10 million). --- **Numerical, continuous**
-
-* rm --- average number of rooms per dwelling. --- **Numerical, continuous**
-
-* age --- proportion of owner-occupied units built prior to 1940. --- **Numerical, continuous**
-
-* dis --- weighted mean of distances to five Boston employment centres. --- **Numerical, continuous**
-
-* rad --- index of accessibility to radial highways. larger index denotes better accessibility --- **categorical, ordinal**
-
-* tax --- full-value property-tax rate per $10,000. --- **Numerical, continuous**
-
-* ptratio --- pupil-teacher ratio by town. --- **Numerical, continuous**
-
-* black --- $1000 (Bk - 0.63)^2$ where $Bk$ is the proportion of blacks by town. --- **Numerical, continuous**
-
-* lstat --- lower status of the population (percent). --- **Numerical, continuous**
-
-* medv --- median value of owner-occupied homes in $1000s. --- **Numerical, continuous**
+| Variable  | Description                                                                 | Type                    |
+|-----------|-----------------------------------------------------------------------------|-------------------------|
+| `crim`    | Per capita crime rate by town                                                | Numerical, continuous   |
+| `zn`      | Proportion of residential land zoned for lots over 25,000 sq.ft.            | Numerical, continuous   |
+| `indus`   | Proportion of non-retail business acres per town                             | Numerical, continuous   |
+| `chas`    | Charles River dummy variable (1 if tract bounds river; 0 otherwise)          | Categorical, nominal   |
+| `nox`     | Nitrogen oxides concentration (parts per 10 million)                        | Numerical, continuous   |
+| `rm`      | Average number of rooms per dwelling                                         | Numerical, continuous   |
+| `age`     | Proportion of owner-occupied units built prior to 1940                       | Numerical, continuous   |
+| `dis`     | Weighted mean distance to five Boston employment centers                     | Numerical, continuous   |
+| `rad`     | Index of accessibility to radial highways (larger = better accessibility)   | Categorical, ordinal   |
+| `tax`     | Full-value property-tax rate per \$10,000                                    | Numerical, continuous   |
+| `ptratio` | Pupil–teacher ratio by town                                                  | Numerical, continuous   |
+| `black`   | $1000(B_k - 0.63)^2$, where $B_k$ is the proportion of Black residents   | Numerical, continuous   |
+| `lstat`   | Percentage of lower-status population                                       | Numerical, continuous   |
+| `medv`    | Median value of owner-occupied homes (in \$1,000s)                          | Numerical, continuous   |
 
 
 
+### Summary of all the variables
 
-
-#### Summary of all the variables
+Usually we would like to check two things: the distribution of each variable, and finding all missing values.
 
 Are there any missing values?
 
 ```{r}
 sapply(Boston, anyNA)
 ```
-From the output, we know there is no missing values in the Boston dataset.
+From the output, we know there is no missing values in the `Boston` dataset.
 
 
 
-Next, we find the summary of all the 13 variables as follows.
+Next, we find the summary of all the 13 variables as follows. These summary shows a brief glance of the distributions of all variables.
 
 ```{r}
 summary(Boston)
 ```
 
-#### Histogram
-
-We could draw histogram for a particular variable, say *medv*
+Note that `chas` and `rad` are supposed to be categorical data. In this summary they are still treated as numerical. Therefore we could change their type if necessary.
 
 
 ```{r}
-library(ggplot2)
-attach(Boston)
+chas <- factor(chas)
+rad <- factor(rad)
 
-### In base R
+summary(Boston)
+```
 
+
+
+### Histogram
+
+We could draw histogram for a particular variable, say `medv`.
+
+
+```{r}
 hist(medv)
-
-
-### ggplot
-
-ggplot(Boston, aes(x=medv))+
-  geom_histogram(binwidth=5,color="darkblue", fill="lightblue")
-
 ```
 
 
-We could also draw all the histogram for all numerical variables in the data frame Boston.
-
-```{r, fig.height=10, fig.width=8}
-# library(Hmisc)
-# hist.data.frame(Boston)
-```
-
-#### Boxplot
-
-We could draw boxplot for each column. For example, ptratio,
+We could also draw all the histogram for all numerical variables in the data frame `Boston` with the help of `Hmisc::hist.data.frame. Note that categorical data are automatically removed.
 
 ```{r}
-### In base R
-
-boxplot(ptratio)
-
-
-
-
-### ggplot
-ggplot(Boston, aes(y=ptratio))+
-  geom_boxplot()
-
-#### boxplot of ptratio by chas groups
-ggplot(Boston, aes(x=as.factor(chas), y=ptratio))+
-  geom_boxplot()
-
+#| fig-height: 8
+#| fig-width: 10
+#| warning: false
+library(Hmisc)
+hist.data.frame(Boston)
 ```
 
 
 
-### Bar chart \& Pie chart
+
+### Scatter plot
+
+Finally, the most import plot for regression should be the scatter plot. For example, let us see the relation between `lstat` and `medv`.
 
 ```{r}
-
-attach(Boston)
-
-### In base R
-counts <- table(chas)
-barplot(counts, main = "Chas Distribution", xlab = "Whether on the banks of the Charles River ( 0 = No; 1 = Yes)")
-pie(counts, labels=names(counts), main ="If house on the banks of the Charles River ( 0 = No; 1 = Yes)" )
-
-
-### ggplot
-ggplot(Boston, aes(x=as.factor(chas)))+
-  geom_bar()
-
-ggplot(Boston, aes(x=rad))+
-  geom_bar()
-
-ggplot(Boston, aes(x=factor(1), fill=as.factor(chas)))+
-  geom_bar(stat="count")+
-  coord_polar("y")+
-  labs(fill="chas", title="If house on the banks of the Charles River ( 0 = No; 1 = Yes)")
-
-```
-
-
-#### Scatter plot
-
-```{r}
-attach(Boston)
-### In base R
 plot(lstat, medv)
-
-
-### ggplot
-ggplot(Boston, aes(x=lstat, y=medv, color=as.factor(chas)))+
-  geom_point(size=2)
-```
-
-We could also combine scatter plot and the marginal histogram.
-
-```{r}
-
-# library(ggExtra)
-# p = ggplot(Boston, aes(x=lstat, y=medv, color=rad))+
-#   geom_point()
-# ggMarginal(p, type="histogram")
-
 ```
 
 
-## Chapter 3 Simple Linear Regression 
 
-We will seek to predict *medv* using 13 predictors such as *rm* (average number of rooms per house), *age* (proportion of the owner-occupied units built prior to 1940), and *lstat* (percent of households with low socioeconomic status).
+## Simple Linear Regression 
+
+We will seek to predict `medv` using 13 predictors such as `rm` (average number of rooms per house), `age` (proportion of the owner-occupied units built prior to 1940), or `lstat` (percent of households with low socioeconomic status).
 
 
 
-### Find a strongest linear correlation (between the numerical independent variables and the dependent variable) 
+### Find a strongest linear correlation 
+
+In general there has to be a more complicated analysis about choosing the best variable. In this case in order to demonstrate the idea, we will only use the most correlted numerical variable. 
 
 
 Here, we use corrlation matrix to find the independent variable which has the strongest linear correlation to the dependent variable. 
 
+We first find out the numeric columns.
 
-```{r correlation matrix, message=FALSE}
-options(width = 300)
-Boston_num<-Boston[, -c(4,9)] ## remove the chas and rad columns, which are categorical variables;
-cor_matrix<-cor(Boston_num)
-round(cor_matrix,2)
 
-### Visualize the correlation matrix
+```{r}
+Boston_num <- Boston[, sapply(Boston, is.numeric)] 
+```
+
+Then we compute the corrlation matrix. We would like to find the column that is most correlated to `medv`. We find that `lstat` and `medv` has the strongest linear correlation. 
+```{r}
+cor_matrix <- cor(Boston_num)
+round(cor_matrix, 2)
+```
+
+
+The matrix can be visualized. `lstat` is also the most obvious choice from the plot.
+
+```{r}
+#| warning: false
 library(ggcorrplot)
-ggcorrplot(cor_matrix, hc.order=TRUE)
+ggcorrplot(cor_matrix, hc.order = TRUE)
 ```
 
 
-The last column in the correlation matrix shows the correlation coefficient $r$s between the predictors and the response variable (medv). We find that lstat and medv has the strongest linear correlation. 
+For the next step, we will explore the linear relationship between the two variables. That is, $y$=`medv`, $x$=`lstat`.
 
-For the next step, we will explore the linear relationship between the two variables. That is, $y$=medv, $x$=lstat.
-
-```{r medv_lstat, message=FALSE}
-plot(Boston$lstat, Boston$medv)
-
+```{r}
+plot(lstat, medv)
 ```
 
-The data appears to demostrate a straight-line relationshiop. As the percentage of lower status of the population (lstat) increase, the median home value decrease, which fits with common sense. The scatterplot shows curvilinear relation, which suggests a curivilinear model might be a better fit. In this chapter, we first fit the straight-line model.   
+The data appears to demostrate a straight-line relationshiop. As the percentage of lower status of the population (`lstat`) increase, the median home value decrease, which fits with common sense. The scatterplot shows curvilinear relation, which suggests a curivilinear model might be a better fit. In this chapter, we fit the straight-line model using `lm`.   
 
-```{r correlation, message=FALSE}
-cor(Boston$lstat, Boston$medv)
-cor.test(Boston$lstat, Boston$medv)
-pv<-cor.test(Boston$lstat, Boston$medv)$p.value
+Here is a quick glance about how `lm` works.
+```{r}
+model <- lm(medv ~ lstat, data = Boston)
+model
+coef(model)
 ```
 
-We perform the hypothesis test for linear correlation. $H_0: \rho=0$ vs $H_a: \rho\neq0$. Since p-value = `r pv` <$\alpha$=0.05, we reject $H_0$. Therefore, median home price and low-status percentage are significantly linearly related. 
-
-
-```{r regression, message=FALSE}
-lm.fit=lm(medv~lstat, data=Boston)
-attach(Boston)
-lm.fit=lm(medv~lstat)
-
-lm.fit
-coef(lm.fit)
-```
-
-The estimated regression equation by using least squares method is $\hat{y}$=`r round(coef(lm.fit)[1],3)`+(`r round(coef(lm.fit)[2],3)`)x. Before we use the fitted model to do point or interval estimation, we need to access model adequacy.
+The estimated regression equation by using least squares method is $\hat{y}$=`{r} coef(model)[1]`$+$(`{r} coef(model)[2]`)$x$. 
 
 ### Test of model utility
 
-```{r model utility, message=FALSE}
-anova(lm.fit)
-summary(lm.fit)
 
-names(summary(lm.fit))
+```{r}
+#| echo: false
+source("../../anova_alt.R")
+```
 
-summary(lm.fit)$coefficients
-confint(lm.fit, level=0.95)
+We would like to see the output of the model.
+```{r}
+anova_alt(model)
+summary(model)
+```
 
+
+Let us check the confidence interval for $\beta_1$.
+
+```{r}
 # Combine to display the coef and confidence interval for the parameters together;
-coef<-summary(lm.fit)$coefficients
-coef_CI<-confint(lm.fit,level=0.95)
-cbind(coef,coef_CI)
+coef <- coefficients(summary(model))
+coef_CI <- confint(model, level = 0.95)
+cbind(coef, coef_CI)
 ```
 
-Now, we test the $H_0:\beta_1=0$ vs $H_a: \beta_1\neq 0$. For simple linear regression, the result would be the same as the correlation hypothesis test above. We will conclude percentage of lower status (lstat) is a significant predictor to the median house price (medv). 
+- **Significance**: We test the $H_0:\beta_1=0$ vs $H_a: \beta_1\neq 0$. For simple linear regression, the result would be the same as the correlation hypothesis test above. We will conclude percentage of lower status (`lstat`) is a significant predictor to the median house price (`medv`). 
+- **CI for $\beta_1$**: The confidence interval for slope $\beta_1$ is (`r coef_CI[2,]`). We are 95\% confident that the mean median home price decreases around 0.874 to 1.026 thousands of dollors per additional percent increase in low-status of the population.
+- **sd for $\beta_1$**: The estimated standard deviation of $\varepsilon$ is $s$=`r summary(model)$sigma`, which implies that most of the observed median home price will fall within in approximately $2s$=12.4 thousands of dollars of their respective predicted values when using the least squares line. 
+- **$R^2$**: The coefficient of determination is `r round(summary(model)$r.squared,3)`. This value implies that about 54% of the sample variation in median home price is explained by the low-status percent and the median home price. However, as we note that $R^2$ is not very high, we need to modify our model in the future.
+- **Prediction**:  With relatively small $2s$, significant linear relationship between `lstat` and `medv`, we could get confidence interval and prediction interval as follows. 
+```{r}
+plot(lstat, medv)
 
-The confidence interval for slope $\beta_1$ is (`r coef_CI[2,]`). We are 95\% confident that the mean median home price decreases from 0.874 to 1.026 thousands of dollors per additional percent increase in low-status of the population.
+newx <- data.frame(lstat = seq(min(lstat), max(lstat), by = 0.1))
+pred.int <- predict(model, newx, interval = "prediction")
+conf.int <- predict(model, newx, interval = "confidence")
 
-The estimated standard deviation of $\epsilon$ is $s$=`r summary(lm.fit)$sigma`, which implies that most of the observed median home price will fall within in approximately $2s$=12.4 thousands of dollars of their respective predicted values when using the least squares line. 
+lines(newx$lstat, pred.int[, "fit"])
 
-The coefficient of determination is `r round(summary(lm.fit)$r.squared,3)`. This value implies that about 54% of the sample variation in median home price is explained by the low-status percent and the median home price. 
+lines(newx$lstat, pred.int[, "lwr"], col = "red")
+lines(newx$lstat, pred.int[, "upr"], col = "red")
 
-
-With relatively small $2s$, significant linear relationship between $x$ and $y$, we might make predictions as follows. However, as we note that $r^2$ is not very high, we need to add more predictors in our model. We could get confidence interval and prediction interval as follows. 
-```{r prediction, message=FALSE}
-plot(Boston$lstat, Boston$medv, pch="+")
-abline(lm.fit, lwd=3, col="red")
-
-summary(lm.fit)$r.squared
-summary(lm.fit)$sigma
-summary(lm.fit)$fstatistic
-
-### Confidence Interval for E(y);
-predict(lm.fit, data.frame(lstat=c(5,10,15)), se.fit=TRUE, interval="confidence")
-CI<-predict(lm.fit, data.frame(lstat=c(5,10,15)), se.fit=TRUE, interval="confidence") ## Save as CI and we will access items one by one below;
-CI$fit
-CI$se.fit
-
-
+lines(newx$lstat, conf.int[, "lwr"], col = "blue")
+lines(newx$lstat, conf.int[, "upr"], col = "blue")
 ```
 
-In abline(), 
- * lwd --- change the weight of the line; 
- * col --- change the color of the line.
  
  
  
 ### Residual Analysis
 
-We plot the residual vs the predictor variable *lstat*.
+The detailed residual analysis will be covered in the future. Here we only show the very basic analysis, that is the plot of the residual vs the predictor variable `lstat`.
 
 ```{r}
-res = resid(lm.fit)
-
-plot(Boston$lstat, res)
+res <- resid(model)
+plot(lstat, res)
 
 ```
 
 
 We could find that there is a clear u-shape in the residual plot. And the variance shows non-constant variance issue, as the size of the residuals decreases as the value of lstat increase. This residual plot indicates that a multiplicative model may be appropriate. 
 
-
-### Prediction Interval for y;
-```{r}
-predict(lm.fit, data.frame(lstat=c(5,10,15)), interval="prediction")
-
-#detach(Boston)
-
-# par(mfrow=c(2,2))
-# plot(lm.fit)
-# plot(predict(lm.fit), residuals(lm.fit))
-# plot(predict(lm.fit), rstudent(lm.fit))
-# plot(hatvalues(lm.fit)) # hatvalues() produces leverage statistics, which can be used to compute for any number of predictors;
-# which.max(hatvalues(lm.fit))
-```
-
- 
- 
-
-## Chapter 4 Multiple Regression Models
-
-```{r ANOVA_ALT function, message=FALSE, echo=FALSE}
-anova_alt = function (object, reg_collapse=TRUE,...) 
-{
-  if (length(list(object, ...)) > 1L) 
-    return(anova.lmlist(object, ...))
-  if (!inherits(object, "lm")) 
-    warning("calling anova.lm(<fake-lm-object>) ...")
-  w <- object$weights
-  ssr <- sum(if (is.null(w)) object$residuals^2 else w * object$residuals^2)
-  mss <- sum(if (is.null(w)) object$fitted.values^2 else w * 
-               object$fitted.values^2)
-  if (ssr < 1e-10 * mss) 
-    warning("ANOVA F-tests on an essentially perfect fit are unreliable")
-  dfr <- df.residual(object)
-  p <- object$rank
-  if (p > 0L) {
-    p1 <- 1L:p
-    comp <- object$effects[p1]
-    asgn <- object$assign[stats:::qr.lm(object)$pivot][p1]
-    nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
-    tlabels <- nmeffects[1 + unique(asgn)]
-    ss <- c(vapply(split(comp^2, asgn), sum, 1), ssr)
-    df <- c(lengths(split(asgn, asgn)), dfr)
-    if(reg_collapse){
-      if(attr(object$terms, "intercept")){
-        collapse_p<-2:(length(ss)-1)
-        ss<-c(ss[1],sum(ss[collapse_p]),ss[length(ss)])
-        df<-c(df[1],sum(df[collapse_p]),df[length(df)])
-        tlabels<-c(tlabels[1],"Source")
-      } else{
-        collapse_p<-1:(length(ss)-1)
-        ss<-c(sum(ss[collapse_p]),ss[length(ss)])
-        df<-c(df[1],sum(df[collapse_p]),df[length(df)])
-        tlabels<-c("Regression")
-      }
-    }
-  }else {
-    ss <- ssr
-    df <- dfr
-    tlabels <- character()
-    if(reg_collapse){
-      collapse_p<-1:(length(ss)-1)
-      ss<-c(sum(ss[collapse_p]),ss[length(ss)])
-      df<-c(df[1],sum(df[collapse_p]),df[length(df)])
-    }
-  }
-  
-  ms <- ss/df
-  f <- ms/(ssr/dfr)
-  P <- pf(f, df, dfr, lower.tail = FALSE)
-  table <- data.frame(df, ss, ms, f, P)
-  table <- rbind(table, 
-                 colSums(table))
-  if (attr(object$terms, "intercept")){
-   table$ss[nrow(table)]<- table$ss[nrow(table)] - table$ss[1]
-  }
-  table$ms[nrow(table)]<-table$ss[nrow(table)]/table$df[nrow(table)]
-  table[length(P):(length(P)+1), 4:5] <- NA
-  dimnames(table) <- list(c(tlabels, "Error","Total"), 
-                          c("Df","SS", "MS", "F", 
-                            "P"))
-  if (attr(object$terms, "intercept")){
-    table <- table[-1, ]
-    table$MS[nrow(table)]<-table$MS[nrow(table)]*(table$Df[nrow(table)])/(table$Df[nrow(table)]-1)
-    table$Df[nrow(table)]<-table$Df[nrow(table)]-1
-  }
-  structure(table, heading = c("Analysis of Variance Table\n"), 
-            class = c("anova", "data.frame"))
-}
-```
-
-##### If fit a model with all predictors...
-
-Now we consider building a model with more than one predictor. We have 13 independent variables to choose. Should all the predictors be included in the model? Or use only a couple of them? Which ones should be in the model? We will decide by using variable selection procedures, which is discussed in Chapter 8.
-
-```{r full model, tidy=TRUE}
-fit.full<-lm(medv~., data=Boston) # Here, we used the short-hand, to avoid cumbersome way of listing all 13 variables;
-anova_alt(fit.full)
-```
-
-
-By using variable selection procedures, we could identify the most important predictors. For now, let's say, we are going to fit models with 5 predictors chosen: lstat, rm, dis, ptratio, chas.
-
-```{r 5 predictors, tidy=TRUE}
-Boston_5_pred<-Boston[, c("lstat", "rm", "dis", "ptratio","chas", "medv")]
-attach(Boston_5_pred)
-```
-
-First, we model the median value of house (medv, $y$, in \$1000s) as a function of the lower status of the populatio ($x_1$), average number of rooms ($x_2$), distance to Boston employment centres ($x_3$), pupil-teacher ratio ($x_4$), and if tract bounds river ($x_5$). 
-
-
-### Is the qualitative variable chas significantly related to the median value of house (medv, $y$, in \$1000s)?
-
-To answer this question, we fit the regression model with medv as the $y$ and chas as the independent variable $x$. Note that, chas is a dummy variable, with 
-
-* chas --- Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
-
-In other words, not tract bounds river is chosen as the base level. 
-
-```{r model with dummy, tidy=TRUE}
-fit_chas<-lm(medv~chas)
-anova(fit_chas)
-summary(fit_chas)
-```
-
-From the output above, we could find on average, the median value of a house is $6,346 higher for the houses tract bounds river than those not.
-
-We could also perfor a hypothesis test as follows:
-
-$H_0:$ Chas is not a significant predictor.
-$H_a:$ Chas is a significant predictor.
-
-Since p-value = 0.0000739 $<\alpha=$ 0.05, the null hypothesis is rejected. We conslude Chas is a significant predictor. However, on the other hand, the coefficient of determination $r^2=0.03$, which is quite small value. In other word, in addition to Chas, we need more predictors in the model.
-
-
-### The relationship between lstat and medv
-
-In Chapter 3, we fitted stright-line model to relate medv ($y$) and lstat ($x$). 
-
-```{r medv_lstat scatterplot, message=FALSE}
-plot(Boston$lstat, Boston$medv)
-
-```
-
-The scatterplot shows curvilinear relationship, which suggests a curivilinear model might be a better fit. We will fit the curvilinear model $y=\beta_0+\beta_1 x+\beta_2 x^2+\varepsilon$. 
-
-```{r quadratic model, tidy=TRUE}
-fit_quad<-lm(medv~lstat+I(lstat^2))
-anova_alt(fit_quad)
-summary(fit_quad)
-```
-
-Firt, we test the overall significance of this curvilinear model.
-
-$H_0: \beta_1=\beta_2=0$
-
-$H_a:$ At least one of the $\beta$'s $\neq 0$
-
-Since the p-value is almost 0, which is less than $\alpha=0.05$, we reject $H_0$ and conclude the curvilinear model is adequate. 
-
-In order to identify whether the curvilinear term lstat$^2$ should be kept in the model, we could run the $t$-test, or partial $F$-test. Since there is only one additional factor (i.e. lstat$^2$) is considered here, these two test are equivalent.
-
-```{r partial F-test, tidy=TRUE}
-anova(lm.fit, fit_quad)
-```
-
-$H_0: y=\beta_0+\beta_1 x$ (Reduced Model)
-
-$H_a:y=\beta_0+\beta_1 x +\beta_2 x^2$ (Complete Model)
-
-Since the $p$-value =7.63e-28 $<\alpha$, we reject $H_0$ and conclude the complete model is prefered. Therefore, medv and lstat are related in a curvilinear way, with upward curvature (as $\beta_2>0$). 
-
-### Interaction between rm and dis
-
-An analyst hypothesizes that the efect of distance to Boston employment centres on house price will be greater when there are more room numbers. To test this hypothesis, we will need to run an interaction model for $E(y)$ as a function of dis ($x_1$), rm($x_2$), and dis_rm ($x_1x_2$).
-
-```{r interaction model}
-
-fit_interaction<-lm(medv~ rm*dis, data=Boston_5_pred)
-anova_alt(fit_interaction)
-summary(fit_interaction)
-```
-
-
-$H_0$: There is no significant interaction between rm and dis.
-
-$H_a:$ There is a significant interaction between rm and dis.
-
-From the p-value = 0.0000042 $<\alpha=.05$, we conclude there is a significant interaction between rm and dis. As the distance from Boston employment centres and number of rooms interact positivel on median house price.
-
-
-### Residual Analysis
-
-```{r}
-res = resid(fit_interaction)
-pred=predict(fit_interaction)
-
-plot(pred, res)
-
-```

@@ -1,0 +1,186 @@
+
+
+## Chapter 4 Multiple Regression Models
+
+```{r ANOVA_ALT function, message=FALSE, echo=FALSE}
+
+
+anova_alt = function (object, reg_collapse=TRUE,...) 
+{
+  if (length(list(object, ...)) > 1L) 
+    return(anova.lmlist(object, ...))
+  if (!inherits(object, "lm")) 
+    warning("calling anova.lm(<fake-lm-object>) ...")
+  w <- object$weights
+  ssr <- sum(if (is.null(w)) object$residuals^2 else w * object$residuals^2)
+  mss <- sum(if (is.null(w)) object$fitted.values^2 else w * 
+               object$fitted.values^2)
+  if (ssr < 1e-10 * mss) 
+    warning("ANOVA F-tests on an essentially perfect fit are unreliable")
+  dfr <- df.residual(object)
+  p <- object$rank
+  if (p > 0L) {
+    p1 <- 1L:p
+    comp <- object$effects[p1]
+    asgn <- object$assign[stats:::qr.lm(object)$pivot][p1]
+    nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
+    tlabels <- nmeffects[1 + unique(asgn)]
+    ss <- c(vapply(split(comp^2, asgn), sum, 1), ssr)
+    df <- c(lengths(split(asgn, asgn)), dfr)
+    if(reg_collapse){
+      if(attr(object$terms, "intercept")){
+        collapse_p<-2:(length(ss)-1)
+        ss<-c(ss[1],sum(ss[collapse_p]),ss[length(ss)])
+        df<-c(df[1],sum(df[collapse_p]),df[length(df)])
+        tlabels<-c(tlabels[1],"Source")
+      } else{
+        collapse_p<-1:(length(ss)-1)
+        ss<-c(sum(ss[collapse_p]),ss[length(ss)])
+        df<-c(df[1],sum(df[collapse_p]),df[length(df)])
+        tlabels<-c("Regression")
+      }
+    }
+  }else {
+    ss <- ssr
+    df <- dfr
+    tlabels <- character()
+    if(reg_collapse){
+      collapse_p<-1:(length(ss)-1)
+      ss<-c(sum(ss[collapse_p]),ss[length(ss)])
+      df<-c(df[1],sum(df[collapse_p]),df[length(df)])
+    }
+  }
+  
+  ms <- ss/df
+  f <- ms/(ssr/dfr)
+  P <- pf(f, df, dfr, lower.tail = FALSE)
+  table <- data.frame(df, ss, ms, f, P)
+  table <- rbind(table, 
+                 colSums(table))
+  if (attr(object$terms, "intercept")){
+   table$ss[nrow(table)]<- table$ss[nrow(table)] - table$ss[1]
+  }
+  table$ms[nrow(table)]<-table$ss[nrow(table)]/table$df[nrow(table)]
+  table[length(P):(length(P)+1), 4:5] <- NA
+  dimnames(table) <- list(c(tlabels, "Error","Total"), 
+                          c("Df","SS", "MS", "F", 
+                            "P"))
+  if (attr(object$terms, "intercept")){
+    table <- table[-1, ]
+    table$MS[nrow(table)]<-table$MS[nrow(table)]*(table$Df[nrow(table)])/(table$Df[nrow(table)]-1)
+    table$Df[nrow(table)]<-table$Df[nrow(table)]-1
+  }
+  structure(table, heading = c("Analysis of Variance Table\n"), 
+            class = c("anova", "data.frame"))
+}
+```
+
+##### If fit a model with all predictors...
+
+Now we consider building a model with more than one predictor. We have 13 independent variables to choose. Should all the predictors be included in the model? Or use only a couple of them? Which ones should be in the model? We will decide by using variable selection procedures, which is discussed in Chapter 8.
+
+```{r full model, tidy=TRUE}
+fit.full<-lm(medv~., data=Boston) # Here, we used the short-hand, to avoid cumbersome way of listing all 13 variables;
+anova_alt(fit.full)
+```
+
+
+By using variable selection procedures, we could identify the most important predictors. For now, let's say, we are going to fit models with 5 predictors chosen: lstat, rm, dis, ptratio, chas.
+
+```{r 5 predictors, tidy=TRUE}
+Boston_5_pred<-Boston[, c("lstat", "rm", "dis", "ptratio","chas", "medv")]
+attach(Boston_5_pred)
+```
+
+First, we model the median value of house (medv, $y$, in \$1000s) as a function of the lower status of the populatio ($x_1$), average number of rooms ($x_2$), distance to Boston employment centres ($x_3$), pupil-teacher ratio ($x_4$), and if tract bounds river ($x_5$). 
+
+
+### Is the qualitative variable chas significantly related to the median value of house (medv, $y$, in \$1000s)?
+
+To answer this question, we fit the regression model with medv as the $y$ and chas as the independent variable $x$. Note that, chas is a dummy variable, with 
+
+* chas --- Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+
+In other words, not tract bounds river is chosen as the base level. 
+
+```{r model with dummy, tidy=TRUE}
+fit_chas<-lm(medv~chas)
+anova(fit_chas)
+summary(fit_chas)
+```
+
+From the output above, we could find on average, the median value of a house is $6,346 higher for the houses tract bounds river than those not.
+
+We could also perfor a hypothesis test as follows:
+
+$H_0:$ Chas is not a significant predictor.
+$H_a:$ Chas is a significant predictor.
+
+Since p-value = 0.0000739 $<\alpha=$ 0.05, the null hypothesis is rejected. We conslude Chas is a significant predictor. However, on the other hand, the coefficient of determination $r^2=0.03$, which is quite small value. In other word, in addition to Chas, we need more predictors in the model.
+
+
+### The relationship between lstat and medv
+
+In Chapter 3, we fitted stright-line model to relate medv ($y$) and lstat ($x$). 
+
+```{r medv_lstat scatterplot, message=FALSE}
+plot(Boston$lstat, Boston$medv)
+
+```
+
+The scatterplot shows curvilinear relationship, which suggests a curivilinear model might be a better fit. We will fit the curvilinear model $y=\beta_0+\beta_1 x+\beta_2 x^2+\varepsilon$. 
+
+```{r quadratic model, tidy=TRUE}
+fit_quad<-lm(medv~lstat+I(lstat^2))
+anova_alt(fit_quad)
+summary(fit_quad)
+```
+
+Firt, we test the overall significance of this curvilinear model.
+
+$H_0: \beta_1=\beta_2=0$
+
+$H_a:$ At least one of the $\beta$'s $\neq 0$
+
+Since the p-value is almost 0, which is less than $\alpha=0.05$, we reject $H_0$ and conclude the curvilinear model is adequate. 
+
+In order to identify whether the curvilinear term lstat$^2$ should be kept in the model, we could run the $t$-test, or partial $F$-test. Since there is only one additional factor (i.e. lstat$^2$) is considered here, these two test are equivalent.
+
+```{r partial F-test, tidy=TRUE}
+anova(lm.fit, fit_quad)
+```
+
+$H_0: y=\beta_0+\beta_1 x$ (Reduced Model)
+
+$H_a:y=\beta_0+\beta_1 x +\beta_2 x^2$ (Complete Model)
+
+Since the $p$-value =7.63e-28 $<\alpha$, we reject $H_0$ and conclude the complete model is prefered. Therefore, medv and lstat are related in a curvilinear way, with upward curvature (as $\beta_2>0$). 
+
+### Interaction between rm and dis
+
+An analyst hypothesizes that the efect of distance to Boston employment centres on house price will be greater when there are more room numbers. To test this hypothesis, we will need to run an interaction model for $E(y)$ as a function of dis ($x_1$), rm($x_2$), and dis_rm ($x_1x_2$).
+
+```{r interaction model}
+
+fit_interaction<-lm(medv~ rm*dis, data=Boston_5_pred)
+anova_alt(fit_interaction)
+summary(fit_interaction)
+```
+
+
+$H_0$: There is no significant interaction between rm and dis.
+
+$H_a:$ There is a significant interaction between rm and dis.
+
+From the p-value = 0.0000042 $<\alpha=.05$, we conclude there is a significant interaction between rm and dis. As the distance from Boston employment centres and number of rooms interact positivel on median house price.
+
+
+### Residual Analysis
+
+```{r}
+res = resid(fit_interaction)
+pred=predict(fit_interaction)
+
+plot(pred, res)
+
+```
