@@ -214,7 +214,6 @@ Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering $x_1$ and $x_
 :::
 
 
-### Type III ANOVA table
 
 
 ### Type III ANOVA Table 
@@ -227,4 +226,56 @@ $$
 y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
 $$
 
-The Type I ANOVA table reports
+The Type III ANOVA table reports, for each predictor $x_j$,
+
+$$
+SS^{(III)}(x_j)=SSE(\text{full model with }\beta_j=0) - SSE(\text{full model}).
+$$
+That is, each sum of squares measures the increase in unexplained variability that results from constraining the coefficient $\beta_j$ to be zero while keeping all other predictors in the model.
+
+| Source    | Degrees of Freedom | Sum of Squares    | Mean Square | F        |
+| --------- | ------------------ | ----------------- | ----------- | -------- |
+| $x_1$     | 1                  | $SS^{(III)}(x_1)$ | $MS(x_1)$   | $F_1$    |
+| $x_2$     | 1                  | $SS^{(III)}(x_2)$ | $MS(x_2)$   | $F_2$    |
+| $\vdots$  | $\vdots$           | $\vdots$          | $\vdots$    | $\vdots$ |
+| Residuals | $n-p-1$            | SSE               | MSE         |          |
+
+Each F-statistic tests
+$$
+H_0: \beta_j=0 \quad \text{ given that all other predictors are in the model}.
+$$
+
+The corresponding F-statistic is computed by 
+$$
+F_j=\frac{MS^{(III)}(x_j)}{MSE}.
+$$
+In the case of a single degree of freedom per predictor, this test is equivalent to the square of the $t$-test for the coefficient $\beta_j$.
+
+In summary, the Type III ANOVA table answers the question:
+
+> Is this coefficient nonzero in the full model, holding all other predictors fixed?
+
+
+::: {.callout-note}
+## Type III vs t-tests
+In linear regression, for any predictor with one degree of freedom,
+$$
+F^{(III)}_j=t_j^2.
+$$
+Therefore the Type III F-test and the coefficient t-test test exactly the same null hypothesis.
+:::
+
+::: {.callout-note}
+## Type II vs Type III
+Type II ANOVA tests variables (main effects), whereas Type III ANOVA tests individual coefficients. Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types are equivalent and yield identical test statistics and p-values.
+
+When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA does not test main effects involved in interactions, because such tests lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds to test the corresponding coefficients anyway, regardless of whether the resulting hypothesis has a meaningful interpretation.
+:::
+
+
+
+```{r}
+y  <- x1*x2+2*x1+3*x2+rnorm(80)
+fit <- lm(y~x1*x2)
+Anova(fit, type=2)
+```
