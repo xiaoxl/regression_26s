@@ -14,3 +14,8 @@ python -m ipykernel install --user --name stats --display-name "(stats)"
 ```
 quarto use template juba/bookup-html
 ```
+
+
+
+
+

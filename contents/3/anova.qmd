@@ -1,42 +1,230 @@
 # ANOVA
 
-## type 1/2/3
+{{< include ../math.qmd >}} 
 
-for diagnoisis
+ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.
 
-can be used to evaluate variables, but not var selection itself
+In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.
 
-
-
-In simple linear regression, this ANOVA table is unique and unambiguous, since there is only one predictor.
-
-However, in multiple linear regression, the contribution of each predictor to the model is no longer uniquely defined.
-As a result, different conventions have been developed to allocate the explained variability among predictors, leading to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA.
-These types differ in how they account for the presence of other predictors and interaction terms in the model.
+More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant. 
 
 
+ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector $y$ onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:
+
+$$
+\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
+$$
+This identity is the mathematical foundation of all ANOVA tables.
+
+### ANOVA table for linear regression
+
+This is the anova table introduced in the previous lectures. The main purpose is to show to decomposition and compute the F-statistic as well as the corresponding p-value.
+
+$$
+F=\frac{MSR}{MSE}=\frac{\text{variance explained per parameter}}{\text{variance unexplained per observation}}.
+$$
+
+### Type I ANOVA table
+
+Type I ANOVA Table (Sequential Sum of Squares) decomposes the total variation in the response by adding predictors to the model sequentially, one at a time, in the order they appear in the model formula.
+
+Suppose we fit the linear model
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+$$
+
+The Type I ANOVA table reports
+$$
+SS(x_j\mid x_1,\ldots, x_{j-1})=SSE(\text{model with }x_1,\ldots,x_j-1)-SSE(\text{model with }x_1,\ldots,x_j).
+$$
+
+That is, each sum of squares measures the reduction in unexplained variability obtained by adding $x_j$ to a model that contains the preceding predictors.
+
+| Source    | Degrees of Freedom | Sum of Squares     | Mean Square | F        |
+| --------- | ------------------ | ------------------ | ----------- | -------- |
+| $x_1$     | 1                  | $SS(x_1)$          | $MS(x_1)$   | $F_1$    |
+| $x_2$     | 1                  | $SS(x_2 \mid x_1)$ | $MS(x_2)$   | $F_2$    |
+| $\vdots$  | $\vdots$           | $\vdots$           | $\vdots$    | $\vdots$ |
+| Residuals | $n-p-1$            | SSE                | MSE         |          |
+
+Each F-statistic tests
+
+$$
+H_0: \beta_j=0\quad \text{ given that $x_1,\ldots,x_{j-1}$ are already in the model.}
+$$
+
+The corresponding F-statistic is computed by
+$$
+F_j=\frac{MS(x_j)}{MSE}.
+$$
+
+
+In summary, the Type I ANOVA table answers the question:
+
+> How much additional variation does this variable explain when added at this point in the model?
+
+::: {.callout-tip}
+1. Type I ANOVA table depends on the order of variables. 
+2. Each row corresponds to a nested-model comparison.
+3. Equivalent to `anova(model1, model2)` for successive models.
+4. Matches classical ANOVA in balanced designs.
+:::
+
+
+
+::: {#exm-}
+We first generate a dataset, with three correlated predictors $x_1$, $x_2$ and $x_3$. The correlation structure is intentional, so that the sequential nature of
+Type I ANOVA is visible.
+```{r}
+set.seed(123)
+
+n <- 80
+x1 <- rnorm(n)
+x2 <- 0.8 * x1 + rnorm(n, sd = 0.6)
+x3 <- 0.6 * x2 + rnorm(n, sd = 0.5)
+y <- 3 + 2 * x1 + 1 * x2 + +3*x3+rnorm(n, sd = 1)
 ```
-import numpy as np
 
-anova_table = pd.DataFrame({
-    "Source": ["Model", "Residual", "Total"],
-    "df": [
-        int(model.df_model),
-        int(model.df_resid),
-        int(model.df_model + model.df_resid)
-    ],
-    "SS": [
-        model.ess,                 # SSR
-        model.ssr,                 # SSE
-        model.ess + model.ssr      # SST
-    ]
-})
+Now fit the model and show the Type I ANOVA table. For Type I ANOVA table, we could use the build-in R function `anova()`.
 
-anova_table["MS"] = anova_table["SS"] / anova_table["df"]
-anova_table.loc[0, "F"] = model.fvalue
-anova_table.loc[0, "Pr(>F)"] = model.f_pvalue
-
-anova_table
-
-
+```{r}
+model123 <- lm(y~x1+x2+x3)
+anova(model123)
 ```
+
+
+Because Type I ANOVA is sequential, each row corresponds to a nested-model F test.
+
+1. $x_1$: Tests adding $x_1$ to the intercept-only model. Since the p-value is small, we conclude that $x_1$ explains a significant amount of variation in $y$.
+2. $x_2$: Tests adding $x_2$ to a model that already contains $x_1$. Since the p-value is small, we conclude that $x_2$ contributes information beyond $x_1$.
+3. $x_3$: Tests adding $x_3$ to the model with $x_1$ and $x_2$. Since the p-value is small, we conclude that $x_3$ explains additional variation not already captured by $x_1$ and $x_2$.
+
+:::
+
+
+
+::: {#exm-}
+
+We now illustrate an example that the order of variables matters. We generate a dataset with two highly correlated variables $x_1$ and $x_2$, where the response $y$ is constructed to depend only on $x_1$.
+
+
+```{r}
+set.seed(123)
+
+n <- 100
+x1 <- rnorm(n)
+x2 <- x1 + rnorm(n, sd = 0.2)
+
+y <- 2 + 3 * x1 + rnorm(n, sd = 1)
+```
+
+
+```{r}
+model12 <- lm(y~x1+x2)
+anova(model12)
+```
+
+When $x_1$ is added first, it explains most of the variation in $y$. Because $x_2$ is largely redundant with $x_1$, adding $x_2$ afterward does not produce a significant additional reduction in the residual sum of squares. As a result, $x_1$ is significant, while $x_2$ is not.
+
+
+
+```{r}
+model21 <- lm(y~x2+x1)
+anova(model21)
+```
+
+When $x_2$ is added first, it captures much of the variation in $y$ due to its
+strong correlation with $x_1$, and therefore appears significant. However, because $x_2$ does not fully explain $x_1$, there remains variation in $y$ that is uniquely attributable to $x_1$. Consequently, $x_1$ is still significant even after $x_2$ has been included in the model.
+
+:::
+
+
+
+### Nested ANOVA table
+
+### Type II ANOVA table
+
+A Type II ANOVA table (Marginal Sum of Squares) tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested.
+
+Suppose we fit the linear model
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+$$
+For each predictor $x_j$, the Type II sum of squares is defined as
+$$
+SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full model}).
+$$
+That is, it measures the unique contribution of $x_j$ after accounting for all other predictors.
+
+
+| Source        | Degrees of Freedom | Sum of Squares                | Mean Square                 | F        |
+|---------------|--------------------|-------------------------------|-----------------------------|----------|
+| $x_1$         | $1$                | $SS^{(II)}(x_1)$              | $MS(x_1)$                   | $F_1$    |
+| $x_2$         | $1$                | $SS^{(II)}(x_2)$              | $MS(x_2)$                   | $F_2$    |
+| $\vdots$      | $\vdots$           | $\vdots$                      | $\vdots$                    | $\vdots$ |
+| Residuals     | $n - p - 1$        | $\mathrm{SSE}$                | $\mathrm{MSE}$              |          |
+
+Each F-statistic tests
+$$
+H_0: \beta_j=0\quad\text{ adjusting for all other predictors.}
+$$
+
+The corresponding F-statistic
+$$
+F_j^{(II)}=\frac{MS^{(II)(x_j)}}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+$$
+
+
+::: {.callout-tip}
+1. Reordering predictors does not change the table.
+2. Each effect is tested conditional on all other main effects.
+3. If interactions are present, Type II does not test main effects in their presence.
+4. Each row is a nested-model F test removing one predictor at a time.
+:::
+
+
+
+
+::: {#exm-}
+
+We first generate a dataset with two correlated predictors $x_1$ and $x_2$.
+```{r}
+set.seed(123)
+
+n <- 80
+x1 <- rnorm(n)
+x2 <- 0.8 * x1 + rnorm(n, sd = 0.6) 
+y <- 3 + 2 * x1 + 1 * x2 + rnorm(n, sd = 1)
+```
+
+For Type II ANOVA table, we could use the function `Anova` from `car` library.
+
+
+```{r}
+library(car)
+model <- lm(y~x1+x2)
+Anova(model, type=2)
+```
+
+- $x_1$: Compares the full model $y \sim x_1 + x_2$ to the reduced model $y \sim x_2$ (i.e., the model with $x_1$ removed). A small p-value implies that $x_1$ explains a significant amount of variation in $y$ beyond what is explained by $x_2$.
+- $x_2$: Compares the full model $y \sim x_1 + x_2$ to the reduced model $y \sim x_1$ (i.e., the model with $x_2$ removed). A small p-value implies that $x_2$ explains a significant amount of variation in $y$ beyond what is explained by $x_1$.
+
+Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering $x_1$ and $x_2$ does not change the results.
+
+:::
+
+
+### Type III ANOVA table
+
+
+### Type III ANOVA Table 
+
+A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) decomposes the explained variation in the response by testing each coefficient in the full model, while holding all other terms fixed. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.
+
+
+Suppose we fit the linear model
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+$$
+
+The Type I ANOVA table reports
