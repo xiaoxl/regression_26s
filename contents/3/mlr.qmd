@@ -206,17 +206,59 @@ $$
 <details>
 <summary><strong>Click for proof.</strong></summary>
 
+
 Let the model be $y=X\beta+\varepsilon$. Let the j-th predictor column be $x_j$ and $X_{-j}$ be the matrix of all other predictor columns. Rewrite the design matrix as 
 $$
 X=\mqty[x_j&X_{-j}].
 $$
 
+Then 
+$$
+X^TX=\mqty[x_j^Tx_j&x_j^TX_{-j}\\X^T_{-j}x_j&X^T_{-j}X_{-j}].
+$$
+
+Consider 
+$$
+\mqty[A&B\\C&D]=\underbrace{\mqty[I&BD^{-1}\\0&I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&0\\C&D]}_{(II)}.
+$$
+Let $A-BD^{-1}C=S$. Then 
+$$
+(I)^{-1}=\mqty[I&-BD^{-1}\\o&I],\quad (II)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}],
+$$
+so
+$$
+\mqty[A&B\\C&D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}]\mqty[I&-BD^{-1}\\0&I]=\mqty[S^{-1}&-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&D^{-1}(CS^{-1}BD^{-1}+I)]
+$$
+Therefore the left upper corner of the inverse matrix is $S^{-1}=(A-BD^{-1}C)^{-1}$. Then
+$$
+(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
+$$
+Let $P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}$. We have
+$$
+\begin{split}
+\Var(\hat\beta_j)&=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
+&=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
+\end{split}
+$$
+
+
+On the other side, use $x_j=P_jX_{-j}+\varepsilon$. Then $x_j^T(I-P_j)x_j=SSE_j$. Since $1-\frac{SSE_j}{SST_j}=R_j^2$, we have
+$$
+x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
+$$
+So 
+$$
+\begin{split}
+\Var(\hat\beta_j)&=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
+\end{split}
+$$
 
 </details>
 
 
 :::
 
+When $R_j^2$ is bigger, the variance will be amplified. In other words, if one variable depends on other variables, which means that $R_j^2$ is high, the variance of $\hat\beta_j$ is also very high. This lemma shows that when there are (almost) multiconlinear variables, the varaiance of the corresponding estimator will be extremely large.
 
 
 
