@@ -24,8 +24,24 @@ where
 Note that there might be relations among $x_i$'s.
 
 - If $x_2=x_1^2$, $x_2$ is called a **higher-order term**.
-- If $x_3=1$ in some cases and $0$ in some other cases, $x_3$ is called a **coded variable**. This is an example of categorical variables in regression.
+- If $x_3=x_1x_2$, $x_3$ is called a **interaction term**.
+- If $x_4=1$ in some cases and $0$ in some other cases, $x_4$ is called a **coded variable**. This is an example of categorical variables in regression.
+
+| Model | Name of the Model |
+|------|------------------|
+| $y = \beta_0 + \beta_1 x_1 + \varepsilon$ | • Simple linear regression  <br> • Simple first-order model with one predictor |
+| $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \varepsilon$ | • Multiple linear regression with three predictors <br> • First-order model with three predictors |
+| $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon$ | • Interaction model with two predictors |
+| $y = \beta_0 + \beta_1 x_1 + \beta_2 x_1^2 + \varepsilon$ | • Second-order model with one predictor |
+| $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_4 + \beta_5 x_5 + \varepsilon$ | • First-order model with five predictors |
+| $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1^2 + \beta_4 x_2^2 + \beta_5 x_1 x_2 + \varepsilon$ | • Second-order model with two predictors |
+
 :::
+
+
+
+
+
 
 The steps are very similar to simple linear regression.
 
@@ -36,6 +52,13 @@ The steps are very similar to simple linear regression.
 5. Evaluate the utility of the model, like checking p-values and $R^2$.
 6. Verify the model by checking the assumptions on $\varepsilon$.
 7. Use the model. Analyze the prediction and make inferences.
+
+$$
+y=\underbrace{\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k}_{\text{Deterministic portion of model}}+\underbrace{\varepsilon}_{\text{Random error}}.
+$$
+
+
+
 
 
 ::: {.callout-note}
@@ -54,6 +77,8 @@ E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k
 $$
 where $x_1,\ldots,x_k$ are $k$ quantitative independent variables.
 :::
+
+Here *independent* means that these variables are not functions of other variables.
 
 After inputing the data, we have the following equations.
 
@@ -165,6 +190,33 @@ In MLR, the multicolinearity between independent variables doesn't affect the un
 - Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
 - The model might struggle to separate the effects of correlated predictors.
 :::
+
+
+### Colinearity
+In the above estimation, the independence of variables doesn't affect the unbiasedness of the OLS estimators.
+
+
+
+::: {#lem-}
+$$
+\Var(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
+$$
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+Let the model be $y=X\beta+\varepsilon$. Let the j-th predictor column be $x_j$ and $X_{-j}$ be the matrix of all other predictor columns. Rewrite the design matrix as 
+$$
+X=\mqty[x_j&X_{-j}].
+$$
+
+
+</details>
+
+
+:::
+
 
 
 

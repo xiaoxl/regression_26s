@@ -114,6 +114,14 @@ In order to find the best parameters, we need to minimize the sum of squared err
 $$
 L(\beta_0, \beta_1) = \sum_{i=1}^n\varepsilon_i^2=\sum_{i=1}^n(y_i-\beta_0-\beta_1x_i)^2.
 $$
+
+In other words, 
+
+$$
+\hat\beta_0,\hat\beta_1=\argmin_{\beta_0,\beta_1}L(\beta_0, \beta_1)=\argmin_{\beta_0,\beta_1}\sum_i^n(y_i-\beta_0-\beta_1x_i)^2.
+$$
+
+
 Since this loss can be treated as a function of $\beta_0$ and $\beta_1$, to minimize it, we could consider the critical point, which is 
 
 $$
