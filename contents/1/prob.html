@@ -400,7 +400,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">SLR</span></a>
+ <span class="menu-text">Simple Linear regression</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -435,12 +435,29 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
- <span class="menu-text">Appendices</span></a>
+ <span class="menu-text">Multiple Linear regression</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/mlr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/app/data.html" class="sidebar-item-text sidebar-link">
@@ -481,7 +498,6 @@ window.Quarto = {
   <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</a></li>
   <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</a></li>
   </ul></li>
-  <li><a href="#miscs" id="toc-miscs" class="nav-link" data-scroll-target="#miscs"><span class="header-section-number">2.5</span> Miscs</a></li>
   </ul>
 </nav>
     </div>
@@ -517,15 +533,11 @@ window.Quarto = {
 <p><span class="math display">\[
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
 \]</span></p>
 <!-- Probability -->
-<p><span class="math display">\[
-\newcommand{\Exp}{\operatorname{E}}
-\newcommand{\Var}{\operatorname{Var}}
-  \newcommand{\Cov}{\operatorname{Cov}}
-\newcommand{\Mode}{\operatorname{mode}}
-\newcommand{\cor}{\operatorname{cor}}
-\]</span></p>
+<p>$$ </p>
+<p> $$</p>
 <!-- Distributions pdf -->
 <p><span class="math display">\[
 \newcommand{\pdfbinom}{{\tt binom}}
@@ -553,31 +565,31 @@ window.Quarto = {
 <li><span class="math inline">\(\Pr\qty(Y\in A\mid\theta)\)</span>: the probability of <span class="math inline">\(Y\)</span> being in <span class="math inline">\(A\)</span></li>
 <li><span class="math inline">\(p(y\mid\theta)=\Pr\qty(Y=y\mid\theta)\)</span>: the probability mass function (discrete case)</li>
 <li><span class="math inline">\(f(y\mid\theta)=\displaystyle\dv{y}\Pr\qty(Y\leq y\mid\theta)\)</span>: the probability density function (continuous case)</li>
-<li><span class="math inline">\(\Exp\qty(Y)\)</span>: the expectation of <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\Var\qty(Y)\)</span>: the variance of <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(\operatorname{E}\qty(Y)\)</span>: the expectation of <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(\operatorname{Var}\qty(Y)\)</span>: the variance of <span class="math inline">\(Y\)</span></li>
 </ul>
 </section>
 <section id="random-variables" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="random-variables"><span class="header-section-number">2.2</span> Random variables</h2>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.1 (Expectation)</strong></span> <span class="math display">\[
-\Exp\mqty[u(X)] = \int_{-\infty}^{\infty}u(x)f(x)\dl3x.
+\operatorname{E}\mqty[u(X)] = \int_{-\infty}^{\infty}u(x)f(x)\dl3x.
 \]</span></p>
 </div>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.2</strong></span> &nbsp;</p>
 <ol type="1">
-<li><span class="math inline">\(\mu=\Exp(X)\)</span> is called the <strong>mean value</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(\sigma^2=\Var(X)=\Exp\mqty[(X-\mu)^2]\)</span> is called the <strong>variance</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(M_X(t)=\Exp\mqty[\me^{tX}]\)</span> is called the <strong>moment generating function</strong> of <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(\mu=\operatorname{E}(X)\)</span> is called the <strong>mean value</strong> of <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(\sigma^2=\operatorname{Var}(X)=\operatorname{E}\mqty[(X-\mu)^2]\)</span> is called the <strong>variance</strong> of <span class="math inline">\(X\)</span>.</li>
+<li><span class="math inline">\(M_X(t)=\operatorname{E}\mqty[\me^{tX}]\)</span> is called the <strong>moment generating function</strong> of <span class="math inline">\(X\)</span>.</li>
 </ol>
 </div>
 <div id="prp-" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 2.1</strong></span> &nbsp;</p>
 <ol type="1">
-<li><span class="math inline">\(\Exp\mqty[ag(X)+bh(X)]=a\Exp\mqty[g(X)]+b\Exp\mqty[h(X)]\)</span>.</li>
-<li><span class="math inline">\(\Var\mqty[X]=\Exp\mqty[(X-\mu)^2]=\Exp(X^2)-\mu^2\)</span>.</li>
-<li>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, <span class="math inline">\(\Var\mqty[aX+bY]=a^2\Var(X)+b^2\Var(Y)\)</span>.</li>
+<li><span class="math inline">\(\operatorname{E}\mqty[ag(X)+bh(X)]=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)]\)</span>.</li>
+<li><span class="math inline">\(\operatorname{Var}\mqty[X]=\operatorname{E}\mqty[(X-\mu)^2]=\operatorname{E}(X^2)-\mu^2\)</span>.</li>
+<li>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, <span class="math inline">\(\operatorname{Var}\mqty[aX+bY]=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y)\)</span>.</li>
 </ol>
 <details>
 <summary>
@@ -585,25 +597,25 @@ window.Quarto = {
 </summary>
 <p><span class="math display">\[
 \begin{split}
-\Exp\mqty[ag(X)+bh(X)]&amp;=\int_{-\infty}^{\infty}\mqty[ag(x)+bh(x)]f(x)\dl3x\\
+\operatorname{E}\mqty[ag(X)+bh(X)]&amp;=\int_{-\infty}^{\infty}\mqty[ag(x)+bh(x)]f(x)\dl3x\\
                  &amp;=a\int_{-\infty}^{\infty}g(x)f(x)\dl3x+b\int_{-\infty}^{\infty}h(x)f(x)\dl3x\\
-                 &amp;=a\Exp\mqty[g(X)]+b\Exp\mqty[h(X)].
+                 &amp;=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)].
 \end{split}
 \]</span></p>
 <p><span class="math display">\[
 \begin{split}
-\Exp\mqty[(X-\mu)^2]&amp;=\Exp\mqty[\qty(X^2-2\mu X+\mu^2)]=\Exp(X^2)-2\mu\Exp(X)+\Exp(\mu^2)\\
-&amp;=\Exp(X^2)-2\mu\mu+\mu^2=\Exp(X^2)-\mu^2.
+\operatorname{E}\mqty[(X-\mu)^2]&amp;=\operatorname{E}\mqty[\qty(X^2-2\mu X+\mu^2)]=\operatorname{E}(X^2)-2\mu\operatorname{E}(X)+\operatorname{E}(\mu^2)\\
+&amp;=\operatorname{E}(X^2)-2\mu\mu+\mu^2=\operatorname{E}(X^2)-\mu^2.
 \end{split}
 \]</span></p>
 <p><span class="math display">\[
 \begin{split}
-\Var\mqty[aX]&amp;=\Exp(a^2X^2)-a^2\mu^2=a^2\qty(\Exp(X^2)-\mu^2)=a^2\Var(X),\\
-\Var\mqty[X+Y]&amp;=\Exp((X+Y)^2)-(\Exp(X+Y))^2\\
-&amp;=\Exp(X^2)+\Exp(Y^2)+2\Exp(XY)-\Exp(X)^2-\Exp(Y)^2-2\Exp(X)\Exp(Y)\\
-&amp;=\Var(X)+\Var(Y)+2(E(XY)-E(X)E(Y))\\
-&amp;=\Var(X)+\Var(Y),\\
-\Var\mqty[aX+bY]&amp;=a^2\Var(X)+b^2\Var(Y).
+\operatorname{Var}\mqty[aX]&amp;=\operatorname{E}(a^2X^2)-a^2\mu^2=a^2\qty(\operatorname{E}(X^2)-\mu^2)=a^2\operatorname{Var}(X),\\
+\operatorname{Var}\mqty[X+Y]&amp;=\operatorname{E}((X+Y)^2)-(\operatorname{E}(X+Y))^2\\
+&amp;=\operatorname{E}(X^2)+\operatorname{E}(Y^2)+2\operatorname{E}(XY)-\operatorname{E}(X)^2-\operatorname{E}(Y)^2-2\operatorname{E}(X)\operatorname{E}(Y)\\
+&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y)+2(E(XY)-E(X)E(Y))\\
+&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y),\\
+\operatorname{Var}\mqty[aX+bY]&amp;=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y).
 \end{split}
 \]</span></p>
 </details>
@@ -618,7 +630,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Assume <span class="math inline">\(X_1,\ldots, X_n\)</span> i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Then <span class="math inline">\(\Var(\frac1n\sum X_i)=\sigma^2/n\)</span>. This implies that the more samples you pick, the smaller the variance is. This explains why, when possible, we want a large sample size. Note that we don’t specify any concrete distribution in this remark. This is related to estimation, which will be discussed in detail later.</p>
+<p>Assume <span class="math inline">\(X_1,\ldots, X_n\)</span> i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Then <span class="math inline">\(\operatorname{Var}(\frac1n\sum X_i)=\sigma^2/n\)</span>. This implies that the more samples you pick, the smaller the variance is. This explains why, when possible, we want a large sample size. Note that we don’t specify any concrete distribution in this remark. This is related to estimation, which will be discussed in detail later.</p>
 </div>
 </div>
 <section id="r-code" class="level3" data-number="2.2.1">
@@ -670,8 +682,8 @@ Note
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  0.3832064  0.4811536  0.9407225  0.3473203  0.9705847  0.8000386</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  0.2221451  1.1320445 -1.9443368 -0.3623345</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] -0.87256252  0.31427172 -1.73319915  1.33146324 -1.44970934 -0.29750001</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7]  2.03199296  0.21105727  0.02054169  0.50591485</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 </div>
@@ -692,7 +704,7 @@ Note
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.3 (Covariance and sample covariance)</strong></span> &nbsp;</p>
 <ul>
-<li><span class="math inline">\(\Cov(X,Y)=\Exp[(X-\mu_X)(Y-\mu_Y)]\)</span>, where <span class="math inline">\(\mu_X=\Exp(X)\)</span> and <span class="math inline">\(\mu_Y=\Exp(Y)\)</span>.</li>
+<li><span class="math inline">\(\operatorname{Cov}(X,Y)=\operatorname{E}[(X-\mu_X)(Y-\mu_Y)]\)</span>, where <span class="math inline">\(\mu_X=\operatorname{E}(X)\)</span> and <span class="math inline">\(\mu_Y=\operatorname{E}(Y)\)</span>.</li>
 <li><span class="math inline">\(s_{xy}=\frac1{n-1}SS_{xy}=\frac1{n-1}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span>.</li>
 </ul>
 </div>
@@ -701,7 +713,7 @@ Note
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</h3>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.4 (Pearson correlation coefficient <span class="math inline">\(r\)</span>)</strong></span> <span class="math display">\[
-r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
+r=\operatorname{cor}(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
 \]</span></p>
 </div>
 <div id="thm-" class="theorem">
@@ -713,7 +725,7 @@ r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
 <li><span class="math inline">\(r&lt;0\)</span> means negative correlation.</li>
 <li><span class="math inline">\(r=0\)</span> means no positive or negative linear correlation.</li>
 </ul></li>
-<li><span class="math inline">\(\cor(x,y)=\cor(y, x)\)</span></li>
+<li><span class="math inline">\(\operatorname{cor}(x,y)=\operatorname{cor}(y, x)\)</span></li>
 <li>The correlation coefficient <span class="math inline">\(r\)</span> is scaleless (which means that it doesn’t depend on the units of measurement used for the variables).</li>
 </ol>
 </div>
@@ -733,7 +745,7 @@ r=\cor(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.9995427</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.9994271</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
@@ -750,14 +762,14 @@ f_{X,Y}(x,y)=f_X(x)f_Y(y).
 \]</span></p>
 <p>It is equivalent to say that for all measurable functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>,</p>
 <p><span class="math display">\[
-\Exp[g(X)h(Y)]=\Exp[g(X)]\Exp[h(Y)].
+\operatorname{E}[g(X)h(Y)]=\operatorname{E}[g(X)]\operatorname{E}[h(Y)].
 \]</span></p>
 </div>
-<p>Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from <span class="math inline">\(\Cov\)</span> and <span class="math inline">\(\cor\)</span>.</p>
+<p>Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from <span class="math inline">\(\operatorname{Cov}\)</span> and <span class="math inline">\(\operatorname{cor}\)</span>.</p>
 <div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.2</strong></span> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\Cov(X,Y)=0\)</span> and <span class="math inline">\(\cor(X,Y)=0\)</span>. The converse is not true in general.</p>
+<p><span class="theorem-title"><strong>Theorem 2.2</strong></span> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> and <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>. The converse is not true in general.</p>
 </div>
-<p><span class="math inline">\(\Cov(X,Y)=0\)</span> (equivalently, <span class="math inline">\(\cor(X,Y)=0\)</span>) means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no positive or negative linear relationship. However, this does not imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are unrelated; they may still exhibit a nonlinear dependence.</p>
+<p><span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> (equivalently, <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>) means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no positive or negative linear relationship. However, this does not imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are unrelated; they may still exhibit a nonlinear dependence.</p>
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.3</strong></span> &nbsp;</p>
 <div class="cell">
@@ -839,45 +851,6 @@ Note
 <p>The normal distribution and the t-distribution are both bell-shaped and symmetric. When the sample size is large (typically (n &gt; 30)), the t-distribution becomes very similar to the standard normal distribution, so the normal approximation is usually acceptable. When the sample size is small, however, the t-distribution has noticeably heavier tails, and it is better to use the t-distribution directly for inference.</p>
 </div>
 </div>
-</section>
-</section>
-<section id="miscs" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="miscs"><span class="header-section-number">2.5</span> Miscs</h2>
-<div id="thm-empirical-rule" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.5 (Empirical Rule (Normal Data))</strong></span> If a random variable <span class="math inline">\(X\)</span> is approximately normally distributed with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, then:</p>
-<ul>
-<li><p>About <span class="math inline">\(68\%\)</span> of observations lie within <span class="math inline">\(1\sigma\)</span> of the mean: [ ]</p></li>
-<li><p>About <span class="math inline">\(95\%\)</span> of observations lie within <span class="math inline">\(2\sigma\)</span> of the mean: [ ]</p></li>
-<li><p>About <span class="math inline">\(99.7\%\)</span> of observations lie within <span class="math inline">\(3\sigma\)</span> of the mean: [ ]</p></li>
-</ul>
-<p>This is commonly known as the <strong>68–95–99.7 rule</strong>.</p>
-</div>
-<div id="rem-empirical-approx" class="proof remark">
-<p><span class="proof-title"><em>Remark 2.1</em> (Precision of the 95% Rule). </span>The statement that “about <span class="math inline">\(95\%\)</span> of observations lie within <span class="math inline">\(2\sigma\)</span> of the mean” is an <strong>approximation</strong>.</p>
-<p>If [ X N(,^2), ] then the exact probability statement is [ P(- 1.96X + 1.96) = 0.95. ]</p>
-<p>Thus, for normally distributed data:</p>
-<ul>
-<li>The exact 95% cutoff is <span class="math inline">\(\pm 1.96\sigma\)</span></li>
-<li>The value <span class="math inline">\(\pm 2\sigma\)</span> is a convenient rounding</li>
-</ul>
-</div>
-<div id="rem-why-use-2sd" class="proof remark">
-<p><span class="proof-title"><em>Remark 2.2</em> (Why <span class="math inline">\(\boldsymbol{2\sigma}\)</span> Is Still Used). </span>The cutoff <span class="math inline">\(\pm 2\sigma\)</span> is widely used because:</p>
-<ol type="1">
-<li>It is easy to remember and communicate.</li>
-<li>The difference from <span class="math inline">\(1.96\sigma\)</span> is small: [ P(|Z|) . ]</li>
-<li>It provides a useful mental model of variability.</li>
-</ol>
-<p>In contrast, the value <span class="math inline">\(1.96\)</span> arises naturally in formal statistical inference, such as confidence intervals and hypothesis testing.</p>
-</div>
-<div id="rem-rule-vs-exact" class="proof remark">
-<p><span class="proof-title"><em>Remark 2.3</em> (Rule-of-Thumb vs.&nbsp;Exact Normal Theory). </span></p>
-<ul>
-<li>The <strong>68–95–99.7 rule</strong> is a descriptive heuristic.</li>
-<li>The values <span class="math inline">\(1.645\)</span>, <span class="math inline">\(1.96\)</span>, and <span class="math inline">\(2.576\)</span> come from exact normal quantiles.</li>
-</ul>
-<p>Understanding this distinction is essential for: - Confidence intervals - Hypothesis testing - Interpretation of statistical uncertainty</p>
-</div>
 
 
 <div id="refs" class="references csl-bib-body" role="list" style="display: none">
@@ -885,6 +858,7 @@ Note
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->

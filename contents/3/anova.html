@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Multiple Linear regression – Regression 26 Spring</title>
+<title>9&nbsp; ANOVA – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/app/data.html" rel="next">
-<link href="../../contents/2/project1.html" rel="prev">
+<link href="../../contents/3/categorical.html" rel="next">
+<link href="../../contents/3/mlr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -316,7 +316,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -424,8 +424,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/3/mlr.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/3/mlr.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/anova.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analysis of predictions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/rcode2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">R code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 4 Multiple Regression Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -463,15 +487,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#general-form" id="toc-general-form" class="nav-link active" data-scroll-target="#general-form"><span class="header-section-number">8.1</span> General form</a></li>
-  <li><a href="#a-first-order-model-with-quantitative-predictors" id="toc-a-first-order-model-with-quantitative-predictors" class="nav-link" data-scroll-target="#a-first-order-model-with-quantitative-predictors"><span class="header-section-number">8.2</span> A first-order model with quantitative predictors</a></li>
-  <li><a href="#colinearity" id="toc-colinearity" class="nav-link" data-scroll-target="#colinearity"><span class="header-section-number">8.3</span> Colinearity</a></li>
-  <li><a href="#the-analysis-of-variance" id="toc-the-analysis-of-variance" class="nav-link" data-scroll-target="#the-analysis-of-variance"><span class="header-section-number">8.4</span> The analysis of variance</a></li>
-  <li><a href="#evluation" id="toc-evluation" class="nav-link" data-scroll-target="#evluation"><span class="header-section-number">8.5</span> Evluation</a>
-  <ul class="collapse">
-  <li><a href="#r2" id="toc-r2" class="nav-link" data-scroll-target="#r2"><span class="header-section-number">8.5.1</span> <span class="math inline">\(R^2\)</span></a></li>
-  <li><a href="#r_a2" id="toc-r_a2" class="nav-link" data-scroll-target="#r_a2"><span class="header-section-number">8.5.2</span> <span class="math inline">\(R_a^2\)</span></a></li>
-  </ul></li>
+  <li><a href="#anova-table-for-linear-regression" id="toc-anova-table-for-linear-regression" class="nav-link active" data-scroll-target="#anova-table-for-linear-regression"><span class="header-section-number">9.0.1</span> ANOVA table for linear regression</a></li>
+  <li><a href="#type-i-anova-table" id="toc-type-i-anova-table" class="nav-link" data-scroll-target="#type-i-anova-table"><span class="header-section-number">9.0.2</span> Type I ANOVA table</a></li>
+  <li><a href="#nested-anova-table" id="toc-nested-anova-table" class="nav-link" data-scroll-target="#nested-anova-table"><span class="header-section-number">9.0.3</span> Nested ANOVA table</a></li>
+  <li><a href="#type-ii-anova-table" id="toc-type-ii-anova-table" class="nav-link" data-scroll-target="#type-ii-anova-table"><span class="header-section-number">9.0.4</span> Type II ANOVA table</a></li>
+  <li><a href="#type-iii-anova-table" id="toc-type-iii-anova-table" class="nav-link" data-scroll-target="#type-iii-anova-table"><span class="header-section-number">9.0.5</span> Type III ANOVA Table</a></li>
   </ul>
 </nav>
     </div>
@@ -481,7 +501,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></h1>
 </div>
 
 
@@ -531,396 +551,379 @@ window.Quarto = {
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
 \]</span></p>
 </div>
-<section id="general-form" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="general-form"><span class="header-section-number">8.1</span> General form</h2>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.1</strong></span> <span class="math display">\[
-y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k+\varepsilon
-\]</span> where</p>
-<ul>
-<li><span class="math inline">\(y\)</span> is the dependent variable (response variable)</li>
-<li><span class="math inline">\(x_1,\ldots,x_k\)</span> are the independent variable</li>
-<li><span class="math inline">\(E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k\)</span> is the deterministic portion of the model</li>
-<li><span class="math inline">\(\beta_i\)</span> determines the contribution of the independent variable <span class="math inline">\(x_i\)</span></li>
-</ul>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A <strong>main effect</strong> refers only to the original predictor before interactions or transformations. A <strong>variable</strong> is any quantity we use to help explain or predict the response.</p>
-<ul>
-<li>If <span class="math inline">\(x_2=x_1^2\)</span>, <span class="math inline">\(x_2\)</span> is called a <strong>higher-order term</strong>.</li>
-<li>If <span class="math inline">\(x_3=x_1x_2\)</span>, <span class="math inline">\(x_3\)</span> is called a <strong>interaction term</strong>.</li>
-<li>If <span class="math inline">\(x_4=1\)</span> in some cases and <span class="math inline">\(0\)</span> in some other cases, <span class="math inline">\(x_4\)</span> is called a <strong>coded variable</strong>. This is an example of categorical variables in regression.</li>
-</ul>
+<p>ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.</p>
+<p>In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.</p>
+<p>More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.</p>
+<p>ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector <span class="math inline">\(y\)</span> onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:</p>
+<p><span class="math display">\[
+\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
+\]</span> This identity is the mathematical foundation of all ANOVA tables.</p>
+<section id="anova-table-for-linear-regression" class="level3" data-number="9.0.1">
+<h3 data-number="9.0.1" class="anchored" data-anchor-id="anova-table-for-linear-regression"><span class="header-section-number">9.0.1</span> ANOVA table for linear regression</h3>
+<p>This is the anova table introduced in the previous lectures. The main purpose is to show to decomposition and compute the F-statistic as well as the corresponding p-value.</p>
+<p><span class="math display">\[
+F=\frac{MSR}{MSE}=\frac{\text{variance explained per parameter}}{\text{variance unexplained per observation}}.
+\]</span></p>
+</section>
+<section id="type-i-anova-table" class="level3" data-number="9.0.2">
+<h3 data-number="9.0.2" class="anchored" data-anchor-id="type-i-anova-table"><span class="header-section-number">9.0.2</span> Type I ANOVA table</h3>
+<p>Type I ANOVA Table (Sequential Sum of Squares) decomposes the total variation in the response by adding predictors to the model sequentially, one at a time, in the order they appear in the model formula.</p>
+<p>Suppose we fit the linear model <span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+\]</span></p>
+<p>The Type I ANOVA table reports <span class="math display">\[
+SS(x_j\mid x_1,\ldots, x_{j-1})=SSE(\text{model with }x_1,\ldots,x_j-1)-SSE(\text{model with }x_1,\ldots,x_j).
+\]</span></p>
+<p>That is, each sum of squares measures the reduction in unexplained variability obtained by adding <span class="math inline">\(x_j\)</span> to a model that contains the preceding predictors.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 75%">
+<col style="width: 14%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 17%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Model</th>
-<th>Name of the Model</th>
+<th>Source</th>
+<th>Degrees of Freedom</th>
+<th>Sum of Squares</th>
+<th>Mean Square</th>
+<th>F</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \varepsilon\)</span></td>
-<td>• Simple linear regression <br> • Simple first-order model with one predictor</td>
+<td><span class="math inline">\(x_1\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(SS(x_1)\)</span></td>
+<td><span class="math inline">\(MS(x_1)\)</span></td>
+<td><span class="math inline">\(F_1\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \varepsilon\)</span></td>
-<td>• Multiple linear regression with three predictors <br> • First-order model with three predictors</td>
+<td><span class="math inline">\(x_2\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(SS(x_2 \mid x_1)\)</span></td>
+<td><span class="math inline">\(MS(x_2)\)</span></td>
+<td><span class="math inline">\(F_2\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon\)</span></td>
-<td>• Interaction model with two predictors</td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_1^2 + \varepsilon\)</span></td>
-<td>• Second-order model with one predictor</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_4 + \beta_5 x_5 + \varepsilon\)</span></td>
-<td>• First-order model with five predictors</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1^2 + \beta_4 x_2^2 + \beta_5 x_1 x_2 + \varepsilon\)</span></td>
-<td>• Second-order model with two predictors</td>
+<td>Residuals</td>
+<td><span class="math inline">\(n-p-1\)</span></td>
+<td>SSE</td>
+<td>MSE</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<p>The steps are very similar to simple linear regression.</p>
-<ol type="1">
-<li>Collect data.</li>
-<li>Hypothesize the form of the model.</li>
-<li>Estimate the unknown parameters <span class="math inline">\(\beta_0,\ldots,\beta_k\)</span>.</li>
-<li>Specify the distribution of <span class="math inline">\(\varepsilon\)</span> and estimate its <span class="math inline">\(\sigma^2\)</span>.</li>
-<li>Evaluate the utility of the model, like checking p-values and <span class="math inline">\(R^2\)</span>.</li>
-<li>Verify the model by checking the assumptions on <span class="math inline">\(\varepsilon\)</span>.</li>
-<li>Use the model. Analyze the prediction and make inferences.</li>
-</ol>
+<p>Each F-statistic tests</p>
 <p><span class="math display">\[
-y=\underbrace{\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k}_{\text{Deterministic portion of model}}+\underbrace{\varepsilon}_{\text{Random error}}.
+H_0: \beta_j=0\quad \text{ given that $x_1,\ldots,x_{j-1}$ are already in the model.}
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>The corresponding F-statistic is computed by <span class="math display">\[
+F_j=\frac{MS(x_j)}{MSE}.
+\]</span></p>
+<p>In summary, the Type I ANOVA table answers the question:</p>
+<blockquote class="blockquote">
+<p>How much additional variation does this variable explain when added at this point in the model?</p>
+</blockquote>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Assumptions about <span class="math inline">\(\varepsilon\)</span>
+Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>For any given <span class="math inline">\(x_i\)</span>, <span class="math inline">\(\varepsilon\sim \distnormal(0,\sigma^2)\)</span>.</li>
-<li>The random errors are independent.</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="a-first-order-model-with-quantitative-predictors" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="a-first-order-model-with-quantitative-predictors"><span class="header-section-number">8.2</span> A first-order model with quantitative predictors</h2>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.2 (A First-Order Model in <span class="math inline">\(k\)</span> Quantitative Independent Variables)</strong></span> <span class="math display">\[
-E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_kx_k
-\]</span> where <span class="math inline">\(x_1,\ldots,x_k\)</span> are <span class="math inline">\(k\)</span> quantitative independent variables.</p>
-</div>
-<p>Here <em>independent</em> means that these variables are not functions of other variables.</p>
-<p>After inputing the data, we have the following equations.</p>
-<p><span class="math display">\[
-y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2}+\ldots+\beta_kx_{ik}+\epsilon_i,\quad i=1,\ldots,n.
-\]</span></p>
-<p>Write them in term of matrices:</p>
-<p><span class="math display">\[
-\mathbf{y}=\mqty[y_1\\\ldots\\y_n],\quad \mathbf{X}=\mqty[1&amp;x_{11}&amp;x_{12}&amp;\ldots&amp;x_{1k}\\\ldots&amp;&amp;&amp;&amp;\\1&amp;x_{n1}&amp;x_{n2}&amp;\ldots&amp;x_{nk}],\quad \boldsymbol{\beta}=\mqty[\beta_0\\\beta_1\\\ldots\\\beta_k],\quad \boldsymbol{\epsilon}=\mqty[\epsilon_1\\\ldots\\\epsilon_n].
-\]</span></p>
-<p>Here <span class="math inline">\(X\)</span> is called a <strong>design matrix</strong>. It is simply the matrix that contains all predictor information:</p>
-<ul>
-<li>Rows: obervations</li>
-<li>Columns: variables (including intercept column of <span class="math inline">\(1\)</span>’s’)</li>
-</ul>
-<p>Then the model can be expressed as <span class="math display">\[
-\mathbf{y}=\mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}
-\]</span></p>
-<p>The OLS estimator is used to minimize the square sum of residuals <span class="math display">\[
-(\mathbf y-\mathbf X\boldsymbol{\beta})^T(\mathbf y-\mathbf X\boldsymbol{\beta}).
-\]</span></p>
-<p>Therefore <span class="math display">\[
-\boldsymbol{\hat{\beta}}=\argmin_{\beta}(\mathbf y-\mathbf X\boldsymbol{\beta})^T(\mathbf y-\mathbf X\boldsymbol{\beta}).
-\]</span></p>
-<div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 8.1 (The OLS estimator)</strong></span> The following estimator is an unbiased estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span>: <span class="math display">\[
-\boldsymbol{\hat{\beta}}=\mathbf{(X^T X)^{-1}X^T y}
-\]</span> In addition, <span class="math display">\[
-\operatorname{Var}(\boldsymbol{\hat{\beta}})=\mathbf{(X^T X)}^{-1}\sigma^2.
-\]</span></p>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>SLR case
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>When <span class="math inline">\(k=1\)</span>, we have</p>
-<p><span class="math display">\[
-\mathbf X=\mqty[1&amp;1&amp;\ldots&amp;1\\x_1&amp;x_2&amp;\ldots&amp;x_n],\quad \mathbf y=\mqty[y_1\\\ldots\\y_n].
-\]</span> Then</p>
-<p><span class="math display">\[
-\begin{split}
-\mathbf{X^T X}&amp;=\mqty[1&amp;1&amp;\ldots&amp;1\\x_1&amp;x_2&amp;\ldots&amp;x_n]\mqty[1&amp;x_1\\1&amp;x_2\\\ldots&amp;\\1&amp;x_n]=\mqty[n&amp;n\bar{x}\\n\bar x&amp;\sum x_i^2],\\
-\mathbf{X^T y}&amp;=\mqty[1&amp;1&amp;\ldots&amp;1\\x_1&amp;x_2&amp;\ldots&amp;x_n]\mqty[y_1\\\ldots\\y_n]=\mqty[n\bar y\\\sum x_iy_i],\\
-\mathbf{(X^T X)^{-1}X^T y}&amp;=\mqty[n&amp;n\bar{x}\\n\bar x&amp;\sum x_i^2]^{-1}\mqty[n\bar y\\\sum x_iy_i]\\
-&amp;=\frac{1}{n(\sum x_i^2)-n^2\bar x^2}\mqty[\sum x_i^2&amp;-n\bar x\\-n\bar x&amp;n]\mqty[n\bar y\\\sum x_iy_i]\\
-&amp;=\frac{1}{n(\sum x_i^2)-n^2\bar x^2}\mqty[n(\sum x_i^2)\bar y-n\bar x(\sum x_iy_i)\\n(\sum x_iy_i)-n^2\bar x\bar y]\\
-&amp;=\frac{1}{(\sum x_i^2)-n\bar x^2}\mqty[(\sum x_i^2)\bar y-\bar x(\sum x_iy_i)\\(\sum x_iy_i)-n\bar x\bar y]\\
-&amp;=\frac{1}{\sum x_i^2-n\bar x^2}\mqty[(\sum x_i^2-n\bar x^2)\bar y+n\bar x^2\bar y-\bar x(\sum x_iy_i)\\\sum x_iy_i-n\bar x\bar y]\\
-&amp;=\frac{1}{\sum x_i^2-n\bar x^2}\mqty[(\sum x_i^2-n\bar x^2)\bar y-\bar x(\sum x_iy_i-n\bar x\bar y)\\\sum x_iy_i-n\bar x\bar y].
-\end{split}
-\]</span></p>
-<p>Note that</p>
-<p><span class="math display">\[
-\begin{split}
-S_{xx}&amp;=\sum (x_i-\bar x)^2=\sum(x_i^2-2x_i\bar x+\bar x^2)=\sum x_i^2-2(\sum x_i)\bar x+n\bar x^2=\sum x_i^2-n\bar x^2,\\
-% S_{yy}&amp;=\sum (y_i-\bar y)^2=\sum(y_i^2-2y_i\bar y+\bar y^2)=\sum y_i^2-2(\sum y_i)\bar y+n\bar y^2=\sum y_i^2-n\bar y^2,\\
-S_{xy}&amp;=\sum (x_i-\bar x)(y_i-\bar y)=\sum(x_iy_i-x_i\bar y-y_i\bar x+\bar x\bar y)\\
-&amp;=\sum x_iy_i-(\sum x_i)\bar y-(\sum y_i)\bar x+n\bar x\bar y=\sum x_iy_i-n\bar x\bar y,
-\end{split}
-\]</span></p>
-<p>We have</p>
-<p><span class="math display">\[
-\begin{split}
-\mathbf{(X^T X)^{-1}X^T y}&amp;=\frac{1}{\sum x_i^2-n\bar x^2}\mqty[(\sum x_i^2-n\bar x^2)\bar y-\bar x(\sum x_iy_i-n\bar x\bar y)\\\sum x_iy_i-n\bar x\bar y]\\
-&amp;=\frac{1}{S_{xx}}\mqty[S_{xx}(\bar y-\bar x(S_{xy}))\\S_{xy}]=\mqty[\bar y-\bar x(S_{xy}/S_{xx})\\S_{xy}/S_{xx}].
-\end{split}
-\]</span></p>
-<p>Therefore in the case of <span class="math inline">\(k=1\)</span>, <span class="math inline">\(\hat{\beta}_1=S_{xy}/S_{xx}\)</span> and <span class="math inline">\(\hat{\beta}_0=\bar y-\beta_1\bar x\)</span>.</p>
-<p>In addition, the variance of <span class="math inline">\(\hat{\beta_1}\)</span> is the (2,2)-entry of the variance-covariance matrix <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>. Since</p>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{Var}(\boldsymbol{\hat{\beta}})=\mathbf{(X^T X)}^{-1}\sigma^2=\frac{1}{n(\sum x_i^2)-n^2\bar x^2}\mqty[\sum x_i^2&amp;-n\bar x\\-n\bar x&amp;n]\sigma^2,
-\end{split}
-\]</span> the (2,2)-entry is <span class="math display">\[
-\begin{split}
-\operatorname{Var}(\hat{\beta_1})&amp;=\frac{n}{n(\sum x_i^2-n\bar x^2)}\sigma^2=\frac{\sigma^2}{S_{xx}}.
-\end{split}
-\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="colinearity" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="colinearity"><span class="header-section-number">8.3</span> Colinearity</h2>
-<p>In the above estimation, the independence of variables doesn’t affect the unbiasedness of the OLS estimators.</p>
-<div id="lem-vif" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 8.1</strong></span> <span class="math display">\[
-\operatorname{Var}(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
-\]</span></p>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-<p>Let the model be <span class="math inline">\(y=X\beta+\varepsilon\)</span>. Let the j-th predictor column be <span class="math inline">\(x_j\)</span> and <span class="math inline">\(X_{-j}\)</span> be the matrix of all other predictor columns. Rewrite the design matrix as <span class="math display">\[
-X=\mqty[x_j&amp;X_{-j}].
-\]</span></p>
-<p>Then <span class="math display">\[
-X^TX=\mqty[x_j^Tx_j&amp;x_j^TX_{-j}\\X^T_{-j}x_j&amp;X^T_{-j}X_{-j}].
-\]</span></p>
-<p>Consider <span class="math display">\[
-\mqty[A&amp;B\\C&amp;D]=\underbrace{\mqty[I&amp;BD^{-1}\\0&amp;I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&amp;0\\C&amp;D]}_{(II)}.
-\]</span> Let <span class="math inline">\(A-BD^{-1}C=S\)</span>. Then <span class="math display">\[
-(I)^{-1}=\mqty[I&amp;-BD^{-1}\\o&amp;I],\quad (II)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}],
-\]</span> so <span class="math display">\[
-\mqty[A&amp;B\\C&amp;D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}]\mqty[I&amp;-BD^{-1}\\0&amp;I]=\mqty[S^{-1}&amp;-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&amp;D^{-1}(CS^{-1}BD^{-1}+I)]
-\]</span> Therefore the left upper corner of the inverse matrix is <span class="math inline">\(S^{-1}=(A-BD^{-1}C)^{-1}\)</span>. Then <span class="math display">\[
-(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
-\]</span> Let <span class="math inline">\(P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}\)</span>. We have <span class="math display">\[
-\begin{split}
-\operatorname{Var}(\hat\beta_j)&amp;=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
-&amp;=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
-\end{split}
-\]</span></p>
-<p>On the other side, use <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon\)</span>. Then <span class="math inline">\(x_j^T(I-P_j)x_j=SSE_j\)</span>. Since <span class="math inline">\(1-\frac{SSE_j}{SST_j}=R_j^2\)</span>, we have <span class="math display">\[
-x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
-\]</span> So <span class="math display">\[
-\begin{split}
-\operatorname{Var}(\hat\beta_j)&amp;=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
-\end{split}
-\]</span></p>
-</details>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.3 (The variance inflation factor)</strong></span> The variance inflation factor for the ith coefficient is <span class="math display">\[
-VIF_j=\frac{1}{1-R^2_j}
-\]</span> where <span class="math inline">\(R_j^2\)</span> is the <span class="math inline">\(R^2\)</span> of regression produced by regressing <span class="math inline">\(x_j\)</span> against other <span class="math inline">\(x_i\)</span>’s.</p>
-</div>
-<p>So we would like to use other variables to represent <span class="math inline">\(x_j\)</span>. From the proof in <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, we know that <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon_j\)</span>. If this fits well, <span class="math inline">\(R_j^2\)</span> is close to 1. If not <span class="math inline">\(R^2_j\)</span> is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be <span class="math inline">\(\infty\)</span>. If not, its VIF is supposed to be <span class="math inline">\(1\)</span>.</p>
-<p>Now by <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, when <span class="math inline">\(R_j^2\)</span> is large, <span class="math inline">\(VIF_j\)</span> will be large. In other words, if one variable depends on other variables, which means that <span class="math inline">\(R_j^2\)</span> is high, the variance of <span class="math inline">\(\hat\beta_j\)</span> is also very high. Then the standard error of <span class="math inline">\(\hat\beta_j\)</span> is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.</p>
-<p>Usually if VIF is more than 5 or 10, multicollinearity may be a problem.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Also the interpretation of coefficients breaks. The basic interpretation of <span class="math inline">\(\beta_j\)</span> is that “holding others fixed, a 1-uint increase in <span class="math inline">\(x_j\)</span> will change <span class="math inline">\(y\)</span> by <span class="math inline">\(\beta_j\)</span>”. When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In MLR, the multicolinearity between independent variables doesn’t affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate <span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.</p>
-<ul>
-<li>Multicollinearity inflates the variance of the estimated coefficients.</li>
-<li>Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.</li>
-<li>The model might struggle to separate the effects of correlated predictors.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="the-analysis-of-variance" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="the-analysis-of-variance"><span class="header-section-number">8.4</span> The analysis of variance</h2>
-<ol type="1">
-<li><span class="math inline">\(SSE=\sum (y_i-\hat{y}_i)^2\)</span>.</li>
-<li><span class="math inline">\(s^2=MSE=\frac{SSE}{n-(k+1)}\)</span>.</li>
-</ol>
-<p>Hypothesis test:</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.4 (The Global <span class="math inline">\(F\)</span>-Test)</strong></span> &nbsp;</p>
-<ul>
-<li><span class="math inline">\(H_0\)</span>: all <span class="math inline">\(\beta_i\)</span>’s are <span class="math inline">\(0\)</span>.</li>
-<li><span class="math inline">\(H_a\)</span>: at least one <span class="math inline">\(\beta_i\)</span> is not <span class="math inline">\(0\)</span>.</li>
-<li><span class="math inline">\(F=\frac{MSR}{MSE}=\frac{(SST-SSE)/k}{SSE/[n-(k+1)]}\)</span>.</li>
-<li><span class="math inline">\(p=\Pr(F&gt;F_{\alpha})\)</span>.</li>
-</ul>
-<p>Note that since <span class="math inline">\(F\)</span>-statistics is always positive, we only need to compute one tail of it.</p>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.5 (The individual <span class="math inline">\(t\)</span>-Test for variable <span class="math inline">\(\beta_i\)</span>)</strong></span> &nbsp;</p>
-<ul>
-<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_i=0\)</span>.</li>
-<li><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\beta_i\neq 0\)</span>.</li>
-<li><span class="math inline">\(t=\frac{\hat{\beta}_i}{s_{\hat{\beta}_i}}\)</span>.</li>
-<li><span class="math inline">\(p=\Pr(\abs{t}&gt;t_{\alpha})\)</span>.</li>
-</ul>
-<p>Note that these <span class="math inline">\(\hat{\beta}_i\)</span> and <span class="math inline">\(s_{\hat{\beta}_i}\)</span> directly come from the OLS estimators.</p>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>You have to pass F-test to proceed. If not, stop and modify the model.</li>
-<li>Try to minimize the number of t-tests. Too many t-tests leads to a high overall Type I error rate.</li>
-<li>When a parameter is not significant, there are some possibilities:
-<ul>
-<li><span class="math inline">\(y\)</span> and <span class="math inline">\(x_i\)</span> don’t have relations.</li>
-<li>They have a linear relation, but Type II error occurred.</li>
-<li>They have non-linear relations.</li>
-</ul></li>
+<li>Type I ANOVA table depends on the order of variables.</li>
+<li>Each row corresponds to a nested-model comparison.</li>
+<li>Equivalent to <code>anova(model1, model2)</code> for successive models.</li>
+<li>Matches classical ANOVA in balanced designs.</li>
 </ol>
 </div>
 </div>
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 8.1 (a simple R code example)</strong></span> &nbsp;</p>
-<details>
-<summary>
-<strong>Click to expand.</strong>
-</summary>
-<p>In base R, we need the following command to perform manual operations:</p>
-<ul>
-<li><code>as.matrix</code> to convert a <code>data.frame</code> into a <code>matrix</code>.</li>
-<li><code>%*%</code> is for matrix multiplication.</li>
-<li><code>t</code> is the transpose of a matrix.</li>
-<li><code>solve</code> is used to compute the inverse of a matrix.</li>
-<li><code>cbind</code> is to combine two matrices horizontally. (<code>rbind</code> is to combine matrices vertically, but we don’t need it here.)</li>
-</ul>
-<p>Then once you have two dataframes <code>dfX</code> and <code>dfY</code>, the following code can be used to compute the OLS estimators.</p>
+<p><span class="theorem-title"><strong>Example 9.1</strong></span> We first generate a dataset, with three correlated predictors <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span>. The correlation structure is intentional, so that the sequential nature of Type I ANOVA is visible.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dfX)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, X)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dfY)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fl">0.6</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="sc">+</span><span class="dv">3</span><span class="sc">*</span>x3<span class="sc">+</span><span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>To compute the variance, we should first estimate <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>Now fit the model and show the Type I ANOVA table. For Type I ANOVA table, we could use the build-in R function <code>anova()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">sum</span>((y<span class="sc">-</span>yhat)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(X)[<span class="dv">1</span>]</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">dim</span>(X)[<span class="dv">2</span>] <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> SSE<span class="sc">/</span>(n<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>var_beta <span class="ot">&lt;-</span> s2 <span class="sc">*</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model123 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2<span class="sc">+</span>x3)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model123)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         1 1336.61 1336.61 1333.29 &lt; 2.2e-16 ***</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x2         1  275.19  275.19  274.51 &lt; 2.2e-16 ***</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x3         1  115.49  115.49  115.20 &lt; 2.2e-16 ***</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals 76   76.19    1.00                      </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We could use <code>diag</code> to extract the diagonal to get variance and ignore all the covariance terms. Then apply <code>sqrt</code> to get the standard errors.</p>
+<p>Because Type I ANOVA is sequential, each row corresponds to a nested-model F test.</p>
+<ol type="1">
+<li><span class="math inline">\(x_1\)</span>: Tests adding <span class="math inline">\(x_1\)</span> to the intercept-only model. Since the p-value is small, we conclude that <span class="math inline">\(x_1\)</span> explains a significant amount of variation in <span class="math inline">\(y\)</span>.</li>
+<li><span class="math inline">\(x_2\)</span>: Tests adding <span class="math inline">\(x_2\)</span> to a model that already contains <span class="math inline">\(x_1\)</span>. Since the p-value is small, we conclude that <span class="math inline">\(x_2\)</span> contributes information beyond <span class="math inline">\(x_1\)</span>.</li>
+<li><span class="math inline">\(x_3\)</span>: Tests adding <span class="math inline">\(x_3\)</span> to the model with <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. Since the p-value is small, we conclude that <span class="math inline">\(x_3\)</span> explains additional variation not already captured by <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</li>
+</ol>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.2</strong></span> We now illustrate an example that the order of variables matters. We generate a dataset with two highly correlated variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, where the response <span class="math inline">\(y\)</span> is constructed to depend only on <span class="math inline">\(x_1\)</span>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>se_beta <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(var_beta))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.2</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>From here, we could compute the corresponding <span class="math inline">\(t\)</span>-tests and <span class="math inline">\(F\)</span>-test, by the formula <span class="math inline">\(t=\frac{\hat{\beta}}{s_{\hat{\beta}}}\)</span> and <span class="math inline">\(F=\frac{MSR}{MSE}\)</span>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> beta <span class="sc">/</span> se_beta</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>MSR <span class="ot">&lt;-</span> <span class="fu">sum</span>((y_hat<span class="sc">-</span><span class="fu">mean</span>(y))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> k</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> s2</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>F <span class="ot">&lt;-</span> MSR<span class="sc">/</span>MSE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model12)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##           Df Sum Sq Mean Sq  F value Pr(&gt;F)    </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         1 677.37  677.37 748.5025 &lt;2e-16 ***</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x2         1   0.05    0.05   0.0579 0.8104    </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals 97  87.78    0.90                    </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>After we get the statistics, we could conduct the corresponding test by checking the p-values.</p>
+<p>When <span class="math inline">\(x_1\)</span> is added first, it explains most of the variation in <span class="math inline">\(y\)</span>. Because <span class="math inline">\(x_2\)</span> is largely redundant with <span class="math inline">\(x_1\)</span>, adding <span class="math inline">\(x_2\)</span> afterward does not produce a significant additional reduction in the residual sum of squares. As a result, <span class="math inline">\(x_1\)</span> is significant, while <span class="math inline">\(x_2\)</span> is not.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p_t <span class="ot">&lt;-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t), n<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t), n<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>)) </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>p_f <span class="ot">&lt;-</span> <span class="fu">pf</span>(F, k, n<span class="sc">-</span>(k<span class="sc">+</span><span class="dv">1</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model21 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x2<span class="sc">+</span>x1)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model21)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="do">##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="do">## x2         1 650.19  650.19 718.462 &lt; 2.2e-16 ***</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         1  27.24   27.24  30.098 3.272e-07 ***</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals 97  87.78    0.90                      </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</details>
+<p>When <span class="math inline">\(x_2\)</span> is added first, it captures much of the variation in <span class="math inline">\(y\)</span> due to its strong correlation with <span class="math inline">\(x_1\)</span>, and therefore appears significant. However, because <span class="math inline">\(x_2\)</span> does not fully explain <span class="math inline">\(x_1\)</span>, there remains variation in <span class="math inline">\(y\)</span> that is uniquely attributable to <span class="math inline">\(x_1\)</span>. Consequently, <span class="math inline">\(x_1\)</span> is still significant even after <span class="math inline">\(x_2\)</span> has been included in the model.</p>
 </div>
 </section>
-<section id="evluation" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="evluation"><span class="header-section-number">8.5</span> Evluation</h2>
-<section id="r2" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="r2"><span class="header-section-number">8.5.1</span> <span class="math inline">\(R^2\)</span></h3>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.6 (The multiple coefficient of determination)</strong></span> <span class="math display">\[
-R^2=1-\frac{SSE}{SST}.
-\]</span> <span class="math inline">\(R^2\)</span> represents the fraction of the sample variation that is explained by the model.</p>
-</div>
+<section id="nested-anova-table" class="level3" data-number="9.0.3">
+<h3 data-number="9.0.3" class="anchored" data-anchor-id="nested-anova-table"><span class="header-section-number">9.0.3</span> Nested ANOVA table</h3>
 </section>
-<section id="r_a2" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="r_a2"><span class="header-section-number">8.5.2</span> <span class="math inline">\(R_a^2\)</span></h3>
-<p><span class="math inline">\(R^2\)</span> is a “hard” measurement for the model performance. However since adding more predictors always increases <span class="math inline">\(R^2\)</span> even if they are useless, we need a way to adjust for the number of predictors. This is the adjusted <span class="math inline">\(R^2\)</span>.</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.7 (The adjusted multiple coefficient of determination)</strong></span> <span class="math display">\[
-R^2_a=1-\qty[\frac{(n-1)}{n-(k+1)}]\qty(\frac{SSE}{SST})=1-\qty[\frac{(n-1)}{n-(k+1)}]\qty(1-R^2).
+<section id="type-ii-anova-table" class="level3" data-number="9.0.4">
+<h3 data-number="9.0.4" class="anchored" data-anchor-id="type-ii-anova-table"><span class="header-section-number">9.0.4</span> Type II ANOVA table</h3>
+<p>A Type II ANOVA table (Marginal Sum of Squares) tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested.</p>
+<p>Suppose we fit the linear model <span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+\]</span> For each predictor <span class="math inline">\(x_j\)</span>, the Type II sum of squares is defined as <span class="math display">\[
+SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full model}).
+\]</span> That is, it measures the unique contribution of <span class="math inline">\(x_j\)</span> after accounting for all other predictors.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 19%">
+<col style="width: 29%">
+<col style="width: 27%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Degrees of Freedom</th>
+<th>Sum of Squares</th>
+<th>Mean Square</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x_1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(SS^{(II)}(x_1)\)</span></td>
+<td><span class="math inline">\(MS(x_1)\)</span></td>
+<td><span class="math inline">\(F_1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_2\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(SS^{(II)}(x_2)\)</span></td>
+<td><span class="math inline">\(MS(x_2)\)</span></td>
+<td><span class="math inline">\(F_2\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td>Residuals</td>
+<td><span class="math inline">\(n - p - 1\)</span></td>
+<td><span class="math inline">\(\mathrm{SSE}\)</span></td>
+<td><span class="math inline">\(\mathrm{MSE}\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Each F-statistic tests <span class="math display">\[
+H_0: \beta_j=0\quad\text{ adjusting for all other predictors.}
 \]</span></p>
+<p>The corresponding F-statistic <span class="math display">\[
+F_j^{(II)}=\frac{MS^{(II)(x_j)}}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Reordering predictors does not change the table.</li>
+<li>Each effect is tested conditional on all other main effects.</li>
+<li>If interactions are present, Type II does not test main effects in their presence.</li>
+<li>Each row is a nested-model F test removing one predictor at a time.</li>
+</ol>
+</div>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.3</strong></span> We first generate a dataset with two correlated predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.6</span>) </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For Type II ANOVA table, we could use the function <code>Anova</code> from <code>car</code> library.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: carData</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model, <span class="at">type=</span><span class="dv">2</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">##           Sum Sq Df F value    Pr(&gt;F)    </span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x1        71.255  1  77.566 2.823e-13 ***</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        37.255  1  40.554 1.271e-08 ***</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals 70.735 77                      </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><span class="math inline">\(x_1\)</span>: Compares the full model <span class="math inline">\(y \sim x_1 + x_2\)</span> to the reduced model <span class="math inline">\(y \sim x_2\)</span> (i.e., the model with <span class="math inline">\(x_1\)</span> removed). A small p-value implies that <span class="math inline">\(x_1\)</span> explains a significant amount of variation in <span class="math inline">\(y\)</span> beyond what is explained by <span class="math inline">\(x_2\)</span>.</li>
+<li><span class="math inline">\(x_2\)</span>: Compares the full model <span class="math inline">\(y \sim x_1 + x_2\)</span> to the reduced model <span class="math inline">\(y \sim x_1\)</span> (i.e., the model with <span class="math inline">\(x_2\)</span> removed). A small p-value implies that <span class="math inline">\(x_2\)</span> explains a significant amount of variation in <span class="math inline">\(y\)</span> beyond what is explained by <span class="math inline">\(x_1\)</span>.</li>
+</ul>
+<p>Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> does not change the results.</p>
+</div>
+</section>
+<section id="type-iii-anova-table" class="level3" data-number="9.0.5">
+<h3 data-number="9.0.5" class="anchored" data-anchor-id="type-iii-anova-table"><span class="header-section-number">9.0.5</span> Type III ANOVA Table</h3>
+<p>A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) decomposes the explained variation in the response by testing each coefficient in the full model, while holding all other terms fixed. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.</p>
+<p>Suppose we fit the linear model <span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+\]</span></p>
+<p>The Type III ANOVA table reports, for each predictor <span class="math inline">\(x_j\)</span>,</p>
+<p><span class="math display">\[
+SS^{(III)}(x_j)=SSE(\text{full model with }\beta_j=0) - SSE(\text{full model}).
+\]</span> That is, each sum of squares measures the increase in unexplained variability that results from constraining the coefficient <span class="math inline">\(\beta_j\)</span> to be zero while keeping all other predictors in the model.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 28%">
+<col style="width: 26%">
+<col style="width: 17%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Degrees of Freedom</th>
+<th>Sum of Squares</th>
+<th>Mean Square</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x_1\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(SS^{(III)}(x_1)\)</span></td>
+<td><span class="math inline">\(MS(x_1)\)</span></td>
+<td><span class="math inline">\(F_1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_2\)</span></td>
+<td>1</td>
+<td><span class="math inline">\(SS^{(III)}(x_2)\)</span></td>
+<td><span class="math inline">\(MS(x_2)\)</span></td>
+<td><span class="math inline">\(F_2\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td>Residuals</td>
+<td><span class="math inline">\(n-p-1\)</span></td>
+<td>SSE</td>
+<td>MSE</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Each F-statistic tests <span class="math display">\[
+H_0: \beta_j=0 \quad \text{ given that all other predictors are in the model}.
+\]</span></p>
+<p>The corresponding F-statistic is computed by <span class="math display">\[
+F_j=\frac{MS^{(III)}(x_j)}{MSE}.
+\]</span> In the case of a single degree of freedom per predictor, this test is equivalent to the square of the <span class="math inline">\(t\)</span>-test for the coefficient <span class="math inline">\(\beta_j\)</span>.</p>
+<p>In summary, the Type III ANOVA table answers the question:</p>
+<blockquote class="blockquote">
+<p>Is this coefficient nonzero in the full model, holding all other predictors fixed?</p>
+</blockquote>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Type III vs t-tests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In linear regression, for any predictor with one degree of freedom, <span class="math display">\[
+F^{(III)}_j=t_j^2.
+\]</span> Therefore the Type III F-test and the coefficient t-test test exactly the same null hypothesis.</p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -928,20 +931,31 @@ R^2_a=1-\qty[\frac{(n-1)}{n-(k+1)}]\qty(\frac{SSE}{SST})=1-\qty[\frac{(n-1)}{n-(
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Note</span>Type II vs Type III
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ol type="1">
-<li><span class="math inline">\(R_a^2\leq R^2\)</span>.</li>
-<li>For poor-fitting models <span class="math inline">\(R_a^2\)</span> can be negative.</li>
-<li>The practical interpretation for <span class="math inline">\(R_a^2\)</span> is the fraction of the variance explained by the model adjusted for the sample size and the number of parameters.</li>
-</ol>
+<p>Type II ANOVA tests variables (main effects), whereas Type III ANOVA tests individual coefficients. Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types are equivalent and yield identical test statistics and p-values.</p>
+<p>When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA does not test main effects involved in interactions, because such tests lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds to test the corresponding coefficients anyway, regardless of whether the resulting hypothesis has a meaningful interpretation.</p>
 </div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> x1<span class="sc">*</span>x2<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>x1<span class="sc">+</span><span class="dv">3</span><span class="sc">*</span>x2<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">80</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">*</span>x2)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type=</span><span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">##            Sum Sq Df F value    Pr(&gt;F)    </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         74.314  1  71.918 1.322e-12 ***</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        270.853  1 262.121 &lt; 2.2e-16 ***</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## x1:x2      84.601  1  81.874 1.078e-13 ***</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  78.532 76                      </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1360,13 +1374,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/2/project1.html" class="pagination-link" aria-label="Example: SLR phase">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></span>
+      <a href="../../contents/3/mlr.html" class="pagination-link" aria-label="Multiple Linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/3/categorical.html" class="pagination-link" aria-label="Analysis of predictions">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analysis of predictions</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
