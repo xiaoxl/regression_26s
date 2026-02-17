@@ -65,7 +65,9 @@ book:
     - part: "Multiple Linear regression"
       chapters:
       - contents/3/mlr.qmd
-      - contents/3/anova.qmd
+      # - contents/3/anova.qmd
+      # - contents/3/categorical.qmd
+      # - contents/3/rcode2.qmd
       # - contents/3/project2.qmd
     # - part: "Building models"
     #   chapters:

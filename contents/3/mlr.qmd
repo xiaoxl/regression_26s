@@ -21,11 +21,15 @@ where
 
 
 ::: {.callout-note}
-Note that there might be relations among $x_i$'s.
+A **main effect** refers only to the original predictor before interactions or transformations. A **variable** is any quantity we use to help explain or predict the response. 
 
 - If $x_2=x_1^2$, $x_2$ is called a **higher-order term**.
 - If $x_3=x_1x_2$, $x_3$ is called a **interaction term**.
 - If $x_4=1$ in some cases and $0$ in some other cases, $x_4$ is called a **coded variable**. This is an example of categorical variables in regression.
+
+
+
+
 
 | Model | Name of the Model |
 |------|------------------|
@@ -91,6 +95,11 @@ Write them in term of matrices:
 $$
 \mathbf{y}=\mqty[y_1\\\ldots\\y_n],\quad \mathbf{X}=\mqty[1&x_{11}&x_{12}&\ldots&x_{1k}\\\ldots&&&&\\1&x_{n1}&x_{n2}&\ldots&x_{nk}],\quad \boldsymbol{\beta}=\mqty[\beta_0\\\beta_1\\\ldots\\\beta_k],\quad \boldsymbol{\epsilon}=\mqty[\epsilon_1\\\ldots\\\epsilon_n].
 $$
+
+Here $X$ is called a **design matrix**. It is simply the matrix that contains all predictor information:
+
+- Rows: obervations
+- Columns: variables (including intercept column of $1$'s')
 
 Then the model can be expressed as 
 $$
@@ -183,21 +192,13 @@ $$
 
 
 
-::: {.callout-caution}
-In MLR, the multicolinearity between independent variables doesn't affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate $\boldsymbol{\hat{\beta}}$ as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.
 
-- Multicollinearity inflates the variance of the estimated coefficients.
-- Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
-- The model might struggle to separate the effects of correlated predictors.
-:::
-
-
-### Colinearity
+## Colinearity
 In the above estimation, the independence of variables doesn't affect the unbiasedness of the OLS estimators.
 
 
 
-::: {#lem-}
+::: {#lem-vif}
 $$
 \Var(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
 $$
@@ -258,7 +259,51 @@ $$
 
 :::
 
-When $R_j^2$ is bigger, the variance will be amplified. In other words, if one variable depends on other variables, which means that $R_j^2$ is high, the variance of $\hat\beta_j$ is also very high. This lemma shows that when there are (almost) multiconlinear variables, the varaiance of the corresponding estimator will be extremely large.
+
+
+::: {#def-}
+## The variance inflation factor
+The variance inflation factor for the ith coefficient is 
+$$
+VIF_j=\frac{1}{1-R^2_j}
+$$
+where $R_j^2$ is the $R^2$ of regression produced by regressing $x_j$ against other $x_i$'s. 
+:::
+
+So we would like to use other variables to represent $x_j$. From the proof in @lem-vif, we know that $x_j=P_jX_{-j}+\varepsilon_j$. If this fits well, $R_j^2$ is close to 1. If not $R^2_j$ is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be $\infty$. If not, its VIF is supposed to be $1$.
+
+
+
+Now by @lem-vif, when $R_j^2$ is large, $VIF_j$ will be large. In other words, if one variable depends on other variables, which means that $R_j^2$ is high, the variance of $\hat\beta_j$ is also very high. Then the standard error of $\hat\beta_j$ is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.
+
+
+Usually if VIF is more than 5 or 10, multicollinearity may be a problem.
+
+
+
+
+::: {.callout-note}
+
+Also the interpretation of coefficients breaks. The basic interpretation of $\beta_j$ is that "holding others fixed, a 1-uint increase in $x_j$ will change $y$ by $\beta_j$". When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.
+
+:::
+
+::: {.callout-caution}
+In MLR, the multicolinearity between independent variables doesn't affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate $\boldsymbol{\hat{\beta}}$ as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.
+
+- Multicollinearity inflates the variance of the estimated coefficients.
+- Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
+- The model might struggle to separate the effects of correlated predictors.
+:::
+
+
+
+
+
+
+
+
+
 
 
 
@@ -312,6 +357,10 @@ Note that these $\hat{\beta}_i$ and $s_{\hat{\beta}_i}$ directly come from the O
 
 ::: {#exm-}
 ## a simple R code example
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
 In base R, we need the following command to perform manual operations:
 
@@ -373,6 +422,9 @@ After we get the statistics, we could conduct the corresponding test by checking
 p_t <- pt(abs(t), n-(k+1), lower.tail = FALSE) + pt(-abs(t), n-(k+1)) 
 p_f <- pf(F, k, n-(k+1), lower.tail = FALSE)
 ```
+</details>
+
+
 :::
 
 
@@ -411,215 +463,4 @@ $$
 
 
 
-## Analysis of predictions
 
-- C.I.
-- P.I.
-
-code are the same
-
-
-::: {.callout-warning}
-Exteprelation is **dangerous**.
-:::
-
-
-
-## Interaction and confounding
-
-1. lm(y~x+z+x:z)
-2. lm(y~x:z)
-3. x2 <- x*x, lm(y~x+x2)
-4. lm(y~x+I(x^2))
-5. lm(y~poly(x,2,raw=True))
-
-
-
-## Dummy variables
-
-R use factors to regonze processable categorical data.
-
-`lm` function will automatically cast processiable categorical data into dummy variables.
-
-
-
-CARGO has durable, fragile and semifrag
-
-if the variable is not numeric, it will be changed into categorical regression with dummy variables directly.
-
-```{r}
-#| eval: false
-
-cargo$CARGO as.factor(cargo$CARGO)
-contrasts(cargo$CARGO)
-```
-contrasts is to show how dummy variables are set
-
-if we are changing the base level:
-
-```{r}
-#| eval: false
-
-cargo$CARGO = relevel(cargo$CARGO, ref="Fragile")
-contrasts(cargo$CARGO)
-```
-
-
-```{r}
-#| eval: false
-
-fit <- lm(COST~CARGO, data=cargo)
-summary(fit)
-```
-
-
-
-
-
-
-## A test for comparing nested models
-
-
-::: {#def-}
-## Nested models
-Two models are **nested** if one model contains all the terms of the second model and at least one additional term.
-
-- The more complex model is called the **complete** (or **full**) model.
-- The simpler model is called the **reduced** (or **restricted**) model.
-:::
-
-Here the main question is whether the additional terms are really necessary. We use a Hypothesis test to answer the question.
-
-
-::: {.callout-note}
-## F-Test for comparing nested models
-- Reduced model:  $E(y)=\beta_0+\beta_1x_1+\ldots+\beta_g x_g$
-- Complete model: $E(y)=\beta_0+\beta_1x_1+\ldots+\beta_g x_g+\beta_{g+1}x_{g+1}+\ldots+\beta_{k}x_k$
-- $H_0: \beta_{g+1}=\ldots=\beta_k=0$.
-- $H_a$: at least one of the $\beta_{g+1},\ldots,\beta_k$ is nonzero.
-- $\displaystyle F=\frac{(SSE_R-SSE_C)/(k-g)}{SSE_C/[n-(k+1)]}$.
-:::
-
-We could use the above formula to manually perform the test.
-
-or we could use R code `anova(fit.reduced, fit.full)`
-
-
-
-
-
-
-## Dummy variable: qualitative variables
-
-
-
-## Collinearity in Multiple Linear Regression
-
-1. First issue about collinearity is that $\mathbf{X^T X}$ would be singular, or at least close to singular, that its inverse doesn't exist or the computation is very unstable. 
-2. The covariance matrix $\mathbf{(X^T X)}^{-1}\sigma^2$ will be extremely large, which means that the variance will be very large.
-
-
-::: {#def-}
-## The variance inflation factor
-The variance inflation factor for the ith coefficient is 
-$$
-VIF_i=\frac{1}{1-R^2_i}
-$$
-where $R_i^2$ is the $R^2$ of regression produced by regressing $x_i$ against other $x_j$'s. If one variable is colinear to other variables, its VIF is supposed to be $\infty$. If not, its VIF is supposed to be $1$.
-:::
-
-Usually if VIF is more than 5 or 10, multicollinearity may be a problem.
-
-
-
-![](assests/img/20250302154333.png)
-
-
-
-
-## R code
-
-How to use `lm` function.
-
-```{r}
-x1 <- runif(100)
-x2 <- runif(100)
-eps <- rnorm(100, 0, 0.5)
-y <- 1+2*x1+3*x2+eps
-model <- lm(y~x1+x2)
-```
-
-1. Model coefficients
-
-```{r}
-model$coefficients
-model$coefficients['(Intercept)']
-model$coefficients['x1']
-model$coefficients['x2']
-```
-
-When using SLR, we could directly read the coefficients and plot lines.
-```{r}
-plot(x1, y)
-abline(lm(y~x1)$coefficients)
-```
-
-
-2. Some computed values
-   
-We could directly find the residuals and the fitted values. 
-
-```{r}
-#| eval: false
-model$residuals
-model$fitted.values
-```
-
-3. Model properties
-The standard error, $R^2$, $R_a^2$, and $F$-statistic can be gotten from here.
-
-```{r}
-summary(model)$sigma
-summary(model)$r.squared
-summary(model)$adj.r.squared
-summary(model)$fstatistic
-```
-The individual Std. error and t value and p value can also be read directly.
-
-```{r}
-summary(model)$coefficients
-summary(model)$coefficients['x2', 't value']
-```
-
-
-
-
-2. Why Does summary(lm()) Show t-tests Instead of F-tests?
-Regression focus:
-
-summary(lm()) emphasizes coefficient estimates (slopes), so t-tests are more intuitive.
-
-It answers: "Is this specific predictor’s slope ≠ 0?"
-
-ANOVA focus:
-
-anova(lm()) emphasizes variance explained by each term.
-
-It answers: "Does this predictor (or model) explain significant variance?"
-
-
-
-4. Key Takeaways
-For simple regression (1 predictor):
-
-The t-test (from summary) and F-test (from anova) are identical.
-
-For multiple predictors:
-
-t-tests assess individual slopes (adjusting for other predictors).
-
-F-tests assess groups of predictors (e.g., all levels of a categorical variable).
-
-ANOVA is a generalization:
-
-t-tests are a special case of ANOVA when testing a single predictor.

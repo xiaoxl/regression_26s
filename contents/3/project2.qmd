@@ -2,6 +2,13 @@
 
 ## Chapter 4 Multiple Regression Models
 
+
+```{r}
+library(MASS)
+data(Boston)
+```
+
+
 ```{r ANOVA_ALT function, message=FALSE, echo=FALSE}
 
 

@@ -1,5 +1,41 @@
 # ANOVA
 
+
+
+
+## A test for comparing nested models
+
+
+::: {#def-}
+## Nested models
+Two models are **nested** if one model contains all the terms of the second model and at least one additional term.
+
+- The more complex model is called the **complete** (or **full**) model.
+- The simpler model is called the **reduced** (or **restricted**) model.
+:::
+
+Here the main question is whether the additional terms are really necessary. We use a Hypothesis test to answer the question.
+
+
+::: {.callout-note}
+## F-Test for comparing nested models
+- Reduced model:  $E(y)=\beta_0+\beta_1x_1+\ldots+\beta_g x_g$
+- Complete model: $E(y)=\beta_0+\beta_1x_1+\ldots+\beta_g x_g+\beta_{g+1}x_{g+1}+\ldots+\beta_{k}x_k$
+- $H_0: \beta_{g+1}=\ldots=\beta_k=0$.
+- $H_a$: at least one of the $\beta_{g+1},\ldots,\beta_k$ is nonzero.
+- $\displaystyle F=\frac{(SSE_R-SSE_C)/(k-g)}{SSE_C/[n-(k+1)]}$.
+:::
+
+We could use the above formula to manually perform the test.
+
+or we could use R code `anova(fit.reduced, fit.full)`
+
+
+
+## ANOVA
+
+
+
 {{< include ../math.qmd >}} 
 
 ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.

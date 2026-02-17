@@ -226,7 +226,7 @@ sf <- summary(fit)
 af <- anova(fit)
 ```
 
-So $SSE$=`{r} af[1,2]`, $s^2$=`{r} af[2,3]` and $s$=`{r} sf$sigma`.
+So $SSE$=`{r} af[2,2]`, $s^2$=`{r} af[2,3]` and $s$=`{r} sf$sigma`.
 
 (b) $\sigma^2$ is estimated by $s^2$, which is `{r} af[2,3]`.
 (c) $\sigma$ is estimated by $s$, which is `{r} sf$sigma`.

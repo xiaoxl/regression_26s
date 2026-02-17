@@ -1,0 +1,70 @@
+# Dummy variables
+
+## Analysis of predictions
+
+- C.I.
+- P.I.
+
+code are the same
+
+
+::: {.callout-warning}
+Exteprelation is **dangerous**.
+:::
+
+
+
+## Interaction and confounding
+
+1. lm(y~x+z+x:z)
+2. lm(y~x:z)
+3. x2 <- x*x, lm(y~x+x2)
+4. lm(y~x+I(x^2))
+5. lm(y~poly(x,2,raw=True))
+
+
+
+## Dummy variables
+
+R use factors to regonze processable categorical data.
+
+`lm` function will automatically cast processiable categorical data into dummy variables.
+
+
+
+CARGO has durable, fragile and semifrag
+
+if the variable is not numeric, it will be changed into categorical regression with dummy variables directly.
+
+```{r}
+#| eval: false
+
+cargo$CARGO as.factor(cargo$CARGO)
+contrasts(cargo$CARGO)
+```
+contrasts is to show how dummy variables are set
+
+if we are changing the base level:
+
+```{r}
+#| eval: false
+
+cargo$CARGO = relevel(cargo$CARGO, ref="Fragile")
+contrasts(cargo$CARGO)
+```
+
+
+```{r}
+#| eval: false
+
+fit <- lm(COST~CARGO, data=cargo)
+summary(fit)
+```
+
+
+
+
+
+
+
+## Dummy variable: qualitative variables

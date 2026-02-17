@@ -1,0 +1,94 @@
+
+
+
+## R code
+
+How to use `lm` function.
+
+```{r}
+#| eval: false
+x1 <- runif(100)
+x2 <- runif(100)
+eps <- rnorm(100, 0, 0.5)
+y <- 1+2*x1+3*x2+eps
+model <- lm(y~x1+x2)
+```
+
+1. Model coefficients
+
+```{r}
+#| eval: false
+model$coefficients
+model$coefficients["(Intercept)"]
+model$coefficients["x1"]
+model$coefficients["x2"]
+```
+
+When using SLR, we could directly read the coefficients and plot lines.
+```{r}
+#| eval: false
+plot(x1, y)
+abline(lm(y ~ x1)$coefficients)
+```
+
+
+2. Some computed values
+   
+We could directly find the residuals and the fitted values. 
+
+```{r}
+#| eval: false
+model$residuals
+model$fitted.values
+```
+
+3. Model properties
+The standard error, $R^2$, $R_a^2$, and $F$-statistic can be gotten from here.
+
+```{r}
+#| eval: false
+summary(model)$sigma
+summary(model)$r.squared
+summary(model)$adj.r.squared
+summary(model)$fstatistic
+```
+The individual Std. error and t value and p value can also be read directly.
+
+```{r}
+#| eval: false
+summary(model)$coefficients
+summary(model)$coefficients['x2', 't value']
+```
+
+
+
+
+2. Why Does summary(lm()) Show t-tests Instead of F-tests?
+Regression focus:
+
+summary(lm()) emphasizes coefficient estimates (slopes), so t-tests are more intuitive.
+
+It answers: "Is this specific predictor’s slope ≠ 0?"
+
+ANOVA focus:
+
+anova(lm()) emphasizes variance explained by each term.
+
+It answers: "Does this predictor (or model) explain significant variance?"
+
+
+
+4. Key Takeaways
+For simple regression (1 predictor):
+
+The t-test (from summary) and F-test (from anova) are identical.
+
+For multiple predictors:
+
+t-tests assess individual slopes (adjusting for other predictors).
+
+F-tests assess groups of predictors (e.g., all levels of a categorical variable).
+
+ANOVA is a generalization:
+
+t-tests are a special case of ANOVA when testing a single predictor.
