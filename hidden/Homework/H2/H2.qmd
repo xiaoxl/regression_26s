@@ -38,8 +38,26 @@ knitr::kable(df, format = "pipe")
 ```
 
 
+
 (a) Fit the model and find a 90% confidence interval for the true slope of the line. Interpret the result.
 (b) Fit the model and determine whether there is a positive or negative linear relationship between the amount of pectin $x$ and the sweetness $y$. That is, determine if there is sufficient evidence (at $\alpha=0.05$) to indicate that $\beta_1$, the slope of the straight-line model, is significantly different from zero. 
+
+:::
+
+
+
+::: {.answer}
+
+```{r}
+model <- lm(sweetness~pectin, data=df)
+confint(model, level=.9)
+```
+
+
+```{r}
+summary(model)
+```
+
 
 :::
 
@@ -132,6 +150,13 @@ cat("\n\\end{alltt}\n")
 :::
 
 
+::: {.answer}
+
+```{r}
+summary(fit)
+```
+
+:::
 
 ::: {#exr-}
 ## Position effects in memories
