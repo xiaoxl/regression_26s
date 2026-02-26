@@ -27,12 +27,61 @@ Although the company expects peak load to increase as the temperature increases,
 A random sample of 25 summer days is selected and both the peak load (measured in megawatts) and high temperature (in degrees) recorded for each day. The R output is attached.
 
 
+
+```{r}
+#| echo: false
+df <- data.frame(
+    TEMP = c(
+        94, 96, 95, 108, 67, 88, 89, 84, 90, # Column 1
+        106, 67, 71, 100, 79, 97, 98, 87, # Column 2
+        76, 68, 92, 100, 85, 89, 74, 86 # Column 3
+    ),
+    LOAD = c(
+        136.0, 131.7, 140.7, 189.3, 96.5, 116.4, 118.5, 113.4, 132.0, # Col 1
+        178.2, 101.6, 92.5, 151.9, 106.2, 153.2, 150.1, 114.7, # Col 2
+        100.9, 96.3, 135.1, 143.6, 111.4, 116.5, 103.9, 105.1 # Col 3
+    )
+)
+source("../../../anova_alt.R")
+```
+
+---
+
+# 3RD ORDER MODEL
+
+```{r}
+third_oder_model <- lm(LOAD~TEMP+I(TEMP^2)+I(TEMP^3), data=df)
+anova_alt(third_oder_model)
+summary(third_oder_model)
+```
+
+---
+
+# 2ND ORDER MODEL
+```{r}
+second_order_model <- lm(LOAD~TEMP+I(TEMP^2), data=df)
+anova_alt(second_order_model)
+summary(second_order_model)
+```
+
+{{< pagebreak >}} 
+
 ::: {#exr-}
 Fit the third-order model, $E(y) = \beta_0 + \beta_1x + \beta_2x^2+\beta_3x^3$, to the data. Is there evidence that the cubic term, $\beta_3x^3$, contributes information for the prediction of peak power load? Test at $\alpha = .05$.
 :::
 
+
+::: {.answer}
+We perform the t-test for the cubic term $H_0:\beta_3=0$. The p-value is 0.911. Since p-value > $\alpha$ = .05, we fail to reject null hypothesis. There is insufficient evidence of a third-order relationship between peak load and high temperature. Consequently, we will drop the cubic term, $\beta_3x^3$, from the model.
+:::
+
 ::: {#exr-ref}
-Fit the third-order model, $E(y) = \beta_0 + \beta_1x + \beta_2x^2$, to the data.  Test the hypothesis that the power load increases at an increasing rate with temperature. In other words, is the curve concave upward? Use $\alpha = .05$.
+Fit the 2nd-order model, $E(y) = \beta_0 + \beta_1x + \beta_2x^2$, to the data.  Test the hypothesis that the power load increases at an increasing rate with temperature. In other words, is the curve concave upward? Use $\alpha = .05$.
+:::
+
+
+::: {.answer}
+We fit the quadratic model. We test $H_0:\beta_2=0$. The two-tailed p-value is 0.000. Since the one-tailed p-value < $\alpha$ = .05, we reject null hypothesis. We conclude the peak power load increases at an increasing rate with temperature. In other words, the curve is concave upward.
 :::
 
 
@@ -41,9 +90,10 @@ Give the prediction equation for the second-order model, in @exr-ref. Are you sa
 :::
 
 
-![](assests/img/20250302180514.png)
-
-![](assests/img/20250302180536.png)
-
-![](assests/img/20250302180549.png)
-
+::: {.answer}
+The prediction equation for the quadratic model is
+$$
+\hat y=385.0480-8.2925x+.0598x^2.
+$$
+Based on the F-test, the model is statistically useful.
+:::

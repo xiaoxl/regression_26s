@@ -14,7 +14,7 @@ format:
                 \renewcommand{\theexercise}{\arabic{exercise}}
             }
 params:
-    show_solution: false
+    show_solution: true
 filters:
     - ../../solution-filter.lua
 crossref:
@@ -36,6 +36,12 @@ $$
 :::
 
 
+::: {.answer}
+- [ ] Sixth order model with one predictor
+- [ ] First order model with one predictor
+- [x] First order model with six predictors
+- [ ] Sixth order model with six predictors
+:::
 
 ::: {#exr-}
 The following regression model is known as 
@@ -51,11 +57,24 @@ $$
 :::
 
 
+::: {.answer}
+- [ ] First order model with three predictors
+- [ ] First order model with one predictor
+- [x] Third order model with one predictor
+- [ ] Third order model with three predictors
+:::
+
+
 ::: {#exr-}
 Interpret the $\hat{\beta}_2$ in the following model 
 $$
 \hat y = -0.0304+2.006x_1+5.006x_2.
 $$
+:::
+
+
+::: {.asnwer}
+Holding all other predictors constant, the expected value of $y$ is estimated to increase by 5.006 for every one-unit increase in $x_2$.
 :::
 
 
@@ -82,3 +101,10 @@ Give a practical interpretation of $\hat{\beta}_1$.
 
 
 
+::: {.answer}
+
+- [ ] When patient's age increase 1 year, the risk of stroke increases 1.08%.
+- [x] When patient's age increase 1 year, the risk of stroke increases 1.08%, while the other two variables (blood pressure and smoke) are hold constant.
+- [ ] The patient's age increases 1.08, if the risk of stroke increase 1 unit.
+- [ ] The patient's age increases 1.08, if the risk of stroke increase 1 unit, while the other two variables (blood pressure and smoke) are hold constant.
+:::
