@@ -2,8 +2,11 @@
 
 
 
+{{< include ../math.qmd >}} 
 
-## A test for comparing nested models
+## Nested ANOVA
+
+This is a test for comparing nested models.
 
 
 ::: {#def-}
@@ -23,27 +26,74 @@ Here the main question is whether the additional terms are really necessary. We 
 - Complete model: $E(y)=\beta_0+\beta_1x_1+\ldots+\beta_g x_g+\beta_{g+1}x_{g+1}+\ldots+\beta_{k}x_k$
 - $H_0: \beta_{g+1}=\ldots=\beta_k=0$.
 - $H_a$: at least one of the $\beta_{g+1},\ldots,\beta_k$ is nonzero.
-- $\displaystyle F=\frac{(SSE_R-SSE_C)/(k-g)}{SSE_C/[n-(k+1)]}$.
+- $\displaystyle F=\frac{(SSE_R-SSE_C)/(k-g)}{SSE_C/[n-(k+1)]}$, where $k$ is the number of full model predictors, and $g$ is the number of reduced model predictors.
+- Note that the above denominator $SSE_C/[n-(k+1)]=MSE$.
 :::
 
-We could use the above formula to manually perform the test.
+The test is usually done with the nested ANOVA table.
 
-or we could use R code `anova(fit.reduced, fit.full)`
+| Model | Residual DF | Sum of Squares | DF Difference | Extra Sum of Squares | F Statistic | p-value |
+|-------|------------|-------------------|--------------|----------------------|-------------| ----- |
+| Reduced Model | $n - (g+1)$ | $SSE_R$ |  |  |  |  |
+| Full Model    | $n - (k+1)$ | $SSE_C$ | $k-g$ | $SSE_R - SSE_C$ | $\dfrac{(SSE_R - SSE_C)/(k-g)}{SSE_C/(n - (k+1))}$ |  |
 
+
+In this table, each row is about a model. The first row is about the reduced model and the second row is about the complete model. 
+
+- `Res.Df` is the degree of freedom of residuals. It is $n-(p+1)$ where $p$ is the number of predictors. 
+- Since there are $g$ variables in the reduced model, and $k$ variables in the complete model, `Res.Df` of each model is $n-(g+1)$ and $n-(k+1)$.
+- The third column is the difference of `Res.Df`. Therefore it is $[n-(g+1)]-[n-(k+1)]=k-g$.
+- The forth column is the difference of $SSE$; 
+- By the above definition, the F-statistic is $\displaystyle F=\frac{(SSE_R-SSE_C)/(k-g)}{SSE_C/[n-(k+1)]}$. 
+- The p-value is gotten by the F-test.
+
+In R, we could use R code `anova(fit.reduced, fit.full)` to directly generate the above table. 
+
+::: {#exm-}
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+```{r}
+x1 <- runif(100)
+x2 <- runif(100)
+y <- 1 + 2 * x1 + 3 * x2 + rnorm(100, 0, 1)
+model12 <- lm(y ~ x1 + x2)
+model1 <- lm(y ~ x1)
+
+anova(model1, model12)
+
+```
+
+In this table, each row is about a model. The first row is about the reduced model and the second row is about the full model. 
+
+- In each model, `Res.Df` is the degree of freedom of residuals, which is $n-(p+1)$ where $p$ is the number of predictors. 
+- In this example, `Res.Df` is $100-(1+1)=98$ and $100-(1+2)=97$. 
+- The difference of degree of freedom is $2-1=1$.
+- The difference of $SSE$ is `r  anova(model1, model12)[1,2]`-`r anova(model1, model12)[2,2]`=`r anova(model1, model12)[2,4]`.
+- Then the F-statistic is (`r anova(model1, model12)[2,4]`/1)/(`r anova(model1, model12)[2,2]`/`r anova(model1, model12)[2,1]`)=`r anova(model1, model12)[2,5]`.
+- The p-value is gotten by the F-test.
+
+</details>
+
+:::
+
+
+::: {.callout-note}
+This nested model is the basis of all ANOVA tables listed below. All ANOVA tables in regression are based on comparing nested models. Every row in an ANOVA table corresponds to testing whether a set of parameters can be removed from a larger model.
+:::
 
 
 ## ANOVA
 
 
-
-{{< include ../math.qmd >}} 
-
 ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.
 
 In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.
 
-More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant. 
+<!-- More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.  -->
 
+More generally, ANOVA is a framework for testing whether a model explains a non-trivial amount of variation in a response variable. Conceptually, it asks whether the reduction in unexplained variability achieved by adding terms to a model is large relative to random noise. Operationally, it answers this by comparing mean squares (variance estimates) using an F-statistic.
 
 ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector $y$ onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:
 
@@ -52,6 +102,9 @@ $$
 $$
 This identity is the mathematical foundation of all ANOVA tables.
 
+<!-- (With an intercept in the model, the fitted values and residuals are orthogonal, which implies the decomposition $SST=SSR+SSE$.) --> 
+
+
 ### ANOVA table for linear regression
 
 This is the anova table introduced in the previous lectures. The main purpose is to show to decomposition and compute the F-statistic as well as the corresponding p-value.
@@ -59,6 +112,9 @@ This is the anova table introduced in the previous lectures. The main purpose is
 $$
 F=\frac{MSR}{MSE}=\frac{\text{variance explained per parameter}}{\text{variance unexplained per observation}}.
 $$
+
+It is about the whole group of variables.
+
 
 ### Type I ANOVA table
 
@@ -71,7 +127,7 @@ $$
 
 The Type I ANOVA table reports
 $$
-SS(x_j\mid x_1,\ldots, x_{j-1})=SSE(\text{model with }x_1,\ldots,x_j-1)-SSE(\text{model with }x_1,\ldots,x_j).
+SS(x_j\mid x_1,\ldots, x_{j-1})=SSE(\text{model with }x_1,\ldots,x_{j-1})-SSE(\text{model with }x_1,\ldots,x_j).
 $$
 
 That is, each sum of squares measures the reduction in unexplained variability obtained by adding $x_j$ to a model that contains the preceding predictors.
@@ -118,7 +174,7 @@ n <- 80
 x1 <- rnorm(n)
 x2 <- 0.8 * x1 + rnorm(n, sd = 0.6)
 x3 <- 0.6 * x2 + rnorm(n, sd = 0.5)
-y <- 3 + 2 * x1 + 1 * x2 + +3*x3+rnorm(n, sd = 1)
+y <- 3 + 2 * x1 + 1 * x2 +3*x3+rnorm(n, sd = 1)
 ```
 
 Now fit the model and show the Type I ANOVA table. For Type I ANOVA table, we could use the build-in R function `anova()`.
@@ -176,11 +232,15 @@ strong correlation with $x_1$, and therefore appears significant. However, becau
 
 
 
-### Nested ANOVA table
 
 ### Type II ANOVA table
 
-A Type II ANOVA table (Marginal Sum of Squares) tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested.
+A Type II ANOVA table (Marginal Sum of Squares) tests a main effect after adjusting for the other main effects, but not adjusting for interactions that contain that effect (and many implementations won’t even report the “main effect” test if it’s involved in interactions, because it’s not meaningful without specifying interaction context).
+
+In other words, Type II ANOVA can only be applied to models without interaction terms. 
+<!-- tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested. -->
+
+Type II 
 
 Suppose we fit the linear model
 $$
@@ -214,7 +274,7 @@ $$
 ::: {.callout-tip}
 1. Reordering predictors does not change the table.
 2. Each effect is tested conditional on all other main effects.
-3. If interactions are present, Type II does not test main effects in their presence.
+3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
 4. Each row is a nested-model F test removing one predictor at a time.
 :::
 
@@ -254,8 +314,8 @@ Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering $x_1$ and $x_
 
 ### Type III ANOVA Table 
 
-A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) decomposes the explained variation in the response by testing each coefficient in the full model, while holding all other terms fixed. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.
 
+A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) tests each model term in the presence of all other terms. Equivalently, for a given term, it compares the full model to a reduced model obtained by setting the coefficients associated with that term to zero while keeping all other terms in the model. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.
 
 Suppose we fit the linear model
 $$
@@ -289,16 +349,54 @@ In the case of a single degree of freedom per predictor, this test is equivalent
 
 In summary, the Type III ANOVA table answers the question:
 
-> Is this coefficient nonzero in the full model, holding all other predictors fixed?
+> Is this coefficient of the main effect nonzero in the full model, when all other effects (including interaction terms) presented in the model?
 
 
 ::: {.callout-note}
 ## Type III vs t-tests
-In linear regression, for any predictor with one degree of freedom,
+For a 1-degree-of-freedom term (e.g., a single continuous predictor), the Type III F-test is equivalent to the squared t-test for the corresponding coefficient:
 $$
-F^{(III)}_j=t_j^2.
+F^{(III)}=t^2.
 $$
-Therefore the Type III F-test and the coefficient t-test test exactly the same null hypothesis.
+For multi-df terms (e.g., a factor with multiple levels), Type III tests the whole set of coefficients for that term simultaneously.
+
+:::
+
+
+::: {#exm-}
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+```{r}
+set.seed(123)
+
+n <- 80
+x1 <- rnorm(n)
+x2 <- 0.8 * x1 + rnorm(n, sd = 0.6) 
+y <- 3 + 2 * x1 + 1 * x2 + rnorm(n, sd = 1)
+```
+
+
+```{r}
+library(car)
+model <- lm(y ~ x1 * x2)
+Anova(model, type = 3)
+```
+
+```{r}
+summary(model)
+```
+Please compare the t-statistic and the F-statistic for each variable.
+
+
+```{r}
+Anova(model, Type=2)
+```
+
+
+</details>
+
 :::
 
 ::: {.callout-note}
@@ -315,3 +413,10 @@ y  <- x1*x2+2*x1+3*x2+rnorm(80)
 fit <- lm(y~x1*x2)
 Anova(fit, type=2)
 ```
+
+
+| Term      | **Type II Logic**                                                        | **Type III Logic**                         |
+| --------- | ------------------------------------------------------------------------ | ------------------------------------------ |
+| $x_1$     | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_2 + x_1:x_2$ | Same reduced model: $y \sim x_2 + x_1:x_2$ |
+| $x_2$     | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_1 + x_1:x_2$ | Same reduced model: $y \sim x_1 + x_1:x_2$ |
+| $x_1:x_2$ | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_1 + x_2$     | Same as Type II                            |

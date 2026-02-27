@@ -193,115 +193,6 @@ $$
 
 
 
-## Colinearity
-In the above estimation, the independence of variables doesn't affect the unbiasedness of the OLS estimators.
-
-
-
-::: {#lem-vif}
-$$
-\Var(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
-$$
-
-
-<details>
-<summary><strong>Click for proof.</strong></summary>
-
-
-Let the model be $y=X\beta+\varepsilon$. Let the j-th predictor column be $x_j$ and $X_{-j}$ be the matrix of all other predictor columns. Rewrite the design matrix as 
-$$
-X=\mqty[x_j&X_{-j}].
-$$
-
-Then 
-$$
-X^TX=\mqty[x_j^Tx_j&x_j^TX_{-j}\\X^T_{-j}x_j&X^T_{-j}X_{-j}].
-$$
-
-Consider 
-$$
-\mqty[A&B\\C&D]=\underbrace{\mqty[I&BD^{-1}\\0&I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&0\\C&D]}_{(II)}.
-$$
-Let $A-BD^{-1}C=S$. Then 
-$$
-(I)^{-1}=\mqty[I&-BD^{-1}\\o&I],\quad (II)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}],
-$$
-so
-$$
-\mqty[A&B\\C&D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}]\mqty[I&-BD^{-1}\\0&I]=\mqty[S^{-1}&-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&D^{-1}(CS^{-1}BD^{-1}+I)]
-$$
-Therefore the left upper corner of the inverse matrix is $S^{-1}=(A-BD^{-1}C)^{-1}$. Then
-$$
-(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
-$$
-Let $P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}$. We have
-$$
-\begin{split}
-\Var(\hat\beta_j)&=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
-&=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
-\end{split}
-$$
-
-
-On the other side, use $x_j=P_jX_{-j}+\varepsilon$. Then $x_j^T(I-P_j)x_j=SSE_j$. Since $1-\frac{SSE_j}{SST_j}=R_j^2$, we have
-$$
-x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
-$$
-So 
-$$
-\begin{split}
-\Var(\hat\beta_j)&=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
-\end{split}
-$$
-
-</details>
-
-
-:::
-
-
-
-::: {#def-}
-## The variance inflation factor
-The variance inflation factor for the ith coefficient is 
-$$
-VIF_j=\frac{1}{1-R^2_j}
-$$
-where $R_j^2$ is the $R^2$ of regression produced by regressing $x_j$ against other $x_i$'s. 
-:::
-
-So we would like to use other variables to represent $x_j$. From the proof in @lem-vif, we know that $x_j=P_jX_{-j}+\varepsilon_j$. If this fits well, $R_j^2$ is close to 1. If not $R^2_j$ is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be $\infty$. If not, its VIF is supposed to be $1$.
-
-
-
-Now by @lem-vif, when $R_j^2$ is large, $VIF_j$ will be large. In other words, if one variable depends on other variables, which means that $R_j^2$ is high, the variance of $\hat\beta_j$ is also very high. Then the standard error of $\hat\beta_j$ is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.
-
-
-Usually if VIF is more than 5 or 10, multicollinearity may be a problem.
-
-
-
-
-::: {.callout-note}
-
-Also the interpretation of coefficients breaks. The basic interpretation of $\beta_j$ is that "holding others fixed, a 1-uint increase in $x_j$ will change $y$ by $\beta_j$". When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.
-
-:::
-
-::: {.callout-caution}
-In MLR, the multicolinearity between independent variables doesn't affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate $\boldsymbol{\hat{\beta}}$ as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.
-
-- Multicollinearity inflates the variance of the estimated coefficients.
-- Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
-- The model might struggle to separate the effects of correlated predictors.
-:::
-
-
-
-
-
-
-
 
 
 
@@ -464,3 +355,138 @@ $$
 
 
 
+
+
+## Colinearity
+In the above estimation, the independence of variables doesn't affect the unbiasedness of the OLS estimators.
+
+
+
+::: {#lem-vif}
+$$
+\Var(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
+$$
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+
+Let the model be $y=X\beta+\varepsilon$. Let the j-th predictor column be $x_j$ and $X_{-j}$ be the matrix of all other predictor columns. Rewrite the design matrix as 
+$$
+X=\mqty[x_j&X_{-j}].
+$$
+
+Then 
+$$
+X^TX=\mqty[x_j^Tx_j&x_j^TX_{-j}\\X^T_{-j}x_j&X^T_{-j}X_{-j}].
+$$
+
+Consider 
+$$
+\mqty[A&B\\C&D]=\underbrace{\mqty[I&BD^{-1}\\0&I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&0\\C&D]}_{(II)}.
+$$
+Let $A-BD^{-1}C=S$. Then 
+$$
+(I)^{-1}=\mqty[I&-BD^{-1}\\o&I],\quad (II)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}],
+$$
+so
+$$
+\mqty[A&B\\C&D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&0\\-D^{-1}CS^{-1}&D^{-1}]\mqty[I&-BD^{-1}\\0&I]=\mqty[S^{-1}&-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&D^{-1}(CS^{-1}BD^{-1}+I)]
+$$
+Therefore the left upper corner of the inverse matrix is $S^{-1}=(A-BD^{-1}C)^{-1}$. Then
+$$
+(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
+$$
+Let $P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}$. We have
+$$
+\begin{split}
+\Var(\hat\beta_j)&=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
+&=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
+\end{split}
+$$
+
+
+On the other side, use $x_j=P_jX_{-j}+\varepsilon$. Then $x_j^T(I-P_j)x_j=SSE_j$. Since $1-\frac{SSE_j}{SST_j}=R_j^2$, we have
+$$
+x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
+$$
+So 
+$$
+\begin{split}
+\Var(\hat\beta_j)&=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
+\end{split}
+$$
+
+</details>
+
+
+:::
+
+
+
+::: {#def-}
+## The variance inflation factor
+The variance inflation factor for the ith coefficient is 
+$$
+VIF_j=\frac{1}{1-R^2_j}
+$$
+where $R_j^2$ is the $R^2$ of regression produced by regressing $x_j$ against other $x_i$'s. 
+:::
+
+So we would like to use other variables to represent $x_j$. From the proof in @lem-vif, we know that $x_j=P_jX_{-j}+\varepsilon_j$. If this fits well, $R_j^2$ is close to 1. If not $R^2_j$ is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be $\infty$. If not, its VIF is supposed to be $1$.
+
+
+
+Now by @lem-vif, when $R_j^2$ is large, $VIF_j$ will be large. In other words, if one variable depends on other variables, which means that $R_j^2$ is high, the variance of $\hat\beta_j$ is also very high. Then the standard error of $\hat\beta_j$ is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.
+
+
+Usually if VIF is more than 5 or 10, multicollinearity may be a problem.
+
+
+
+
+::: {.callout-note}
+
+Also the interpretation of coefficients breaks. The basic interpretation of $\beta_j$ is that "holding others fixed, a 1-uint increase in $x_j$ will change $y$ by $\beta_j$". When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.
+
+:::
+<!-- 
+::: {.callout-caution}
+In MLR, the multicolinearity between independent variables doesn't affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate $\boldsymbol{\hat{\beta}}$ as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.
+
+- Multicollinearity inflates the variance of the estimated coefficients.
+- Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
+- The model might struggle to separate the effects of correlated predictors.
+:::
+
+ -->
+
+
+
+## Formula language
+
+Formula language was introduced by John Chambers based on the Wilkinson–Rogers notation. It is a formal symbolic system used to express mathematical relationships between variables. It provides a structured way to represent models, equations, and logical relationships in mathematics, statistics, etc..
+
+Instead of describing relationships in words, formula language expresses them precisely using symbols.
+
+
+
+| Notation | Meaning | Statistical Equivalent and Examples |
+| :--- | :--- | :--- |
+| `A + B` | Main Effects | $y = \beta_0 + \beta_1 A + \beta_2 B$ (Independent effects) |
+| `A : B` | Interaction Term | $y = \beta_0 + \beta_1 (AB)$ (Only the interaction) |
+| `A * B` | Full Factorial | $y = \beta_0 + \beta_1 A + \beta_2 B + \beta_3 (AB)$ |
+| `(A + B + C)^2` | Degree Limit | All main effects and all possible 2-way interactions |
+| `I()` | Math Identity | Wraps arithmetic: $I(A^2)$ or $I(A + B)$ as a single term |
+| `1` | Intercept | The constant $\beta_0$ (included by default) |
+| `0 or -1` | No Intercept | Removes $\beta_0$, forcing the model through the origin |
+| `.` | All Variables | Shorthand for "all other columns in the data frame" |
+| `- B` | Exclusion | Removes a specific term (e.g., `y ~ . - x1`) |
+
+
+
+In R formulas, symbols like `*`, `^`, and `+` have special meanings. To use them as standard math operators, you must wrap them in `I()`. For example
+
+- Quadratic Model: `y ~ x + I(x^2)`
+- Summation as Predictor: `y ~ I(x1 + x2)`
