@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/app/data.html" rel="next">
+<link href="../../contents/3/anova.html" rel="next">
 <link href="../../contents/2/project1.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -428,6 +428,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Multiple Linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -465,13 +471,14 @@ window.Quarto = {
   <ul>
   <li><a href="#general-form" id="toc-general-form" class="nav-link active" data-scroll-target="#general-form"><span class="header-section-number">8.1</span> General form</a></li>
   <li><a href="#a-first-order-model-with-quantitative-predictors" id="toc-a-first-order-model-with-quantitative-predictors" class="nav-link" data-scroll-target="#a-first-order-model-with-quantitative-predictors"><span class="header-section-number">8.2</span> A first-order model with quantitative predictors</a></li>
-  <li><a href="#colinearity" id="toc-colinearity" class="nav-link" data-scroll-target="#colinearity"><span class="header-section-number">8.3</span> Colinearity</a></li>
-  <li><a href="#the-analysis-of-variance" id="toc-the-analysis-of-variance" class="nav-link" data-scroll-target="#the-analysis-of-variance"><span class="header-section-number">8.4</span> The analysis of variance</a></li>
-  <li><a href="#evluation" id="toc-evluation" class="nav-link" data-scroll-target="#evluation"><span class="header-section-number">8.5</span> Evluation</a>
+  <li><a href="#the-analysis-of-variance" id="toc-the-analysis-of-variance" class="nav-link" data-scroll-target="#the-analysis-of-variance"><span class="header-section-number">8.3</span> The analysis of variance</a></li>
+  <li><a href="#evluation" id="toc-evluation" class="nav-link" data-scroll-target="#evluation"><span class="header-section-number">8.4</span> Evluation</a>
   <ul class="collapse">
-  <li><a href="#r2" id="toc-r2" class="nav-link" data-scroll-target="#r2"><span class="header-section-number">8.5.1</span> <span class="math inline">\(R^2\)</span></a></li>
-  <li><a href="#r_a2" id="toc-r_a2" class="nav-link" data-scroll-target="#r_a2"><span class="header-section-number">8.5.2</span> <span class="math inline">\(R_a^2\)</span></a></li>
+  <li><a href="#r2" id="toc-r2" class="nav-link" data-scroll-target="#r2"><span class="header-section-number">8.4.1</span> <span class="math inline">\(R^2\)</span></a></li>
+  <li><a href="#r_a2" id="toc-r_a2" class="nav-link" data-scroll-target="#r_a2"><span class="header-section-number">8.4.2</span> <span class="math inline">\(R_a^2\)</span></a></li>
   </ul></li>
+  <li><a href="#colinearity" id="toc-colinearity" class="nav-link" data-scroll-target="#colinearity"><span class="header-section-number">8.5</span> Colinearity</a></li>
+  <li><a href="#formula-language" id="toc-formula-language" class="nav-link" data-scroll-target="#formula-language"><span class="header-section-number">8.6</span> Formula language</a></li>
   </ul>
 </nav>
     </div>
@@ -726,95 +733,15 @@ S_{xy}&amp;=\sum (x_i-\bar x)(y_i-\bar y)=\sum(x_iy_i-x_i\bar y-y_i\bar x+\bar x
 </div>
 </div>
 </section>
-<section id="colinearity" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="colinearity"><span class="header-section-number">8.3</span> Colinearity</h2>
-<p>In the above estimation, the independence of variables doesn’t affect the unbiasedness of the OLS estimators.</p>
-<div id="lem-vif" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 8.1</strong></span> <span class="math display">\[
-\operatorname{Var}(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
-\]</span></p>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-<p>Let the model be <span class="math inline">\(y=X\beta+\varepsilon\)</span>. Let the j-th predictor column be <span class="math inline">\(x_j\)</span> and <span class="math inline">\(X_{-j}\)</span> be the matrix of all other predictor columns. Rewrite the design matrix as <span class="math display">\[
-X=\mqty[x_j&amp;X_{-j}].
-\]</span></p>
-<p>Then <span class="math display">\[
-X^TX=\mqty[x_j^Tx_j&amp;x_j^TX_{-j}\\X^T_{-j}x_j&amp;X^T_{-j}X_{-j}].
-\]</span></p>
-<p>Consider <span class="math display">\[
-\mqty[A&amp;B\\C&amp;D]=\underbrace{\mqty[I&amp;BD^{-1}\\0&amp;I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&amp;0\\C&amp;D]}_{(II)}.
-\]</span> Let <span class="math inline">\(A-BD^{-1}C=S\)</span>. Then <span class="math display">\[
-(I)^{-1}=\mqty[I&amp;-BD^{-1}\\o&amp;I],\quad (II)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}],
-\]</span> so <span class="math display">\[
-\mqty[A&amp;B\\C&amp;D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}]\mqty[I&amp;-BD^{-1}\\0&amp;I]=\mqty[S^{-1}&amp;-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&amp;D^{-1}(CS^{-1}BD^{-1}+I)]
-\]</span> Therefore the left upper corner of the inverse matrix is <span class="math inline">\(S^{-1}=(A-BD^{-1}C)^{-1}\)</span>. Then <span class="math display">\[
-(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
-\]</span> Let <span class="math inline">\(P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}\)</span>. We have <span class="math display">\[
-\begin{split}
-\operatorname{Var}(\hat\beta_j)&amp;=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
-&amp;=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
-\end{split}
-\]</span></p>
-<p>On the other side, use <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon\)</span>. Then <span class="math inline">\(x_j^T(I-P_j)x_j=SSE_j\)</span>. Since <span class="math inline">\(1-\frac{SSE_j}{SST_j}=R_j^2\)</span>, we have <span class="math display">\[
-x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
-\]</span> So <span class="math display">\[
-\begin{split}
-\operatorname{Var}(\hat\beta_j)&amp;=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
-\end{split}
-\]</span></p>
-</details>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.3 (The variance inflation factor)</strong></span> The variance inflation factor for the ith coefficient is <span class="math display">\[
-VIF_j=\frac{1}{1-R^2_j}
-\]</span> where <span class="math inline">\(R_j^2\)</span> is the <span class="math inline">\(R^2\)</span> of regression produced by regressing <span class="math inline">\(x_j\)</span> against other <span class="math inline">\(x_i\)</span>’s.</p>
-</div>
-<p>So we would like to use other variables to represent <span class="math inline">\(x_j\)</span>. From the proof in <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, we know that <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon_j\)</span>. If this fits well, <span class="math inline">\(R_j^2\)</span> is close to 1. If not <span class="math inline">\(R^2_j\)</span> is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be <span class="math inline">\(\infty\)</span>. If not, its VIF is supposed to be <span class="math inline">\(1\)</span>.</p>
-<p>Now by <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, when <span class="math inline">\(R_j^2\)</span> is large, <span class="math inline">\(VIF_j\)</span> will be large. In other words, if one variable depends on other variables, which means that <span class="math inline">\(R_j^2\)</span> is high, the variance of <span class="math inline">\(\hat\beta_j\)</span> is also very high. Then the standard error of <span class="math inline">\(\hat\beta_j\)</span> is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.</p>
-<p>Usually if VIF is more than 5 or 10, multicollinearity may be a problem.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Also the interpretation of coefficients breaks. The basic interpretation of <span class="math inline">\(\beta_j\)</span> is that “holding others fixed, a 1-uint increase in <span class="math inline">\(x_j\)</span> will change <span class="math inline">\(y\)</span> by <span class="math inline">\(\beta_j\)</span>”. When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Caution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In MLR, the multicolinearity between independent variables doesn’t affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate <span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.</p>
-<ul>
-<li>Multicollinearity inflates the variance of the estimated coefficients.</li>
-<li>Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.</li>
-<li>The model might struggle to separate the effects of correlated predictors.</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="the-analysis-of-variance" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="the-analysis-of-variance"><span class="header-section-number">8.4</span> The analysis of variance</h2>
+<section id="the-analysis-of-variance" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="the-analysis-of-variance"><span class="header-section-number">8.3</span> The analysis of variance</h2>
 <ol type="1">
 <li><span class="math inline">\(SSE=\sum (y_i-\hat{y}_i)^2\)</span>.</li>
 <li><span class="math inline">\(s^2=MSE=\frac{SSE}{n-(k+1)}\)</span>.</li>
 </ol>
 <p>Hypothesis test:</p>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.4 (The Global <span class="math inline">\(F\)</span>-Test)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 8.3 (The Global <span class="math inline">\(F\)</span>-Test)</strong></span> &nbsp;</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: all <span class="math inline">\(\beta_i\)</span>’s are <span class="math inline">\(0\)</span>.</li>
 <li><span class="math inline">\(H_a\)</span>: at least one <span class="math inline">\(\beta_i\)</span> is not <span class="math inline">\(0\)</span>.</li>
@@ -824,7 +751,7 @@ Caution
 <p>Note that since <span class="math inline">\(F\)</span>-statistics is always positive, we only need to compute one tail of it.</p>
 </div>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.5 (The individual <span class="math inline">\(t\)</span>-Test for variable <span class="math inline">\(\beta_i\)</span>)</strong></span> &nbsp;</p>
+<p><span class="theorem-title"><strong>Definition 8.4 (The individual <span class="math inline">\(t\)</span>-Test for variable <span class="math inline">\(\beta_i\)</span>)</strong></span> &nbsp;</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_i=0\)</span>.</li>
 <li><span class="math inline">\(H_a\)</span>: <span class="math inline">\(\beta_i\neq 0\)</span>.</li>
@@ -904,21 +831,21 @@ Caution
 </details>
 </div>
 </section>
-<section id="evluation" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="evluation"><span class="header-section-number">8.5</span> Evluation</h2>
-<section id="r2" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="r2"><span class="header-section-number">8.5.1</span> <span class="math inline">\(R^2\)</span></h3>
+<section id="evluation" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="evluation"><span class="header-section-number">8.4</span> Evluation</h2>
+<section id="r2" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="r2"><span class="header-section-number">8.4.1</span> <span class="math inline">\(R^2\)</span></h3>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.6 (The multiple coefficient of determination)</strong></span> <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 8.5 (The multiple coefficient of determination)</strong></span> <span class="math display">\[
 R^2=1-\frac{SSE}{SST}.
 \]</span> <span class="math inline">\(R^2\)</span> represents the fraction of the sample variation that is explained by the model.</p>
 </div>
 </section>
-<section id="r_a2" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="r_a2"><span class="header-section-number">8.5.2</span> <span class="math inline">\(R_a^2\)</span></h3>
+<section id="r_a2" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="r_a2"><span class="header-section-number">8.4.2</span> <span class="math inline">\(R_a^2\)</span></h3>
 <p><span class="math inline">\(R^2\)</span> is a “hard” measurement for the model performance. However since adding more predictors always increases <span class="math inline">\(R^2\)</span> even if they are useless, we need a way to adjust for the number of predictors. This is the adjusted <span class="math inline">\(R^2\)</span>.</p>
 <div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 8.7 (The adjusted multiple coefficient of determination)</strong></span> <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 8.6 (The adjusted multiple coefficient of determination)</strong></span> <span class="math display">\[
 R^2_a=1-\qty[\frac{(n-1)}{n-(k+1)}]\qty(\frac{SSE}{SST})=1-\qty[\frac{(n-1)}{n-(k+1)}]\qty(1-R^2).
 \]</span></p>
 </div>
@@ -939,9 +866,152 @@ Note
 </ol>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="colinearity" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="colinearity"><span class="header-section-number">8.5</span> Colinearity</h2>
+<p>In the above estimation, the independence of variables doesn’t affect the unbiasedness of the OLS estimators.</p>
+<div id="lem-vif" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 8.1</strong></span> <span class="math display">\[
+\operatorname{Var}(\hat\beta_j)\propto\frac{1}{1-R^2_j}.
+\]</span></p>
+<details>
+<summary>
+<strong>Click for proof.</strong>
+</summary>
+<p>Let the model be <span class="math inline">\(y=X\beta+\varepsilon\)</span>. Let the j-th predictor column be <span class="math inline">\(x_j\)</span> and <span class="math inline">\(X_{-j}\)</span> be the matrix of all other predictor columns. Rewrite the design matrix as <span class="math display">\[
+X=\mqty[x_j&amp;X_{-j}].
+\]</span></p>
+<p>Then <span class="math display">\[
+X^TX=\mqty[x_j^Tx_j&amp;x_j^TX_{-j}\\X^T_{-j}x_j&amp;X^T_{-j}X_{-j}].
+\]</span></p>
+<p>Consider <span class="math display">\[
+\mqty[A&amp;B\\C&amp;D]=\underbrace{\mqty[I&amp;BD^{-1}\\0&amp;I]}_{(I)}\underbrace{\mqty[A-BD^{-1}C&amp;0\\C&amp;D]}_{(II)}.
+\]</span> Let <span class="math inline">\(A-BD^{-1}C=S\)</span>. Then <span class="math display">\[
+(I)^{-1}=\mqty[I&amp;-BD^{-1}\\o&amp;I],\quad (II)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}],
+\]</span> so <span class="math display">\[
+\mqty[A&amp;B\\C&amp;D]^{-1}=(II)^{-1}(I)^{-1}=\mqty[S^{-1}&amp;0\\-D^{-1}CS^{-1}&amp;D^{-1}]\mqty[I&amp;-BD^{-1}\\0&amp;I]=\mqty[S^{-1}&amp;-S^{-1}BD^{-1}\\-D^{-1}CS^{-1}&amp;D^{-1}(CS^{-1}BD^{-1}+I)]
+\]</span> Therefore the left upper corner of the inverse matrix is <span class="math inline">\(S^{-1}=(A-BD^{-1}C)^{-1}\)</span>. Then <span class="math display">\[
+(X^TX)^{-1}_{jj}=(x_j^Tx_j-x^T_jX_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}x_j)^{-1}.
+\]</span> Let <span class="math inline">\(P_j=X_{-j}(X^T_{-j}X_{-j})^{-1}X^T_{-j}\)</span>. We have <span class="math display">\[
+\begin{split}
+\operatorname{Var}(\hat\beta_j)&amp;=\mqty[(X^TX)^{-1}\sigma^2]_{jj}=(X^TX)^{-1}_{jj}\sigma^2\\
+&amp;=\frac{\sigma^2}{x_j^Tx_j-x^T_jP_jx_j}=\frac{\sigma^2}{x_j^T(I-P_j)x_j}.
+\end{split}
+\]</span></p>
+<p>On the other side, use <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon\)</span>. Then <span class="math inline">\(x_j^T(I-P_j)x_j=SSE_j\)</span>. Since <span class="math inline">\(1-\frac{SSE_j}{SST_j}=R_j^2\)</span>, we have <span class="math display">\[
+x_j^T(I-P_j)x_j = SST_j(1-R_j^2).
+\]</span> So <span class="math display">\[
+\begin{split}
+\operatorname{Var}(\hat\beta_j)&amp;=\frac{\sigma^2}{x_j^T(I-P_j)x_j}=\frac{\sigma^2}{SST_j}\frac{1}{1-R_j^2}\propto\frac{1}{1-R_j^2}.
+\end{split}
+\]</span></p>
+</details>
+</div>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8.7 (The variance inflation factor)</strong></span> The variance inflation factor for the ith coefficient is <span class="math display">\[
+VIF_j=\frac{1}{1-R^2_j}
+\]</span> where <span class="math inline">\(R_j^2\)</span> is the <span class="math inline">\(R^2\)</span> of regression produced by regressing <span class="math inline">\(x_j\)</span> against other <span class="math inline">\(x_i\)</span>’s.</p>
+</div>
+<p>So we would like to use other variables to represent <span class="math inline">\(x_j\)</span>. From the proof in <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, we know that <span class="math inline">\(x_j=P_jX_{-j}+\varepsilon_j\)</span>. If this fits well, <span class="math inline">\(R_j^2\)</span> is close to 1. If not <span class="math inline">\(R^2_j\)</span> is close to 0. In other words, if one variable is colinear to other variables, its VIF is supposed to be <span class="math inline">\(\infty\)</span>. If not, its VIF is supposed to be <span class="math inline">\(1\)</span>.</p>
+<p>Now by <a href="#lem-vif" class="quarto-xref">Lemma&nbsp;<span>8.1</span></a>, when <span class="math inline">\(R_j^2\)</span> is large, <span class="math inline">\(VIF_j\)</span> will be large. In other words, if one variable depends on other variables, which means that <span class="math inline">\(R_j^2\)</span> is high, the variance of <span class="math inline">\(\hat\beta_j\)</span> is also very high. Then the standard error of <span class="math inline">\(\hat\beta_j\)</span> is large, and then the corresponding t-statistic is small, which leads to a large p-value, and therefore it is highly possible that the variable is not significant. In other words, if there are redundent info, an individual variable might be non-significant while the whole group is significant.</p>
+<p>Usually if VIF is more than 5 or 10, multicollinearity may be a problem.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Also the interpretation of coefficients breaks. The basic interpretation of <span class="math inline">\(\beta_j\)</span> is that “holding others fixed, a 1-uint increase in <span class="math inline">\(x_j\)</span> will change <span class="math inline">\(y\)</span> by <span class="math inline">\(\beta_j\)</span>”. When strong multicollinearity exists, the interpretation “holding other variables fixed” becomes unrealistic because the predictors cannot vary independently in the observed data. As a result, individual regression coefficients no longer represent meaningful causal or marginal effects, even if the model still predicts well.</p>
+</div>
+</div>
+<!-- 
+::: {.callout-caution}
+In MLR, the multicolinearity between independent variables doesn't affect the unbiasedness of the OLS estimators. In other words, even if those independent variable are colinear, the OLS estimators is still BLUE (Best Linear Unbiased Estimators) to estimate $\boldsymbol{\hat{\beta}}$ as long as other standard assumptions hold. However, the variance and the stability may be impacted, and this may impact the later inference.
+
+- Multicollinearity inflates the variance of the estimated coefficients.
+- Even if a variable is genuinely important, its coefficient might not be statistically significant due to high standard errors.
+- The model might struggle to separate the effects of correlated predictors.
+:::
+
+ -->
+</section>
+<section id="formula-language" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">8.6</span> Formula language</h2>
+<p>Formula language was introduced by John Chambers based on the Wilkinson–Rogers notation. It is a formal symbolic system used to express mathematical relationships between variables. It provides a structured way to represent models, equations, and logical relationships in mathematics, statistics, etc..</p>
+<p>Instead of describing relationships in words, formula language expresses them precisely using symbols.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Notation</th>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Statistical Equivalent and Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>A + B</code></td>
+<td style="text-align: left;">Main Effects</td>
+<td style="text-align: left;"><span class="math inline">\(y = \beta_0 + \beta_1 A + \beta_2 B\)</span> (Independent effects)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>A : B</code></td>
+<td style="text-align: left;">Interaction Term</td>
+<td style="text-align: left;"><span class="math inline">\(y = \beta_0 + \beta_1 (AB)\)</span> (Only the interaction)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>A * B</code></td>
+<td style="text-align: left;">Full Factorial</td>
+<td style="text-align: left;"><span class="math inline">\(y = \beta_0 + \beta_1 A + \beta_2 B + \beta_3 (AB)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>(A + B + C)^2</code></td>
+<td style="text-align: left;">Degree Limit</td>
+<td style="text-align: left;">All main effects and all possible 2-way interactions</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>I()</code></td>
+<td style="text-align: left;">Math Identity</td>
+<td style="text-align: left;">Wraps arithmetic: <span class="math inline">\(I(A^2)\)</span> or <span class="math inline">\(I(A + B)\)</span> as a single term</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>1</code></td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">The constant <span class="math inline">\(\beta_0\)</span> (included by default)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>0 or -1</code></td>
+<td style="text-align: left;">No Intercept</td>
+<td style="text-align: left;">Removes <span class="math inline">\(\beta_0\)</span>, forcing the model through the origin</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>.</code></td>
+<td style="text-align: left;">All Variables</td>
+<td style="text-align: left;">Shorthand for “all other columns in the data frame”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>- B</code></td>
+<td style="text-align: left;">Exclusion</td>
+<td style="text-align: left;">Removes a specific term (e.g., <code>y ~ . - x1</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>In R formulas, symbols like <code>*</code>, <code>^</code>, and <code>+</code> have special meanings. To use them as standard math operators, you must wrap them in <code>I()</code>. For example</p>
+<ul>
+<li>Quadratic Model: <code>y ~ x + I(x^2)</code></li>
+<li>Summation as Predictor: <code>y ~ I(x1 + x2)</code></li>
+</ul>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1365,8 +1435,8 @@ Note
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/3/anova.html" class="pagination-link" aria-label="ANOVA">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
