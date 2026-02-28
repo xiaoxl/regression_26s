@@ -470,13 +470,15 @@ window.Quarto = {
    
   <ul>
   <li><a href="#nested-anova" id="toc-nested-anova" class="nav-link active" data-scroll-target="#nested-anova"><span class="header-section-number">9.1</span> Nested ANOVA</a></li>
-  <li><a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova"><span class="header-section-number">9.2</span> ANOVA</a>
+  <li><a href="#anova-table-for-linear-regression" id="toc-anova-table-for-linear-regression" class="nav-link" data-scroll-target="#anova-table-for-linear-regression"><span class="header-section-number">9.2</span> ANOVA table for linear regression</a></li>
+  <li><a href="#type-i-anova-table" id="toc-type-i-anova-table" class="nav-link" data-scroll-target="#type-i-anova-table"><span class="header-section-number">9.3</span> Type I ANOVA table</a></li>
+  <li><a href="#type-ii-anova-table" id="toc-type-ii-anova-table" class="nav-link" data-scroll-target="#type-ii-anova-table"><span class="header-section-number">9.4</span> Type II ANOVA table</a>
   <ul class="collapse">
-  <li><a href="#anova-table-for-linear-regression" id="toc-anova-table-for-linear-regression" class="nav-link" data-scroll-target="#anova-table-for-linear-regression"><span class="header-section-number">9.2.1</span> ANOVA table for linear regression</a></li>
-  <li><a href="#type-i-anova-table" id="toc-type-i-anova-table" class="nav-link" data-scroll-target="#type-i-anova-table"><span class="header-section-number">9.2.2</span> Type I ANOVA table</a></li>
-  <li><a href="#type-ii-anova-table" id="toc-type-ii-anova-table" class="nav-link" data-scroll-target="#type-ii-anova-table"><span class="header-section-number">9.2.3</span> Type II ANOVA table</a></li>
-  <li><a href="#type-iii-anova-table" id="toc-type-iii-anova-table" class="nav-link" data-scroll-target="#type-iii-anova-table"><span class="header-section-number">9.2.4</span> Type III ANOVA Table</a></li>
+  <li><a href="#testing-a-main-effect" id="toc-testing-a-main-effect" class="nav-link" data-scroll-target="#testing-a-main-effect"><span class="header-section-number">9.4.1</span> Testing a main effect</a></li>
+  <li><a href="#testing-an-interaction" id="toc-testing-an-interaction" class="nav-link" data-scroll-target="#testing-an-interaction"><span class="header-section-number">9.4.2</span> Testing an interaction</a></li>
+  <li><a href="#f-test" id="toc-f-test" class="nav-link" data-scroll-target="#f-test"><span class="header-section-number">9.4.3</span> F-test</a></li>
   </ul></li>
+  <li><a href="#type-iii-anova-table" id="toc-type-iii-anova-table" class="nav-link" data-scroll-target="#type-iii-anova-table"><span class="header-section-number">9.5</span> Type III ANOVA Table</a></li>
   </ul>
 </nav>
     </div>
@@ -536,6 +538,15 @@ window.Quarto = {
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
 \]</span></p>
 </div>
+<p>ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.</p>
+<p>In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.</p>
+<!-- More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.  -->
+<p>More generally, ANOVA is a framework for testing whether a model explains a non-trivial amount of variation in a response variable. Conceptually, it asks whether the reduction in unexplained variability achieved by adding terms to a model is large relative to random noise. Operationally, it answers this by comparing mean squares (variance estimates) using an F-statistic.</p>
+<p>ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector <span class="math inline">\(y\)</span> onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:</p>
+<p><span class="math display">\[
+\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
+\]</span> This identity is the mathematical foundation of all ANOVA tables.</p>
+<!-- (With an intercept in the model, the fitted values and residuals are orthogonal, which implies the decomposition $SST=SSR+SSE$.) -->
 <section id="nested-anova" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="nested-anova"><span class="header-section-number">9.1</span> Nested ANOVA</h2>
 <p>This is a test for comparing nested models.</p>
@@ -639,8 +650,8 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: y ~ x1</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: y ~ x1 + x2</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 168.62                                  </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97 105.81  1    62.811 57.584 1.989e-11 ***</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 177.82                                  </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97 127.48  1    50.343 38.306 1.447e-08 ***</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -649,8 +660,8 @@ window.Quarto = {
 <li>In each model, <code>Res.Df</code> is the degree of freedom of residuals, which is <span class="math inline">\(n-(p+1)\)</span> where <span class="math inline">\(p\)</span> is the number of predictors.</li>
 <li>In this example, <code>Res.Df</code> is <span class="math inline">\(100-(1+1)=98\)</span> and <span class="math inline">\(100-(1+2)=97\)</span>.</li>
 <li>The difference of degree of freedom is <span class="math inline">\(2-1=1\)</span>.</li>
-<li>The difference of <span class="math inline">\(SSE\)</span> is 168.6156183-105.8046712=62.8109471.</li>
-<li>Then the F-statistic is (62.8109471/1)/(105.8046712/97)=57.5840537.</li>
+<li>The difference of <span class="math inline">\(SSE\)</span> is 177.8235526-127.4803312=50.3432214.</li>
+<li>Then the F-statistic is (50.3432214/1)/(127.4803312/97)=38.3062424.</li>
 <li>The p-value is gotten by the F-test.</li>
 </ul>
 </details>
@@ -669,27 +680,16 @@ Note
 </div>
 </div>
 </section>
-<section id="anova" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="anova"><span class="header-section-number">9.2</span> ANOVA</h2>
-<p>ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.</p>
-<p>In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.</p>
-<!-- More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.  -->
-<p>More generally, ANOVA is a framework for testing whether a model explains a non-trivial amount of variation in a response variable. Conceptually, it asks whether the reduction in unexplained variability achieved by adding terms to a model is large relative to random noise. Operationally, it answers this by comparing mean squares (variance estimates) using an F-statistic.</p>
-<p>ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector <span class="math inline">\(y\)</span> onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:</p>
-<p><span class="math display">\[
-\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
-\]</span> This identity is the mathematical foundation of all ANOVA tables.</p>
-<!-- (With an intercept in the model, the fitted values and residuals are orthogonal, which implies the decomposition $SST=SSR+SSE$.) -->
-<section id="anova-table-for-linear-regression" class="level3" data-number="9.2.1">
-<h3 data-number="9.2.1" class="anchored" data-anchor-id="anova-table-for-linear-regression"><span class="header-section-number">9.2.1</span> ANOVA table for linear regression</h3>
+<section id="anova-table-for-linear-regression" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="anova-table-for-linear-regression"><span class="header-section-number">9.2</span> ANOVA table for linear regression</h2>
 <p>This is the anova table introduced in the previous lectures. The main purpose is to show to decomposition and compute the F-statistic as well as the corresponding p-value.</p>
 <p><span class="math display">\[
 F=\frac{MSR}{MSE}=\frac{\text{variance explained per parameter}}{\text{variance unexplained per observation}}.
 \]</span></p>
 <p>It is about the whole group of variables.</p>
 </section>
-<section id="type-i-anova-table" class="level3" data-number="9.2.2">
-<h3 data-number="9.2.2" class="anchored" data-anchor-id="type-i-anova-table"><span class="header-section-number">9.2.2</span> Type I ANOVA table</h3>
+<section id="type-i-anova-table" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="type-i-anova-table"><span class="header-section-number">9.3</span> Type I ANOVA table</h2>
 <p>Type I ANOVA Table (Sequential Sum of Squares) decomposes the total variation in the response by adding predictors to the model sequentially, one at a time, in the order they appear in the model formula.</p>
 <p>Suppose we fit the linear model <span class="math display">\[
 y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
@@ -849,16 +849,47 @@ Tip
 <p>When <span class="math inline">\(x_2\)</span> is added first, it captures much of the variation in <span class="math inline">\(y\)</span> due to its strong correlation with <span class="math inline">\(x_1\)</span>, and therefore appears significant. However, because <span class="math inline">\(x_2\)</span> does not fully explain <span class="math inline">\(x_1\)</span>, there remains variation in <span class="math inline">\(y\)</span> that is uniquely attributable to <span class="math inline">\(x_1\)</span>. Consequently, <span class="math inline">\(x_1\)</span> is still significant even after <span class="math inline">\(x_2\)</span> has been included in the model.</p>
 </div>
 </section>
-<section id="type-ii-anova-table" class="level3" data-number="9.2.3">
-<h3 data-number="9.2.3" class="anchored" data-anchor-id="type-ii-anova-table"><span class="header-section-number">9.2.3</span> Type II ANOVA table</h3>
-<p>A Type II ANOVA table (Marginal Sum of Squares) tests a main effect after adjusting for the other main effects, but not adjusting for interactions that contain that effect (and many implementations won’t even report the “main effect” test if it’s involved in interactions, because it’s not meaningful without specifying interaction context).</p>
-<p>In other words, Type II ANOVA can only be applied to models without interaction terms. <!-- tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested. --></p>
-<p>Type II</p>
-<p>Suppose we fit the linear model <span class="math display">\[
-y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
-\]</span> For each predictor <span class="math inline">\(x_j\)</span>, the Type II sum of squares is defined as <span class="math display">\[
-SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full model}).
-\]</span> That is, it measures the unique contribution of <span class="math inline">\(x_j\)</span> after accounting for all other predictors.</p>
+<section id="type-ii-anova-table" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="type-ii-anova-table"><span class="header-section-number">9.4</span> Type II ANOVA table</h2>
+<p>A Type II ANOVA table (marginal sum of squares) tests each term after adjusting for all other main effects, but not for interaction terms that contain that effect. In practice, the sums of squares for main effects are computed from the additive model (without interactions), while the interaction terms are tested by comparing the additive model with the model that includes the interaction.</p>
+<p>Suppose the full model is</p>
+<p><span class="math display">\[
+y \sim x_1 + x_2 + x_1:x_2 .
+\]</span></p>
+<section id="testing-a-main-effect" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="testing-a-main-effect"><span class="header-section-number">9.4.1</span> Testing a main effect</h3>
+<p>To test the main effect (<span class="math inline">\(x_i\)</span>), the Type II sum of squares is obtained from the additive model</p>
+<p><span class="math display">\[
+y \sim x_1 + x_2 .
+\]</span></p>
+<p>Specifically, <span class="math display">\[
+SS^{(II)}(x_1)= SSE(x_2)-SSE(x_1 + x_2).
+\]</span></p>
+<p>Similarly,</p>
+<p><span class="math display">\[
+SS^{(II)}(x_2)=SSE(x_1)-SSE(x_1 + x_2).
+\]</span></p>
+<p>Thus, the main effects are evaluated after adjusting for the other main effects, but ignoring the interaction term.</p>
+</section>
+<section id="testing-an-interaction" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="testing-an-interaction"><span class="header-section-number">9.4.2</span> Testing an interaction</h3>
+<p>For the interaction (<span class="math inline">\(x_1x_2\)</span>), the models compared are</p>
+<p>Full model</p>
+<p><span class="math display">\[
+y \sim x_1 + x_2 + x_1:x_2
+\]</span></p>
+<p>Reduced model</p>
+<p><span class="math display">\[
+y \sim x_1 + x_2.
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+SS^{(II)}(x_1:x_2)=SSE(x_1 + x_2)-SSE(x_1 + x_2 + x_1:x_2).
+\]</span></p>
+<p>That is, it measures the unique contribution of <span class="math inline">\(x_j\)</span> after accounting for all other predictors.</p>
+</section>
+<section id="f-test" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="f-test"><span class="header-section-number">9.4.3</span> F-test</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
@@ -881,14 +912,14 @@ SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full m
 <td><span class="math inline">\(x_1\)</span></td>
 <td><span class="math inline">\(1\)</span></td>
 <td><span class="math inline">\(SS^{(II)}(x_1)\)</span></td>
-<td><span class="math inline">\(MS(x_1)\)</span></td>
+<td><span class="math inline">\(MS^{II}(x_1)\)</span></td>
 <td><span class="math inline">\(F_1\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(x_2\)</span></td>
 <td><span class="math inline">\(1\)</span></td>
 <td><span class="math inline">\(SS^{(II)}(x_2)\)</span></td>
-<td><span class="math inline">\(MS(x_2)\)</span></td>
+<td><span class="math inline">\(MS^{II}(x_2)\)</span></td>
 <td><span class="math inline">\(F_2\)</span></td>
 </tr>
 <tr class="odd">
@@ -908,10 +939,10 @@ SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full m
 </tbody>
 </table>
 <p>Each F-statistic tests <span class="math display">\[
-H_0: \beta_j=0\quad\text{ adjusting for all other predictors.}
+H_0: \beta_j=0\quad\text{ adjusting for all other main effect predictors.}
 \]</span></p>
 <p>The corresponding F-statistic <span class="math display">\[
-F_j^{(II)}=\frac{MS^{(II)(x_j)}}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
 \]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -931,6 +962,61 @@ Tip
 </ol>
 </div>
 </div>
+<hr>
+<!-- 
+### Summary
+
+In Type II ANOVA:
+
+* Main effects are tested using the **additive model (without interactions)**.
+* Interaction terms are tested by comparing the additive model with the full model.
+* The F statistics use the **residual variance from the full model**.
+
+---
+
+
+
+
+A Type II ANOVA table (Marginal Sum of Squares) tests a main effect after adjusting for the other main effects, but not adjusting for interactions that contain that effect. In practical, if we study a main effect $x$, the models we compare are the full model without interactions related to $x$, and the redued model with all variables other than $x$ and all interactions related to $x$. If we study an interaction term, then we compare the full model with this interaction and the reduced model without this interaction.
+
+
+
+
+Suppose we fit the linear model
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
+$$
+For each predictor $x_j$, the Type II sum of squares is defined as
+$$
+SS^{(II)}(x_j)=SSE(x_j| \text{all other terms without interaction with } x_j)-SSE(\text{full model without interaction terms with } x_j).
+$$
+That is, it measures the unique contribution of $x_j$ after accounting for all other predictors.
+
+
+| Source        | Degrees of Freedom | Sum of Squares                | Mean Square                 | F        |
+|---------------|--------------------|-------------------------------|-----------------------------|----------|
+| $x_1$         | $1$                | $SS^{(II)}(x_1)$              | $MS^{II}(x_1)$                   | $F_1$    |
+| $x_2$         | $1$                | $SS^{(II)}(x_2)$              | $MS^{II}(x_2)$                   | $F_2$    |
+| $\vdots$      | $\vdots$           | $\vdots$                      | $\vdots$                    | $\vdots$ |
+| Residuals     | $n - p - 1$        | $\mathrm{SSE}$                | $\mathrm{MSE}$              |          |
+
+Each F-statistic tests
+$$
+H_0: \beta_j=0\quad\text{ adjusting for all other predictors.}
+$$
+
+The corresponding F-statistic
+$$
+F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+$$ 
+-->
+<!-- 
+::: {.callout-tip}
+1. Reordering predictors does not change the table.
+2. Each effect is tested conditional on all other main effects.
+3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
+4. Each row is a nested-model F test removing one predictor at a time.
+::: -->
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 9.4</strong></span> We first generate a dataset with two correlated predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
 <div class="cell">
@@ -964,8 +1050,9 @@ Tip
 <p>Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> does not change the results.</p>
 </div>
 </section>
-<section id="type-iii-anova-table" class="level3" data-number="9.2.4">
-<h3 data-number="9.2.4" class="anchored" data-anchor-id="type-iii-anova-table"><span class="header-section-number">9.2.4</span> Type III ANOVA Table</h3>
+</section>
+<section id="type-iii-anova-table" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="type-iii-anova-table"><span class="header-section-number">9.5</span> Type III ANOVA Table</h2>
 <p>A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) tests each model term in the presence of all other terms. Equivalently, for a given term, it compares the full model to a reduced model obtained by setting the coefficients associated with that term to zero while keeping all other terms in the model. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.</p>
 <p>Suppose we fit the linear model <span class="math display">\[
 y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
@@ -1114,6 +1201,16 @@ F^{(III)}=t^2.
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">*</span>x2)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x2)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x1<span class="sc">:</span>x2)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x2<span class="sc">+</span>x1<span class="sc">:</span>x2)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </details>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1131,19 +1228,19 @@ F^{(III)}=t^2.
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> x1<span class="sc">*</span>x2<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>x1<span class="sc">+</span><span class="dv">3</span><span class="sc">*</span>x2<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">80</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">*</span>x2)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type=</span><span class="dv">2</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">##            Sum Sq Df F value    Pr(&gt;F)    </span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         74.314  1  71.918 1.322e-12 ***</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        270.853  1 262.121 &lt; 2.2e-16 ***</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">## x1:x2      84.601  1  81.874 1.078e-13 ***</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  78.532 76                      </span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> x1<span class="sc">*</span>x2<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>x1<span class="sc">+</span><span class="dv">3</span><span class="sc">*</span>x2<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">80</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">*</span>x2)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type=</span><span class="dv">2</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##            Sum Sq Df F value    Pr(&gt;F)    </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         74.314  1  71.918 1.322e-12 ***</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        270.853  1 262.121 &lt; 2.2e-16 ***</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## x1:x2      84.601  1  81.874 1.078e-13 ***</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  78.532 76                      </span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <table class="caption-top table">
 <colgroup>
@@ -1178,7 +1275,6 @@ F^{(III)}=t^2.
 </table>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
