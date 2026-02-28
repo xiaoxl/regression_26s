@@ -4,6 +4,39 @@
 
 {{< include ../math.qmd >}} 
 
+
+
+
+
+ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.
+
+In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.
+
+<!-- More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.  -->
+
+More generally, ANOVA is a framework for testing whether a model explains a non-trivial amount of variation in a response variable. Conceptually, it asks whether the reduction in unexplained variability achieved by adding terms to a model is large relative to random noise. Operationally, it answers this by comparing mean squares (variance estimates) using an F-statistic.
+
+ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector $y$ onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:
+
+$$
+\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
+$$
+This identity is the mathematical foundation of all ANOVA tables.
+
+<!-- (With an intercept in the model, the fitted values and residuals are orthogonal, which implies the decomposition $SST=SSR+SSE$.) --> 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Nested ANOVA
 
 This is a test for comparing nested models.
@@ -84,28 +117,8 @@ This nested model is the basis of all ANOVA tables listed below. All ANOVA table
 :::
 
 
-## ANOVA
 
-
-ANOVA stands for Analysis of Variance. It is a fundamental diagnostic and inferential tool in regression analysis. The basic idea of ANOVA is to use F tests to assess whether a model or components of a model explains a statistically significant amount of variability in the response variable.
-
-In simple linear regression, the ANOVA table is unique and unambiguous, because there is only one predictor and hence only one way to attribute explained variability. In multiple linear regression, however, predictors may be correlated, and their contributions to the model are no longer uniquely defined. As a result, different conventions have been developed to allocate the explained variability among predictors. These conventions lead to different types of ANOVA tables, commonly referred to as Type I, Type II, and Type III ANOVA. The three types differ in how they account for the presence of other predictors and, when applicable, interaction terms in the model.
-
-<!-- More generally, ANOVA is a framework for testing whether a statistical model explains a non-trivial amount of variation in a response variable. Despite its name, ANOVA is not about comparing variances. Rather, it is about explaining variability. The central question ANOVA addresses is whether the reduction in unexplained variability achieved by a model is sufficiently large, relative to random noise, to be considered statistically significant.  -->
-
-More generally, ANOVA is a framework for testing whether a model explains a non-trivial amount of variation in a response variable. Conceptually, it asks whether the reduction in unexplained variability achieved by adding terms to a model is large relative to random noise. Operationally, it answers this by comparing mean squares (variance estimates) using an F-statistic.
-
-ANOVA is built on orthogonal projection in the data space. Fitting a model corresponds to projecting the response vector $y$ onto the model subspace, which yields the fundamental decomposition of total variability into explained and unexplained components:
-
-$$
-\underbrace{\norm{y-\bar y}^2}_{\text{SST}}=\underbrace{\norm{\hat y-\bar y}^2}_{\text{SSR}}+\underbrace{\norm{y-\hat y}^2}_{\text{SSE}}
-$$
-This identity is the mathematical foundation of all ANOVA tables.
-
-<!-- (With an intercept in the model, the fitted values and residuals are orthogonal, which implies the decomposition $SST=SSR+SSE$.) --> 
-
-
-### ANOVA table for linear regression
+## ANOVA table for linear regression
 
 This is the anova table introduced in the previous lectures. The main purpose is to show to decomposition and compute the F-statistic as well as the corresponding p-value.
 
@@ -116,7 +129,7 @@ $$
 It is about the whole group of variables.
 
 
-### Type I ANOVA table
+## Type I ANOVA table
 
 Type I ANOVA Table (Sequential Sum of Squares) decomposes the total variation in the response by adding predictors to the model sequentially, one at a time, in the order they appear in the model formula.
 
@@ -233,14 +246,127 @@ strong correlation with $x_1$, and therefore appears significant. However, becau
 
 
 
-### Type II ANOVA table
+## Type II ANOVA table
 
-A Type II ANOVA table (Marginal Sum of Squares) tests a main effect after adjusting for the other main effects, but not adjusting for interactions that contain that effect (and many implementations won’t even report the “main effect” test if it’s involved in interactions, because it’s not meaningful without specifying interaction context).
 
-In other words, Type II ANOVA can only be applied to models without interaction terms. 
-<!-- tests each predictor after adjusting for all other main effects in the model, but ignores interaction terms that involve the predictor being tested. -->
 
-Type II 
+
+
+A Type II ANOVA table (marginal sum of squares) tests each term after adjusting for all other main effects, but not for interaction terms that contain that effect. In practice, the sums of squares for main effects are computed from the additive model (without interactions), while the interaction terms are tested by comparing the additive model with the model that includes the interaction.
+
+Suppose the full model is
+
+$$
+y \sim x_1 + x_2 + x_1:x_2 .
+$$
+
+### Testing a main effect
+
+To test the main effect ($x_i$), the Type II sum of squares is obtained from the additive model
+
+$$
+y \sim x_1 + x_2 .
+$$
+
+Specifically,
+$$
+SS^{(II)}(x_1)= SSE(x_2)-SSE(x_1 + x_2).
+$$
+
+Similarly,
+
+$$
+SS^{(II)}(x_2)=SSE(x_1)-SSE(x_1 + x_2).
+$$
+
+Thus, the main effects are evaluated after adjusting for the other main effects, but ignoring the interaction term.
+
+### Testing an interaction
+
+For the interaction ($x_1x_2$), the models compared are
+
+Full model
+
+$$
+y \sim x_1 + x_2 + x_1:x_2
+$$
+
+Reduced model
+
+$$
+y \sim x_1 + x_2.
+$$
+
+Therefore,
+
+$$
+SS^{(II)}(x_1:x_2)=SSE(x_1 + x_2)-SSE(x_1 + x_2 + x_1:x_2).
+$$
+
+
+
+
+
+
+That is, it measures the unique contribution of $x_j$ after accounting for all other predictors.
+
+
+
+### F-test
+
+
+| Source        | Degrees of Freedom | Sum of Squares                | Mean Square                 | F        |
+|---------------|--------------------|-------------------------------|-----------------------------|----------|
+| $x_1$         | $1$                | $SS^{(II)}(x_1)$              | $MS^{II}(x_1)$                   | $F_1$    |
+| $x_2$         | $1$                | $SS^{(II)}(x_2)$              | $MS^{II}(x_2)$                   | $F_2$    |
+| $\vdots$      | $\vdots$           | $\vdots$                      | $\vdots$                    | $\vdots$ |
+| Residuals     | $n - p - 1$        | $\mathrm{SSE}$                | $\mathrm{MSE}$              |          |
+
+Each F-statistic tests
+$$
+H_0: \beta_j=0\quad\text{ adjusting for all other main effect predictors.}
+$$
+
+The corresponding F-statistic
+$$
+F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+$$
+
+
+::: {.callout-tip}
+1. Reordering predictors does not change the table.
+2. Each effect is tested conditional on all other main effects.
+3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
+4. Each row is a nested-model F test removing one predictor at a time.
+:::
+
+
+
+---
+
+
+
+
+
+
+<!-- 
+### Summary
+
+In Type II ANOVA:
+
+* Main effects are tested using the **additive model (without interactions)**.
+* Interaction terms are tested by comparing the additive model with the full model.
+* The F statistics use the **residual variance from the full model**.
+
+---
+
+
+
+
+A Type II ANOVA table (Marginal Sum of Squares) tests a main effect after adjusting for the other main effects, but not adjusting for interactions that contain that effect. In practical, if we study a main effect $x$, the models we compare are the full model without interactions related to $x$, and the redued model with all variables other than $x$ and all interactions related to $x$. If we study an interaction term, then we compare the full model with this interaction and the reduced model without this interaction.
+
+
+
 
 Suppose we fit the linear model
 $$
@@ -248,15 +374,15 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\ldots+\beta_px_p+\varepsilon.
 $$
 For each predictor $x_j$, the Type II sum of squares is defined as
 $$
-SS^{(II)}(x_j)=SSE(\text{model with all predictors except }x_j)-SSE(\text{full model}).
+SS^{(II)}(x_j)=SSE(x_j| \text{all other terms without interaction with } x_j)-SSE(\text{full model without interaction terms with } x_j).
 $$
 That is, it measures the unique contribution of $x_j$ after accounting for all other predictors.
 
 
 | Source        | Degrees of Freedom | Sum of Squares                | Mean Square                 | F        |
 |---------------|--------------------|-------------------------------|-----------------------------|----------|
-| $x_1$         | $1$                | $SS^{(II)}(x_1)$              | $MS(x_1)$                   | $F_1$    |
-| $x_2$         | $1$                | $SS^{(II)}(x_2)$              | $MS(x_2)$                   | $F_2$    |
+| $x_1$         | $1$                | $SS^{(II)}(x_1)$              | $MS^{II}(x_1)$                   | $F_1$    |
+| $x_2$         | $1$                | $SS^{(II)}(x_2)$              | $MS^{II}(x_2)$                   | $F_2$    |
 | $\vdots$      | $\vdots$           | $\vdots$                      | $\vdots$                    | $\vdots$ |
 | Residuals     | $n - p - 1$        | $\mathrm{SSE}$                | $\mathrm{MSE}$              |          |
 
@@ -267,16 +393,16 @@ $$
 
 The corresponding F-statistic
 $$
-F_j^{(II)}=\frac{MS^{(II)(x_j)}}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
-$$
-
-
+F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
+$$ 
+-->
+<!-- 
 ::: {.callout-tip}
 1. Reordering predictors does not change the table.
 2. Each effect is tested conditional on all other main effects.
 3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
 4. Each row is a nested-model F test removing one predictor at a time.
-:::
+::: -->
 
 
 
@@ -312,7 +438,7 @@ Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering $x_1$ and $x_
 
 
 
-### Type III ANOVA Table 
+## Type III ANOVA Table 
 
 
 A Type III ANOVA table (Fully Adjusted / Coefficient-Based Tests) tests each model term in the presence of all other terms. Equivalently, for a given term, it compares the full model to a reduced model obtained by setting the coefficients associated with that term to zero while keeping all other terms in the model. Unlike Type I ANOVA, the allocation of variability does not depend on the order of predictors in the model.
@@ -393,6 +519,20 @@ Please compare the t-statistic and the F-statistic for each variable.
 ```{r}
 Anova(model, Type=2)
 ```
+
+
+
+```{r}
+model12 <- lm(y~x1*x2)
+model1 <- lm(y~x1)
+model2 <- lm(y~x2)
+fit1 <- lm(y~x1+x1:x2)
+fit2 <- lm(y~x2+x1:x2)
+fit <- lm(y~x1+x2)
+s1 <- lm(y~x1)
+s2 <- lm(y~x2)
+```
+
 
 
 </details>
