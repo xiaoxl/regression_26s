@@ -333,12 +333,22 @@ F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
 $$
 
 
+
+
+Type II ANOVA table asks the following question: 
+
+> Does this term improve the model after adjusting for the other main effects (when ignoring the interaction)?
+
+
 ::: {.callout-tip}
 1. Reordering predictors does not change the table.
 2. Each effect is tested conditional on all other main effects.
 3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
 4. Each row is a nested-model F test removing one predictor at a time.
 :::
+
+
+
 
 
 
@@ -409,6 +419,9 @@ $$
 
 ::: {#exm-}
 
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
 We first generate a dataset with two correlated predictors $x_1$ and $x_2$.
 ```{r}
 set.seed(123)
@@ -432,6 +445,8 @@ Anova(model, type=2)
 - $x_2$: Compares the full model $y \sim x_1 + x_2$ to the reduced model $y \sim x_1$ (i.e., the model with $x_2$ removed). A small p-value implies that $x_2$ explains a significant amount of variation in $y$ beyond what is explained by $x_1$.
 
 Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering $x_1$ and $x_2$ does not change the results.
+
+</details>
 
 :::
 
@@ -541,22 +556,48 @@ s2 <- lm(y~x2)
 
 ::: {.callout-note}
 ## Type II vs Type III
-Type II ANOVA tests variables (main effects), whereas Type III ANOVA tests individual coefficients. Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types are equivalent and yield identical test statistics and p-values.
+Type II ANOVA tests variables (main effects) through comparisons of nested models, whereas Type III ANOVA tests individual coefficients within the full model.
 
-When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA does not test main effects involved in interactions, because such tests lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds to test the corresponding coefficients anyway, regardless of whether the resulting hypothesis has a meaningful interpretation.
+Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types become equivalent and yield identical test statistics and p-values. In this case, testing whether a coefficient is zero is equivalent to comparing the reduced model without that variable to the full model that includes it.
+
+When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA avoids testing main effects that participate in interactions, because such tests would require breaking the hierarchical structure of the model and thus lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds by testing the corresponding coefficients in the full model regardless of interactions, even though the resulting hypothesis may be difficult to interpret scientifically.
+
+Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model.
 :::
 
 
+::: {#exm-}
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
 ```{r}
-y  <- x1*x2+2*x1+3*x2+rnorm(80)
-fit <- lm(y~x1*x2)
-Anova(fit, type=2)
+set.seed(123)
+
+n <- 80
+x1 <- rnorm(n)
+x2 <- 0.8 * x1 + rnorm(n, sd = 0.6)
+y <- x1 * x2 + 2 * x1 + 3 * x2 + rnorm(80)
 ```
 
+```{r}
+fit <- lm(y ~ x1 * x2)
+Anova(fit, type = 2)
+```
 
-| Term      | **Type II Logic**                                                        | **Type III Logic**                         |
-| --------- | ------------------------------------------------------------------------ | ------------------------------------------ |
-| $x_1$     | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_2 + x_1:x_2$ | Same reduced model: $y \sim x_2 + x_1:x_2$ |
-| $x_2$     | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_1 + x_1:x_2$ | Same reduced model: $y \sim x_1 + x_1:x_2$ |
-| $x_1:x_2$ | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_1 + x_2$     | Same as Type II                            |
+```{r}
+fit2 <- lm(y ~ x1 + x2)
+Anova(fit2, type = 3)
+```
+
+Please compare the sum of squares between the Type II ANOVA table of the 1st model `y~x1*x2` and the Type III ANOVA table of the 2nd model `y~x1+x2`.
+
+
+| Term | Type II Logic (nested model comparison) | Type III Logic (coefficient test in full model) |
+|---|---|---|
+| $x_1$ | Full: $y \sim x_1 + x_2$  <br> Reduced: $y \sim x_2$ | model: $y \sim x_1 + x_2 + x_1:x_2$  <br> Test $H_0:\beta_1=0$ |
+| $x_2$ | Full: $y \sim x_1 + x_2$  <br> Reduced: $y \sim x_1$ | model: $y \sim x_1 + x_2 + x_1:x_2$  <br> Test $H_0:\beta_2=0$ |
+| $x_1:x_2$ | Full: $y \sim x_1 + x_2 + x_1:x_2$  <br> Reduced: $y \sim x_1 + x_2$ | Full model kept: $y \sim x_1 + x_2 + x_1:x_2$ <br> Test $H_0:\beta_3=0$ |
+</details>
+
+:::

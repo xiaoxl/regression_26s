@@ -464,6 +464,212 @@ In MLR, the multicolinearity between independent variables doesn't affect the un
 
 
 
+
+
+### Dependence and Multicolinearity
+If $X$ is a random variable, $X^2$ depends on $X$ completely. However, the ``linear relation'' between $X$ and $X^2$ is not obvious. Here the key point is to consider the $R^2$ when regressing $X^2$ on $X$: $X^2=\beta_0+\beta_1X+\varepsilon$.
+
+Note that
+$$
+R^2=\cor(X^2,X)^2=\frac{\Cov(X^2, X)^2}{\Var(X^2)\Var(X)}=\frac{(\Exp[X^3]-\Exp[X]\Exp[X^2])^2}{\Var(X^2)\Var(X)}.
+$$
+
+This result depends on the distribution of $X$. For example, if the distribution of $X$ is symmetric, then $\Exp[X]=0$ and $\Exp[X^3]=0$. Therefore $R^2(X^2\sim X)=0$. 
+
+
+::: {#exm-}
+## Normal distribution
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+Assume $X\sim N(\mu,\sigma^2)$. If $\mu=0$, then the distribution of $X$ is symmetric, and so $R^2(X^2\sim X)=0$, and therefore $VIF(X^2\sim X)=1$. 
+
+More generally when $\mu$ can be $0$,
+$$
+\begin{split}
+\Exp[X]&=\mu,\\
+\Exp[X^2]&=\sigma^2+\mu^2,\\
+\Exp[X^3]&=\mu^3+3\mu\sigma^2,\\
+\Exp[X^4]&=\mu^4+6\mu^2\sigma^2+3\sigma^4,\\
+\Cov(X,X^2)&=\Exp[X^3]-\Exp[X]\Exp[X^2]=(\mu^3+3\mu\sigma^2)-\mu(\sigma^2+\mu^2)=2\mu\sigma^2,\\
+\Var[X]&=\sigma^2,\\
+\Var[X^2]&=\Exp[X^4]-\Exp[X^2]^2=(\mu^4+6\mu^2\sigma^2+3\sigma^4)-(\sigma^2+\mu^2)^2=4\mu^2\sigma^2+2\sigma^4,\\
+\cor(X,X^2)&=\frac{2\mu}{\sqrt{4\mu^2+2\sigma^2}}.
+\end{split}
+$$
+So $R^2(X^2\sim X)=\frac{2\mu^2}{2\mu^2+\sigma^2}$. Then the corresponding VIF is $VIF(X^2\sim X)=1+2\frac{\mu^2}{\sigma^2}$.
+
+</details>
+
+
+:::
+
+
+
+::: {#exm-}
+## Exponential distribution
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+Let
+$$
+X \sim \mathrm{Exp}(\lambda).
+$$
+
+The moments are
+$$
+\begin{split}
+\Exp[X] &= \frac{1}{\lambda},\\
+\Exp[X^2] &= \frac{2}{\lambda^2},\\
+\Exp[X^3] &= \frac{6}{\lambda^3},\\
+\Exp[X^4] &= \frac{24}{\lambda^4}.
+\end{split}
+$$
+
+Compute the required quantities.
+
+$$
+\Var(X)=\frac{1}{\lambda^2}.
+$$
+
+$$
+\begin{split}
+\Var(X^2)
+&=\Exp[X^4]-\Exp[X^2]^2\\
+&=\frac{24}{\lambda^4}-\frac{4}{\lambda^4}\\
+&=\frac{20}{\lambda^4}.
+\end{split}
+$$
+
+$$
+\begin{split}
+\Cov(X,X^2)
+&=\Exp[X^3]-\Exp[X]\Exp[X^2]\\
+&=\frac{6}{\lambda^3}-\frac{1}{\lambda}\cdot\frac{2}{\lambda^2}\\
+&=\frac{4}{\lambda^3}.
+\end{split}
+$$
+
+Now compute $R^2$:
+
+$$
+\begin{split}
+R^2
+&=\frac{\Cov(X,X^2)^2}{\Var(X)\Var(X^2)}\\
+&=\frac{(4/\lambda^3)^2}{(1/\lambda^2)(20/\lambda^4)}\\
+&=\frac{16}{20}\\
+&=0.8.
+\end{split}
+$$
+
+Thus $R^2(X^2\sim X)=0.8$. Therefore $VIF(X^2\sim X)=5$.
+
+
+</details>
+
+:::
+
+
+
+::: {#exm-}
+## Uniform distribution
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+Let
+$$
+X \sim \mathrm{Unif}(0,1).
+$$
+
+The moments are
+$$
+\begin{split}
+\Exp[X] &= \frac12,\\
+\Exp[X^2] &= \frac13,\\
+\Exp[X^3] &= \frac14,\\
+\Exp[X^4] &= \frac15.
+\end{split}
+$$
+
+Compute the required quantities.
+
+$$
+\begin{split}
+\Var(X)
+&=\Exp[X^2]-\Exp[X]^2\\
+&=\frac13-\frac14\\
+&=\frac{1}{12}.
+\end{split}
+$$
+
+$$
+\begin{split}
+\Var(X^2)
+&=\Exp[X^4]-\Exp[X^2]^2\\
+&=\frac15-\frac19\\
+&=\frac{4}{45}.
+\end{split}
+$$
+
+$$
+\begin{split}
+\Cov(X,X^2)
+&=\Exp[X^3]-\Exp[X]\Exp[X^2]\\
+&=\frac14-\frac12\cdot\frac13\\
+&=\frac{1}{12}.
+\end{split}
+$$
+
+Now compute $R^2$:
+
+$$
+\begin{split}
+R^2
+&=\frac{\Cov(X,X^2)^2}{\Var(X)\Var(X^2)}\\
+&=\frac{(1/12)^2}{(1/12)(4/45)}\\
+&=\frac{1}{12}\cdot\frac{45}{4}\\
+&=\frac{15}{16}.
+\end{split}
+$$
+
+Thus $R^2(X^2\sim X)=\frac{15}{16}=0.9375$. Then $VIF(X^2\sim X)=16$.
+</details>
+
+:::
+
+
+Here is a table of common distributions. 
+
+| Distribution | Parameters | $R^2(X^2\sim X)$ | $\mathrm{VIF}(X^2\sim X)$ |
+|---|---|---|---|
+| Normal | $N(0,\sigma^2)$ | $0$ | $1$ |
+| Normal | $N(\mu,\sigma^2)$ | $\dfrac{2\mu^2}{2\mu^2+\sigma^2}$ | $1+\dfrac{2\mu^2}{\sigma^2}$ |
+| Uniform | $\mathrm{Unif}(-a,a)$ | $0$ | $1$ |
+| Uniform | $\mathrm{Unif}(0,1)$ | $\dfrac{15}{16}=0.9375$ | $16$ |
+| Exponential | $\mathrm{Exp}(\lambda)$ | $\dfrac45=0.8$ | $5$ |
+| Gamma | $\Gamma(k,\lambda)$ | $\dfrac{2k}{2k+1}$ | $2k+1$ |
+| Chi-square | $\chi^2_k$ | $\dfrac{2k}{2k+1}$ | $2k+1$ |
+| t | $t_\nu$ | $0$ | $1$ |
+
+
+This shows that for a nonlinear relation such as $X^2$, a linear regression may sometimes capture a large portion of the variation, while in other cases it may capture almost nothing.
+
+
+
+::: {.callout-note}
+One common trick to reduce multicollinearity is to center the variable:
+$$
+z = x - \bar x.
+$$
+Then $z$ is centered around $0$, which often makes $z$ and $z^2$ less linearly dependent than $x$ and $x^2$. This transformation can reduce collinearity among predictors, while leaving the fitted values, residuals, and $R^2$ of the model unchanged.
+:::
+
+
+
+
 ## Formula language
 
 Formula language was introduced by John Chambers based on the Wilkinson–Rogers notation. It is a formal symbolic system used to express mathematical relationships between variables. It provides a structured way to represent models, equations, and logical relationships in mathematics, statistics, etc..
