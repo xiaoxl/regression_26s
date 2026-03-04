@@ -477,7 +477,10 @@ window.Quarto = {
   <li><a href="#r2" id="toc-r2" class="nav-link" data-scroll-target="#r2"><span class="header-section-number">8.4.1</span> <span class="math inline">\(R^2\)</span></a></li>
   <li><a href="#r_a2" id="toc-r_a2" class="nav-link" data-scroll-target="#r_a2"><span class="header-section-number">8.4.2</span> <span class="math inline">\(R_a^2\)</span></a></li>
   </ul></li>
-  <li><a href="#colinearity" id="toc-colinearity" class="nav-link" data-scroll-target="#colinearity"><span class="header-section-number">8.5</span> Colinearity</a></li>
+  <li><a href="#colinearity" id="toc-colinearity" class="nav-link" data-scroll-target="#colinearity"><span class="header-section-number">8.5</span> Colinearity</a>
+  <ul class="collapse">
+  <li><a href="#dependence-and-multicolinearity" id="toc-dependence-and-multicolinearity" class="nav-link" data-scroll-target="#dependence-and-multicolinearity"><span class="header-section-number">8.5.1</span> Dependence and Multicolinearity</a></li>
+  </ul></li>
   <li><a href="#formula-language" id="toc-formula-language" class="nav-link" data-scroll-target="#formula-language"><span class="header-section-number">8.6</span> Formula language</a></li>
   </ul>
 </nav>
@@ -939,6 +942,223 @@ In MLR, the multicolinearity between independent variables doesn't affect the un
 :::
 
  -->
+<section id="dependence-and-multicolinearity" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="dependence-and-multicolinearity"><span class="header-section-number">8.5.1</span> Dependence and Multicolinearity</h3>
+<p>If <span class="math inline">\(X\)</span> is a random variable, <span class="math inline">\(X^2\)</span> depends on <span class="math inline">\(X\)</span> completely. However, the ``linear relation’’ between <span class="math inline">\(X\)</span> and <span class="math inline">\(X^2\)</span> is not obvious. Here the key point is to consider the <span class="math inline">\(R^2\)</span> when regressing <span class="math inline">\(X^2\)</span> on <span class="math inline">\(X\)</span>: <span class="math inline">\(X^2=\beta_0+\beta_1X+\varepsilon\)</span>.</p>
+<p>Note that <span class="math display">\[
+R^2=\operatorname{cor}(X^2,X)^2=\frac{\operatorname{Cov}(X^2, X)^2}{\operatorname{Var}(X^2)\operatorname{Var}(X)}=\frac{(\operatorname{E}[X^3]-\operatorname{E}[X]\operatorname{E}[X^2])^2}{\operatorname{Var}(X^2)\operatorname{Var}(X)}.
+\]</span></p>
+<p>This result depends on the distribution of <span class="math inline">\(X\)</span>. For example, if the distribution of <span class="math inline">\(X\)</span> is symmetric, then <span class="math inline">\(\operatorname{E}[X]=0\)</span> and <span class="math inline">\(\operatorname{E}[X^3]=0\)</span>. Therefore <span class="math inline">\(R^2(X^2\sim X)=0\)</span>.</p>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.2 (Normal distribution)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>Assume <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. If <span class="math inline">\(\mu=0\)</span>, then the distribution of <span class="math inline">\(X\)</span> is symmetric, and so <span class="math inline">\(R^2(X^2\sim X)=0\)</span>, and therefore <span class="math inline">\(VIF(X^2\sim X)=1\)</span>.</p>
+<p>More generally when <span class="math inline">\(\mu\)</span> can be <span class="math inline">\(0\)</span>, <span class="math display">\[
+\begin{split}
+\operatorname{E}[X]&amp;=\mu,\\
+\operatorname{E}[X^2]&amp;=\sigma^2+\mu^2,\\
+\operatorname{E}[X^3]&amp;=\mu^3+3\mu\sigma^2,\\
+\operatorname{E}[X^4]&amp;=\mu^4+6\mu^2\sigma^2+3\sigma^4,\\
+\operatorname{Cov}(X,X^2)&amp;=\operatorname{E}[X^3]-\operatorname{E}[X]\operatorname{E}[X^2]=(\mu^3+3\mu\sigma^2)-\mu(\sigma^2+\mu^2)=2\mu\sigma^2,\\
+\operatorname{Var}[X]&amp;=\sigma^2,\\
+\operatorname{Var}[X^2]&amp;=\operatorname{E}[X^4]-\operatorname{E}[X^2]^2=(\mu^4+6\mu^2\sigma^2+3\sigma^4)-(\sigma^2+\mu^2)^2=4\mu^2\sigma^2+2\sigma^4,\\
+\operatorname{cor}(X,X^2)&amp;=\frac{2\mu}{\sqrt{4\mu^2+2\sigma^2}}.
+\end{split}
+\]</span> So <span class="math inline">\(R^2(X^2\sim X)=\frac{2\mu^2}{2\mu^2+\sigma^2}\)</span>. Then the corresponding VIF is <span class="math inline">\(VIF(X^2\sim X)=1+2\frac{\mu^2}{\sigma^2}\)</span>.</p>
+</details>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.3 (Exponential distribution)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>Let <span class="math display">\[
+X \sim \mathrm{Exp}(\lambda).
+\]</span></p>
+<p>The moments are <span class="math display">\[
+\begin{split}
+\operatorname{E}[X] &amp;= \frac{1}{\lambda},\\
+\operatorname{E}[X^2] &amp;= \frac{2}{\lambda^2},\\
+\operatorname{E}[X^3] &amp;= \frac{6}{\lambda^3},\\
+\operatorname{E}[X^4] &amp;= \frac{24}{\lambda^4}.
+\end{split}
+\]</span></p>
+<p>Compute the required quantities.</p>
+<p><span class="math display">\[
+\operatorname{Var}(X)=\frac{1}{\lambda^2}.
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\operatorname{Var}(X^2)
+&amp;=\operatorname{E}[X^4]-\operatorname{E}[X^2]^2\\
+&amp;=\frac{24}{\lambda^4}-\frac{4}{\lambda^4}\\
+&amp;=\frac{20}{\lambda^4}.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\operatorname{Cov}(X,X^2)
+&amp;=\operatorname{E}[X^3]-\operatorname{E}[X]\operatorname{E}[X^2]\\
+&amp;=\frac{6}{\lambda^3}-\frac{1}{\lambda}\cdot\frac{2}{\lambda^2}\\
+&amp;=\frac{4}{\lambda^3}.
+\end{split}
+\]</span></p>
+<p>Now compute <span class="math inline">\(R^2\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+R^2
+&amp;=\frac{\operatorname{Cov}(X,X^2)^2}{\operatorname{Var}(X)\operatorname{Var}(X^2)}\\
+&amp;=\frac{(4/\lambda^3)^2}{(1/\lambda^2)(20/\lambda^4)}\\
+&amp;=\frac{16}{20}\\
+&amp;=0.8.
+\end{split}
+\]</span></p>
+<p>Thus <span class="math inline">\(R^2(X^2\sim X)=0.8\)</span>. Therefore <span class="math inline">\(VIF(X^2\sim X)=5\)</span>.</p>
+</details>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.4 (Uniform distribution)</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>Let <span class="math display">\[
+X \sim \mathrm{Unif}(0,1).
+\]</span></p>
+<p>The moments are <span class="math display">\[
+\begin{split}
+\operatorname{E}[X] &amp;= \frac12,\\
+\operatorname{E}[X^2] &amp;= \frac13,\\
+\operatorname{E}[X^3] &amp;= \frac14,\\
+\operatorname{E}[X^4] &amp;= \frac15.
+\end{split}
+\]</span></p>
+<p>Compute the required quantities.</p>
+<p><span class="math display">\[
+\begin{split}
+\operatorname{Var}(X)
+&amp;=\operatorname{E}[X^2]-\operatorname{E}[X]^2\\
+&amp;=\frac13-\frac14\\
+&amp;=\frac{1}{12}.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\operatorname{Var}(X^2)
+&amp;=\operatorname{E}[X^4]-\operatorname{E}[X^2]^2\\
+&amp;=\frac15-\frac19\\
+&amp;=\frac{4}{45}.
+\end{split}
+\]</span></p>
+<p><span class="math display">\[
+\begin{split}
+\operatorname{Cov}(X,X^2)
+&amp;=\operatorname{E}[X^3]-\operatorname{E}[X]\operatorname{E}[X^2]\\
+&amp;=\frac14-\frac12\cdot\frac13\\
+&amp;=\frac{1}{12}.
+\end{split}
+\]</span></p>
+<p>Now compute <span class="math inline">\(R^2\)</span>:</p>
+<p><span class="math display">\[
+\begin{split}
+R^2
+&amp;=\frac{\operatorname{Cov}(X,X^2)^2}{\operatorname{Var}(X)\operatorname{Var}(X^2)}\\
+&amp;=\frac{(1/12)^2}{(1/12)(4/45)}\\
+&amp;=\frac{1}{12}\cdot\frac{45}{4}\\
+&amp;=\frac{15}{16}.
+\end{split}
+\]</span></p>
+Thus <span class="math inline">\(R^2(X^2\sim X)=\frac{15}{16}=0.9375\)</span>. Then <span class="math inline">\(VIF(X^2\sim X)=16\)</span>.
+</details>
+</div>
+<p>Here is a table of common distributions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Parameters</th>
+<th><span class="math inline">\(R^2(X^2\sim X)\)</span></th>
+<th><span class="math inline">\(\mathrm{VIF}(X^2\sim X)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normal</td>
+<td><span class="math inline">\(N(0,\sigma^2)\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td>Normal</td>
+<td><span class="math inline">\(N(\mu,\sigma^2)\)</span></td>
+<td><span class="math inline">\(\dfrac{2\mu^2}{2\mu^2+\sigma^2}\)</span></td>
+<td><span class="math inline">\(1+\dfrac{2\mu^2}{\sigma^2}\)</span></td>
+</tr>
+<tr class="odd">
+<td>Uniform</td>
+<td><span class="math inline">\(\mathrm{Unif}(-a,a)\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td>Uniform</td>
+<td><span class="math inline">\(\mathrm{Unif}(0,1)\)</span></td>
+<td><span class="math inline">\(\dfrac{15}{16}=0.9375\)</span></td>
+<td><span class="math inline">\(16\)</span></td>
+</tr>
+<tr class="odd">
+<td>Exponential</td>
+<td><span class="math inline">\(\mathrm{Exp}(\lambda)\)</span></td>
+<td><span class="math inline">\(\dfrac45=0.8\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+</tr>
+<tr class="even">
+<td>Gamma</td>
+<td><span class="math inline">\(\Gamma(k,\lambda)\)</span></td>
+<td><span class="math inline">\(\dfrac{2k}{2k+1}\)</span></td>
+<td><span class="math inline">\(2k+1\)</span></td>
+</tr>
+<tr class="odd">
+<td>Chi-square</td>
+<td><span class="math inline">\(\chi^2_k\)</span></td>
+<td><span class="math inline">\(\dfrac{2k}{2k+1}\)</span></td>
+<td><span class="math inline">\(2k+1\)</span></td>
+</tr>
+<tr class="even">
+<td>t</td>
+<td><span class="math inline">\(t_\nu\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This shows that for a nonlinear relation such as <span class="math inline">\(X^2\)</span>, a linear regression may sometimes capture a large portion of the variation, while in other cases it may capture almost nothing.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One common trick to reduce multicollinearity is to center the variable: <span class="math display">\[
+z = x - \bar x.
+\]</span> Then <span class="math inline">\(z\)</span> is centered around <span class="math inline">\(0\)</span>, which often makes <span class="math inline">\(z\)</span> and <span class="math inline">\(z^2\)</span> less linearly dependent than <span class="math inline">\(x\)</span> and <span class="math inline">\(x^2\)</span>. This transformation can reduce collinearity among predictors, while leaving the fitted values, residuals, and <span class="math inline">\(R^2\)</span> of the model unchanged.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="formula-language" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">8.6</span> Formula language</h2>

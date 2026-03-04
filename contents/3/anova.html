@@ -650,8 +650,8 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: y ~ x1</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: y ~ x1 + x2</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 177.82                                  </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97 127.48  1    50.343 38.306 1.447e-08 ***</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 182.21                                  </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97 105.11  1      77.1 71.148 3.168e-13 ***</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -660,8 +660,8 @@ window.Quarto = {
 <li>In each model, <code>Res.Df</code> is the degree of freedom of residuals, which is <span class="math inline">\(n-(p+1)\)</span> where <span class="math inline">\(p\)</span> is the number of predictors.</li>
 <li>In this example, <code>Res.Df</code> is <span class="math inline">\(100-(1+1)=98\)</span> and <span class="math inline">\(100-(1+2)=97\)</span>.</li>
 <li>The difference of degree of freedom is <span class="math inline">\(2-1=1\)</span>.</li>
-<li>The difference of <span class="math inline">\(SSE\)</span> is 177.8235526-127.4803312=50.3432214.</li>
-<li>Then the F-statistic is (50.3432214/1)/(127.4803312/97)=38.3062424.</li>
+<li>The difference of <span class="math inline">\(SSE\)</span> is 182.2141959-105.1146211=77.0995747.</li>
+<li>Then the F-statistic is (77.0995747/1)/(105.1146211/97)=71.1476545.</li>
 <li>The p-value is gotten by the F-test.</li>
 </ul>
 </details>
@@ -944,6 +944,10 @@ H_0: \beta_j=0\quad\text{ adjusting for all other main effect predictors.}
 <p>The corresponding F-statistic <span class="math display">\[
 F_j^{(II)}=\frac{MS^{(II)}(x_j)}{MSE}=\frac{SS^{^{II}}(x_j)/df_j}{SSE/(n-p-1)}.
 \]</span></p>
+<p>Type II ANOVA table asks the following question:</p>
+<blockquote class="blockquote">
+<p>Does this term improve the model after adjusting for the other main effects (when ignoring the interaction)?</p>
+</blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1018,7 +1022,12 @@ $$
 4. Each row is a nested-model F test removing one predictor at a time.
 ::: -->
 <div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 9.4</strong></span> We first generate a dataset with two correlated predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
+<p><span class="theorem-title"><strong>Example 9.4</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<p>We first generate a dataset with two correlated predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1048,6 +1057,7 @@ $$
 <li><span class="math inline">\(x_2\)</span>: Compares the full model <span class="math inline">\(y \sim x_1 + x_2\)</span> to the reduced model <span class="math inline">\(y \sim x_1\)</span> (i.e., the model with <span class="math inline">\(x_2\)</span> removed). A small p-value implies that <span class="math inline">\(x_2\)</span> explains a significant amount of variation in <span class="math inline">\(y\)</span> beyond what is explained by <span class="math inline">\(x_1\)</span>.</li>
 </ul>
 <p>Unlike Type I ANOVA, Type II ANOVA is order-invariant—reordering <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> does not change the results.</p>
+</details>
 </div>
 </section>
 </section>
@@ -1223,56 +1233,88 @@ F^{(III)}=t^2.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Type II ANOVA tests variables (main effects), whereas Type III ANOVA tests individual coefficients. Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types are equivalent and yield identical test statistics and p-values.</p>
-<p>When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA does not test main effects involved in interactions, because such tests lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds to test the corresponding coefficients anyway, regardless of whether the resulting hypothesis has a meaningful interpretation.</p>
+<p>Type II ANOVA tests variables (main effects) through comparisons of nested models, whereas Type III ANOVA tests individual coefficients within the full model.</p>
+<p>Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types become equivalent and yield identical test statistics and p-values. In this case, testing whether a coefficient is zero is equivalent to comparing the reduced model without that variable to the full model that includes it.</p>
+<p>When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA avoids testing main effects that participate in interactions, because such tests would require breaking the hierarchical structure of the model and thus lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds by testing the corresponding coefficients in the full model regardless of interactions, even though the resulting hypothesis may be difficult to interpret scientifically.</p>
+<p>Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model.</p>
 </div>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.6</strong></span> &nbsp;</p>
+<details>
+<summary>
+<strong>Click to expand.</strong>
+</summary>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">80</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.6</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x1 <span class="sc">*</span> x2 <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">80</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y  <span class="ot">&lt;-</span> x1<span class="sc">*</span>x2<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>x1<span class="sc">+</span><span class="dv">3</span><span class="sc">*</span>x2<span class="sc">+</span><span class="fu">rnorm</span>(<span class="dv">80</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">*</span>x2)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type=</span><span class="dv">2</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">##            Sum Sq Df F value    Pr(&gt;F)    </span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         74.314  1  71.918 1.322e-12 ***</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        270.853  1 262.121 &lt; 2.2e-16 ***</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## x1:x2      84.601  1  81.874 1.078e-13 ***</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  78.532 76                      </span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">*</span> x2)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type =</span> <span class="dv">2</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##            Sum Sq Df F value    Pr(&gt;F)    </span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">## x1         69.075  1  74.705 6.443e-13 ***</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x2        276.608  1 299.153 &lt; 2.2e-16 ***</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x1:x2      55.426  1  59.943 3.423e-11 ***</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  70.272 76                      </span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit2, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type III tests)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="do">##              Sum Sq Df F value    Pr(&gt;F)    </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  45.980  1  28.166 1.040e-06 ***</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1           69.075  1  42.314 7.083e-09 ***</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2          276.608  1 169.444 &lt; 2.2e-16 ***</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals   125.698 77                      </span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Please compare the sum of squares between the Type II ANOVA table of the 1st model <code>y~x1*x2</code> and the Type III ANOVA table of the 2nd model <code>y~x1+x2</code>.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 58%">
-<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Term</th>
-<th><strong>Type II Logic</strong></th>
-<th><strong>Type III Logic</strong></th>
+<th>Type II Logic (nested model comparison)</th>
+<th>Type III Logic (coefficient test in full model)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(x_1\)</span></td>
-<td>Full: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Reduced: <span class="math inline">\(y \sim x_2 + x_1:x_2\)</span></td>
-<td>Same reduced model: <span class="math inline">\(y \sim x_2 + x_1:x_2\)</span></td>
+<td>Full: <span class="math inline">\(y \sim x_1 + x_2\)</span> <br> Reduced: <span class="math inline">\(y \sim x_2\)</span></td>
+<td>model: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Test <span class="math inline">\(H_0:\beta_1=0\)</span></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(x_2\)</span></td>
-<td>Full: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Reduced: <span class="math inline">\(y \sim x_1 + x_1:x_2\)</span></td>
-<td>Same reduced model: <span class="math inline">\(y \sim x_1 + x_1:x_2\)</span></td>
+<td>Full: <span class="math inline">\(y \sim x_1 + x_2\)</span> <br> Reduced: <span class="math inline">\(y \sim x_1\)</span></td>
+<td>model: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Test <span class="math inline">\(H_0:\beta_2=0\)</span></td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(x_1:x_2\)</span></td>
 <td>Full: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Reduced: <span class="math inline">\(y \sim x_1 + x_2\)</span></td>
-<td>Same as Type II</td>
+<td>Full model kept: <span class="math inline">\(y \sim x_1 + x_2 + x_1:x_2\)</span> <br> Test <span class="math inline">\(H_0:\beta_3=0\)</span></td>
 </tr>
 </tbody>
 </table>
+</details>
+</div>
 
 
 </section>
