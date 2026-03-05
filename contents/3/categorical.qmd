@@ -1,4 +1,9 @@
-# Dummy variables
+# Categorical Regression
+
+We could regress the response variable on categorical variables.
+
+
+## Dummy variables
 
 ## Analysis of predictions
 

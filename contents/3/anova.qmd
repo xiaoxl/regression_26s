@@ -249,7 +249,7 @@ strong correlation with $x_1$, and therefore appears significant. However, becau
 ## Type II ANOVA table
 
 
-
+<!-- A Type II ANOVA table (often called marginal sums of squares) tests each main effect after adjusting for the other main effects, while respecting model hierarchy when interactions are present. -->
 
 
 A Type II ANOVA table (marginal sum of squares) tests each term after adjusting for all other main effects, but not for interaction terms that contain that effect. In practice, the sums of squares for main effects are computed from the additive model (without interactions), while the interaction terms are tested by comparing the additive model with the model that includes the interaction.
@@ -344,7 +344,7 @@ Type II ANOVA table asks the following question:
 1. Reordering predictors does not change the table.
 2. Each effect is tested conditional on all other main effects.
 3. If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.
-4. Each row is a nested-model F test removing one predictor at a time.
+4. Each row corresponds to a nested-model comparison.
 :::
 
 
@@ -532,7 +532,7 @@ Please compare the t-statistic and the F-statistic for each variable.
 
 
 ```{r}
-Anova(model, Type=2)
+Anova(model, type=2)
 ```
 
 
@@ -556,13 +556,20 @@ s2 <- lm(y~x2)
 
 ::: {.callout-note}
 ## Type II vs Type III
+
+- Type II tests main effects after adjusting for the other main effects, and (when interactions exist) it typically tests main effects in the additive model to preserve hierarchy. Interactions are tested by comparing the additive model to the interaction model.
+- Type III tests each term within the full model, even if that term participates in interactions. This can yield hypotheses that are sensitive to coding/centering and may be harder to interpret scientifically.
+
+When there are no interactions, and predictors are coded in the usual way, Type II and Type III coincide (they reduce to the standard partial F-tests).
+<!-- 
+
 Type II ANOVA tests variables (main effects) through comparisons of nested models, whereas Type III ANOVA tests individual coefficients within the full model.
 
 Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types become equivalent and yield identical test statistics and p-values. In this case, testing whether a coefficient is zero is equivalent to comparing the reduced model without that variable to the full model that includes it.
 
 When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA avoids testing main effects that participate in interactions, because such tests would require breaking the hierarchical structure of the model and thus lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds by testing the corresponding coefficients in the full model regardless of interactions, even though the resulting hypothesis may be difficult to interpret scientifically.
 
-Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model.
+Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model. -->
 :::
 
 
@@ -587,10 +594,11 @@ Anova(fit, type = 2)
 
 ```{r}
 fit2 <- lm(y ~ x1 + x2)
-Anova(fit2, type = 3)
+fit3 <- lm(y ~ x2)
+anova(fit3, fit2)
 ```
 
-Please compare the sum of squares between the Type II ANOVA table of the 1st model `y~x1*x2` and the Type III ANOVA table of the 2nd model `y~x1+x2`.
+Please compare the sum of squares between the Type II ANOVA table of the 1st model `y~x1*x2` and nested model in the 2nd case. 
 
 
 | Term | Type II Logic (nested model comparison) | Type III Logic (coefficient test in full model) |

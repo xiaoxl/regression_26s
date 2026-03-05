@@ -668,6 +668,154 @@ Then $z$ is centered around $0$, which often makes $z$ and $z^2$ less linearly d
 :::
 
 
+## Interpretations of special terms
+
+### Interation term
+
+
+Consider the model
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon.
+$$
+
+We need to understand the intepretations of both the interaction term $\beta_3$ and the main effect $\beta_1$. Note that
+
+$$
+E(y\mid x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2.
+$$
+
+Taking partial derivatives gives
+
+$$
+\frac{\partial E(y)}{\partial x_1}=\beta_1+\beta_3x_2,
+\qquad
+\frac{\partial E(y)}{\partial x_2}=\beta_2+\beta_3x_1.
+$$
+
+So:
+
+- when $x_2$ increases by 1, the slope of $x_1$ increases by $\beta_3$  
+- when $x_1$ increases by 1, the slope of $x_2$ increases by $\beta_3$
+
+
+::: {.callout-note}
+## Interaction term
+The interaction term $\beta_3x_1x_2$ means the effect (slope) of one predictor changes as the other predictor changes.
+
+Equivalently, 
+$$
+\beta_3=\frac{\partial^2 \Exp(y)}{\partial x_1\partial x_2},
+$$
+so $\beta_3$ measures how quickly one slope changes with the other predictor.
+:::
+
+On the other side, we could inteprete $\beta_1$ as 
+$$
+\beta_1=\text{effect of }x_1\text{ when }x_2=0.
+$$
+
+However in many cases, $x_2=0$ is not meaningful. Therefore we need to change the formula a little bit to understand $\beta_1$. Let
+
+$$
+x_2^*=x_2-\bar x_2,\quad \beta_1^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta_1+\beta_3\bar x_2.
+$$
+
+Then the orginal model is
+$$
+y=\beta_0^*+\beta_1^*x_1+\beta_2x_2^*+\beta_3x_1x_2^*.
+$$
+In this case, $x_2^*$ can be $0$. Then main effects represent slopes at the average level of the other predictor. We call $\beta_1^*$ centralized main effect.
+
+::: {.callout-note}
+## Main effect
+After centering, the main effect of $x_1$ represents its effect at the average level of the other predictor.
+:::
+
+
+### Higher-degree (polynomial) terms
+
+- Model and main meaning
+
+Consider
+
+$$
+y=\beta_0+\beta_1x+\beta_2x^2+\varepsilon.
+$$
+
+**Interpretation (one sentence):**
+
+> The term $x^2$ captures curvature; the effect of $x$ changes as $x$ changes.
+
+---
+
+- Interpretation via derivative (changing slope)
+
+$$
+\frac{dE(y)}{dx}=\beta_1+2\beta_2x.
+$$
+
+So:
+
+- slope is not constant  
+- slope changes linearly with $x$
+
+---
+
+- Shape interpretation
+
+- If $\beta_2>0$: U-shaped  
+- If $\beta_2<0$: inverted U
+
+---
+
+- Turning point (very useful in teaching)
+
+The extremum occurs at
+
+$$
+x^\*=-\frac{\beta_1}{2\beta_2}.
+$$
+
+- If $\beta_2>0$: minimum  
+- If $\beta_2<0$: maximum
+
+---
+
+- Practical interpretation example
+
+Example:
+
+$$
+\text{performance}\sim \text{stress}+\text{stress}^2
+$$
+
+Interpretation:
+
+- moderate stress best  
+- too little or too much worse
+
+---
+
+- Interaction vs Higher-Degree: Key Difference
+
+| Term Type | Meaning | Effect on Slope |
+|-----------|--------|----------------|
+| Interaction $x_1x_2$ | effect varies across variables | slope changes across another variable |
+| Higher-degree $x^2$ | curvature within one variable | slope changes across same variable |
+
+👉 Interaction = cross-variable change  
+👉 Polynomial = within-variable change  
+
+---
+
+- One-line teaching summary
+
+> Interaction: “effect depends on another variable.”  
+> Higher-degree: “effect changes as the variable changes.”
+
+
+
 
 
 ## Formula language
