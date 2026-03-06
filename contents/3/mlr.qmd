@@ -718,12 +718,12 @@ $$
 However in many cases, $x_2=0$ is not meaningful. Therefore we need to change the formula a little bit to understand $\beta_1$. Let
 
 $$
-x_2^*=x_2-\bar x_2,\quad \beta_1^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta_1+\beta_3\bar x_2.
+x_2^*=x_2-\bar x_2,\quad \beta_0^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta_1+\beta_3\bar x_2.
 $$
 
 Then the orginal model is
 $$
-y=\beta_0^*+\beta_1^*x_1+\beta_2x_2^*+\beta_3x_1x_2^*.
+\Exp(y)=\beta_0^*+\beta_1^*x_1+\beta_2x_2^*+\beta_3x_1x_2^*.
 $$
 In this case, $x_2^*$ can be $0$. Then main effects represent slopes at the average level of the other predictor. We call $\beta_1^*$ centralized main effect.
 

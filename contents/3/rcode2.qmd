@@ -92,3 +92,878 @@ F-tests assess groups of predictors (e.g., all levels of a categorical variable)
 ANOVA is a generalization:
 
 t-tests are a special case of ANOVA when testing a single predictor.
+
+
+
+
+# A Concrete Example for Formula Language and ANOVA
+
+In this section, we use one concrete example to connect the following topics:
+
+- formula language
+- global $F$-test
+- individual $t$-tests
+- Type I, Type II, and Type III ANOVA
+- interaction terms
+- higher-degree terms
+- centering
+- multicollinearity
+
+The goal is to see how all of these ideas fit together in one regression analysis.
+
+## Example setup
+
+Suppose we want to study how an exam score depends on:
+
+- `hours`: study hours
+- `attend`: attendance rate
+- `tutor`: whether the student received tutoring (`0` = no, `1` = yes)
+
+A reasonable model might include:
+
+1. main effects of all predictors
+2. an interaction between `hours` and `attend`
+3. a quadratic term for `hours` to capture diminishing returns
+
+So we consider the model
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_1x_2+\beta_5x_1^2+\varepsilon
+$$
+
+where
+
+- $y=$ score
+- $x_1=$ hours
+- $x_2=$ attendance
+- $x_3=$ tutoring indicator
+
+In words:
+
+- more hours may improve the score
+- better attendance may improve the score
+- tutoring may improve the score
+- the effect of hours may depend on attendance
+- the effect of hours may not be linear
+
+## Formula language
+
+In R formula language, the above model can be written as
+
+```{r}
+#| eval: false
+score ~ hours + attend + tutor + hours:attend + I(hours^2)
+```
+
+```{r}
+#| eval: false
+score ~ hours*attend + tutor + I(hours^2)
+```
+
+
+```{r}
+#| eval: false
+hours + attend + hours:attend
+```
+
+
+
+
+::: {.callout-note}
+Formula interpretation
+
+hours + attend + tutor adds main effects
+
+hours:attend adds only the interaction
+
+hours*attend adds both main effects and the interaction
+
+I(hours^2) tells R to treat hours^2 as arithmetic, not formula syntax
+:::
+
+
+
+```{r}
+set.seed(1)
+
+n <- 120
+df <- data.frame(
+    hours = runif(n, 0, 10),
+    attend = runif(n, 0.6, 1.0),
+    tutor = rbinom(n, 1, 0.4)
+)
+
+df$score <- 50 +
+    4 * df$hours +
+    15 * df$attend +
+    6 * df$tutor +
+    2 * df$hours * df$attend -
+    0.35 * df$hours^2 +
+    rnorm(n, 0, 5)
+
+head(df)
+```
+
+
+Now fit several models of increasing complexity.
+
+### Main-effects model
+
+
+```{r}
+m1 <- lm(score ~ hours + attend + tutor, data = df)
+summary(m1)
+```
+This model is
+$$
+E(y)=h, a, t
+$$
+
+Interpretation:
+
+- $\beta_1$: expected change in score when hours increases by 1, holding attendance and tutoring fixed
+- $\beta_2$: expected change in score when attendance increases by 1, holding the others fixed
+- $\beta_3$: expected difference in score between tutoring and no tutoring, holding the others fixed
+
+### Add an interaction term
+```{r}
+m2 <- lm(score ~ hours * attend + tutor, data = df)
+summary(m2)
+```
+This model is
+$$
+E(y)=h,a,t,ha
+$$
+
+So the slope of hours depends on attendance, and the slope of attend depends on hours.
+
+::: {.callout-note}
+
+Interaction interpretation
+
+The interaction term means:
+
+the effect of study hours changes as attendance changes, and
+
+the effect of attendance changes as study hours change.
+
+Equivalently,
+
+$$
+b4=p2dv
+$$
+
+:::
+
+### Add a quadratic term
+
+
+```{r}
+m3 <- lm(score ~ hours * attend + tutor + I(hours^2), data = df)
+summary(m3)
+```
+
+This model is
+
+$$
+E=h, a,t,ha, h2
+$$
+
+Now the slope with respect to hours is
+
+$$
+dEdh=b1+b4a+2b5h
+$$
+
+This tells us that the effect of hours is not constant.
+
+
+::: {.callout-note}
+
+## Quadratic interpretation
+
+The quadratic term $h^2$ introduces curvature.
+
+If $\beta_5>0$, the curve is U-shaped.
+
+If $\beta_5<0$, the curve is inverted U-shaped.
+:::
+
+The turning point occurs at 
+
+$$
+h^*=(b1+b4a)/2b5
+$$
+
+for a fixed attendance level $a$.
+
+
+
+
+## Global F-test and individual t-tests
+Global F-test
+
+For a multiple regression model, the global $F$-test examines
+
+$H_0$: all slope coefficients are $0$
+
+$H_a$: at least one slope coefficient is not $0$
+
+For m3, this is the test of whether the model as a whole explains variation in score.
+
+
+
+
+```{r}
+anova(m3)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# A Concrete Example for Formula Language and ANOVA
+
+In this section, we use one concrete example to connect the following topics:
+
+- formula language
+- global $F$-test
+- individual $t$-tests
+- Type I, Type II, and Type III ANOVA
+- interaction terms
+- higher-degree terms
+- centering
+- multicollinearity
+
+The goal is to see how all of these ideas fit together in one regression analysis.
+
+## Example setup
+
+Suppose we want to study how an exam score depends on:
+
+- `hours`: study hours
+- `attend`: attendance rate
+- `tutor`: whether the student received tutoring (`0` = no, `1` = yes)
+
+A reasonable model might include:
+
+1. main effects of all predictors
+2. an interaction between `hours` and `attend`
+3. a quadratic term for `hours` to capture diminishing returns
+
+So we consider the model
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_1x_2+\beta_5x_1^2+\varepsilon
+$$
+
+where
+
+- $y=$ score
+- $x_1=$ hours
+- $x_2=$ attendance
+- $x_3=$ tutoring indicator
+
+In words:
+
+- more hours may improve the score
+- better attendance may improve the score
+- tutoring may improve the score
+- the effect of hours may depend on attendance
+- the effect of hours may not be linear
+
+## Formula language
+
+In R formula language, the above model can be written as
+
+```{r}
+#| eval: false
+score ~ hours + attend + tutor + hours:attend + I(hours^2)
+```
+
+A more compact way is
+
+```{r}
+#| eval: false
+score ~ hours*attend + tutor + I(hours^2)
+```
+
+because `hours*attend` automatically expands to
+
+```{r}
+#| eval: false
+hours + attend + hours:attend
+```
+
+::: {.callout-note}
+
+## Formula interpretation
+
+* `hours + attend + tutor` adds main effects
+* `hours:attend` adds only the interaction
+* `hours*attend` adds both main effects and the interaction
+* `I(hours^2)` tells R to treat `hours^2` as arithmetic, not formula syntax
+:::
+
+# Simulated dataset
+
+To make the discussion concrete, consider the following simulated data.
+
+```{r}
+set.seed(1)
+
+n <- 120
+df <- data.frame(
+  hours = runif(n, 0, 10),
+  attend = runif(n, 0.6, 1.0),
+  tutor = rbinom(n, 1, 0.4)
+)
+
+df$score <- 50 +
+  4*df$hours +
+  15*df$attend +
+  6*df$tutor +
+  2*df$hours*df$attend -
+  0.35*df$hours^2 +
+  rnorm(n, 0, 5)
+
+head(df)
+```
+
+Now fit several models of increasing complexity.
+
+## Main-effects model
+
+```{r}
+m1 <- lm(score ~ hours + attend + tutor, data = df)
+summary(m1)
+```
+
+This model is
+
+$$
+E(y)=\beta_0+\beta_1\text{hours}+\beta_2\text{attend}+\beta_3\text{tutor}.
+$$
+
+Interpretation:
+
+* $\beta_1$: expected change in score when hours increases by 1, holding attendance and tutoring fixed
+* $\beta_2$: expected change in score when attendance increases by 1, holding the others fixed
+* $\beta_3$: expected difference in score between tutoring and no tutoring, holding the others fixed
+
+## Add an interaction term
+
+```{r}
+m2 <- lm(score ~ hours*attend + tutor, data = df)
+summary(m2)
+```
+
+This model is
+
+$$
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3t+\beta_4ha.
+$$
+
+Now
+
+$$
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_4a,
+\qquad
+\frac{\partial E(y)}{\partial a}=\beta_2+\beta_4h.
+$$
+
+So the slope of `hours` depends on attendance, and the slope of `attend` depends on hours.
+
+::: {.callout-note}
+
+## Interaction interpretation
+
+The interaction term means:
+
+* the effect of study hours changes as attendance changes, and
+* the effect of attendance changes as study hours change.
+
+Equivalently,
+$$
+\beta_4=\frac{\partial^2E(y)}{\partial h,\partial a}.
+$$
+:::
+
+## Add a quadratic term
+
+```{r}
+m3 <- lm(score ~ hours*attend + tutor + I(hours^2), data = df)
+summary(m3)
+```
+
+This model is
+
+$$
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3t+\beta_4ha+\beta_5h^2.
+$$
+
+Now the slope with respect to hours is
+
+$$
+\frac{dE(y)}{dh}=\beta_1+\beta_4a+2\beta_5h.
+$$
+
+This tells us that the effect of hours is not constant.
+
+::: {.callout-note}
+
+## Quadratic interpretation
+
+The quadratic term $h^2$ introduces curvature.
+
+* If $\beta_5>0$, the curve is U-shaped.
+* If $\beta_5<0$, the curve is inverted U-shaped.
+:::
+
+The turning point occurs at
+
+$$
+h^*=-\frac{\beta_1+\beta_4a}{2\beta_5}
+$$
+
+for a fixed attendance level $a$.
+
+# Global F-test and individual t-tests
+
+## Global F-test
+
+For a multiple regression model, the global $F$-test examines
+
+* $H_0$: all slope coefficients are $0$
+* $H_a$: at least one slope coefficient is not $0$
+
+For `m3`, this is the test of whether the model as a whole explains variation in score.
+
+```{r}
+anova(m3)
+```
+
+The global test answers the question:
+
+> Does this regression model provide useful information about the response?
+
+## Individual t-tests
+
+The `summary()` output gives individual $t$-tests for each coefficient.
+
+For example, the test for the interaction term is
+
+$$
+H_0:\beta_4=0
+\qquad\text{vs}\qquad
+H_a:\beta_4\ne 0.
+$$
+
+The test for the quadratic term is
+
+$$
+H_0:\beta_5=0
+\qquad\text{vs}\qquad
+H_a:\beta_5\ne 0.
+$$
+
+These tests help us decide whether each term contributes after accounting for the others in the fitted model.
+
+# ANOVA tables and their meanings
+
+In multiple regression, there is more than one way to define the contribution of each term. This leads to different ANOVA types.
+
+## Type I ANOVA
+
+Type I ANOVA is sequential. Terms are tested in the order they enter the model.
+
+```{r}
+anova(m3)
+```
+
+For the formula
+
+```{r}
+#| eval: false
+score ~ hours*attend + tutor + I(hours^2)
+```
+
+the terms are entered in the order:
+
+1. `hours`
+2. `attend`
+3. `tutor`
+4. `hours:attend`
+5. `I(hours^2)`
+
+So Type I tests:
+
+* `hours` first
+* then `attend` after `hours`
+* then `tutor` after `hours` and `attend`
+* and so on
+
+::: {.callout-caution}
+
+## Type I depends on order
+
+If you change the order of predictors in the formula, the Type I ANOVA table changes.
+:::
+
+For example:
+
+```{r}
+m3_alt <- lm(score ~ tutor + attend + hours + hours:attend + I(hours^2), data = df)
+anova(m3_alt)
+```
+
+This ANOVA table will generally differ from the previous one.
+
+## Type II ANOVA
+
+Type II ANOVA tests each main effect after adjusting for the other main effects, but not after adjusting for higher-order relatives containing that term.
+
+```{r}
+#| message: false
+library(car)
+Anova(m3, type = 2)
+```
+
+Roughly speaking, Type II asks:
+
+* does `hours` matter after accounting for `attend` and `tutor`?
+* does `attend` matter after accounting for `hours` and `tutor`?
+* does `hours:attend` matter after accounting for the main effects?
+* does `I(hours^2)` matter after accounting for the lower-order terms?
+
+Type II is often a good default when the model respects the hierarchy principle.
+
+::: {.callout-note}
+
+## Hierarchy principle
+
+If an interaction term or polynomial term is in the model, the related lower-order terms should also remain in the model.
+:::
+
+## Type III ANOVA
+
+Type III ANOVA tests each term after adjusting for all other terms in the full model.
+
+```{r}
+Anova(m3, type = 3)
+```
+
+For example, the Type III test for `hours` is essentially a test of
+
+$$
+H_0:\beta_1=0
+$$
+
+in the full model containing
+
+* `attend`
+* `tutor`
+* `hours:attend`
+* `I(hours^2)`
+
+This often causes interpretation problems, because with interaction present, the coefficient $\beta_1$ no longer represents a universal main effect.
+
+In fact, in the interaction model,
+
+$$
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_4a+2\beta_5h,
+$$
+
+so $\beta_1$ corresponds to a slope evaluated at specific reference values.
+
+# A concrete interpretation of Type I, II, and III
+
+Using `m3`, the three ANOVA types answer different questions.
+
+## Type I question
+
+> If we add terms one by one in this exact order, how much extra variation does each term explain?
+
+So Type I is order-based.
+
+## Type II question
+
+> Does this term help explain the response, after accounting for other comparable lower-order terms?
+
+So Type II is usually closer to the idea of testing the practical contribution of a term.
+
+## Type III question
+
+> Is this coefficient zero in the full model, after everything else is already included?
+
+So Type III is coefficient-based in the full model.
+
+::: {.callout-note}
+
+## Practical summary
+
+* Type I: sequential, order dependent
+* Type II: usually best for well-structured regression models
+* Type III: tests coefficients in the full model; often hard to interpret unless predictors are centered and contrasts are chosen carefully
+:::
+
+# Why Type II and Type III differ when interaction exists
+
+Consider the interaction model
+
+$$
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3ha.
+$$
+
+Then
+
+$$
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_3a.
+$$
+
+So the coefficient $\beta_1$ is the effect of `hours` only when $a=0$.
+
+If `attend = 0` is not meaningful, then the Type III test of $\beta_1=0$ is not testing a useful scientific question.
+
+By contrast, Type II usually asks whether `hours` contributes in a broader model-comparison sense.
+
+This is why Type II and Type III may disagree when interaction is present.
+
+# Centering the predictors
+
+A common fix is to center the quantitative predictors.
+
+```{r}
+df$hc <- scale(df$hours, scale = FALSE)
+df$ac <- scale(df$attend, scale = FALSE)
+```
+
+Now fit the centered model:
+
+```{r}
+m4 <- lm(score ~ hc*ac + tutor + I(hc^2), data = df)
+summary(m4)
+```
+
+The centered model has the same fitted values and residuals as the uncentered version, but the coefficient interpretations improve.
+
+Now:
+
+* `hc = 0` means average study hours
+* `ac = 0` means average attendance
+
+So the main effect of `hc` is the slope of hours at average attendance.
+
+Similarly, the main effect of `ac` is the slope of attendance at average study hours.
+
+## Type III after centering
+
+```{r}
+Anova(m4, type = 3)
+```
+
+After centering, the Type III tests become much more interpretable because zero is now meaningful.
+
+::: {.callout-note}
+
+## Why centering helps
+
+Centering changes the meaning of the main effects, but it does not change:
+
+* fitted values
+* residuals
+* SSE
+* $R^2$
+* overall model fit
+:::
+
+# Multicollinearity and VIF
+
+Polynomial and interaction terms often create multicollinearity.
+
+For example:
+
+* `hours` and `hours^2` may be strongly correlated
+* `hours`, `attend`, and `hours:attend` may also be related
+
+We can check this with VIF.
+
+## VIF for the uncentered model
+
+```{r}
+vif(m3)
+```
+
+## VIF for the centered model
+
+```{r}
+vif(m4)
+```
+
+Usually, centering reduces the collinearity between lower-order and higher-order terms.
+
+::: {.callout-note}
+
+## Interpretation of VIF
+
+A large VIF means that the corresponding predictor is highly explained by other predictors.
+
+This inflates the variance of its estimated coefficient and may make a truly important term appear non-significant.
+:::
+
+# A nested-model view of ANOVA tests
+
+It is useful to understand ANOVA tests through nested model comparisons.
+
+## Testing the interaction
+
+To test whether the interaction is needed, compare
+
+* reduced model:
+  $$
+  \text{score} \sim \text{hours} + \text{attend} + \text{tutor} + I(\text{hours}^2)
+  $$
+
+* full model:
+  $$
+  \text{score} \sim \text{hours} + \text{attend} + \text{tutor} + I(\text{hours}^2) + \text{hours}:\text{attend}
+  $$
+
+In R:
+
+```{r}
+m_no_int <- lm(score ~ hours + attend + tutor + I(hours^2), data = df)
+anova(m_no_int, m3)
+```
+
+This directly tests whether adding the interaction significantly reduces SSE.
+
+## Testing the quadratic term
+
+Similarly, compare
+
+* reduced model:
+  $$
+  \text{score} \sim \text{hours}*\text{attend} + \text{tutor}
+  $$
+
+* full model:
+  $$
+  \text{score} \sim \text{hours}*\text{attend} + \text{tutor} + I(\text{hours}^2)
+  $$
+
+```{r}
+anova(m2, m3)
+```
+
+This tests whether the quadratic term adds useful information.
+
+# Recommended teaching workflow
+
+A practical workflow for students is:
+
+1. Start with a scientifically reasonable full model.
+2. Use the global $F$-test to verify that the model is useful.
+3. Use a Type II ANOVA table to assess terms.
+4. Interpret interaction terms before interpreting main effects.
+5. Check for multicollinearity using VIF.
+6. Center quantitative predictors when interactions or polynomial terms are present.
+7. Refit and interpret the coefficients again.
+8. Use nested model comparisons when testing whether a specific higher-order term is needed.
+
+# Final comparison table
+
+| Topic               | Concrete meaning in this example                          |
+| ------------------- | --------------------------------------------------------- |
+| Main effect         | effect of a predictor holding other variables fixed       |
+| Interaction         | effect of `hours` depends on `attend`                     |
+| Quadratic term      | effect of `hours` changes as `hours` changes              |
+| Global $F$-test     | does the model explain score at all?                      |
+| Individual $t$-test | is a specific coefficient zero?                           |
+| Type I ANOVA        | order-dependent sequential contribution                   |
+| Type II ANOVA       | contribution of a term after comparable lower-order terms |
+| Type III ANOVA      | coefficient test in the full model                        |
+| Centering           | makes zero meaningful and reduces collinearity            |
+| VIF                 | measures variance inflation due to predictor dependence   |
+
+# Short teaching summary
+
+::: {.callout-note}
+
+## One-paragraph summary
+
+In multiple linear regression, formula language describes which main effects, interaction terms, and higher-degree terms are included in the model. Once the model is fit, the global $F$-test checks whether the model is useful overall, while individual $t$-tests examine specific coefficients. In multiple regression, ANOVA is not unique: Type I is sequential and depends on order, Type II is usually preferred for hierarchical models, and Type III tests coefficients in the full model and is most meaningful after centering. Interaction terms change the interpretation of main effects, and polynomial terms often create multicollinearity, so centering and VIF checks are often important parts of the analysis.
+:::
+
+# Optional R code block for all models
+
+```{r}
+#| eval: false
+set.seed(1)
+
+n <- 120
+df <- data.frame(
+  hours = runif(n, 0, 10),
+  attend = runif(n, 0.6, 1.0),
+  tutor = rbinom(n, 1, 0.4)
+)
+
+df$score <- 50 +
+  4*df$hours +
+  15*df$attend +
+  6*df$tutor +
+  2*df$hours*df$attend -
+  0.35*df$hours^2 +
+  rnorm(n, 0, 5)
+
+m1 <- lm(score ~ hours + attend + tutor, data = df)
+m2 <- lm(score ~ hours*attend + tutor, data = df)
+m3 <- lm(score ~ hours*attend + tutor + I(hours^2), data = df)
+
+library(car)
+
+summary(m1)
+summary(m2)
+summary(m3)
+
+anova(m3)              # Type I
+Anova(m3, type = 2)    # Type II
+Anova(m3, type = 3)    # Type III
+
+df$hc <- scale(df$hours, scale = FALSE)
+df$ac <- scale(df$attend, scale = FALSE)
+
+m4 <- lm(score ~ hc*ac + tutor + I(hc^2), data = df)
+
+summary(m4)
+Anova(m4, type = 3)
+
+vif(m3)
+vif(m4)
+
+m_no_int <- lm(score ~ hours + attend + tutor + I(hours^2), data = df)
+anova(m_no_int, m3)
+anova(m2, m3)
+```
