@@ -668,7 +668,24 @@ Then $z$ is centered around $0$, which often makes $z$ and $z^2$ less linearly d
 :::
 
 
-## Interpretations of special terms
+## Interpretations of coefficients
+
+
+A clear way to understand regression coefficients is through effects.
+
+
+::: {#def-}
+- The effect of variable $x$ is the partial derivative of the expected response with respect to $x$:
+$$
+\text{effect of }x=\pdv{\Exp(y\mid \vb x)}{x}.
+$$
+Equivalently, it measures how much $\Exp(y)$ changes when $x$ increases by $1$, holding other variables fixed.
+- The main effect of a variable is its coefficient in the regression model.
+- If the model contains no interaction or nonlinear terms, the main effect equals the effect.
+:::
+
+When interactions are present, however, the coefficient is not the effect. The coefficient equals the effect only when the interacting variable equals $0$.
+
 
 ### Interation term
 
@@ -679,22 +696,15 @@ $$
 y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon.
 $$
 
-We need to understand the intepretations of both the interaction term $\beta_3$ and the main effect $\beta_1$. Note that
-
-$$
-E(y\mid x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2.
-$$
-
-Taking partial derivatives gives
-
+Since
 $$
 \frac{\partial E(y)}{\partial x_1}=\beta_1+\beta_3x_2,
 \qquad
-\frac{\partial E(y)}{\partial x_2}=\beta_2+\beta_3x_1.
+\frac{\partial E(y)}{\partial x_2}=\beta_2+\beta_3x_1,
 $$
+we obtain the following interpretations:
 
-So:
-
+- The effect of $x_1$ depends on the value of $x_2$, and vice versa.
 - when $x_2$ increases by 1, the slope of $x_1$ increases by $\beta_3$  
 - when $x_1$ increases by 1, the slope of $x_2$ increases by $\beta_3$
 
@@ -710,18 +720,17 @@ $$
 so $\beta_3$ measures how quickly one slope changes with the other predictor.
 :::
 
-On the other side, we could inteprete $\beta_1$ as 
+We may still write
 $$
 \beta_1=\text{effect of }x_1\text{ when }x_2=0.
 $$
 
-However in many cases, $x_2=0$ is not meaningful. Therefore we need to change the formula a little bit to understand $\beta_1$. Let
-
+However in many cases, $x_2=0$ is not meaningful in practice. To obtain a more useful interpretation, we center the variable:
 $$
 x_2^*=x_2-\bar x_2,\quad \beta_0^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta_1+\beta_3\bar x_2.
 $$
 
-Then the orginal model is
+Then the orginal model becomes
 $$
 \Exp(y)=\beta_0^*+\beta_1^*x_1+\beta_2x_2^*+\beta_3x_1x_2^*.
 $$
@@ -735,7 +744,22 @@ After centering, the main effect of $x_1$ represents its effect at the average l
 
 ### Higher-degree (polynomial) terms
 
-- Model and main meaning
+
+::: {#def-}
+
+A higher-order term is a nonlinear transformation of a predictor, such as $x^2$, $x^3$, $\sqrt{x}$, or $\log x$.
+:::
+
+::: {.callout-note}
+Recall that the effect of a variable $x$ is the rate of change of the expected response with respect to $x$:
+$$
+\text{effect of }x=\pdv{\Exp(y\mid \vb x)}{x}.
+$$
+With higher-degree terms, the coefficient of $x$ is generally not the effect of $x$; the effect depends on the value of $x$.
+:::
+
+
+::: {#exm-}
 
 Consider
 
@@ -743,76 +767,29 @@ $$
 y=\beta_0+\beta_1x+\beta_2x^2+\varepsilon.
 $$
 
-**Interpretation (one sentence):**
-
-> The term $x^2$ captures curvature; the effect of $x$ changes as $x$ changes.
-
----
-
-- Interpretation via derivative (changing slope)
-
+Since
 $$
-\frac{dE(y)}{dx}=\beta_1+2\beta_2x.
+\dv{E(y)}{x}=\beta_1+2\beta_2x,
 $$
 
-So:
+we see:
 
 - slope is not constant  
 - slope changes linearly with $x$
 
----
+The term $x^2$ captures curvature:
 
-- Shape interpretation
+- If $\beta_2>0$: concave up
+- If $\beta_2<0$: concave down
 
-- If $\beta_2>0$: U-shaped  
-- If $\beta_2<0$: inverted U
+:::
 
----
-
-- Turning point (very useful in teaching)
-
-The extremum occurs at
-
-$$
-x^\*=-\frac{\beta_1}{2\beta_2}.
-$$
-
-- If $\beta_2>0$: minimum  
-- If $\beta_2<0$: maximum
-
----
-
-- Practical interpretation example
-
-Example:
-
-$$
-\text{performance}\sim \text{stress}+\text{stress}^2
-$$
-
-Interpretation:
-
-- moderate stress best  
-- too little or too much worse
-
----
-
-- Interaction vs Higher-Degree: Key Difference
 
 | Term Type | Meaning | Effect on Slope |
 |-----------|--------|----------------|
 | Interaction $x_1x_2$ | effect varies across variables | slope changes across another variable |
 | Higher-degree $x^2$ | curvature within one variable | slope changes across same variable |
 
-👉 Interaction = cross-variable change  
-👉 Polynomial = within-variable change  
-
----
-
-- One-line teaching summary
-
-> Interaction: “effect depends on another variable.”  
-> Higher-degree: “effect changes as the variable changes.”
 
 
 
@@ -836,11 +813,19 @@ Instead of describing relationships in words, formula language expresses them pr
 | `1` | Intercept | The constant $\beta_0$ (included by default) |
 | `0 or -1` | No Intercept | Removes $\beta_0$, forcing the model through the origin |
 | `.` | All Variables | Shorthand for "all other columns in the data frame" |
-| `- B` | Exclusion | Removes a specific term (e.g., `y ~ . - x1`) |
+| `- ` | Exclusion | Removes a specific term (e.g., `y ~ . - x1`) |
 
 
 
+::: {.callout-note}
 In R formulas, symbols like `*`, `^`, and `+` have special meanings. To use them as standard math operators, you must wrap them in `I()`. For example
 
 - Quadratic Model: `y ~ x + I(x^2)`
 - Summation as Predictor: `y ~ I(x1 + x2)`
+
+:::
+
+
+::: {.callout-note}
+In R formula, higher degree terms without `I()` will be ignored. So `y ~ x^2` will be the same as `y ~ x`. Another example is `y ~ (x1+x2)^2`, which is the same as `y ~ x1 * x2` since `x1^2` and `x2^2` are ignored.
+:::
