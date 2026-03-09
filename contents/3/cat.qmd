@@ -1,0 +1,649 @@
+# Regression with qualitative variables
+
+
+{{< include ../math.qmd >}}
+
+When there are qualitative variables, the whole regression algorithm stay almost the same. The basic idea is still
+
+$$
+y=\text{systematic part}+\varepsilon.
+$$
+
+The main difference is that a categorical predictor cannot be inserted directly as a number. Instead, we represent group membership by **indicator variables** (also called **dummy variables**), and then fit the model using the same least squares machinery as before.
+
+Suppose a predictor has $g$ categories. After choosing one category as the baseline, we create $g-1$ dummy variables:
+
+$$
+x_j=
+\begin{cases}
+1,& \text{if the observation is in category }j,\\
+0,& \text{otherwise.}
+\end{cases}
+$$
+
+Then the categorical regression model has the form
+
+$$
+y=\beta_0+\beta_1x_1+\cdots+\beta_{g-1}x_{g-1}+\varepsilon.
+$$
+
+Here:
+
+- $\beta_0$ is the mean response for the baseline group.
+- $\beta_j$ is the difference between the expected response of group $j$ and the baseline group.
+- $\varepsilon$ is the random error term.
+
+Therefore it is just ordinary linear regression with specially coded predictors.
+
+
+
+## A one-way regression model with qualitative variables
+
+Suppose a factor has three groups: A, B, and C. Take A as the baseline, and define
+
+$$
+x_1=I(\text{group B}),\quad x_2=I(\text{group C}).
+$$
+
+Then the model is
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\varepsilon.
+$$
+
+The fitted means are
+
+$$
+\begin{aligned}
+E(y\mid A)&=\beta_0,\\
+E(y\mid B)&=\beta_0+\beta_1,\\
+E(y\mid C)&=\beta_0+\beta_2.
+\end{aligned}
+$$
+
+Therefore:
+
+- $\beta_0$ is the mean of group A;
+- $\beta_1$ is the difference between the mean of group B and the mean of group A;
+- $\beta_2$ is the difference between the mean of group C and the mean of group A.
+
+This is the simplest form of categorical regression.
+
+
+
+
+
+
+
+
+## One-Way ANOVA
+
+One-way ANOVA (analysis of variance) is a classical method for comparing the means of several populations. Suppose we observe a quantitative response variable across $k$ independent groups (or treatments). The primary question is whether the population means are equal:
+
+$$
+H_0:\ \mu_1=\mu_2=\cdots=\mu_k
+\qquad\text{vs}\qquad
+H_a:\ \text{not all }\mu_i\text{ are equal}.
+$$
+
+<!-- Rather than comparing group means pairwise, one-way ANOVA assesses whether the variability **between groups** is large relative to the variability **within groups**. If group means differ substantially compared with the variation among observations within each group, this provides evidence against $H_0$. -->
+
+The traditional one-way ANOVA model is
+
+$$
+y_{ij}=\mu+\tau_i+\varepsilon_{ij},\qquad i=1,\ldots,k,\ j=1,\ldots,n_i,
+$$
+
+where
+
+- $\mu$ is the overall mean,
+- $\tau_i$ is the effect of group $i$ (with $\sum_{i=1}^k \tau_i=0$), and hence the mean of group $i$ is $\mu_i=\mu+\tau_i$,
+- $\varepsilon_{ij}\overset{iid}{\sim}N(0,\sigma^2)$.
+
+
+
+ANOVA partitions the total variability into **between-group** and **within-group** components and uses an $F$-test to determine whether the group means differ significantly.
+
+
+
+
+Suppose we observe
+
+$$
+y_{ij},\quad i=1,\dots,k,\ j=1,\dots,n_i,
+$$
+
+where:
+
+- $k$ = number of groups  
+- $n_i$ = sample size in group $i$  
+- $N=\sum n_i$ = total sample size  
+
+Define:
+
+- group means  
+    $$
+    \bar y_i=\frac{1}{n_i}\sum_{j=1}^{n_i}y_{ij}
+    $$
+- overall mean  
+    $$
+    \bar y=\frac{1}{N}\sum_{i=1}^k\sum_{j=1}^{n_i}y_{ij}.
+    $$
+- Between-group sum of squares: this measures how far group means are from the overall mean.
+    $$
+    SSB=\sum_{i=1}^k n_i(\bar y_i-\bar y)^2.
+    $$
+- Between-group variance (mean square): this is called the **between-group variance** in ANOVA.
+    $$
+    MSB=\frac{SSB}{k-1}.
+    $$
+- Within-group sum of squares: this measures variation within each group.
+    $$
+    SSW=\sum_{i=1}^k\sum_{j=1}^{n_i}(y_{ij}-\bar y_i)^2.
+    $$
+- Within-group variance (mean square): this is called the **within-group variance** and serves as the pooled estimate of $\sigma^2$ under $H_0$.
+    $$
+    MSW=\frac{SSW}{N-k}.
+    $$
+- The one-way ANOVA test statistic is the F-test with the F-statistic:
+    $$
+    F=\frac{MSB}{MSW}.
+    $$
+
+All values mentioned above are summarized in the following standard One-Way ANOVA table
+
+| Source | SS | df | MS | F |
+|--------|----|----|----|---|
+| Between (Groups) | $SSB$ | $k-1$ | $\frac{SSB}{k-1}$ | $\frac{MSB}{MSW}$ |
+| Within (Error) | $SSW$ | $N-k$ | $\frac{SSW}{N-k}$ |  |
+| Total | $SST$ | $N-1$ |  |  |
+
+Similar to all the ANOVA tables we mentioned before, we have a decomposition of variance that $SST=SSB+SSW$. 
+
+
+
+::: {#exm-}
+
+Scores:
+
+- A: 78, 82, 85, 80  
+- B: 88, 90, 85, 87  
+- C: 72, 75, 70, 74  
+
+Group means:
+
+$$
+\bar y_A=81.25,\quad 
+\bar y_B=87.5,\quad 
+\bar y_C=72.75,\quad 
+\bar y=80.5.
+$$
+
+$$
+\begin{split}
+SSB&=4(81.25-80.5)^2+4(87.5-80.5)^2+4(72.75-80.5)^2=434,\\
+MSB&=\frac{434}{2}=217,\\
+SSW&=26.75+13+14.75=54.5,\\
+MSW&=\frac{54.5}{9}=6.06.
+\end{split}
+$$
+Then 
+$$
+F=\frac{MSB}{MSW}=\frac{217}{6.06}\approx 35.81.
+$$
+Under the null hypothesis $H_0:\mu_A=\mu_B=\mu_C$, we have
+
+$$
+F\sim F_{2,9}.
+$$
+
+So the p-value is
+
+$$
+p=P(F_{2,9}\ge 35.81)\approx 5.4\times 10^{-5}.
+$$
+
+Since the p-value is much smaller than $0.05$, we reject $H_0$ and conclude that not all group means are equal.
+
+
+:::
+
+
+
+
+
+## Relation between the two models
+
+One-way ANOVA can be viewed as a special case of multiple linear regression in which the predictor is categorical. Suppose the explanatory variable has $k$ groups. Then we have the regression model
+
+<!-- we may represent group membership using indicator variables and fit a regression model.
+
+For example, if there are $k$ groups, we may write -->
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_{k-1}x_{k-1}+\varepsilon,
+$$
+
+where each $x_j$ is a dummy variable indicating membership in one of the groups, and one group is treated as the reference group.
+
+In this formulation:
+
+- $\beta_0$ is the mean of the reference group,
+- each $\beta_j$ measures the difference between the mean of group $j$ and the mean of the reference group.
+
+
+Thus, testing whether all group means are equal is equivalent to testing
+$$
+H_0:\beta_1=\beta_2=\cdots=\beta_{k-1}=0.
+$$
+
+So the usual one-way ANOVA $F$-test is exactly the same as the overall $F$-test in the corresponding regression model with a categorical predictor.
+
+In this sense, one-way ANOVA and one-way categorical regression are not different methods; they are simply two equivalent ways to describe the same model. ANOVA emphasizes partitioning variation into between-group and within-group components, while regression emphasizes coefficients and predictor effects.
+
+
+::: {.callout-note}
+##  Relation between ANOVA tables
+Sicne the independent variable is dummy variable which indicates the group index, the regreesion model simply means that the response variable is modeled by the group mean. In other words, once we decide to talk about the i-th group, the fitted value is the group mean $\hat y_{ij}=\bar y_i$. 
+
+Then 
+$$
+\begin{split}
+SSR&=\sum_{i=1}^k\sum_{j}^{n_i}(\hat y_{ij}-\bar y)^2=\sum_{i=1}^k\sum_{j}^{n_i}(\bar y_i-\bar y)^2=\sum_{i=1}^kn_i(\bar y_i-\bar y)^2=SSB,\\
+SSE&=\sum_{i=1}^k\sum_{j}^{n_i}(y_{ij}-\hat y_{ij})^2=\sum_{i=1}^k\sum_{j}^{n_i}(y_{ij}-\bar y_{i})^2=SSW.
+\end{split}
+$$
+
+Therefore the One-Way ANOVA table is exactly the ANOVA table for this particular multiple linear regression model.
+
+:::
+
+
+
+
+::: {.callout-caution}
+
+## Degree of freedom of predictors
+
+The predictor is also called a factor, and the number of groups is the levels of the factor. Just like mentioned previously, the factor can be modeled by dummy variables. However, since there is only one factor, we treat it as a single factor variable with degree of freedom $k-1$.
+
+Therefore although the regression form seems to have $k-1$ variables, it is essentially a regression model with one variable of degree of freedom of $k-1$.
+
+
+:::
+
+::: {.callout-note}
+## Type III ANOVA table and the summary table
+
+The summary table reports individual t-tests for each coefficient, while the Type III ANOVA table reports a nested-model F-test for each model term. They answer the same hypothesis only when the term has **one degree of freedom**. In that case,
+$$
+F=t^2,
+$$
+
+so the Type III test and the corresponding row in the summary table give identical results.
+
+However, for qualitative variables with multiple levels, the term typically has more than one degree of freedom. In that case:
+
+- the summary table tests coefficients individually (e.g., each group vs the reference),
+- the Type III ANOVA table tests the term jointly.
+
+So they generally answer different questions and may give different conclusions.
+:::
+
+
+
+::: {#exm-}
+In R, we use `factor` to deal with qualitative variables.
+
+
+
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Example: One-Way ANOVA  
+
+Suppose a researcher wants to compare the effectiveness of three teaching methods on exam performance. A group of students is randomly assigned to one of three methods, and their exam scores are recorded.
+
+| Method | Scores |
+|--------|--------|
+| A | 78, 82, 85, 80 |
+| B | 88, 90, 85, 87 |
+| C | 72, 75, 70, 74 |
+
+We want to test whether the mean scores differ across methods:
+
+$$
+H_0:\ \mu_A=\mu_B=\mu_C
+\qquad\text{vs}\qquad
+H_a:\ \text{not all means are equal}.
+$$
+
+First compute the sample means:
+
+$$
+\bar y_A=81.25,\quad 
+\bar y_B=87.5,\quad 
+\bar y_C=72.75.
+$$
+
+We observe differences among the group means, but ANOVA determines whether these differences are large relative to the variation within each group.
+
+The one-way ANOVA model is
+
+$$
+y_{ij}=\mu+\tau_i+\varepsilon_{ij},\qquad i=1,2,3,
+$$
+
+where $\tau_i$ represents the effect of teaching method $i$.
+
+ANOVA partitions variability into:
+
+- **Between-group variation**: differences among group means  
+- **Within-group variation**: variability of observations within each group  
+
+If the between-group variation is sufficiently large relative to the within-group variation, we reject $H_0$ and conclude that at least one teaching method differs from the others.
+
+
+
+```{r}
+# Example data
+score <- c(
+    78, 82, 85, 80,
+    88, 90, 85, 87,
+    72, 75, 70, 74
+)
+
+method <- factor(c(
+    "A", "A", "A", "A",
+    "B", "B", "B", "B",
+    "C", "C", "C", "C"
+))
+
+dat <- data.frame(method, score)
+
+# View the data
+dat
+
+# Group means
+aggregate(score ~ method, data = dat, mean)
+
+# Fit one-way ANOVA
+fit <- aov(score ~ method, data = dat)
+
+# ANOVA table
+summary(fit)
+
+# Equivalent regression model
+lm_fit <- lm(score ~ method, data = dat)
+summary(lm_fit)
+anova(lm_fit)
+
+# Optional: boxplot
+boxplot(score ~ method,
+    data = dat,
+    main = "Exam Scores by Teaching Method",
+    xlab = "Method",
+    ylab = "Score"
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+::: {#exm-}
+Suppose we study exam scores from three teaching methods.
+
+```{r}
+set.seed(123)
+
+method <- factor(rep(c("Lecture", "Hybrid", "Online"), each = 12))
+score <- c(
+  rnorm(12, mean = 78, sd = 4),
+  rnorm(12, mean = 84, sd = 4),
+  rnorm(12, mean = 80, sd = 4)
+)
+
+fit <- lm(score ~ method)
+summary(fit)
+model.tables(aov(score ~ method), type = "means")
+```
+
+If `Lecture` is the reference level, then:
+
+- the intercept estimates the mean score for `Lecture`;
+- the coefficient of `methodHybrid` estimates the difference between `Hybrid` and `Lecture`;
+- the coefficient of `methodOnline` estimates the difference between `Online` and `Lecture`.
+
+The overall F-test checks whether all group means are equal.
+:::
+
+
+## How R handles categorical variables
+
+In R, factors are used to represent categorical predictors. When a factor is included in `lm()`, R automatically creates the corresponding dummy variables.
+
+```{r}
+#| eval: false
+
+dat$group <- as.factor(dat$group)
+contrasts(dat$group)
+fit <- lm(y ~ group, data = dat)
+summary(fit)
+```
+
+If we want to change the baseline group, we can use `relevel()`.
+
+```{r}
+#| eval: false
+
+dat$group <- relevel(dat$group, ref = "control")
+fit <- lm(y ~ group, data = dat)
+summary(fit)
+```
+
+
+::: {.callout-tip}
+Changing the reference level does not change the fitted values, residuals, SSE, or the overall F-test. It only changes how the coefficients are written and interpreted.
+:::
+
+
+## Categorical predictors together with quantitative predictors
+
+Categorical variables can be combined with quantitative variables in the same linear model. For example,
+
+$$
+y=\beta_0+\beta_1x+\beta_2z_1+\beta_3z_2+\varepsilon,
+$$
+
+where $x$ is quantitative and $z_1,z_2$ are dummy variables for a three-level factor.
+
+In this model:
+
+- the factor shifts the intercept across groups;
+- the slope of $x$ is the same for all groups.
+
+If we believe the slope should also vary by group, then we add interaction terms:
+
+$$
+y=\beta_0+\beta_1x+\beta_2z_1+\beta_3z_2+\beta_4xz_1+\beta_5xz_2+\varepsilon.
+$$
+
+Now each group may have a different regression line.
+
+
+## Historical note: ANOVA and regression
+
+Historically, ANOVA and regression were developed as closely related but somewhat separate traditions.
+
+- Regression was developed to study relationships among quantitative variables.
+- ANOVA was developed to compare means across groups, especially in designed experiments.
+
+In modern linear model theory, these are unified. Both are special cases of the same model
+
+$$
+\mathbf y=\mathbf X\boldsymbol{\beta}+\boldsymbol{\varepsilon}.
+$$
+
+The difference is mainly in how the columns of the design matrix $\mathbf X$ are constructed:
+
+- quantitative regression uses numerical predictors directly;
+- categorical regression uses indicator variables;
+- ANOVA tables summarize hypothesis tests for groups of coefficients by comparing nested models.
+
+So traditional ANOVA is not really a separate method from regression. It is a special presentation of linear-model inference when predictors are categorical.
+
+
+## Relation to one-way ANOVA
+
+The traditional one-way ANOVA model is
+
+$$
+y_{ij}=\mu+\tau_i+\varepsilon_{ij},
+$$
+
+where $\tau_i$ is the effect of group $i$.
+
+This is equivalent to a regression model with dummy variables. For example, with three groups:
+
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\varepsilon.
+$$
+
+These two formulations describe the same fitted means, the same residuals, and the same F-test for
+
+$$
+H_0:\mu_1=\mu_2=\cdots=\mu_g.
+$$
+
+In regression language, this is the same as testing
+
+$$
+H_0:\beta_1=\beta_2=\cdots=\beta_{g-1}=0.
+$$
+
+Therefore, one-way ANOVA is exactly categorical regression with one factor.
+
+
+::: {.callout-note}
+The classical ANOVA table partitions variability into between-group and within-group components. In the regression formulation, this is just the usual decomposition into explained and unexplained variation.
+:::
+
+
+## Relation to two-way ANOVA
+
+Suppose there are two categorical predictors, say factor A and factor B. Then the two-way ANOVA model without interaction is
+
+$$
+y_{ijk}=\mu+\alpha_i+\beta_j+\varepsilon_{ijk}.
+$$
+
+This corresponds to a regression model containing dummy variables for factor A and dummy variables for factor B.
+
+If we include interaction, the model becomes
+
+$$
+y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
+$$
+
+In regression form, this means:
+
+1. include dummy variables for factor A;
+2. include dummy variables for factor B;
+3. include products of those dummy variables to represent the interaction.
+
+Thus:
+
+- two-way ANOVA without interaction corresponds to an additive regression model;
+- two-way ANOVA with interaction corresponds to a regression model with interaction terms between categorical predictors.
+
+
+::: {#exm-}
+Here is a small two-way example.
+
+```{r}
+set.seed(321)
+
+A <- factor(rep(c("Low", "High"), each = 18))
+B <- factor(rep(rep(c("Morning", "Evening", "Night"), each = 6), times = 2))
+
+y <- c(
+  rnorm(6, 70, 3), rnorm(6, 74, 3), rnorm(6, 72, 3),
+  rnorm(6, 78, 3), rnorm(6, 85, 3), rnorm(6, 82, 3)
+)
+
+fit.add <- lm(y ~ A + B)
+fit.int <- lm(y ~ A * B)
+
+anova(fit.add, fit.int)
+```
+
+The nested-model comparison checks whether the interaction terms are needed. If the interaction is not significant, the additive model may be adequate. If the interaction is significant, the effect of one factor depends on the level of the other factor.
+:::
+
+
+## Traditional ANOVA language versus regression language
+
+The two vocabularies are slightly different, but they refer to the same underlying model.
+
+| Traditional ANOVA language | Regression language |
+|---|---|
+| treatment or factor | categorical predictor |
+| level | category |
+| main effect | coefficients associated with one factor |
+| interaction | product terms |
+| compare means | test linear combinations of coefficients |
+| between-group variation | explained variation due to factor terms |
+| within-group variation | residual variation |
+
+
+## Summary
+
+- Categorical regression is ordinary linear regression with dummy variables.
+- A one-way ANOVA model is a regression model with one categorical predictor.
+- A two-way ANOVA model is a regression model with two categorical predictors, possibly with interaction.
+- The ANOVA F-tests are nested-model tests on groups of regression coefficients.
+- Modern linear model theory unifies regression and ANOVA in one framework.
