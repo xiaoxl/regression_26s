@@ -216,9 +216,6 @@ Since the p-value is much smaller than $0.05$, we reject $H_0$ and conclude that
 
 One-way ANOVA can be viewed as a special case of multiple linear regression in which the predictor is categorical. Suppose the explanatory variable has $k$ groups. Then we have the regression model
 
-<!-- we may represent group membership using indicator variables and fit a regression model.
-
-For example, if there are $k$ groups, we may write -->
 
 $$
 y=\beta_0+\beta_1x_1+\beta_2x_2+\cdots+\beta_{k-1}x_{k-1}+\varepsilon,
@@ -240,6 +237,16 @@ $$
 So the usual one-way ANOVA $F$-test is exactly the same as the overall $F$-test in the corresponding regression model with a categorical predictor.
 
 In this sense, one-way ANOVA and one-way categorical regression are not different methods; they are simply two equivalent ways to describe the same model. ANOVA emphasizes partitioning variation into between-group and within-group components, while regression emphasizes coefficients and predictor effects.
+
+
+
+
+::: {.callout-tip}
+## History of ANOVA and regression
+Analysis of variance (ANOVA) and regression share a common origin in early 20th-century statistics. Regression was developed earlier by Francis Galton and later formalized by Karl Pearson in studying relationships between quantitative variables. ANOVA was introduced in the 1920s by Ronald A. Fisher to analyze experimental data by decomposing variability into systematic and random components. By the mid-20th century, especially through the work of C. R. Rao and others, ANOVA was recognized as a special case of the general linear model, showing that both methods are unified within the same mathematical framework.
+:::
+
+
 
 
 ::: {.callout-note}
@@ -292,242 +299,142 @@ So they generally answer different questions and may give different conclusions.
 
 
 
+
+
+
+
+## R code
+
+In R, we use `factor` to deal with qualitative variables. 
+
+
+```{r}
+x <- factor(c(1,2,3,1,2,3,1,1,2))
+x
+```
+
+When using `lm` to process a linear regression model, if a variable is a factor, it will be automatically changed into a dummy variable. 
+
+
 ::: {#exm-}
-## Dummy variables
-In R, we use `factor` to deal with qualitative variables.
 
-
-
-R use factors to regonze processable categorical data.
-
-`lm` function will automatically cast processiable categorical data into dummy variables.
-
-
-
-CARGO has durable, fragile and semifrag
-
-if the variable is not numeric, it will be changed into categorical regression with dummy variables directly.
+We could genearte a data of 3 groups.
 
 ```{r}
-#| eval: false
+n <- 5 
+group <- factor(rep(c("A", "B", "C"), each = n))
 
-cargo$CARGO as.factor(cargo$CARGO)
-contrasts(cargo$CARGO)
-```
-contrasts is to show how dummy variables are set
-
-if we are changing the base level:
-
-```{r}
-#| eval: false
-
-cargo$CARGO = relevel(cargo$CARGO, ref="Fragile")
-contrasts(cargo$CARGO)
-```
-
-
-```{r}
-#| eval: false
-
-fit <- lm(COST~CARGO, data=cargo)
-summary(fit)
-```
-
-
-
-
-:::
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Example: One-Way ANOVA  
-
-Suppose a researcher wants to compare the effectiveness of three teaching methods on exam performance. A group of students is randomly assigned to one of three methods, and their exam scores are recorded.
-
-| Method | Scores |
-|--------|--------|
-| A | 78, 82, 85, 80 |
-| B | 88, 90, 85, 87 |
-| C | 72, 75, 70, 74 |
-
-We want to test whether the mean scores differ across methods:
-
-$$
-H_0:\ \mu_A=\mu_B=\mu_C
-\qquad\text{vs}\qquad
-H_a:\ \text{not all means are equal}.
-$$
-
-First compute the sample means:
-
-$$
-\bar y_A=81.25,\quad 
-\bar y_B=87.5,\quad 
-\bar y_C=72.75.
-$$
-
-We observe differences among the group means, but ANOVA determines whether these differences are large relative to the variation within each group.
-
-The one-way ANOVA model is
-
-$$
-y_{ij}=\mu+\tau_i+\varepsilon_{ij},\qquad i=1,2,3,
-$$
-
-where $\tau_i$ represents the effect of teaching method $i$.
-
-ANOVA partitions variability into:
-
-- **Between-group variation**: differences among group means  
-- **Within-group variation**: variability of observations within each group  
-
-If the between-group variation is sufficiently large relative to the within-group variation, we reject $H_0$ and conclude that at least one teaching method differs from the others.
-
-
-
-```{r}
-# Example data
-score <- c(
-    78, 82, 85, 80,
-    88, 90, 85, 87,
-    72, 75, 70, 74
+y <- c(
+    rnorm(n, mean = 0, sd = 1),
+    rnorm(n, mean = 1, sd = 1),
+    rnorm(n, mean = 2, sd = 1)
 )
 
-method <- factor(c(
-    "A", "A", "A", "A",
-    "B", "B", "B", "B",
-    "C", "C", "C", "C"
-))
-
-dat <- data.frame(method, score)
-
-# View the data
+dat <- data.frame(group, y)
 dat
-
-# Group means
-aggregate(score ~ method, data = dat, mean)
-
-# Fit one-way ANOVA
-fit <- aov(score ~ method, data = dat)
-
-# ANOVA table
-summary(fit)
-
-# Equivalent regression model
-lm_fit <- lm(score ~ method, data = dat)
-summary(lm_fit)
-anova(lm_fit)
-
-# Optional: boxplot
-boxplot(score ~ method,
-    data = dat,
-    main = "Exam Scores by Teaching Method",
-    xlab = "Method",
-    ylab = "Score"
-)
 ```
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-::: {#exm-}
-Suppose we study exam scores from three teaching methods.
-
-```{r}
-set.seed(123)
-
-method <- factor(rep(c("Lecture", "Hybrid", "Online"), each = 12))
-score <- c(
-  rnorm(12, mean = 78, sd = 4),
-  rnorm(12, mean = 84, sd = 4),
-  rnorm(12, mean = 80, sd = 4)
-)
-
-fit <- lm(score ~ method)
-summary(fit)
-model.tables(aov(score ~ method), type = "means")
-```
-
-If `Lecture` is the reference level, then:
-
-- the intercept estimates the mean score for `Lecture`;
-- the coefficient of `methodHybrid` estimates the difference between `Hybrid` and `Lecture`;
-- the coefficient of `methodOnline` estimates the difference between `Online` and `Lecture`.
-
-The overall F-test checks whether all group means are equal.
-:::
-
-
-## How R handles categorical variables
-
-In R, factors are used to represent categorical predictors. When a factor is included in `lm()`, R automatically creates the corresponding dummy variables.
 
 ```{r}
 #| eval: false
+#| code-fold: true
 
-dat$group <- as.factor(dat$group)
-contrasts(dat$group)
-fit <- lm(y ~ group, data = dat)
+# This is a function to generate arbitrary groups of data with customized mean and standard deviations.
+
+gen_groups <- function(mu, sd, n = 10, seed = NULL) {
+    if (!is.null(seed)) set.seed(seed)
+
+    Lmu <- length(mu)
+    Lsd <- length(sd)
+
+    if (Lmu == Lsd) {
+        k <- Lmu
+    } else if (Lmu > Lsd && Lmu %% Lsd == 0) {
+        sd <- rep(sd, length.out = Lmu)
+        k <- Lmu
+    } else if (Lsd > Lmu && Lsd %% Lmu == 0) {
+        mu <- rep(mu, length.out = Lsd)
+        k <- Lsd
+    } else {
+        stop("Lengths of mu and sd must match or be multiples (broadcastable).")
+    }
+
+    if (length(n) == 1) n <- rep(n, k)
+
+    if (length(n) != k) {
+        stop("n must be length 1 or same as number of groups")
+    }
+
+    y <- unlist(Map(
+        function(m, s, ni) {
+            rnorm(ni, mean = m, sd = s)
+        },
+        mu, sd, n
+    ))
+
+    group <- factor(rep(seq_len(k), times = n))
+
+    data.frame(group, y)
+}
+
+dat <- gen_groups(c(1, 2, 3), c(2, 1, 1), n=10)
+
+```
+
+
+
+
+
+
+```{r}
+fit <- lm(y ~ group, data=dat)
 summary(fit)
 ```
 
-If we want to change the baseline group, we can use `relevel()`.
+R automatically converts the factor variable into dummy variables. The first level of the factor (which is group A in this example) is used as the base group.
+
+We can relevel the factor to change the base group.
 
 ```{r}
-#| eval: false
-
-dat$group <- relevel(dat$group, ref = "control")
+dat$group <- relevel(dat$group, ref = "B")
 fit <- lm(y ~ group, data = dat)
 summary(fit)
 ```
 
 
-::: {.callout-tip}
-Changing the reference level does not change the fitted values, residuals, SSE, or the overall F-test. It only changes how the coefficients are written and interpreted.
+In this case, all three types of ANOVA tables as well as the ANOVA table for the linear regression are the same, because the model contains only one factor variable. They are different from the summary table, because the summary table tests the individual dummy-variable coefficients, while the ANOVA tables test the factor as a whole.
+
+```{r}
+anova(fit)
+```
+
+```{r}
+library(car)
+Anova(fit, type = 2)
+```
+
+```{r}
+Anova(fit, type = 3)
+```
+
+```{r}
+#| echo: false
+
+source("../../anova_alt.R")
+```
+
+```{r}
+anova_alt(fit)
+```
+
 :::
+
+
+
+
+
 
 
 ## Categorical predictors together with quantitative predictors
@@ -554,62 +461,47 @@ $$
 Now each group may have a different regression line.
 
 
-## Historical note: ANOVA and regression
 
-Historically, ANOVA and regression were developed as closely related but somewhat separate traditions.
+::: {#exm-}
 
-- Regression was developed to study relationships among quantitative variables.
-- ANOVA was developed to compare means across groups, especially in designed experiments.
+```{r}
+set.seed(1)
 
-In modern linear model theory, these are unified. Both are special cases of the same model
+n <- 40
+group <- factor(rep(c("A", "B", "C"), each = n))
 
-$$
-\mathbf y=\mathbf X\boldsymbol{\beta}+\boldsymbol{\varepsilon}.
-$$
+x <- rnorm(3 * n)
 
-The difference is mainly in how the columns of the design matrix $\mathbf X$ are constructed:
+z1 <- as.numeric(group == "B")
+z2 <- as.numeric(group == "C")
 
-- quantitative regression uses numerical predictors directly;
-- categorical regression uses indicator variables;
-- ANOVA tables summarize hypothesis tests for groups of coefficients by comparing nested models.
+y <- 2 + 1.5 * x + 2 * z1 - 1 * z2 + 1 * x * z1 - 0.5 * x * z2 + rnorm(3 * n)
 
-So traditional ANOVA is not really a separate method from regression. It is a special presentation of linear-model inference when predictors are categorical.
+dat <- data.frame(y, x, group)
 
-
-## Relation to one-way ANOVA
-
-The traditional one-way ANOVA model is
-
-$$
-y_{ij}=\mu+\tau_i+\varepsilon_{ij},
-$$
-
-where $\tau_i$ is the effect of group $i$.
-
-This is equivalent to a regression model with dummy variables. For example, with three groups:
-
-$$
-y=\beta_0+\beta_1x_1+\beta_2x_2+\varepsilon.
-$$
-
-These two formulations describe the same fitted means, the same residuals, and the same F-test for
-
-$$
-H_0:\mu_1=\mu_2=\cdots=\mu_g.
-$$
-
-In regression language, this is the same as testing
-
-$$
-H_0:\beta_1=\beta_2=\cdots=\beta_{g-1}=0.
-$$
-
-Therefore, one-way ANOVA is exactly categorical regression with one factor.
+fit <- lm(y ~ x * group, data = dat)
+```
 
 
-::: {.callout-note}
-The classical ANOVA table partitions variability into between-group and within-group components. In the regression formulation, this is just the usual decomposition into explained and unexplained variation.
+```{r}
+summary(fit)
+```
+
+```{r}
+anova_alt(fit)
+```
+
+
+
+- Group A is the base group, which is $\Exp(y)=`r coef(fit)['(Intercept)']`+`r coef(fit)['x']`x$. 
+- Group B, compared with A, its intercept is increased by `r coef(summary(fit))['groupB', 'Estimate']`, and its slope is increased by `r coef(summary(fit))['x:groupB', 'Estimate']`. Therefore the model for group B is $\Exp(y)=`r coef(fit)['(Intercept)']+coef(summary(fit))['groupB', 'Estimate']`+`r coef(fit)['x']+coef(summary(fit))['x:groupB', 'Estimate']` x$.
+- Group C, compared with A, its intercept is increased by `r coef(summary(fit))['groupC', 'Estimate']`, and its slope is increased by `r coef(summary(fit))['x:groupC', 'Estimate']`. Therefore the model for group C is $\Exp(y)= `r coef(fit)['(Intercept)']+coef(summary(fit))['groupC', 'Estimate']`+`r coef(fit)['x']+coef(summary(fit))['x:groupC', 'Estimate']` x$.
+- From the summary table, both interaction terms (`x:groupB` and `x:groupC`) have p-values greater than 0.05, so there is insufficient evidence to conclude that the slopes differ across groups. Thus, the main differences among groups are primarily in their intercepts.
+- From the ANOVA table, however, the interaction term `x:group` is significant overall, indicating that the slopes are not exactly the same across groups when tested jointly.
+- Although neither interaction coefficient is individually significant in the summary table, the ANOVA test shows that the interaction is significant overall. This indicates that the slopes are not identical across groups, even though no single slope difference is strong enough to be detected individually.
 :::
+
+
 
 
 ## Relation to two-way ANOVA
