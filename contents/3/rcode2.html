@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/3/project2.html" rel="next">
-<link href="../../contents/3/categorical.html" rel="prev">
+<link href="../../contents/app/data.html" rel="next">
+<link href="../../contents/3/cat.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -436,20 +436,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/3/categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dummy variables</span></span></a>
+  <a href="../../contents/3/cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression with qualitative variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/rcode2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">R code</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 4 Multiple Regression Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -482,8 +476,71 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-concrete-example-for-formula-language-and-anova" id="toc-a-concrete-example-for-formula-language-and-anova" class="nav-link active" data-scroll-target="#a-concrete-example-for-formula-language-and-anova"><span class="header-section-number">12</span> A Concrete Example for Formula Language and ANOVA</a>
+  <ul class="collapse">
+  <li><a href="#example-setup" id="toc-example-setup" class="nav-link" data-scroll-target="#example-setup"><span class="header-section-number">12.1</span> Example setup</a></li>
+  <li><a href="#formula-language" id="toc-formula-language" class="nav-link" data-scroll-target="#formula-language"><span class="header-section-number">12.2</span> Formula language</a>
+  <ul class="collapse">
+  <li><a href="#main-effects-model" id="toc-main-effects-model" class="nav-link" data-scroll-target="#main-effects-model"><span class="header-section-number">12.2.1</span> Main-effects model</a></li>
+  <li><a href="#add-an-interaction-term" id="toc-add-an-interaction-term" class="nav-link" data-scroll-target="#add-an-interaction-term"><span class="header-section-number">12.2.2</span> Add an interaction term</a></li>
+  <li><a href="#add-a-quadratic-term" id="toc-add-a-quadratic-term" class="nav-link" data-scroll-target="#add-a-quadratic-term"><span class="header-section-number">12.2.3</span> Add a quadratic term</a></li>
+  </ul></li>
+  <li><a href="#global-f-test-and-individual-t-tests" id="toc-global-f-test-and-individual-t-tests" class="nav-link" data-scroll-target="#global-f-test-and-individual-t-tests"><span class="header-section-number">12.3</span> Global F-test and individual t-tests</a></li>
+  </ul></li>
+  <li><a href="#a-concrete-example-for-formula-language-and-anova-1" id="toc-a-concrete-example-for-formula-language-and-anova-1" class="nav-link" data-scroll-target="#a-concrete-example-for-formula-language-and-anova-1"><span class="header-section-number">13</span> A Concrete Example for Formula Language and ANOVA</a>
+  <ul class="collapse">
+  <li><a href="#example-setup-1" id="toc-example-setup-1" class="nav-link" data-scroll-target="#example-setup-1"><span class="header-section-number">13.1</span> Example setup</a></li>
+  <li><a href="#formula-language-1" id="toc-formula-language-1" class="nav-link" data-scroll-target="#formula-language-1"><span class="header-section-number">13.2</span> Formula language</a></li>
+  </ul></li>
+  <li><a href="#simulated-dataset" id="toc-simulated-dataset" class="nav-link" data-scroll-target="#simulated-dataset"><span class="header-section-number">14</span> Simulated dataset</a>
+  <ul class="collapse">
+  <li><a href="#main-effects-model-1" id="toc-main-effects-model-1" class="nav-link" data-scroll-target="#main-effects-model-1"><span class="header-section-number">14.1</span> Main-effects model</a></li>
+  <li><a href="#add-an-interaction-term-1" id="toc-add-an-interaction-term-1" class="nav-link" data-scroll-target="#add-an-interaction-term-1"><span class="header-section-number">14.2</span> Add an interaction term</a></li>
+  <li><a href="#add-a-quadratic-term-1" id="toc-add-a-quadratic-term-1" class="nav-link" data-scroll-target="#add-a-quadratic-term-1"><span class="header-section-number">14.3</span> Add a quadratic term</a></li>
+  </ul></li>
+  <li><a href="#global-f-test-and-individual-t-tests-1" id="toc-global-f-test-and-individual-t-tests-1" class="nav-link" data-scroll-target="#global-f-test-and-individual-t-tests-1"><span class="header-section-number">15</span> Global F-test and individual t-tests</a>
+  <ul class="collapse">
+  <li><a href="#global-f-test" id="toc-global-f-test" class="nav-link" data-scroll-target="#global-f-test"><span class="header-section-number">15.1</span> Global F-test</a></li>
+  <li><a href="#individual-t-tests" id="toc-individual-t-tests" class="nav-link" data-scroll-target="#individual-t-tests"><span class="header-section-number">15.2</span> Individual t-tests</a></li>
+  </ul></li>
+  <li><a href="#anova-tables-and-their-meanings" id="toc-anova-tables-and-their-meanings" class="nav-link" data-scroll-target="#anova-tables-and-their-meanings"><span class="header-section-number">16</span> ANOVA tables and their meanings</a>
+  <ul class="collapse">
+  <li><a href="#type-i-anova" id="toc-type-i-anova" class="nav-link" data-scroll-target="#type-i-anova"><span class="header-section-number">16.1</span> Type I ANOVA</a></li>
+  <li><a href="#type-ii-anova" id="toc-type-ii-anova" class="nav-link" data-scroll-target="#type-ii-anova"><span class="header-section-number">16.2</span> Type II ANOVA</a></li>
+  <li><a href="#type-iii-anova" id="toc-type-iii-anova" class="nav-link" data-scroll-target="#type-iii-anova"><span class="header-section-number">16.3</span> Type III ANOVA</a></li>
+  </ul></li>
+  <li><a href="#a-concrete-interpretation-of-type-i-ii-and-iii" id="toc-a-concrete-interpretation-of-type-i-ii-and-iii" class="nav-link" data-scroll-target="#a-concrete-interpretation-of-type-i-ii-and-iii"><span class="header-section-number">17</span> A concrete interpretation of Type I, II, and III</a>
+  <ul class="collapse">
+  <li><a href="#type-i-question" id="toc-type-i-question" class="nav-link" data-scroll-target="#type-i-question"><span class="header-section-number">17.1</span> Type I question</a></li>
+  <li><a href="#type-ii-question" id="toc-type-ii-question" class="nav-link" data-scroll-target="#type-ii-question"><span class="header-section-number">17.2</span> Type II question</a></li>
+  <li><a href="#type-iii-question" id="toc-type-iii-question" class="nav-link" data-scroll-target="#type-iii-question"><span class="header-section-number">17.3</span> Type III question</a></li>
+  </ul></li>
+  <li><a href="#why-type-ii-and-type-iii-differ-when-interaction-exists" id="toc-why-type-ii-and-type-iii-differ-when-interaction-exists" class="nav-link" data-scroll-target="#why-type-ii-and-type-iii-differ-when-interaction-exists"><span class="header-section-number">18</span> Why Type II and Type III differ when interaction exists</a></li>
+  <li><a href="#centering-the-predictors" id="toc-centering-the-predictors" class="nav-link" data-scroll-target="#centering-the-predictors"><span class="header-section-number">19</span> Centering the predictors</a>
+  <ul class="collapse">
+  <li><a href="#type-iii-after-centering" id="toc-type-iii-after-centering" class="nav-link" data-scroll-target="#type-iii-after-centering"><span class="header-section-number">19.1</span> Type III after centering</a></li>
+  </ul></li>
+  <li><a href="#multicollinearity-and-vif" id="toc-multicollinearity-and-vif" class="nav-link" data-scroll-target="#multicollinearity-and-vif"><span class="header-section-number">20</span> Multicollinearity and VIF</a>
+  <ul class="collapse">
+  <li><a href="#vif-for-the-uncentered-model" id="toc-vif-for-the-uncentered-model" class="nav-link" data-scroll-target="#vif-for-the-uncentered-model"><span class="header-section-number">20.1</span> VIF for the uncentered model</a></li>
+  <li><a href="#vif-for-the-centered-model" id="toc-vif-for-the-centered-model" class="nav-link" data-scroll-target="#vif-for-the-centered-model"><span class="header-section-number">20.2</span> VIF for the centered model</a></li>
+  </ul></li>
+  <li><a href="#a-nested-model-view-of-anova-tests" id="toc-a-nested-model-view-of-anova-tests" class="nav-link" data-scroll-target="#a-nested-model-view-of-anova-tests"><span class="header-section-number">21</span> A nested-model view of ANOVA tests</a>
+  <ul class="collapse">
+  <li><a href="#testing-the-interaction" id="toc-testing-the-interaction" class="nav-link" data-scroll-target="#testing-the-interaction"><span class="header-section-number">21.1</span> Testing the interaction</a></li>
+  <li><a href="#testing-the-quadratic-term" id="toc-testing-the-quadratic-term" class="nav-link" data-scroll-target="#testing-the-quadratic-term"><span class="header-section-number">21.2</span> Testing the quadratic term</a></li>
+  </ul></li>
+  <li><a href="#recommended-teaching-workflow" id="toc-recommended-teaching-workflow" class="nav-link" data-scroll-target="#recommended-teaching-workflow"><span class="header-section-number">22</span> Recommended teaching workflow</a></li>
+  <li><a href="#final-comparison-table" id="toc-final-comparison-table" class="nav-link" data-scroll-target="#final-comparison-table"><span class="header-section-number">23</span> Final comparison table</a></li>
+  <li><a href="#short-teaching-summary" id="toc-short-teaching-summary" class="nav-link" data-scroll-target="#short-teaching-summary"><span class="header-section-number">24</span> Short teaching summary</a></li>
+  <li><a href="#optional-r-code-block-for-all-models" id="toc-optional-r-code-block-for-all-models" class="nav-link" data-scroll-target="#optional-r-code-block-for-all-models"><span class="header-section-number">25</span> Optional R code block for all models</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -569,8 +626,1129 @@ window.Quarto = {
 <p>F-tests assess groups of predictors (e.g., all levels of a categorical variable).</p>
 <p>ANOVA is a generalization:</p>
 <p>t-tests are a special case of ANOVA when testing a single predictor.</p>
+<section id="a-concrete-example-for-formula-language-and-anova" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> A Concrete Example for Formula Language and ANOVA</h1>
+<p>In this section, we use one concrete example to connect the following topics:</p>
+<ul>
+<li>formula language</li>
+<li>global <span class="math inline">\(F\)</span>-test</li>
+<li>individual <span class="math inline">\(t\)</span>-tests</li>
+<li>Type I, Type II, and Type III ANOVA</li>
+<li>interaction terms</li>
+<li>higher-degree terms</li>
+<li>centering</li>
+<li>multicollinearity</li>
+</ul>
+<p>The goal is to see how all of these ideas fit together in one regression analysis.</p>
+<section id="example-setup" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="example-setup"><span class="header-section-number">12.1</span> Example setup</h2>
+<p>Suppose we want to study how an exam score depends on:</p>
+<ul>
+<li><code>hours</code>: study hours</li>
+<li><code>attend</code>: attendance rate</li>
+<li><code>tutor</code>: whether the student received tutoring (<code>0</code> = no, <code>1</code> = yes)</li>
+</ul>
+<p>A reasonable model might include:</p>
+<ol type="1">
+<li>main effects of all predictors</li>
+<li>an interaction between <code>hours</code> and <code>attend</code></li>
+<li>a quadratic term for <code>hours</code> to capture diminishing returns</li>
+</ol>
+<p>So we consider the model</p>
+<p><span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_1x_2+\beta_5x_1^2+\varepsilon
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(y=\)</span> score</li>
+<li><span class="math inline">\(x_1=\)</span> hours</li>
+<li><span class="math inline">\(x_2=\)</span> attendance</li>
+<li><span class="math inline">\(x_3=\)</span> tutoring indicator</li>
+</ul>
+<p>In words:</p>
+<ul>
+<li>more hours may improve the score</li>
+<li>better attendance may improve the score</li>
+<li>tutoring may improve the score</li>
+<li>the effect of hours may depend on attendance</li>
+<li>the effect of hours may not be linear</li>
+</ul>
+</section>
+<section id="formula-language" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">12.2</span> Formula language</h2>
+<p>In R formula language, the above model can be written as</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor <span class="sc">+</span> hours<span class="sc">:</span>attend <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hours <span class="sc">+</span> attend <span class="sc">+</span> hours<span class="sc">:</span>attend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Formula interpretation</p>
+<p>hours + attend + tutor adds main effects</p>
+<p>hours:attend adds only the interaction</p>
+<p>hours*attend adds both main effects and the interaction</p>
+<p>I(hours^2) tells R to treat hours^2 as arithmetic, not formula syntax</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">hours =</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">attend =</span> <span class="fu">runif</span>(n, <span class="fl">0.6</span>, <span class="fl">1.0</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">tutor =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span> <span class="sc">*</span> df<span class="sc">$</span>hours <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">15</span> <span class="sc">*</span> df<span class="sc">$</span>attend <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span> <span class="sc">*</span> df<span class="sc">$</span>tutor <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span> <span class="sc">*</span> df<span class="sc">$</span>hours <span class="sc">*</span> df<span class="sc">$</span>attend <span class="sc">-</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.35</span> <span class="sc">*</span> df<span class="sc">$</span>hours<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="do">##      hours    attend tutor    score</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2.655087 0.9967354     0 72.24028</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 3.721239 0.7982374     0 82.87219</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 5.728534 0.7937398     1 89.52815</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 9.082078 0.6693769     0 72.32193</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 2.016819 0.9019284     0 76.41572</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 8.983897 0.7815582     0 82.65942</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now fit several models of increasing complexity.</p>
+<section id="main-effects-model" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="main-effects-model"><span class="header-section-number">12.2.1</span> Main-effects model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours + attend + tutor, data = df)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -15.3245  -3.7036   0.4361   3.9114  14.9213 </span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  47.7737     4.1432  11.530  &lt; 2e-16 ***</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours         2.1289     0.1966  10.829  &lt; 2e-16 ***</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend       25.0269     4.9550   5.051 1.65e-06 ***</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor         6.7552     1.1340   5.957 2.82e-08 ***</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.779 on 116 degrees of freedom</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.5927, Adjusted R-squared:  0.5821 </span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 56.26 on 3 and 116 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is <span class="math display">\[
+E(y)=h, a, t
+\]</span></p>
+<p>Interpretation:</p>
+<ul>
+<li><span class="math inline">\(\beta_1\)</span>: expected change in score when hours increases by 1, holding attendance and tutoring fixed</li>
+<li><span class="math inline">\(\beta_2\)</span>: expected change in score when attendance increases by 1, holding the others fixed</li>
+<li><span class="math inline">\(\beta_3\)</span>: expected difference in score between tutoring and no tutoring, holding the others fixed</li>
+</ul>
+</section>
+<section id="add-an-interaction-term" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="add-an-interaction-term"><span class="header-section-number">12.2.2</span> Add an interaction term</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">*</span> attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours * attend + tutor, data = df)</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -15.9538  -3.6048   0.4753   4.0756  14.9290 </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)    52.022      8.196   6.347 4.50e-09 ***</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours           1.233      1.503   0.821   0.4136    </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         19.621     10.271   1.910   0.0586 .  </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor           6.762      1.137   5.947 3.01e-08 ***</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend    1.136      1.889   0.601   0.5488    </span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.795 on 115 degrees of freedom</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.5939, Adjusted R-squared:  0.5798 </span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 42.05 on 4 and 115 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is <span class="math display">\[
+E(y)=h,a,t,ha
+\]</span></p>
+<p>So the slope of hours depends on attendance, and the slope of attend depends on hours.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Interaction interpretation</p>
+<p>The interaction term means:</p>
+<p>the effect of study hours changes as attendance changes, and</p>
+<p>the effect of attendance changes as study hours change.</p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+b4=p2dv
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="add-a-quadratic-term" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="add-a-quadratic-term"><span class="header-section-number">12.2.3</span> Add a quadratic term</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">*</span> attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours * attend + tutor + I(hours^2), data = df)</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -14.1072  -3.1060   0.2882   3.3301  13.1107 </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   52.6359     7.2727   7.237 5.71e-11 ***</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          4.2660     1.4368   2.969  0.00364 ** </span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         9.7497     9.2782   1.051  0.29556    </span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          6.5831     1.0095   6.521 1.98e-09 ***</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)    -0.3953     0.0698  -5.664 1.12e-07 ***</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   2.3739     1.6898   1.405  0.16279    </span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.142 on 114 degrees of freedom</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.6831, Adjusted R-squared:  0.6692 </span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 49.15 on 5 and 114 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is</p>
+<p><span class="math display">\[
+E=h, a,t,ha, h2
+\]</span></p>
+<p>Now the slope with respect to hours is</p>
+<p><span class="math display">\[
+dEdh=b1+b4a+2b5h
+\]</span></p>
+<p>This tells us that the effect of hours is not constant.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Quadratic interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The quadratic term <span class="math inline">\(h^2\)</span> introduces curvature.</p>
+<p>If <span class="math inline">\(\beta_5&gt;0\)</span>, the curve is U-shaped.</p>
+<p>If <span class="math inline">\(\beta_5&lt;0\)</span>, the curve is inverted U-shaped.</p>
+</div>
+</div>
+<p>The turning point occurs at</p>
+<p><span class="math display">\[
+h^*=(b1+b4a)/2b5
+\]</span></p>
+<p>for a fixed attendance level <span class="math inline">\(a\)</span>.</p>
+</section>
+</section>
+<section id="global-f-test-and-individual-t-tests" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="global-f-test-and-individual-t-tests"><span class="header-section-number">12.3</span> Global F-test and individual t-tests</h2>
+<p>Global F-test</p>
+<p>For a multiple regression model, the global <span class="math inline">\(F\)</span>-test examines</p>
+<p><span class="math inline">\(H_0\)</span>: all slope coefficients are <span class="math inline">\(0\)</span></p>
+<p><span class="math inline">\(H_a\)</span>: at least one slope coefficient is not <span class="math inline">\(0\)</span></p>
+<p>For m3, this is the test of whether the model as a whole explains variation in score.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">##               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          1 3559.2  3559.2 134.6217 &lt; 2.2e-16 ***</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         1  892.4   892.4  33.7551 5.767e-08 ***</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          1 1185.2  1185.2  44.8297 8.485e-10 ***</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)     1  808.2   808.2  30.5677 2.072e-07 ***</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   1   52.2    52.2   1.9735    0.1628    </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    114 3014.0    26.4                       </span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="a-concrete-example-for-formula-language-and-anova-1" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> A Concrete Example for Formula Language and ANOVA</h1>
+<p>In this section, we use one concrete example to connect the following topics:</p>
+<ul>
+<li>formula language</li>
+<li>global <span class="math inline">\(F\)</span>-test</li>
+<li>individual <span class="math inline">\(t\)</span>-tests</li>
+<li>Type I, Type II, and Type III ANOVA</li>
+<li>interaction terms</li>
+<li>higher-degree terms</li>
+<li>centering</li>
+<li>multicollinearity</li>
+</ul>
+<p>The goal is to see how all of these ideas fit together in one regression analysis.</p>
+<section id="example-setup-1" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="example-setup-1"><span class="header-section-number">13.1</span> Example setup</h2>
+<p>Suppose we want to study how an exam score depends on:</p>
+<ul>
+<li><code>hours</code>: study hours</li>
+<li><code>attend</code>: attendance rate</li>
+<li><code>tutor</code>: whether the student received tutoring (<code>0</code> = no, <code>1</code> = yes)</li>
+</ul>
+<p>A reasonable model might include:</p>
+<ol type="1">
+<li>main effects of all predictors</li>
+<li>an interaction between <code>hours</code> and <code>attend</code></li>
+<li>a quadratic term for <code>hours</code> to capture diminishing returns</li>
+</ol>
+<p>So we consider the model</p>
+<p><span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_1x_2+\beta_5x_1^2+\varepsilon
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(y=\)</span> score</li>
+<li><span class="math inline">\(x_1=\)</span> hours</li>
+<li><span class="math inline">\(x_2=\)</span> attendance</li>
+<li><span class="math inline">\(x_3=\)</span> tutoring indicator</li>
+</ul>
+<p>In words:</p>
+<ul>
+<li>more hours may improve the score</li>
+<li>better attendance may improve the score</li>
+<li>tutoring may improve the score</li>
+<li>the effect of hours may depend on attendance</li>
+<li>the effect of hours may not be linear</li>
+</ul>
+</section>
+<section id="formula-language-1" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="formula-language-1"><span class="header-section-number">13.2</span> Formula language</h2>
+<p>In R formula language, the above model can be written as</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor <span class="sc">+</span> hours<span class="sc">:</span>attend <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>A more compact way is</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>because <code>hours*attend</code> automatically expands to</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>hours <span class="sc">+</span> attend <span class="sc">+</span> hours<span class="sc">:</span>attend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Formula interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>hours + attend + tutor</code> adds main effects</li>
+<li><code>hours:attend</code> adds only the interaction</li>
+<li><code>hours*attend</code> adds both main effects and the interaction</li>
+<li><code>I(hours^2)</code> tells R to treat <code>hours^2</code> as arithmetic, not formula syntax</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="simulated-dataset" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Simulated dataset</h1>
+<p>To make the discussion concrete, consider the following simulated data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">hours =</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">attend =</span> <span class="fu">runif</span>(n, <span class="fl">0.6</span>, <span class="fl">1.0</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tutor =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span><span class="sc">*</span>df<span class="sc">$</span>hours <span class="sc">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">15</span><span class="sc">*</span>df<span class="sc">$</span>attend <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span><span class="sc">*</span>df<span class="sc">$</span>tutor <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span><span class="sc">*</span>df<span class="sc">$</span>hours<span class="sc">*</span>df<span class="sc">$</span>attend <span class="sc">-</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.35</span><span class="sc">*</span>df<span class="sc">$</span>hours<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="do">##      hours    attend tutor    score</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 2.655087 0.9967354     0 72.24028</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 3.721239 0.7982374     0 82.87219</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 5.728534 0.7937398     1 89.52815</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 9.082078 0.6693769     0 72.32193</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 2.016819 0.9019284     0 76.41572</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 8.983897 0.7815582     0 82.65942</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now fit several models of increasing complexity.</p>
+<section id="main-effects-model-1" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="main-effects-model-1"><span class="header-section-number">14.1</span> Main-effects model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours + attend + tutor, data = df)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -15.3245  -3.7036   0.4361   3.9114  14.9213 </span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  47.7737     4.1432  11.530  &lt; 2e-16 ***</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours         2.1289     0.1966  10.829  &lt; 2e-16 ***</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend       25.0269     4.9550   5.051 1.65e-06 ***</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor         6.7552     1.1340   5.957 2.82e-08 ***</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.779 on 116 degrees of freedom</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.5927, Adjusted R-squared:  0.5821 </span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 56.26 on 3 and 116 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is</p>
+<p><span class="math display">\[
+E(y)=\beta_0+\beta_1\text{hours}+\beta_2\text{attend}+\beta_3\text{tutor}.
+\]</span></p>
+<p>Interpretation:</p>
+<ul>
+<li><span class="math inline">\(\beta_1\)</span>: expected change in score when hours increases by 1, holding attendance and tutoring fixed</li>
+<li><span class="math inline">\(\beta_2\)</span>: expected change in score when attendance increases by 1, holding the others fixed</li>
+<li><span class="math inline">\(\beta_3\)</span>: expected difference in score between tutoring and no tutoring, holding the others fixed</li>
+</ul>
+</section>
+<section id="add-an-interaction-term-1" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="add-an-interaction-term-1"><span class="header-section-number">14.2</span> Add an interaction term</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours * attend + tutor, data = df)</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -15.9538  -3.6048   0.4753   4.0756  14.9290 </span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)    52.022      8.196   6.347 4.50e-09 ***</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours           1.233      1.503   0.821   0.4136    </span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         19.621     10.271   1.910   0.0586 .  </span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor           6.762      1.137   5.947 3.01e-08 ***</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend    1.136      1.889   0.601   0.5488    </span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.795 on 115 degrees of freedom</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.5939, Adjusted R-squared:  0.5798 </span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 42.05 on 4 and 115 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is</p>
+<p><span class="math display">\[
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3t+\beta_4ha.
+\]</span></p>
+<p>Now</p>
+<p><span class="math display">\[
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_4a,
+\qquad
+\frac{\partial E(y)}{\partial a}=\beta_2+\beta_4h.
+\]</span></p>
+<p>So the slope of <code>hours</code> depends on attendance, and the slope of <code>attend</code> depends on hours.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interaction interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The interaction term means:</p>
+<ul>
+<li>the effect of study hours changes as attendance changes, and</li>
+<li>the effect of attendance changes as study hours change.</li>
+</ul>
+<p>Equivalently, <span class="math display">\[
+\beta_4=\frac{\partial^2E(y)}{\partial h,\partial a}.
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="add-a-quadratic-term-1" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="add-a-quadratic-term-1"><span class="header-section-number">14.3</span> Add a quadratic term</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hours * attend + tutor + I(hours^2), data = df)</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -14.1072  -3.1060   0.2882   3.3301  13.1107 </span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   52.6359     7.2727   7.237 5.71e-11 ***</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          4.2660     1.4368   2.969  0.00364 ** </span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         9.7497     9.2782   1.051  0.29556    </span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          6.5831     1.0095   6.521 1.98e-09 ***</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)    -0.3953     0.0698  -5.664 1.12e-07 ***</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   2.3739     1.6898   1.405  0.16279    </span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.142 on 114 degrees of freedom</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.6831, Adjusted R-squared:  0.6692 </span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 49.15 on 5 and 114 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This model is</p>
+<p><span class="math display">\[
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3t+\beta_4ha+\beta_5h^2.
+\]</span></p>
+<p>Now the slope with respect to hours is</p>
+<p><span class="math display">\[
+\frac{dE(y)}{dh}=\beta_1+\beta_4a+2\beta_5h.
+\]</span></p>
+<p>This tells us that the effect of hours is not constant.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Quadratic interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The quadratic term <span class="math inline">\(h^2\)</span> introduces curvature.</p>
+<ul>
+<li>If <span class="math inline">\(\beta_5&gt;0\)</span>, the curve is U-shaped.</li>
+<li>If <span class="math inline">\(\beta_5&lt;0\)</span>, the curve is inverted U-shaped.</li>
+</ul>
+</div>
+</div>
+<p>The turning point occurs at</p>
+<p><span class="math display">\[
+h^*=-\frac{\beta_1+\beta_4a}{2\beta_5}
+\]</span></p>
+<p>for a fixed attendance level <span class="math inline">\(a\)</span>.</p>
+</section>
+</section>
+<section id="global-f-test-and-individual-t-tests-1" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Global F-test and individual t-tests</h1>
+<section id="global-f-test" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="global-f-test"><span class="header-section-number">15.1</span> Global F-test</h2>
+<p>For a multiple regression model, the global <span class="math inline">\(F\)</span>-test examines</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: all slope coefficients are <span class="math inline">\(0\)</span></li>
+<li><span class="math inline">\(H_a\)</span>: at least one slope coefficient is not <span class="math inline">\(0\)</span></li>
+</ul>
+<p>For <code>m3</code>, this is the test of whether the model as a whole explains variation in score.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="do">##               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          1 3559.2  3559.2 134.6217 &lt; 2.2e-16 ***</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         1  892.4   892.4  33.7551 5.767e-08 ***</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          1 1185.2  1185.2  44.8297 8.485e-10 ***</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)     1  808.2   808.2  30.5677 2.072e-07 ***</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   1   52.2    52.2   1.9735    0.1628    </span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    114 3014.0    26.4                       </span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The global test answers the question:</p>
+<blockquote class="blockquote">
+<p>Does this regression model provide useful information about the response?</p>
+</blockquote>
+</section>
+<section id="individual-t-tests" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="individual-t-tests"><span class="header-section-number">15.2</span> Individual t-tests</h2>
+<p>The <code>summary()</code> output gives individual <span class="math inline">\(t\)</span>-tests for each coefficient.</p>
+<p>For example, the test for the interaction term is</p>
+<p><span class="math display">\[
+H_0:\beta_4=0
+\qquad\text{vs}\qquad
+H_a:\beta_4\ne 0.
+\]</span></p>
+<p>The test for the quadratic term is</p>
+<p><span class="math display">\[
+H_0:\beta_5=0
+\qquad\text{vs}\qquad
+H_a:\beta_5\ne 0.
+\]</span></p>
+<p>These tests help us decide whether each term contributes after accounting for the others in the fitted model.</p>
+</section>
+</section>
+<section id="anova-tables-and-their-meanings" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> ANOVA tables and their meanings</h1>
+<p>In multiple regression, there is more than one way to define the contribution of each term. This leads to different ANOVA types.</p>
+<section id="type-i-anova" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="type-i-anova"><span class="header-section-number">16.1</span> Type I ANOVA</h2>
+<p>Type I ANOVA is sequential. Terms are tested in the order they enter the model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="do">##               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          1 3559.2  3559.2 134.6217 &lt; 2.2e-16 ***</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         1  892.4   892.4  33.7551 5.767e-08 ***</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          1 1185.2  1185.2  44.8297 8.485e-10 ***</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)     1  808.2   808.2  30.5677 2.072e-07 ***</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   1   52.2    52.2   1.9735    0.1628    </span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    114 3014.0    26.4                       </span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For the formula</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>the terms are entered in the order:</p>
+<ol type="1">
+<li><code>hours</code></li>
+<li><code>attend</code></li>
+<li><code>tutor</code></li>
+<li><code>hours:attend</code></li>
+<li><code>I(hours^2)</code></li>
+</ol>
+<p>So Type I tests:</p>
+<ul>
+<li><code>hours</code> first</li>
+<li>then <code>attend</code> after <code>hours</code></li>
+<li>then <code>tutor</code> after <code>hours</code> and <code>attend</code></li>
+<li>and so on</li>
+</ul>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Type I depends on order
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you change the order of predictors in the formula, the Type I ANOVA table changes.</p>
+</div>
+</div>
+<p>For example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>m3_alt <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> tutor <span class="sc">+</span> attend <span class="sc">+</span> hours <span class="sc">+</span> hours<span class="sc">:</span>attend <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3_alt)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">##               Df Sum Sq Mean Sq  F value    Pr(&gt;F)    </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor          1  783.1   783.1  29.6196 3.050e-07 ***</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         1  936.8   936.8  35.4339 2.977e-08 ***</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="do">## hours          1 3917.0  3917.0 148.1531 &lt; 2.2e-16 ***</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)     1  808.2   808.2  30.5677 2.072e-07 ***</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">## attend:hours   1   52.2    52.2   1.9735    0.1628    </span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    114 3014.0    26.4                       </span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This ANOVA table will generally differ from the previous one.</p>
+</section>
+<section id="type-ii-anova" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="type-ii-anova"><span class="header-section-number">16.2</span> Type II ANOVA</h2>
+<p>Type II ANOVA tests each main effect after adjusting for the other main effects, but not after adjusting for higher-order relatives containing that term.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m3, <span class="at">type =</span> <span class="dv">2</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="do">##               Sum Sq  Df F value    Pr(&gt;F)    </span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="do">## hours        1824.65   1 69.0150 2.292e-13 ***</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="do">## attend        595.21   1 22.5128 6.100e-06 ***</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor        1124.39   1 42.5283 1.985e-09 ***</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)    848.20   1 32.0818 1.124e-07 ***</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   52.18   1  1.9735    0.1628    </span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    3013.99 114                      </span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Roughly speaking, Type II asks:</p>
+<ul>
+<li>does <code>hours</code> matter after accounting for <code>attend</code> and <code>tutor</code>?</li>
+<li>does <code>attend</code> matter after accounting for <code>hours</code> and <code>tutor</code>?</li>
+<li>does <code>hours:attend</code> matter after accounting for the main effects?</li>
+<li>does <code>I(hours^2)</code> matter after accounting for the lower-order terms?</li>
+</ul>
+<p>Type II is often a good default when the model respects the hierarchy principle.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Hierarchy principle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If an interaction term or polynomial term is in the model, the related lower-order terms should also remain in the model.</p>
+</div>
+</div>
+</section>
+<section id="type-iii-anova" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="type-iii-anova"><span class="header-section-number">16.3</span> Type III ANOVA</h2>
+<p>Type III ANOVA tests each term after adjusting for all other terms in the full model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m3, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type III tests)</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="do">##               Sum Sq  Df F value    Pr(&gt;F)    </span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  1384.86   1 52.3805 5.707e-11 ***</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="do">## hours         233.07   1  8.8156  0.003642 ** </span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="do">## attend         29.19   1  1.1042  0.295564    </span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor        1124.39   1 42.5283 1.985e-09 ***</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hours^2)    848.20   1 32.0818 1.124e-07 ***</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="do">## hours:attend   52.18   1  1.9735  0.162793    </span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals    3013.99 114                      </span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For example, the Type III test for <code>hours</code> is essentially a test of</p>
+<p><span class="math display">\[
+H_0:\beta_1=0
+\]</span></p>
+<p>in the full model containing</p>
+<ul>
+<li><code>attend</code></li>
+<li><code>tutor</code></li>
+<li><code>hours:attend</code></li>
+<li><code>I(hours^2)</code></li>
+</ul>
+<p>This often causes interpretation problems, because with interaction present, the coefficient <span class="math inline">\(\beta_1\)</span> no longer represents a universal main effect.</p>
+<p>In fact, in the interaction model,</p>
+<p><span class="math display">\[
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_4a+2\beta_5h,
+\]</span></p>
+<p>so <span class="math inline">\(\beta_1\)</span> corresponds to a slope evaluated at specific reference values.</p>
+</section>
+</section>
+<section id="a-concrete-interpretation-of-type-i-ii-and-iii" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> A concrete interpretation of Type I, II, and III</h1>
+<p>Using <code>m3</code>, the three ANOVA types answer different questions.</p>
+<section id="type-i-question" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="type-i-question"><span class="header-section-number">17.1</span> Type I question</h2>
+<blockquote class="blockquote">
+<p>If we add terms one by one in this exact order, how much extra variation does each term explain?</p>
+</blockquote>
+<p>So Type I is order-based.</p>
+</section>
+<section id="type-ii-question" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="type-ii-question"><span class="header-section-number">17.2</span> Type II question</h2>
+<blockquote class="blockquote">
+<p>Does this term help explain the response, after accounting for other comparable lower-order terms?</p>
+</blockquote>
+<p>So Type II is usually closer to the idea of testing the practical contribution of a term.</p>
+</section>
+<section id="type-iii-question" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="type-iii-question"><span class="header-section-number">17.3</span> Type III question</h2>
+<blockquote class="blockquote">
+<p>Is this coefficient zero in the full model, after everything else is already included?</p>
+</blockquote>
+<p>So Type III is coefficient-based in the full model.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Practical summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Type I: sequential, order dependent</li>
+<li>Type II: usually best for well-structured regression models</li>
+<li>Type III: tests coefficients in the full model; often hard to interpret unless predictors are centered and contrasts are chosen carefully</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="why-type-ii-and-type-iii-differ-when-interaction-exists" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Why Type II and Type III differ when interaction exists</h1>
+<p>Consider the interaction model</p>
+<p><span class="math display">\[
+E(y)=\beta_0+\beta_1h+\beta_2a+\beta_3ha.
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+\frac{\partial E(y)}{\partial h}=\beta_1+\beta_3a.
+\]</span></p>
+<p>So the coefficient <span class="math inline">\(\beta_1\)</span> is the effect of <code>hours</code> only when <span class="math inline">\(a=0\)</span>.</p>
+<p>If <code>attend = 0</code> is not meaningful, then the Type III test of <span class="math inline">\(\beta_1=0\)</span> is not testing a useful scientific question.</p>
+<p>By contrast, Type II usually asks whether <code>hours</code> contributes in a broader model-comparison sense.</p>
+<p>This is why Type II and Type III may disagree when interaction is present.</p>
+</section>
+<section id="centering-the-predictors" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> Centering the predictors</h1>
+<p>A common fix is to center the quantitative predictors.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hc <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>hours, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ac <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>attend, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now fit the centered model:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hc<span class="sc">*</span>ac <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hc<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m4)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = score ~ hc * ac + tutor + I(hc^2), data = df)</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -14.1072  -3.1060   0.2882   3.3301  13.1107 </span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  81.7621     0.7726 105.824  &lt; 2e-16 ***</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="do">## hc            2.1171     0.1769  11.966  &lt; 2e-16 ***</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ac           21.9347     4.4957   4.879 3.49e-06 ***</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor         6.5831     1.0095   6.521 1.98e-09 ***</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hc^2)      -0.3953     0.0698  -5.664 1.12e-07 ***</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="do">## hc:ac         2.3739     1.6898   1.405    0.163    </span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 5.142 on 114 degrees of freedom</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.6831, Adjusted R-squared:  0.6692 </span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 49.15 on 5 and 114 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The centered model has the same fitted values and residuals as the uncentered version, but the coefficient interpretations improve.</p>
+<p>Now:</p>
+<ul>
+<li><code>hc = 0</code> means average study hours</li>
+<li><code>ac = 0</code> means average attendance</li>
+</ul>
+<p>So the main effect of <code>hc</code> is the slope of hours at average attendance.</p>
+<p>Similarly, the main effect of <code>ac</code> is the slope of attendance at average study hours.</p>
+<section id="type-iii-after-centering" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="type-iii-after-centering"><span class="header-section-number">19.1</span> Type III after centering</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m4, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type III tests)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: score</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="do">##             Sum Sq  Df    F value    Pr(&gt;F)    </span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) 296079   1 11198.7690 &lt; 2.2e-16 ***</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="do">## hc            3786   1   143.1829 &lt; 2.2e-16 ***</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ac             629   1    23.8055 3.490e-06 ***</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="do">## tutor         1124   1    42.5283 1.985e-09 ***</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="do">## I(hc^2)        848   1    32.0818 1.124e-07 ***</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="do">## hc:ac           52   1     1.9735    0.1628    </span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals     3014 114                         </span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>After centering, the Type III tests become much more interpretable because zero is now meaningful.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why centering helps
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Centering changes the meaning of the main effects, but it does not change:</p>
+<ul>
+<li>fitted values</li>
+<li>residuals</li>
+<li>SSE</li>
+<li><span class="math inline">\(R^2\)</span></li>
+<li>overall model fit</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="multicollinearity-and-vif" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Multicollinearity and VIF</h1>
+<p>Polynomial and interaction terms often create multicollinearity.</p>
+<p>For example:</p>
+<ul>
+<li><code>hours</code> and <code>hours^2</code> may be strongly correlated</li>
+<li><code>hours</code>, <code>attend</code>, and <code>hours:attend</code> may also be related</li>
+</ul>
+<p>We can check this with VIF.</p>
+<section id="vif-for-the-uncentered-model" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="vif-for-the-uncentered-model"><span class="header-section-number">20.1</span> VIF for the uncentered model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(m3)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">## there are higher-order terms (interactions) in this model</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="do">## consider setting type = 'predictor'; see ?vif</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        hours       attend        tutor   I(hours^2) hours:attend </span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    68.406748     4.432928     1.014656    17.654191    63.815488</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="vif-for-the-centered-model" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="vif-for-the-centered-model"><span class="header-section-number">20.2</span> VIF for the centered model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(m4)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="do">## there are higher-order terms (interactions) in this model</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="do">## consider setting type = 'predictor'; see ?vif</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       hc       ac    tutor  I(hc^2)    hc:ac </span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1.037259 1.040772 1.014656 1.046106 1.061252</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Usually, centering reduces the collinearity between lower-order and higher-order terms.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpretation of VIF
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A large VIF means that the corresponding predictor is highly explained by other predictors.</p>
+<p>This inflates the variance of its estimated coefficient and may make a truly important term appear non-significant.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="a-nested-model-view-of-anova-tests" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> A nested-model view of ANOVA tests</h1>
+<p>It is useful to understand ANOVA tests through nested model comparisons.</p>
+<section id="testing-the-interaction" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="testing-the-interaction"><span class="header-section-number">21.1</span> Testing the interaction</h2>
+<p>To test whether the interaction is needed, compare</p>
+<ul>
+<li><p>reduced model: <span class="math display">\[
+\text{score} \sim \text{hours} + \text{attend} + \text{tutor} + I(\text{hours}^2)
+\]</span></p></li>
+<li><p>full model: <span class="math display">\[
+\text{score} \sim \text{hours} + \text{attend} + \text{tutor} + I(\text{hours}^2) + \text{hours}:\text{attend}
+\]</span></p></li>
+</ul>
+<p>In R:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>m_no_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_no_int, m3)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: score ~ hours + attend + tutor + I(hours^2)</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: score ~ hours * attend + tutor + I(hours^2)</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1    115 3066.2                           </span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2    114 3014.0  1    52.177 1.9735 0.1628</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This directly tests whether adding the interaction significantly reduces SSE.</p>
+</section>
+<section id="testing-the-quadratic-term" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="testing-the-quadratic-term"><span class="header-section-number">21.2</span> Testing the quadratic term</h2>
+<p>Similarly, compare</p>
+<ul>
+<li><p>reduced model: <span class="math display">\[
+\text{score} \sim \text{hours}*\text{attend} + \text{tutor}
+\]</span></p></li>
+<li><p>full model: <span class="math display">\[
+\text{score} \sim \text{hours}*\text{attend} + \text{tutor} + I(\text{hours}^2)
+\]</span></p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m3)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: score ~ hours * attend + tutor</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: score ~ hours * attend + tutor + I(hours^2)</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1    115 3862.2                                  </span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2    114 3014.0  1     848.2 32.082 1.124e-07 ***</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This tests whether the quadratic term adds useful information.</p>
+</section>
+</section>
+<section id="recommended-teaching-workflow" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> Recommended teaching workflow</h1>
+<p>A practical workflow for students is:</p>
+<ol type="1">
+<li>Start with a scientifically reasonable full model.</li>
+<li>Use the global <span class="math inline">\(F\)</span>-test to verify that the model is useful.</li>
+<li>Use a Type II ANOVA table to assess terms.</li>
+<li>Interpret interaction terms before interpreting main effects.</li>
+<li>Check for multicollinearity using VIF.</li>
+<li>Center quantitative predictors when interactions or polynomial terms are present.</li>
+<li>Refit and interpret the coefficients again.</li>
+<li>Use nested model comparisons when testing whether a specific higher-order term is needed.</li>
+</ol>
+</section>
+<section id="final-comparison-table" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span> Final comparison table</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Topic</th>
+<th>Concrete meaning in this example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Main effect</td>
+<td>effect of a predictor holding other variables fixed</td>
+</tr>
+<tr class="even">
+<td>Interaction</td>
+<td>effect of <code>hours</code> depends on <code>attend</code></td>
+</tr>
+<tr class="odd">
+<td>Quadratic term</td>
+<td>effect of <code>hours</code> changes as <code>hours</code> changes</td>
+</tr>
+<tr class="even">
+<td>Global <span class="math inline">\(F\)</span>-test</td>
+<td>does the model explain score at all?</td>
+</tr>
+<tr class="odd">
+<td>Individual <span class="math inline">\(t\)</span>-test</td>
+<td>is a specific coefficient zero?</td>
+</tr>
+<tr class="even">
+<td>Type I ANOVA</td>
+<td>order-dependent sequential contribution</td>
+</tr>
+<tr class="odd">
+<td>Type II ANOVA</td>
+<td>contribution of a term after comparable lower-order terms</td>
+</tr>
+<tr class="even">
+<td>Type III ANOVA</td>
+<td>coefficient test in the full model</td>
+</tr>
+<tr class="odd">
+<td>Centering</td>
+<td>makes zero meaningful and reduces collinearity</td>
+</tr>
+<tr class="even">
+<td>VIF</td>
+<td>measures variance inflation due to predictor dependence</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="short-teaching-summary" class="level1" data-number="24">
+<h1 data-number="24"><span class="header-section-number">24</span> Short teaching summary</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>One-paragraph summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In multiple linear regression, formula language describes which main effects, interaction terms, and higher-degree terms are included in the model. Once the model is fit, the global <span class="math inline">\(F\)</span>-test checks whether the model is useful overall, while individual <span class="math inline">\(t\)</span>-tests examine specific coefficients. In multiple regression, ANOVA is not unique: Type I is sequential and depends on order, Type II is usually preferred for hierarchical models, and Type III tests coefficients in the full model and is most meaningful after centering. Interaction terms change the interpretation of main effects, and polynomial terms often create multicollinearity, so centering and VIF checks are often important parts of the analysis.</p>
+</div>
+</div>
+</section>
+<section id="optional-r-code-block-for-all-models" class="level1" data-number="25">
+<h1 data-number="25"><span class="header-section-number">25</span> Optional R code block for all models</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">hours =</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">attend =</span> <span class="fu">runif</span>(n, <span class="fl">0.6</span>, <span class="fl">1.0</span>),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tutor =</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.4</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>score <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span><span class="sc">*</span>df<span class="sc">$</span>hours <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">15</span><span class="sc">*</span>df<span class="sc">$</span>attend <span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">6</span><span class="sc">*</span>df<span class="sc">$</span>tutor <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span><span class="sc">*</span>df<span class="sc">$</span>hours<span class="sc">*</span>df<span class="sc">$</span>attend <span class="sc">-</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.35</span><span class="sc">*</span>df<span class="sc">$</span>hours<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor, <span class="at">data =</span> df)</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours<span class="sc">*</span>attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3)              <span class="co"># Type I</span></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m3, <span class="at">type =</span> <span class="dv">2</span>)    <span class="co"># Type II</span></span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m3, <span class="at">type =</span> <span class="dv">3</span>)    <span class="co"># Type III</span></span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>hc <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>hours, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ac <span class="ot">&lt;-</span> <span class="fu">scale</span>(df<span class="sc">$</span>attend, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hc<span class="sc">*</span>ac <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hc<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m4)</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m4, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(m3)</span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(m4)</span>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a>m_no_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> hours <span class="sc">+</span> attend <span class="sc">+</span> tutor <span class="sc">+</span> <span class="fu">I</span>(hours<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> df)</span>
+<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m_no_int, m3)</span>
+<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -988,13 +2166,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/3/categorical.html" class="pagination-link" aria-label="Dummy variables">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dummy variables</span></span>
+      <a href="../../contents/3/cat.html" class="pagination-link" aria-label="Regression with qualitative variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression with qualitative variables</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/3/project2.html" class="pagination-link" aria-label="Chapter 4 Multiple Regression Models">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 4 Multiple Regression Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

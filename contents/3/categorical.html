@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; Dummy variables – Regression 26 Spring</title>
+<title>10&nbsp; Categorical Regression – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dummy variables</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Categorical Regression</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -408,19 +408,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/categorical.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dummy variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Categorical Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/rcode2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">R code</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 4 Multiple Regression Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -458,10 +452,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#analysis-of-predictions" id="toc-analysis-of-predictions" class="nav-link active" data-scroll-target="#analysis-of-predictions"><span class="header-section-number">10.1</span> Analysis of predictions</a></li>
-  <li><a href="#interaction-and-confounding" id="toc-interaction-and-confounding" class="nav-link" data-scroll-target="#interaction-and-confounding"><span class="header-section-number">10.2</span> Interaction and confounding</a></li>
-  <li><a href="#dummy-variables" id="toc-dummy-variables" class="nav-link" data-scroll-target="#dummy-variables"><span class="header-section-number">10.3</span> Dummy variables</a></li>
-  <li><a href="#dummy-variable-qualitative-variables" id="toc-dummy-variable-qualitative-variables" class="nav-link" data-scroll-target="#dummy-variable-qualitative-variables"><span class="header-section-number">10.4</span> Dummy variable: qualitative variables</a></li>
+  <li><a href="#dummy-variables" id="toc-dummy-variables" class="nav-link active" data-scroll-target="#dummy-variables"><span class="header-section-number">10.1</span> Dummy variables</a></li>
+  <li><a href="#analysis-of-predictions" id="toc-analysis-of-predictions" class="nav-link" data-scroll-target="#analysis-of-predictions"><span class="header-section-number">10.2</span> Analysis of predictions</a></li>
+  <li><a href="#interaction-and-confounding" id="toc-interaction-and-confounding" class="nav-link" data-scroll-target="#interaction-and-confounding"><span class="header-section-number">10.3</span> Interaction and confounding</a></li>
+  <li><a href="#dummy-variables-1" id="toc-dummy-variables-1" class="nav-link" data-scroll-target="#dummy-variables-1"><span class="header-section-number">10.4</span> Dummy variables</a></li>
+  <li><a href="#dummy-variable-qualitative-variables" id="toc-dummy-variable-qualitative-variables" class="nav-link" data-scroll-target="#dummy-variable-qualitative-variables"><span class="header-section-number">10.5</span> Dummy variable: qualitative variables</a></li>
   </ul>
 </nav>
     </div>
@@ -471,7 +466,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Dummy variables</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Categorical Regression</span></h1>
 </div>
 
 
@@ -488,8 +483,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="analysis-of-predictions" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="analysis-of-predictions"><span class="header-section-number">10.1</span> Analysis of predictions</h2>
+<p>We could regress the response variable on categorical variables.</p>
+<section id="dummy-variables" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="dummy-variables"><span class="header-section-number">10.1</span> Dummy variables</h2>
+</section>
+<section id="analysis-of-predictions" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="analysis-of-predictions"><span class="header-section-number">10.2</span> Analysis of predictions</h2>
 <ul>
 <li>C.I.</li>
 <li>P.I.</li>
@@ -509,8 +508,8 @@ Warning
 </div>
 </div>
 </section>
-<section id="interaction-and-confounding" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="interaction-and-confounding"><span class="header-section-number">10.2</span> Interaction and confounding</h2>
+<section id="interaction-and-confounding" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="interaction-and-confounding"><span class="header-section-number">10.3</span> Interaction and confounding</h2>
 <ol type="1">
 <li>lm(y~x+z+x:z)</li>
 <li>lm(y~x:z)</li>
@@ -519,8 +518,8 @@ Warning
 <li>lm(y~poly(x,2,raw=True))</li>
 </ol>
 </section>
-<section id="dummy-variables" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="dummy-variables"><span class="header-section-number">10.3</span> Dummy variables</h2>
+<section id="dummy-variables-1" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="dummy-variables-1"><span class="header-section-number">10.4</span> Dummy variables</h2>
 <p>R use factors to regonze processable categorical data.</p>
 <p><code>lm</code> function will automatically cast processiable categorical data into dummy variables.</p>
 <p>CARGO has durable, fragile and semifrag</p>
@@ -540,8 +539,8 @@ Warning
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="dummy-variable-qualitative-variables" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="dummy-variable-qualitative-variables"><span class="header-section-number">10.4</span> Dummy variable: qualitative variables</h2>
+<section id="dummy-variable-qualitative-variables" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="dummy-variable-qualitative-variables"><span class="header-section-number">10.5</span> Dummy variable: qualitative variables</h2>
 
 
 </section>

@@ -434,6 +434,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression with qualitative variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: MLR phase</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -481,7 +493,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#dependence-and-multicolinearity" id="toc-dependence-and-multicolinearity" class="nav-link" data-scroll-target="#dependence-and-multicolinearity"><span class="header-section-number">8.5.1</span> Dependence and Multicolinearity</a></li>
   </ul></li>
-  <li><a href="#formula-language" id="toc-formula-language" class="nav-link" data-scroll-target="#formula-language"><span class="header-section-number">8.6</span> Formula language</a></li>
+  <li><a href="#interpretations-of-coefficients" id="toc-interpretations-of-coefficients" class="nav-link" data-scroll-target="#interpretations-of-coefficients"><span class="header-section-number">8.6</span> Interpretations of coefficients</a>
+  <ul class="collapse">
+  <li><a href="#interation-term" id="toc-interation-term" class="nav-link" data-scroll-target="#interation-term"><span class="header-section-number">8.6.1</span> Interation term</a></li>
+  <li><a href="#higher-degree-polynomial-terms" id="toc-higher-degree-polynomial-terms" class="nav-link" data-scroll-target="#higher-degree-polynomial-terms"><span class="header-section-number">8.6.2</span> Higher-degree (polynomial) terms</a></li>
+  </ul></li>
+  <li><a href="#formula-language" id="toc-formula-language" class="nav-link" data-scroll-target="#formula-language"><span class="header-section-number">8.7</span> Formula language</a></li>
   </ul>
 </nav>
     </div>
@@ -1160,8 +1177,146 @@ z = x - \bar x.
 </div>
 </section>
 </section>
-<section id="formula-language" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">8.6</span> Formula language</h2>
+<section id="interpretations-of-coefficients" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="interpretations-of-coefficients"><span class="header-section-number">8.6</span> Interpretations of coefficients</h2>
+<p>A clear way to understand regression coefficients is through effects.</p>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8.8</strong></span> &nbsp;</p>
+<ul>
+<li>The effect of variable <span class="math inline">\(x\)</span> is the partial derivative of the expected response with respect to <span class="math inline">\(x\)</span>: <span class="math display">\[
+\text{effect of }x=\pdv{\operatorname{E}(y\mid \vb x)}{x}.
+\]</span> Equivalently, it measures how much <span class="math inline">\(\operatorname{E}(y)\)</span> changes when <span class="math inline">\(x\)</span> increases by <span class="math inline">\(1\)</span>, holding other variables fixed.</li>
+<li>The main effect of a variable is its coefficient in the regression model.</li>
+<li>If the model contains no interaction or nonlinear terms, the main effect equals the effect.</li>
+</ul>
+</div>
+<p>When interactions are present, however, the coefficient is not the effect. The coefficient equals the effect only when the interacting variable equals <span class="math inline">\(0\)</span>.</p>
+<section id="interation-term" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="interation-term"><span class="header-section-number">8.6.1</span> Interation term</h3>
+<p>Consider the model</p>
+<p><span class="math display">\[
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon.
+\]</span></p>
+<p>Since <span class="math display">\[
+\frac{\partial E(y)}{\partial x_1}=\beta_1+\beta_3x_2,
+\qquad
+\frac{\partial E(y)}{\partial x_2}=\beta_2+\beta_3x_1,
+\]</span> we obtain the following interpretations:</p>
+<ul>
+<li>The effect of <span class="math inline">\(x_1\)</span> depends on the value of <span class="math inline">\(x_2\)</span>, and vice versa.</li>
+<li>when <span class="math inline">\(x_2\)</span> increases by 1, the slope of <span class="math inline">\(x_1\)</span> increases by <span class="math inline">\(\beta_3\)</span><br>
+</li>
+<li>when <span class="math inline">\(x_1\)</span> increases by 1, the slope of <span class="math inline">\(x_2\)</span> increases by <span class="math inline">\(\beta_3\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interaction term
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The interaction term <span class="math inline">\(\beta_3x_1x_2\)</span> means the effect (slope) of one predictor changes as the other predictor changes.</p>
+<p>Equivalently, <span class="math display">\[
+\beta_3=\frac{\partial^2 \operatorname{E}(y)}{\partial x_1\partial x_2},
+\]</span> so <span class="math inline">\(\beta_3\)</span> measures how quickly one slope changes with the other predictor.</p>
+</div>
+</div>
+<p>We may still write <span class="math display">\[
+\beta_1=\text{effect of }x_1\text{ when }x_2=0.
+\]</span></p>
+<p>However in many cases, <span class="math inline">\(x_2=0\)</span> is not meaningful in practice. To obtain a more useful interpretation, we center the variable: <span class="math display">\[
+x_2^*=x_2-\bar x_2,\quad \beta_0^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta_1+\beta_3\bar x_2.
+\]</span></p>
+<p>Then the orginal model becomes <span class="math display">\[
+\operatorname{E}(y)=\beta_0^*+\beta_1^*x_1+\beta_2x_2^*+\beta_3x_1x_2^*.
+\]</span> In this case, <span class="math inline">\(x_2^*\)</span> can be <span class="math inline">\(0\)</span>. Then main effects represent slopes at the average level of the other predictor. We call <span class="math inline">\(\beta_1^*\)</span> centralized main effect.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Main effect
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>After centering, the main effect of <span class="math inline">\(x_1\)</span> represents its effect at the average level of the other predictor.</p>
+</div>
+</div>
+</section>
+<section id="higher-degree-polynomial-terms" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="higher-degree-polynomial-terms"><span class="header-section-number">8.6.2</span> Higher-degree (polynomial) terms</h3>
+<div id="def-" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 8.9</strong></span> A higher-order term is a nonlinear transformation of a predictor, such as <span class="math inline">\(x^2\)</span>, <span class="math inline">\(x^3\)</span>, <span class="math inline">\(\sqrt{x}\)</span>, or <span class="math inline">\(\log x\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recall that the effect of a variable <span class="math inline">\(x\)</span> is the rate of change of the expected response with respect to <span class="math inline">\(x\)</span>: <span class="math display">\[
+\text{effect of }x=\pdv{\operatorname{E}(y\mid \vb x)}{x}.
+\]</span> With higher-degree terms, the coefficient of <span class="math inline">\(x\)</span> is generally not the effect of <span class="math inline">\(x\)</span>; the effect depends on the value of <span class="math inline">\(x\)</span>.</p>
+</div>
+</div>
+<div id="exm-" class="theorem example">
+<p><span class="theorem-title"><strong>Example 8.5</strong></span> Consider</p>
+<p><span class="math display">\[
+y=\beta_0+\beta_1x+\beta_2x^2+\varepsilon.
+\]</span></p>
+<p>Since <span class="math display">\[
+\dv{E(y)}{x}=\beta_1+2\beta_2x,
+\]</span></p>
+<p>we see:</p>
+<ul>
+<li>slope is not constant<br>
+</li>
+<li>slope changes linearly with <span class="math inline">\(x\)</span></li>
+</ul>
+<p>The term <span class="math inline">\(x^2\)</span> captures curvature:</p>
+<ul>
+<li>If <span class="math inline">\(\beta_2&gt;0\)</span>: concave up</li>
+<li>If <span class="math inline">\(\beta_2&lt;0\)</span>: concave down</li>
+</ul>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 22%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term Type</th>
+<th>Meaning</th>
+<th>Effect on Slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Interaction <span class="math inline">\(x_1x_2\)</span></td>
+<td>effect varies across variables</td>
+<td>slope changes across another variable</td>
+</tr>
+<tr class="even">
+<td>Higher-degree <span class="math inline">\(x^2\)</span></td>
+<td>curvature within one variable</td>
+<td>slope changes across same variable</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="formula-language" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="formula-language"><span class="header-section-number">8.7</span> Formula language</h2>
 <p>Formula language was introduced by John Chambers based on the Wilkinson–Rogers notation. It is a formal symbolic system used to express mathematical relationships between variables. It provides a structured way to represent models, equations, and logical relationships in mathematics, statistics, etc..</p>
 <p>Instead of describing relationships in words, formula language expresses them precisely using symbols.</p>
 <table class="caption-top table">
@@ -1219,17 +1374,42 @@ z = x - \bar x.
 <td style="text-align: left;">Shorthand for “all other columns in the data frame”</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><code>- B</code></td>
+<td style="text-align: left;"><code>-</code></td>
 <td style="text-align: left;">Exclusion</td>
 <td style="text-align: left;">Removes a specific term (e.g., <code>y ~ . - x1</code>)</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In R formulas, symbols like <code>*</code>, <code>^</code>, and <code>+</code> have special meanings. To use them as standard math operators, you must wrap them in <code>I()</code>. For example</p>
 <ul>
 <li>Quadratic Model: <code>y ~ x + I(x^2)</code></li>
 <li>Summation as Predictor: <code>y ~ I(x1 + x2)</code></li>
 </ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R formula, higher degree terms without <code>I()</code> will be ignored. So <code>y ~ x^2</code> will be the same as <code>y ~ x</code>. Another example is <code>y ~ (x1+x2)^2</code>, which is the same as <code>y ~ x1 * x2</code> since <code>x1^2</code> and <code>x2^2</code> are ignored.</p>
+</div>
+</div>
 
 
 </section>

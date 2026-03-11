@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/app/data.html" rel="next">
+<link href="../../contents/3/cat.html" rel="next">
 <link href="../../contents/3/mlr.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -434,6 +434,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ANOVA</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/cat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression with qualitative variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: MLR phase</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -649,9 +661,9 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: y ~ x1</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: y ~ x1 + x2</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 182.21                                  </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97 105.11  1      77.1 71.148 3.168e-13 ***</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     98 154.448                                  </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     97  94.583  1    59.865 61.395 5.992e-12 ***</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -660,8 +672,8 @@ window.Quarto = {
 <li>In each model, <code>Res.Df</code> is the degree of freedom of residuals, which is <span class="math inline">\(n-(p+1)\)</span> where <span class="math inline">\(p\)</span> is the number of predictors.</li>
 <li>In this example, <code>Res.Df</code> is <span class="math inline">\(100-(1+1)=98\)</span> and <span class="math inline">\(100-(1+2)=97\)</span>.</li>
 <li>The difference of degree of freedom is <span class="math inline">\(2-1=1\)</span>.</li>
-<li>The difference of <span class="math inline">\(SSE\)</span> is 182.2141959-105.1146211=77.0995747.</li>
-<li>Then the F-statistic is (77.0995747/1)/(105.1146211/97)=71.1476545.</li>
+<li>The difference of <span class="math inline">\(SSE\)</span> is 154.4475747-94.5828925=59.8646822.</li>
+<li>Then the F-statistic is (59.8646822/1)/(94.5828925/97)=61.3945505.</li>
 <li>The p-value is gotten by the F-test.</li>
 </ul>
 </details>
@@ -851,6 +863,7 @@ Tip
 </section>
 <section id="type-ii-anova-table" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="type-ii-anova-table"><span class="header-section-number">9.4</span> Type II ANOVA table</h2>
+<!-- A Type II ANOVA table (often called marginal sums of squares) tests each main effect after adjusting for the other main effects, while respecting model hierarchy when interactions are present. -->
 <p>A Type II ANOVA table (marginal sum of squares) tests each term after adjusting for all other main effects, but not for interaction terms that contain that effect. In practice, the sums of squares for main effects are computed from the additive model (without interactions), while the interaction terms are tested by comparing the additive model with the model that includes the interaction.</p>
 <p>Suppose the full model is</p>
 <p><span class="math display">\[
@@ -962,7 +975,7 @@ Tip
 <li>Reordering predictors does not change the table.</li>
 <li>Each effect is tested conditional on all other main effects.</li>
 <li>If interactions are present, Type II generally does not give a main-effect test that ignores its interactions; in practice you either (i) interpret via simple effects, or (ii) use Type III with a clear coding convention.</li>
-<li>Each row is a nested-model F test removing one predictor at a time.</li>
+<li>Each row corresponds to a nested-model comparison.</li>
 </ol>
 </div>
 </div>
@@ -1199,7 +1212,7 @@ F^{(III)}=t^2.
 </div>
 <p>Please compare the t-statistic and the F-statistic for each variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model, <span class="at">Type=</span><span class="dv">2</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(model, <span class="at">type=</span><span class="dv">2</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
@@ -1233,10 +1246,19 @@ F^{(III)}=t^2.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Type II ANOVA tests variables (main effects) through comparisons of nested models, whereas Type III ANOVA tests individual coefficients within the full model.</p>
-<p>Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types become equivalent and yield identical test statistics and p-values. In this case, testing whether a coefficient is zero is equivalent to comparing the reduced model without that variable to the full model that includes it.</p>
-<p>When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA avoids testing main effects that participate in interactions, because such tests would require breaking the hierarchical structure of the model and thus lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds by testing the corresponding coefficients in the full model regardless of interactions, even though the resulting hypothesis may be difficult to interpret scientifically.</p>
-<p>Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model.</p>
+<ul>
+<li>Type II tests main effects after adjusting for the other main effects, and (when interactions exist) it typically tests main effects in the additive model to preserve hierarchy. Interactions are tested by comparing the additive model to the interaction model.</li>
+<li>Type III tests each term within the full model, even if that term participates in interactions. This can yield hypotheses that are sensitive to coding/centering and may be harder to interpret scientifically.</li>
+</ul>
+<p>When there are no interactions, and predictors are coded in the usual way, Type II and Type III coincide (they reduce to the standard partial F-tests). <!-- 
+
+Type II ANOVA tests variables (main effects) through comparisons of nested models, whereas Type III ANOVA tests individual coefficients within the full model.
+
+Consequently, when a model contains only main effects (that is, no interaction terms) and predictors are coded in a standard way, the two ANOVA types become equivalent and yield identical test statistics and p-values. In this case, testing whether a coefficient is zero is equivalent to comparing the reduced model without that variable to the full model that includes it.
+
+When interaction terms are present, however, the interpretation of a main effect on its own is no longer unique. In this setting, Type II ANOVA avoids testing main effects that participate in interactions, because such tests would require breaking the hierarchical structure of the model and thus lack a clear scientific interpretation. Type III ANOVA, in contrast, proceeds by testing the corresponding coefficients in the full model regardless of interactions, even though the resulting hypothesis may be difficult to interpret scientifically.
+
+Thus the key distinction is that Type II performs tests by comparing nested models, while Type III performs coefficient tests within the full model. --></p>
 </div>
 </div>
 <div id="exm-" class="theorem example">
@@ -1269,19 +1291,19 @@ F^{(III)}=t^2.
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit2, <span class="at">type =</span> <span class="dv">3</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type III tests)</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: y</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="do">##              Sum Sq Df F value    Pr(&gt;F)    </span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  45.980  1  28.166 1.040e-06 ***</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">## x1           69.075  1  42.314 7.083e-09 ***</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## x2          276.608  1 169.444 &lt; 2.2e-16 ***</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals   125.698 77                      </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x2)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit3, fit2)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 1: y ~ x2</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Model 2: y ~ x1 + x2</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1     78 194.77                                  </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2     77 125.70  1    69.075 42.314 7.083e-09 ***</span></span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Please compare the sum of squares between the Type II ANOVA table of the 1st model <code>y~x1*x2</code> and the Type III ANOVA table of the 2nd model <code>y~x1+x2</code>.</p>
+<p>Please compare the sum of squares between the Type II ANOVA table of the 1st model <code>y~x1*x2</code> and nested model in the 2nd case.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -1740,8 +1762,8 @@ F^{(III)}=t^2.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/3/cat.html" class="pagination-link" aria-label="Regression with qualitative variables">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression with qualitative variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
