@@ -289,11 +289,57 @@ summary(fit_final1)
 In the final model, all retained terms are significant. The adjusted $R^2$ is 0.7519, indicating that this model explains a substantial proportion of the variability in `medv` among the models considered here.
 
 
+
+
+## Utilizing ANOVA tables
+In this example, ANOVA tables can be used in several different ways during the model-building process. The choice of Type I, Type II, or Type III ANOVA depends on the question being asked.
+
+### Type I ANOVA
+Type I ANOVA is the default ANOVA table produced by `anova(lm(...))`. It tests terms sequentially in the order they appear in the model. In this example, Type I ANOVA is more naturally used during the model-building phase, since it evaluates terms sequentially in the order they are added to the model. This makes it useful for illustrating how much additional variation is explained as new terms are introduced. However, because Type I ANOVA depends on the order of the terms, it is not the best choice for making the final decision about which terms should remain in the model.
+
+
+
+### Type II ANOVA
+Type II ANOVA tests each term after adjusting for the other relevant lower-order terms. It is often a good choice when the model follows the hierarchy principle.
+
+```{r}
+library(car)
+Anova(fit_final1, type = 2)
+```
+
+In this example, Type II ANOVA is mainly useful after we have selected the final model. It gives one table that summarizes whether each retained term still makes a contribution to the model.
+
+Note that `summary(fit_final1)` gives individual coefficient $t$-tests, while the Type II ANOVA table gives term-wise $F$-tests. In our final model, each retained term has one degree of freedom, so these two summaries lead to essentially the same conclusions.
+
+Therefore, for this example, the Type II ANOVA table can be used as a convenient alternative summary of term significance in the final selected model.
+
+
+
+
+
+
+### Type III ANOVA
+Type III ANOVA tests each term after adjusting for all other terms in the full model.
+
+```{r}
+library(car)
+Anova(fit_final0, type = 3)
+```
+
+
+In this example, Type III ANOVA is mainly useful for the larger model `fit_final0`, where several candidate higher-order and interaction terms are included at the same time. It provides a quick way to check whether higher-order terms such as `chas:dis`, `I(lstat^2)`, and `rm:dis` remain significant after adjusting for all other terms in that model.
+
+However, Type III ANOVA is not used here as the sole basis for removing terms. To formally decide whether a candidate term should be removed, we still use the corresponding nested model comparison. In addition, Type III ANOVA is less helpful for interpreting lower-order terms, since once higher-order terms are included, the corresponding main effects become harder to interpret.
+
+Therefore, in this example, Type III ANOVA is best viewed as a reference table for the larger candidate model, while the nested model comparisons remain more directly tied to our model-building process.
+
+
+
+
+
 ## Residual analysis
 
-We briefly examine the residuals of the final model using a residual plot.
-
-
+Finally we briefly examine the residuals of the final model using a residual plot. 
 
 ```{r}
 #| label: fig-residual-mlr
@@ -304,3 +350,5 @@ abline(h = 0, col = "red")
 
 
 Compared with the residual plot @fig-residual-slr from the simple linear regression model, this one shows less obvious structure. This suggests that the final multiple regression model gives a better fit, although the assumptions are still not perfect.
+
+We will formally talk about residual analysis and variable selection in the next unit.
