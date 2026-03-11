@@ -13,7 +13,7 @@ format:
                 \renewcommand{\theexercise}{\arabic{exercise}}
             }
 params:
-    show_solution: false
+    show_solution: true
 filters:
     - ../../solution-filter.lua
 crossref:
@@ -22,27 +22,67 @@ crossref:
 
 
 
+
+
+
 ::: {#exr-}
-## Reality TV and cosmetic surgery (Data set: BDYIMG)
+## Dataset `B.csv`
+
+Variables:
+
+- $y$: scale ranging from 8 to 40
+- $x_1$: scale ranging from 1 to 10
+- $x_2$: scale ranging from 2 to 6
+- $x_3$: scale ranging from 8 to 18
+- $x_4$: 1 or 0 
+  
+
+```{r}
+#| echo: false
+df <- read.csv('datasets/B.csv')
+```
+
+
+
 (a) Fit the first-order model, $E(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4$, to the data in the file. Give the least squares prediction equation
-(b) Interpret the $\beta$ estimates in the words of the problem. (Yes, you need to find the values of $\hat\beta_0, \hat\beta_1, \hat\beta_2, \hat\beta_3, \hat\beta_4$ and interpret them one by one.)
-(c) Is the overall model statistically useful for predicting desire to have cosmetic surgery? Test using $\alpha=.01$. (When performing the hypothesis testing, do not forget to write down the hypotheses first!)
+(b) Interpret the $\beta$ estimates in the words of the problem. You need to find the values of $\hat\beta_0, \hat\beta_1, \hat\beta_2, \hat\beta_3, \hat\beta_4$ and interpret them one by one.
+(c) Is the overall model statistically useful for predicting $y$? Test using $\alpha=.01$. (When performing the hypothesis testing, do not forget to write down the hypotheses first!)
+(d) Which statistic, $R^2$ or $R^2_a$, is the preferred measure of model fit? Practically interpret the value of this statistic.
+(e) Conduct a test to determine whether $y$ to have decreases linearly as $x_2$. Use $\alpha=0.05$.
+(f) Find a $95\%$ confidence interval for $\beta_4$. Practically interpret the result.
+(g) Assuming there is a data with value $x_1=7$, $x_2=4$, $x_3=14$,$x_4=1$ Interpret the confidence interval for $E(y)$ for it.
+
 :::
+
+
 
 
 ::: {.answer}
-sdffdasf
-:::
 
 
-::: {#exr-}
-## Arsenic in groundwater (Data set: ASWELLS)
+```{r}
+dat <- read.csv("datasets/B.csv")
+dat$x4 <- factor(dat$x4)
+fit <- lm(y ~ ., data = dat)
+```
 
-- (a) Write a first-order model for arsenic level ($y$) as a function of latitude, longitude, and depth.)
-- (b) Fit the model to the data using the method of least squares.
-- (c) Find the value of $\hat\beta_2$ and give a practical interpretation of $\hat\beta_2$.
-- (d) Find the model standard deviation, $s$, and interpret its value.
-- (f) Conduct a test of overall model utility at $\alpha=.05$. (When performing the hypothesis testing, do not forget to write down the hypotheses first!)
+
+
+```{r}
+summary(fit)
+```
+
+
+```{r}
+confint(fit)
+```
+
+```{r}
+newx <- data.frame(x1 = 7, x2 = 4, x3 = 14, x4 = 1)
+newx$x4 <- factor(newx$x4, levels=c(0,1))
+predict(fit, newx, interval = 'confidence')
+```
+
 :::
 
 

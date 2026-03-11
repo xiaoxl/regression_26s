@@ -22,11 +22,79 @@ crossref:
 ---
 
 In the project of faculty salary equity study, there is a variable named `Academic Rank`, which includes 5 levels: `Instructor`, `Assistant Professor`, `Associate Professor`,
-`Professor`, and `Distinguished Professor`.
+`Professor`, and `Distinguished Professor`. Here `Assistant Professor` is the base level.
 
 
 ::: {#exr-}
 1. How many dummy variables are required for Academic Rank?
-2. Set up the dummy variables.
-3. Use a table to show the values of each dummy variable for each level of Academic Rank.
+2. Set up the dummy variables and use a table to show the values of each dummy variable for each level of Academic Rank.
+:::
+
+
+
+::: {.answer}
+1. There should be 4 dummy variables.
+2. Let Academic Rank have five levels:
+
+- Instructor  
+- Assistant Professor  
+- Associate Professor  
+- Professor  
+- Distinguished Professor  
+
+We define four dummy (indicator) variables:
+
+- $x_1$: Instructor  
+- $x_2$: Associate Professor  
+- $x_3$: Professor  
+- $x_4$: Distinguished Professor  
+
+(Assistant Professor is the reference category.)
+
+### Dummy Variable Table
+
+| Academic Rank            | $x_1$ (Instructor) | $x_2$ (Associate) | $x_3$ (Professor) | $x_4$ (Distinguished) |
+|--------------------------|-------------------|-------------------|-------------------|------------------------|
+| Assistant Professor      | 0 | 0 | 0 | 0 |
+| Instructor               | 1 | 0 | 0 | 0 |
+| Associate Professor      | 0 | 1 | 0 | 0 |
+| Professor                | 0 | 0 | 1 | 0 |
+| Distinguished Professor  | 0 | 0 | 0 | 1 |
+
+
+## Indicator Variable Definitions
+
+$$
+x_1 =
+\begin{cases}
+1, & \text{if Instructor} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+$$
+x_2 =
+\begin{cases}
+1, & \text{if Associate Professor} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+$$
+x_3 =
+\begin{cases}
+1, & \text{if Professor} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+$$
+x_4 =
+\begin{cases}
+1, & \text{if Distinguished Professor} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+
 :::
