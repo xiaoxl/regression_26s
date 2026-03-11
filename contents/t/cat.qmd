@@ -251,3 +251,84 @@ The difference is mainly in how the columns of the design matrix $\mathbf X$ are
 
 So traditional ANOVA is not really a separate method from regression. It is a special presentation of linear-model inference when predictors are categorical.
 
+
+
+
+
+
+
+
+## Relation to two-way ANOVA
+
+Suppose there are two categorical predictors, say factor A and factor B. Then the two-way ANOVA model without interaction is
+
+$$
+y_{ijk}=\mu+\alpha_i+\beta_j+\varepsilon_{ijk}.
+$$
+
+This corresponds to a regression model containing dummy variables for factor A and dummy variables for factor B.
+
+If we include interaction, the model becomes
+
+$$
+y_{ijk}=\mu+\alpha_i+\beta_j+(\alpha\beta)_{ij}+\varepsilon_{ijk}.
+$$
+
+In regression form, this means:
+
+1. include dummy variables for factor A;
+2. include dummy variables for factor B;
+3. include products of those dummy variables to represent the interaction.
+
+Thus:
+
+- two-way ANOVA without interaction corresponds to an additive regression model;
+- two-way ANOVA with interaction corresponds to a regression model with interaction terms between categorical predictors.
+
+
+::: {#exm-}
+Here is a small two-way example.
+
+```{r}
+set.seed(321)
+
+A <- factor(rep(c("Low", "High"), each = 18))
+B <- factor(rep(rep(c("Morning", "Evening", "Night"), each = 6), times = 2))
+
+y <- c(
+  rnorm(6, 70, 3), rnorm(6, 74, 3), rnorm(6, 72, 3),
+  rnorm(6, 78, 3), rnorm(6, 85, 3), rnorm(6, 82, 3)
+)
+
+fit.add <- lm(y ~ A + B)
+fit.int <- lm(y ~ A * B)
+
+anova(fit.add, fit.int)
+```
+
+The nested-model comparison checks whether the interaction terms are needed. If the interaction is not significant, the additive model may be adequate. If the interaction is significant, the effect of one factor depends on the level of the other factor.
+:::
+
+
+## Traditional ANOVA language versus regression language
+
+The two vocabularies are slightly different, but they refer to the same underlying model.
+
+| Traditional ANOVA language | Regression language |
+|---|---|
+| treatment or factor | categorical predictor |
+| level | category |
+| main effect | coefficients associated with one factor |
+| interaction | product terms |
+| compare means | test linear combinations of coefficients |
+| between-group variation | explained variation due to factor terms |
+| within-group variation | residual variation |
+
+
+## Summary
+
+- Categorical regression is ordinary linear regression with dummy variables.
+- A one-way ANOVA model is a regression model with one categorical predictor.
+- A two-way ANOVA model is a regression model with two categorical predictors, possibly with interaction.
+- The ANOVA F-tests are nested-model tests on groups of regression coefficients.
+- Modern linear model theory unifies regression and ANOVA in one framework.
