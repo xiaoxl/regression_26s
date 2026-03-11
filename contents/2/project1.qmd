@@ -224,14 +224,15 @@ lines(newx$lstat, conf.int[, "upr"], col = "blue")
  
 ### Residual Analysis
 
-The detailed residual analysis will be covered in the future. Here we only show the very basic analysis, that is the plot of the residual vs the predictor variable `lstat`.
+The detailed residual analysis will be covered in the future. Here we only show the very basic analysis, that is the plot of the residual vs the fitted value.
+
 
 ```{r}
-res <- resid(model)
-plot(lstat, res)
-
+#| label: fig-residual-slr
+#| fig-cap: "Residual plot for the SLR model"
+plot(fitted(model), resid(model))
+abline(h = 0, col = "red")
 ```
-
 
 We could find that there is a clear u-shape in the residual plot. And the variance shows non-constant variance issue, as the size of the residuals decreases as the value of lstat increase. This residual plot indicates that a multiplicative model may be appropriate. 
 
