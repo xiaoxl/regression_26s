@@ -487,7 +487,13 @@ window.Quarto = {
   <li><a href="#interaction-between-rm-and-dis" id="toc-interaction-between-rm-and-dis" class="nav-link" data-scroll-target="#interaction-between-rm-and-dis"><span class="header-section-number">11.4</span> Interaction between <code>rm</code> and <code>dis</code></a></li>
   <li><a href="#interaction-between-chas-and-dis" id="toc-interaction-between-chas-and-dis" class="nav-link" data-scroll-target="#interaction-between-chas-and-dis"><span class="header-section-number">11.5</span> Interaction between <code>chas</code> and <code>dis</code></a></li>
   <li><a href="#put-things-together" id="toc-put-things-together" class="nav-link" data-scroll-target="#put-things-together"><span class="header-section-number">11.6</span> Put things together</a></li>
-  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">11.7</span> Residual analysis</a></li>
+  <li><a href="#utilizing-anova-tables" id="toc-utilizing-anova-tables" class="nav-link" data-scroll-target="#utilizing-anova-tables"><span class="header-section-number">11.7</span> Utilizing ANOVA tables</a>
+  <ul class="collapse">
+  <li><a href="#type-i-anova" id="toc-type-i-anova" class="nav-link" data-scroll-target="#type-i-anova"><span class="header-section-number">11.7.1</span> Type I ANOVA</a></li>
+  <li><a href="#type-ii-anova" id="toc-type-ii-anova" class="nav-link" data-scroll-target="#type-ii-anova"><span class="header-section-number">11.7.2</span> Type II ANOVA</a></li>
+  <li><a href="#type-iii-anova" id="toc-type-iii-anova" class="nav-link" data-scroll-target="#type-iii-anova"><span class="header-section-number">11.7.3</span> Type III ANOVA</a></li>
+  </ul></li>
+  <li><a href="#residual-analysis" id="toc-residual-analysis" class="nav-link" data-scroll-target="#residual-analysis"><span class="header-section-number">11.8</span> Residual analysis</a></li>
   </ul>
 </nav>
     </div>
@@ -1044,12 +1050,73 @@ y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_5+\beta_6x_1^2+\b
 </div>
 <p>In the final model, all retained terms are significant. The adjusted <span class="math inline">\(R^2\)</span> is 0.7519, indicating that this model explains a substantial proportion of the variability in <code>medv</code> among the models considered here.</p>
 </section>
-<section id="residual-analysis" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="residual-analysis"><span class="header-section-number">11.7</span> Residual analysis</h2>
-<p>We briefly examine the residuals of the final model using a residual plot.</p>
+<section id="utilizing-anova-tables" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="utilizing-anova-tables"><span class="header-section-number">11.7</span> Utilizing ANOVA tables</h2>
+<p>In this example, ANOVA tables can be used in several different ways during the model-building process. The choice of Type I, Type II, or Type III ANOVA depends on the question being asked.</p>
+<section id="type-i-anova" class="level3" data-number="11.7.1">
+<h3 data-number="11.7.1" class="anchored" data-anchor-id="type-i-anova"><span class="header-section-number">11.7.1</span> Type I ANOVA</h3>
+<p>Type I ANOVA is the default ANOVA table produced by <code>anova(lm(...))</code>. It tests terms sequentially in the order they appear in the model. In this example, Type I ANOVA is more naturally used during the model-building phase, since it evaluates terms sequentially in the order they are added to the model. This makes it useful for illustrating how much additional variation is explained as new terms are introduced. However, because Type I ANOVA depends on the order of the terms, it is not the best choice for making the final decision about which terms should remain in the model.</p>
+</section>
+<section id="type-ii-anova" class="level3" data-number="11.7.2">
+<h3 data-number="11.7.2" class="anchored" data-anchor-id="type-ii-anova"><span class="header-section-number">11.7.2</span> Type II ANOVA</h3>
+<p>Type II ANOVA tests each term after adjusting for the other relevant lower-order terms. It is often a good choice when the model follows the hierarchy principle.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_final1), <span class="fu">resid</span>(fit_final1))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: carData</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit_final1, <span class="at">type =</span> <span class="dv">2</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type II tests)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: medv</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="do">##             Sum Sq  Df  F value    Pr(&gt;F)    </span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat       4008.0   1 190.9859 &lt; 2.2e-16 ***</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="do">## rm          1624.7   1  77.4193 &lt; 2.2e-16 ***</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="do">## dis          699.0   1  33.3100 1.383e-08 ***</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ptratio      952.3   1  45.3785 4.495e-11 ***</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="do">## chas         273.5   1  13.0349 0.0003367 ***</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="do">## I(lstat^2)  1724.7   1  82.1853 &lt; 2.2e-16 ***</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="do">## rm:dis       104.9   1   4.9996 0.0257947 *  </span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals  10450.9 498                       </span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this example, Type II ANOVA is mainly useful after we have selected the final model. It gives one table that summarizes whether each retained term still makes a contribution to the model.</p>
+<p>Note that <code>summary(fit_final1)</code> gives individual coefficient <span class="math inline">\(t\)</span>-tests, while the Type II ANOVA table gives term-wise <span class="math inline">\(F\)</span>-tests. In our final model, each retained term has one degree of freedom, so these two summaries lead to essentially the same conclusions.</p>
+<p>Therefore, for this example, the Type II ANOVA table can be used as a convenient alternative summary of term significance in the final selected model.</p>
+</section>
+<section id="type-iii-anova" class="level3" data-number="11.7.3">
+<h3 data-number="11.7.3" class="anchored" data-anchor-id="type-iii-anova"><span class="header-section-number">11.7.3</span> Type III ANOVA</h3>
+<p>Type III ANOVA tests each term after adjusting for all other terms in the full model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(fit_final0, <span class="at">type =</span> <span class="dv">3</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Anova Table (Type III tests)</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: medv</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="do">##              Sum Sq  Df  F value    Pr(&gt;F)    </span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  1522.9   1  72.4222 &lt; 2.2e-16 ***</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="do">## lstat        3981.0   1 189.3235 &lt; 2.2e-16 ***</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="do">## rm            287.2   1  13.6580 0.0002437 ***</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="do">## dis           168.4   1   8.0079 0.0048457 ** </span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ptratio       952.5   1  45.2994 4.674e-11 ***</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="do">## chas           34.9   1   1.6579 0.1984825    </span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="do">## I(lstat^2)   1720.2   1  81.8079 &lt; 2.2e-16 ***</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="do">## rm:dis        101.9   1   4.8481 0.0281348 *  </span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="do">## dis:chas        0.2   1   0.0117 0.9137815    </span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals   10450.7 497                       </span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this example, Type III ANOVA is mainly useful for the larger model <code>fit_final0</code>, where several candidate higher-order and interaction terms are included at the same time. It provides a quick way to check whether higher-order terms such as <code>chas:dis</code>, <code>I(lstat^2)</code>, and <code>rm:dis</code> remain significant after adjusting for all other terms in that model.</p>
+<p>However, Type III ANOVA is not used here as the sole basis for removing terms. To formally decide whether a candidate term should be removed, we still use the corresponding nested model comparison. In addition, Type III ANOVA is less helpful for interpreting lower-order terms, since once higher-order terms are included, the corresponding main effects become harder to interpret.</p>
+<p>Therefore, in this example, Type III ANOVA is best viewed as a reference table for the larger candidate model, while the nested model comparisons remain more directly tied to our model-building process.</p>
+</section>
+</section>
+<section id="residual-analysis" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="residual-analysis"><span class="header-section-number">11.8</span> Residual analysis</h2>
+<p>Finally we briefly examine the residuals of the final model using a residual plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_final1), <span class="fu">resid</span>(fit_final1))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-residual-mlr" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1064,6 +1131,7 @@ Figure&nbsp;11.1: Residual plot for the MLR model
 </div>
 </div>
 <p>Compared with the residual plot <a href="../2/project1.html#fig-residual-slr" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> from the simple linear regression model, this one shows less obvious structure. This suggests that the final multiple regression model gives a better fit, although the assumptions are still not perfect.</p>
+<p>We will formally talk about residual analysis and variable selection in the next unit.</p>
 
 
 </section>
