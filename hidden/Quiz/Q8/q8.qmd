@@ -21,7 +21,9 @@ crossref:
     chapters: false
 ---
 
-Variables: `HEATRATE`: $y$, `RPM`: $x_1$, `CPRATIO`: $x_2$, `RPM_CPR`: $x_1x_2$, `RPMSQ`: $x_1^2$, `CPRSQ`: $x_2^2$.
+# Problems
+
+Variables: `y`: $y$, `x1`: $x_1$, `x2`: $x_2$, `x1x2`: $x_1x_2$, `x12`: $x_1^2$, `x22`: $x_2^2$.
 
 From the software output below,
 
@@ -31,8 +33,8 @@ From the software output below,
 #| echo: false
 
 dat <- read.csv("data.csv")
-fit0 <- lm(HEATRATE ~ RPM + CPRATIO + RPM_CPR + RPMSQ + CPRSQ, data = dat)
-fit1 <- lm(HEATRATE ~ RPM + CPRATIO + RPM_CPR, data = dat)
+fit0 <- lm(y ~ x1 + x2 + x1x2 + x12 + x22, data = dat)
+fit1 <- lm(y ~ x1 + x2 + x1x2, data = dat)
 source("../../../anova_alt.R")
 ```
 
