@@ -558,13 +558,11 @@ window.Quarto = {
 <p><span class="math display">\[
 \newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
 \newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
 \]</span></p>
 <!-- Probability -->
-<p><span class="math display">\[
-\newcommand{\Exp}{\operatorname{E}}
-\newcommand{\Var}{\operatorname{Var}}
-\newcommand{\Mode}{\operatorname{mode}}
-\]</span></p>
+<p>$$ </p>
+<p> $$</p>
 <!-- Distributions pdf -->
 <p><span class="math display">\[
 \newcommand{\pdfbinom}{{\tt binom}}
@@ -582,6 +580,7 @@ window.Quarto = {
 \newcommand{\distexp}{\operatorname{Exp}}
 \newcommand{\distpois}{\operatorname{Poisson}}
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
+\newcommand{\distunif}{\operatorname{Unif}}
 \]</span></p>
 </div>
 <section id="quick-overview" class="level2" data-number="1.1">
@@ -645,39 +644,45 @@ Click to expand.
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     chest belly</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## C3   28.0    36</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## C5   28.5    33</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="do">## C10  30.0    34</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">## C15  28.0    34</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## C23  28.5    33</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">## C24  30.0    32</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye
+C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2
+C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0
+C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5
+C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2
+C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1
+C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2
+    chest belly
+C3   28.0    36
+C5   28.5    33
+C10  30.0    34
+C15  28.0    34
+C23  28.5    33
+C24  30.0    32</code></pre>
+</div>
 </div>
 <p>The dimension of the dataset is</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(possum)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 104  14</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 104  14</code></pre>
+</div>
 </div>
 <p>In this example, there are 14 variables, and 104 observations. Each column is a variable. In R you can use the column name to get access to the variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>hdlngth</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>hdlngth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  94.1  92.5  94.0  93.2  91.5  93.1  95.3  94.8  93.4  91.8  93.3  94.9
+ [13]  95.1  95.4  92.9  91.6  94.7  93.5  94.4  94.8  95.9  96.3  92.5  94.4
+ [25]  95.8  96.0  90.5  93.8  92.8  92.1  92.8  94.3  91.4  90.6  94.4  93.3
+ [37]  89.3  92.4  84.7  91.0  88.4  85.3  90.0  85.1  90.7  91.4  90.1  98.6
+ [49]  95.4  91.6  95.6  97.6  93.1  96.9 103.1  99.9  95.1  94.5 102.5  91.3
+ [61]  95.7  91.3  92.0  96.9  93.5  90.4  93.3  94.1  98.0  91.9  92.8  85.9
+ [73]  82.5  88.7  93.8  92.4  93.6  86.5  85.8  86.7  90.6  86.0  90.0  88.4
+ [85]  89.5  88.2  98.5  89.6  97.7  92.6  97.8  90.7  89.2  91.8  91.6  94.8
+ [97]  91.0  93.2  93.3  89.5  88.6  92.4  91.5  93.6</code></pre>
+</div>
 </div>
 </details>
 </div>
@@ -743,41 +748,47 @@ Click to expand.
 </summary>
 <p>Here we still consider the <code>possum</code> dataset.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##     chest belly</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## C3   28.0    36</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## C5   28.5    33</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## C10  30.0    34</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## C15  28.0    34</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## C23  28.5    33</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## C24  30.0    32</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    case site Pop sex age hdlngth skullw totlngth taill footlgth earconch  eye
+C3     1    1 Vic   m   8    94.1   60.4     89.0  36.0     74.5     54.5 15.2
+C5     2    1 Vic   f   6    92.5   57.6     91.5  36.5     72.5     51.2 16.0
+C10    3    1 Vic   f   6    94.0   60.0     95.5  39.0     75.4     51.9 15.5
+C15    4    1 Vic   f   6    93.2   57.1     92.0  38.0     76.1     52.2 15.2
+C23    5    1 Vic   f   2    91.5   56.3     85.5  36.0     71.0     53.2 15.1
+C24    6    1 Vic   f   1    93.1   54.8     90.5  35.5     73.2     53.6 14.2
+    chest belly
+C3   28.0    36
+C5   28.5    33
+C10  30.0    34
+C15  28.0    34
+C23  28.5    33
+C24  30.0    32</code></pre>
+</div>
 </div>
 <p>The variable <code>Pop</code> (location where possum was trapped) is qualitative. We could use the following ways to display it. We first compute the frequency table of the variable <code>Pop</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   Vic other </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    46    58</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Vic other 
+   46    58 </code></pre>
+</div>
 </div>
 <p>or relative frequency table:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)<span class="sc">/</span><span class="fu">length</span>(possum<span class="sc">$</span>Pop)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       Vic     other </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.4423077 0.5576923</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(possum<span class="sc">$</span>Pop)<span class="sc">/</span><span class="fu">length</span>(possum<span class="sc">$</span>Pop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+      Vic     other 
+0.4423077 0.5576923 </code></pre>
+</div>
 </div>
 <p>Then we could draw the barplot of this variable:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -788,7 +799,7 @@ Click to expand.
 </div>
 <p>and the pie plot:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(<span class="fu">table</span>(possum<span class="sc">$</span>Pop))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -822,37 +833,39 @@ Click to expand.
 </summary>
 <p>We still consider the <code>possum</code> dataset. We could use <code>summary</code> to compute the major statistics.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(possum)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       case             site          Pop     sex         age       </span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  </span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 52.50   Median :3.000                     Median :3.000  </span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 52.50   Mean   :3.625                     Mean   :3.833  </span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :104.00   Max.   :7.000                     Max.   :9.000  </span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##                                                     NA's   :2      </span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">##     hdlngth           skullw         totlngth         taill      </span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  </span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  </span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median : 92.80   Median :56.35   Median :88.00   Median :37.00  </span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  </span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  </span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  </span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">##                                                                  </span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="do">##     footlgth        earconch          eye            chest          belly      </span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  </span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  </span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  </span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  </span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  </span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  </span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA's   :1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DAAG)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(possum)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      case             site          Pop     sex         age       
+ Min.   :  1.00   Min.   :1.000   Vic  :46   f:43   Min.   :1.000  
+ 1st Qu.: 26.75   1st Qu.:1.000   other:58   m:61   1st Qu.:2.250  
+ Median : 52.50   Median :3.000                     Median :3.000  
+ Mean   : 52.50   Mean   :3.625                     Mean   :3.833  
+ 3rd Qu.: 78.25   3rd Qu.:6.000                     3rd Qu.:5.000  
+ Max.   :104.00   Max.   :7.000                     Max.   :9.000  
+                                                    NA's   :2      
+    hdlngth           skullw         totlngth         taill      
+ Min.   : 82.50   Min.   :50.00   Min.   :75.00   Min.   :32.00  
+ 1st Qu.: 90.67   1st Qu.:54.98   1st Qu.:84.00   1st Qu.:35.88  
+ Median : 92.80   Median :56.35   Median :88.00   Median :37.00  
+ Mean   : 92.60   Mean   :56.88   Mean   :87.09   Mean   :37.01  
+ 3rd Qu.: 94.72   3rd Qu.:58.10   3rd Qu.:90.00   3rd Qu.:38.00  
+ Max.   :103.10   Max.   :68.60   Max.   :96.50   Max.   :43.00  
+                                                                 
+    footlgth        earconch          eye            chest          belly      
+ Min.   :60.30   Min.   :40.30   Min.   :12.80   Min.   :22.0   Min.   :25.00  
+ 1st Qu.:64.60   1st Qu.:44.80   1st Qu.:14.40   1st Qu.:25.5   1st Qu.:31.00  
+ Median :68.00   Median :46.80   Median :14.90   Median :27.0   Median :32.50  
+ Mean   :68.46   Mean   :48.13   Mean   :15.05   Mean   :27.0   Mean   :32.59  
+ 3rd Qu.:72.50   3rd Qu.:52.00   3rd Qu.:15.72   3rd Qu.:28.0   3rd Qu.:34.12  
+ Max.   :77.90   Max.   :56.20   Max.   :17.80   Max.   :32.0   Max.   :40.00  
+ NA's   :1                                                                     </code></pre>
+</div>
 </div>
 <p>The variable <code>hdlngth</code> (head length) is quantitative. We first show the histogram. We could use <code>breaks</code> to control the number of bins. Note that the function <code>hist</code> does not only draw the histogram; it also provides many useful pieces of information.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">hist</span>(possum<span class="sc">$</span>hdlngth, <span class="at">breaks=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">hist</span>(possum<span class="sc">$</span>hdlngth, <span class="at">breaks=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -860,32 +873,34 @@ Click to expand.
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## $breaks</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  82  84  86  88  90  92  94  96  98 100 102 104</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## $counts</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  1  6  2 12 22 27 22  7  3  0  2</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## $density</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">## $mids</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1]  83  85  87  89  91  93  95  97  99 101 103</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">## $xname</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "possum$hdlngth"</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## $equidist</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,"class")</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "histogram"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$breaks
+ [1]  82  84  86  88  90  92  94  96  98 100 102 104
+
+$counts
+ [1]  1  6  2 12 22 27 22  7  3  0  2
+
+$density
+ [1] 0.004807692 0.028846154 0.009615385 0.057692308 0.105769231 0.129807692
+ [7] 0.105769231 0.033653846 0.014423077 0.000000000 0.009615385
+
+$mids
+ [1]  83  85  87  89  91  93  95  97  99 101 103
+
+$xname
+[1] "possum$hdlngth"
+
+$equidist
+[1] TRUE
+
+attr(,"class")
+[1] "histogram"</code></pre>
+</div>
 </div>
 <p>Then we could show the box plot. You may compare the lines in the plot with the summary table and the histogram above.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(possum<span class="sc">$</span>hdlngth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(possum<span class="sc">$</span>hdlngth)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -908,7 +923,7 @@ Click to expand.
 </summary>
 <p>When both variables are numerical and continuous:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(possum<span class="sc">$</span>hdlngth, possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(possum<span class="sc">$</span>hdlngth, possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -919,7 +934,7 @@ Click to expand.
 </div>
 <p>When one variable is categorical:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop), possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop), possum<span class="sc">$</span>skullw)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -931,9 +946,9 @@ Click to expand.
 <p>Note that in this case, the categorical data has to be a factor. And once it is cast into a factor, the plot is multiple box plots for each category. This type of grouped boxplot corresponds to comparing group means and is directly related to one-way ANOVA and regression with dummy variables. It will be discussed in later sections.</p>
 <p>We can see pair plots for each pair of variables. Pair plots are very important because they help reveal relationships among predictors. Note that before creating the plot, we have to cast <code>pop</code> and <code>sex</code> into factors.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>sex)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>Pop <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>Pop)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>possum<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(possum<span class="sc">$</span>sex)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(possum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
