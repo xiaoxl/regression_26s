@@ -64,3 +64,10 @@
 .example .example-title {
   color: #a66a00;
 }
+
+
+/* =============== CODE / OUTPUT BLOCKS =============== */
+.cell-output pre,
+.cell-output-stdout pre {
+    border-left: 4px solid #d0d0d0;
+}

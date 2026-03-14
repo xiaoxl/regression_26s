@@ -317,6 +317,11 @@ window.Quarto = {
       <a href="../../">Regression 26 Spring</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -453,6 +458,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/hypo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Types of Errors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -533,6 +544,7 @@ window.Quarto = {
 \newcommand{\distexp}{\operatorname{Exp}}
 \newcommand{\distpois}{\operatorname{Poisson}}
 \newcommand{\distnormal}{\operatorname{\mathcal N}}
+\newcommand{\distunif}{\operatorname{Unif}}
 \]</span></p>
 </div>
 <section id="inferential-statistics" class="level2" data-number="3.1">
@@ -712,6 +724,19 @@ p\text{-value}=\Pr(T(X)\geq t_{\text{obs}}\mid H_0 \text{ is true})
 <li>Reduing <span class="math inline">\(\alpha\)</span> will make the test less likely to make Type I errors but increase the likelihood of Type II errors.</li>
 <li>Increasing sample size reduces probability of making both types of errors, which can improve the test’s reliability.</li>
 </ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Types of Errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>More detailed discussions about types of errors and the power of tests can be found in <a href="../app/hypo.html" class="quarto-xref"><span>Appendix C</span></a>.</p>
 </div>
 </div>
 <section id="t-test" class="level3" data-number="3.3.1">
