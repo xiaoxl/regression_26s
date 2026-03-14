@@ -1,0 +1,133 @@
+# Hypothesis tests
+
+
+## Errors
+
+Assume we want to detect a signal in order to check whether a certain thing happens. There are 4 possibilities:
+
+- It happens and we detect the signal: True positive
+- It happens and we fail to detect the signal: False negative
+- It doesn't happen and we didn't detect the signal: True negative
+- It doesn't happen and we detect a signal: False positive
+
+|                       | Detect signal        | Do not detect signal     |
+|-----------------------|----------------------|--------------------------|
+| **It happens**        | True positive (TP)   | False negative (FN)      |
+| **It doesn't happen** | False positive (FP)  | True negative (TN)       |
+
+Both false positives and false negatives are errors. 
+
+- False Positive is called **Type I error**
+- False Negative is called **Type II error**
+
+When doing hypothesis test, usually the null hypothesis is the default case, and we need to detect a signal to accept the alternative hypothesis. Therefore we might make mistakes. Since $H_0$ represents the default case, we could rewrite the above table as follows:
+
+|                       | Reject $H_0$        | Fail to reject $H_0$     |
+|-----------------------|----------------------|--------------------------|
+| **$H_0$ is false**        | True positive (TP)   | False negative (FN)      |
+| **$H_0$ is true** | False positive (FP)  | True negative (TN)       |
+
+
+
+::: {#def-}
+## p-value 
+The probability, assuming $H_0$ is true, of observing a test statistic at least as extreme as the one observed is called **p-value**.
+$$
+\text{p-value}=\Pr(\text{data or more extreme}\mid H_0)=\Pr(s\geq s_{\alpha}\mid H_0),
+$$
+where $s$ is a test statistic, and $s_{\alpha}$ is the observed test statistic.
+:::
+
+
+
+::: {#def-}
+## Significance level ($\alpha$)
+The **significance level** is the pre-chosen probability of committing a Type I error. 
+$$
+\alpha=\Pr(\text{reject } H_0\mid H_0\text{ is true}).
+$$
+:::
+
+
+
+A test use a test statistic $T$, and large values of $T$ are evidence against $H_0$. Assume we choose a cut off $c_{\alpha}$ so that once we have $T>c$, we will reject $H_0$. Then the probability of Type I errors are
+$$
+\Pr(T>c_{\alpha}\mid H_0)=\Pr(\text{reject } H_0\mid H_0\text{ is true})=\alpha.
+$$
+
+::: {.callout-note}
+A hypothesis test with rejection region $R$ has significance level $\alpha$ if
+$$
+\Pr(T\in R\mid H_0)\leq \alpha.
+$$
+If the rejection region is chosen so that
+$$
+\Pr(T\in R\mid H_0)= \alpha,
+$$
+then the test achieves Type I error probability exactly $\alpha$. Equivalently, for a continuous test, if we reject whenever $p\leq \alpha$, then
+$$
+\Pr(p\leq \alpha\mid H_0)= \alpha,
+$$
+:::
+
+
+::: {#thm-pvalue-level}
+## Theorem
+
+For a continuous hypothesis test, if we reject $H_0$ whenever $p \le \alpha$, then
+
+$$
+P(p \le \alpha \mid H_0)=\alpha.
+$$
+
+Hence the test has Type I error probability exactly $\alpha$.
+:::
+
+::: {#prf-}
+## Proof
+
+Suppose $T$ is a test statistic for which large values provide evidence against $H_0$, and let $F_0$ be the cumulative distribution function of $T$ under $H_0$. Since the test is continuous, $F_0$ is continuous.
+
+For an observed value $t_{\mathrm{obs}}$, the p-value is
+
+$$
+p=P(T\ge t_{\mathrm{obs}}\mid H_0)=1-F_0(t_{\mathrm{obs}}).
+$$
+
+Therefore, under $H_0$, the random p-value can be written as
+
+$$
+p=1-F_0(T).
+$$
+
+Then
+
+$$
+P(p\le \alpha\mid H_0)
+=
+P(1-F_0(T)\le \alpha\mid H_0)
+=
+P(F_0(T)\ge 1-\alpha\mid H_0).
+$$
+
+By the probability integral transform, since $F_0$ is continuous,
+
+$$
+F_0(T)\sim \text{Uniform}(0,1)
+\qquad\text{under }H_0.
+$$
+
+Thus
+
+$$
+P(F_0(T)\ge 1-\alpha)=\alpha.
+$$
+
+Hence
+
+$$
+P(p\le \alpha\mid H_0)=\alpha.
+$$
+
+Therefore the test achieves Type I error probability exactly $\alpha$.
+:::
