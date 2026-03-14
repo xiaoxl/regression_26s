@@ -1,9 +1,89 @@
-# Hypothesis tests
+# Power and Type I Error
+
+{{< include ../math.qmd >}} 
+
+## Hypothesis tests
+
+
+When we analyze a dataset, we often formulate a claim and want to determine whether the data provide sufficient evidence to support it. The typical process is:
+
+1. Formulate a null hypothesis $H_0$ and an alternative hypothesis $H_a$, which are mutually exclusive and collectively exhaustive.
+2. Compute a test statistic $T$ from the data. Typically, values of $T$ that are unlikely under $H_0$ provide evidence against $H_0$.
+3. Choose a cutoff (critical value) $c$ based on a pre-specified significance level $\alpha$, and reject $H_0$ if $T$ falls in the rejection region (for example, if $T>c$ in a right-tailed test). 
+4. Alternatively, consider the sampling distribution of $T$ under $H_0$ with cdf $F$. Then deciding whether $T>c$ is equivalent to checking whether $1-F(T)<\alpha$. The quantity $1-F(T)$ represents the probability of observing a value of $T$ at least as extreme as the observed one (for a right-tailed test).
+
+
+Note that the rejection region depends on the setting. For example, we may reject $H_0$ when $T>c$ (right-tailed test), when $T<c$ (left-tailed test), or when $|T|>c$ (two-tailed test). However, once the rule is expressed in terms of the p-value, the decision criterion becomes unified: we reject $H_0$ whenever $p<\alpha$. This is why statisticians developed the p-value approach.
+
+
+
+::: {#def-}
+## p-value 
+The probability, assuming $H_0$ is true, of observing a test statistic at least as extreme as the one observed is called **p-value**.
+$$
+p=\Pr(\text{data or more extreme}\mid H_0). 
+$$
+Assume the test statistic $T$ has a cdf $F$, and assume the cut off of determining "extremeness" is $t_{\alpha}$, then
+$$
+p=\Pr(\text{data or more extreme}\mid H_0)=\Pr(t\geq t_{\alpha}\mid H_0)=1-F(t_\alpha).
+$$
+:::
+
+
+
+::: {#thm-pvalue-level}
+
+For a continuous hypothesis test, if we reject $H_0$ whenever $p \le \alpha$, then
+
+$$
+P(p \le \alpha \mid H_0)=\alpha.
+$$
+
+Hence the test has Type I error probability exactly $\alpha$.
+
+
+:::
+
+
+
+
+<details>
+<summary><strong>Click for proof.</strong></summary>
+
+::: {#prf-}
+## Proof
+
+$$
+\begin{split}
+\Pr(\text{Type I error})&=\Pr(\text{reject } H_0\mid H_0\text{ is true})=\Pr(p\leq \alpha\mid H_0)\\
+&=\Pr(1-F(c_{\alpha})\leq \alpha\mid H_0)=\Pr(F(c_{\alpha})\geq 1-\alpha\mid H_0)\\
+&=1-\Pr(F(c_{\alpha})\leq 1-\alpha\mid H_0)\\
+&=1-(1-\alpha)=\alpha.
+\end{split}
+$$
+
+Here we use Probability Integral Transform Theorem.
+
+::: {#thm-}
+## Probability Integral Transform Theorem
+If $X$ is continous, and assume its cdf is $F_X$, then
+$$
+U=F(X)\sim \distunif(0,1).
+$$
+:::
+
+
+:::
+</details>
+
+
 
 
 ## Errors
 
-Assume we want to detect a signal in order to check whether a certain thing happens. There are 4 possibilities:
+We already mentioned Type I error a few times in the previous section. Here we give a more systematic discussion.
+
+Suppose we want to detect a signal to determine whether a certain phenomenon occurs. There are four possible outcomes:
 
 - It happens and we detect the signal: True positive
 - It happens and we fail to detect the signal: False negative
@@ -20,114 +100,241 @@ Both false positives and false negatives are errors.
 - False Positive is called **Type I error**
 - False Negative is called **Type II error**
 
-When doing hypothesis test, usually the null hypothesis is the default case, and we need to detect a signal to accept the alternative hypothesis. Therefore we might make mistakes. Since $H_0$ represents the default case, we could rewrite the above table as follows:
+
+
+In hypothesis testing, the null hypothesis $H_0$ typically represents the default position, and we look for evidence (a “signal”) against it. Therefore, we may make mistakes. Rewriting the table in terms of hypothesis testing:
 
 |                       | Reject $H_0$        | Fail to reject $H_0$     |
 |-----------------------|----------------------|--------------------------|
-| **$H_0$ is false**        | True positive (TP)   | False negative (FN)      |
-| **$H_0$ is true** | False positive (FP)  | True negative (TN)       |
+| **$H_0$ is false**        | True positive (TP)   | Type II error      |
+| **$H_0$ is true** | Type I error  | True negative (TN)       |
+
+To evaluate the effectiveness of a hypothesis test, we study two cases:
+
+- If $H_0$ is true, we either make a correct decision or commit a Type I error. The probability of a Type I error is exactly $\alpha$.
+- If $H_0$ is false, we either make a correct decision or commit a Type II error. The probability of a Type II error is denoted by $\beta$. Note that $\beta$ depends on the concrete parameters of $H_a$.
 
 
 
 ::: {#def-}
-## p-value 
-The probability, assuming $H_0$ is true, of observing a test statistic at least as extreme as the one observed is called **p-value**.
+## Power
+Suppose we conduct a hypothesis test concerning a parameter $\mu$. The power function of the test is
 $$
-\text{p-value}=\Pr(\text{data or more extreme}\mid H_0)=\Pr(s\geq s_{\alpha}\mid H_0),
+\power(\mu)=\Pr(\text{reject }H_0\mid \mu).
 $$
-where $s$ is a test statistic, and $s_{\alpha}$ is the observed test statistic.
+
+:::
+
+If $\mu$ corresponds to a value under which $H_0$ is false, then $\power(\mu)$ is the probability of a true positive.
+
+If $\mu$ corresponds to a value under which $H_0$ is true, then $\power(\mu)=\alpha$ which is the Type I error rate.
+
+
+
+| Truth       | Decision   | Probability |
+| ----------- | ---------- | --------- |
+| $H_0$ true  | reject     | $ \alpha$       |
+| $H_0$ true  | not reject | $ 1-\alpha$  |
+| $H_0$ false | reject     | $ \power(\mu)$  |
+| $H_0$ false | not reject | $\beta(\mu)=1-\power(\mu)$      |
+
+
+
+::: {.callout-tip}
+## Interpretation in Practice
+
+In practice, we do not know whether $H_0$ is true or false. Therefore, hypothesis testing is evaluated by:
+
+- its Type I error rate when $H_0$ is true, and
+- its power when $H_0$ is false.
+
+Although one could formally combine $1-\alpha$ and $\operatorname{power}(\mu)$ into an overall success rate, classical (frequentist) hypothesis testing typically evaluates these two cases separately, since the true value of $\mu$ is unknown.
 :::
 
 
+## One-Sample t-Test
 
-::: {#def-}
-## Significance level ($\alpha$)
-The **significance level** is the pre-chosen probability of committing a Type I error. 
+Suppose we observe independent and identically distributed data
 $$
-\alpha=\Pr(\text{reject } H_0\mid H_0\text{ is true}).
+x_1,x_2,\ldots, x_n\sim N(\mu, \sigma^2).
 $$
-:::
-
-
-
-A test use a test statistic $T$, and large values of $T$ are evidence against $H_0$. Assume we choose a cut off $c_{\alpha}$ so that once we have $T>c$, we will reject $H_0$. Then the probability of Type I errors are
+We want to test
 $$
-\Pr(T>c_{\alpha}\mid H_0)=\Pr(\text{reject } H_0\mid H_0\text{ is true})=\alpha.
+H_0:\mu=0\quad \text{versus}\quad H_a:\mu\neq 0.
 $$
 
-::: {.callout-note}
-A hypothesis test with rejection region $R$ has significance level $\alpha$ if
+The samples are summarized:
 $$
-\Pr(T\in R\mid H_0)\leq \alpha.
+\bar x=\frac{1}{n}\sum_{i=1}^n x_i,\quad s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar x)^2}.
 $$
-If the rejection region is chosen so that
+We use them to compute the t-statistic
 $$
-\Pr(T\in R\mid H_0)= \alpha,
-$$
-then the test achieves Type I error probability exactly $\alpha$. Equivalently, for a continuous test, if we reject whenever $p\leq \alpha$, then
-$$
-\Pr(p\leq \alpha\mid H_0)= \alpha,
-$$
-:::
-
-
-::: {#thm-pvalue-level}
-## Theorem
-
-For a continuous hypothesis test, if we reject $H_0$ whenever $p \le \alpha$, then
-
-$$
-P(p \le \alpha \mid H_0)=\alpha.
+T=\frac{\bar x}{s/\sqrt{n}}.
 $$
 
-Hence the test has Type I error probability exactly $\alpha$.
-:::
 
-::: {#prf-}
-## Proof
-
-Suppose $T$ is a test statistic for which large values provide evidence against $H_0$, and let $F_0$ be the cumulative distribution function of $T$ under $H_0$. Since the test is continuous, $F_0$ is continuous.
-
-For an observed value $t_{\mathrm{obs}}$, the p-value is
-
+If $H_0$ is true, i.e., $\mu=0$, 
 $$
-p=P(T\ge t_{\mathrm{obs}}\mid H_0)=1-F_0(t_{\mathrm{obs}}).
+T\sim t_{n-1}.
 $$
-
-Therefore, under $H_0$, the random p-value can be written as
-
+Then for significance level $\alpha$, we define the critical value
 $$
-p=1-F_0(T).
+c_{\alpha}=t_{1-\alpha/2,n-1} \quad\text{ by }\quad F_t(t_{1-\alpha/2,n-1})=1-\alpha/2
+$$
+where $F_t$ is the cdf of $t_{n-1}$. Then we reject $H_0$ when 
+$$
+\abs{T}>c_{\alpha}.
 $$
 
-Then
+The critical value $c_{\alpha}$ can be computed by the R code
+```{r}
+#| eval: false
+tcrit <- qt(1 - alpha / 2, df)
+```
 
+
+
+
+If $H_0$ is false, i.e., $\mu\neq 0$,
 $$
-P(p\le \alpha\mid H_0)
-=
-P(1-F_0(T)\le \alpha\mid H_0)
-=
-P(F_0(T)\ge 1-\alpha\mid H_0).
+T\sim t_{n-1}(\delta),\quad\text{where }\delta=\frac{\mu}{\sigma/\sqrt n}.
+$$
+Here the distribution $t_{n-1}(\delta)$ is the noncentral t-distribution. It is t-distribution which shifted away from $0$. Therefore the probability of falling into the rejection region becomes larger. 
+
+Since we still use the same critical level $c_{\alpha}=t_{1-\alpha/2,n-1}$, we have
+$$
+\begin{split}
+\power(\mu)&=\Pr(\abs{T}>c_{\alpha}\mid \mu)\\
+&=\Pr(T<-c_{\alpha}\mid \mu) + \Pr(T>c_{\alpha}\mid \mu)\\
+&=F_{t(\delta)}(-c_{\alpha}) + 1 - F_{t(\delta)}(c_{\alpha}).
+\end{split}
+$$
+Its value can be evaluated by the R code
+
+```{r}
+#| eval: false
+tcrit <- qt(1 - alpha / 2, df)
+power <- 1 - pt(tcrit, df, ncp = delta) + pt(-tcrit, df, ncp = delta)
+```
+
+
+
+In either case, the way to perform the test is to compute the t-statistic, and use the t-distribution formula to compute the p-value in order to compare with $\alpha$.
+
+```{r}
+#| eval: false
+tstat <- mean(x) / (sd(x) / sqrt(n))
+p <- 2 * (1 - pt(abs(tstat), df = n - 1))
+decision <- (p < alpha)
+```
+
+This process can be automated by the build-in function `t.test`.
+
+```{r}
+#| eval: false
+t_test <- t.test(x, mu = 0)
+decision <- (t_test$p.value < alpha)
+```
+
+
+## Example
+
+
+We generate data from `rnorm(n, mu, sd)` and conduct a one-sample $t$-test for
+$$
+H_0:\mu=0
+\qquad\text{versus}\qquad
+H_a:\mu\ne 0.
 $$
 
-By the probability integral transform, since $F_0$ is continuous,
+We consider two cases:
 
+- $\mu=0$, where $H_0$ is true;
+- $\mu=0.5$, where $H_0$ is false.
+
+In both cases we set $\sigma=1$, $n=25$, and $\alpha=0.05$.
+
+When $\mu=0.5$, the null hypothesis $H_0$ is false, so we can compute the theoretical power of the test.
+
+```{r}
+mu_sim <- 0.5
+sigma <- 1
+n <- 25
+alpha <- 0.05
+
+delta <- mu_sim / (sigma / (sqrt(n)))
+df <- n - 1
+tcrit <- qt(1 - alpha / 2, df)
+
+theoretical_power <- 1 - pt(tcrit, df, ncp = delta) + pt(-tcrit, df, ncp = delta)
+theoretical_power
+```
+So the theoretical power in this case is $`r theoretical_power`$. In other words, when the true mean is $\mu=0.5$, the probability of correctly rejecting $H_0$ is $`r theoretical_power`$.
+
+When $\mu=0$, $H_0$ is true. In that case, the probability of incorrectly rejecting $H_0$ is the Type I error rate, which is $\alpha=`r alpha`$. 
+
+We now demonstrate both scenarios by simulation.
+
+```{r}
+set.seed(123)
+
+B <- 200000
+n <- 25
+alpha <- 0.05
+
+truth <- decision <- numeric(B)
+
+for (i in 1:B) {
+    if (runif(1) < 0.5) {
+        mu_sim <- 0
+        truth[i] <- 0 # H0 is true
+    } else {
+        mu_sim <- 0.5
+        truth[i] <- 1 # Ha is true
+    }
+
+    x <- rnorm(n, mean = mu_sim, sd = 1)
+
+    t_test <- t.test(x, mu_sim = 0)
+    decision[i] <- (t_test$p.value < alpha)
+}
+
+table(truth, decision)
+```
+
+```{r}
+#| echo: false
+mu_sim <- 0.5
+sigma <- 1
+n <- 25
+alpha <- 0.05
+
+delta <- mu_sim / (sigma / (sqrt(n)))
+df <- n - 1
+tcrit <- qt(1 - alpha / 2, df)
+theoretical_power <- 1 - pt(tcrit, df, ncp = delta) + pt(-tcrit, df, ncp = delta)
+tab <- table(truth, decision)
+
+type1 <- tab[1, 2] / sum(tab[1, ])
+sim_power <- tab[2, 2] / sum(tab[2, ])
+```
+
+We can convert this table into conditional rejection frequencies.
+
+- Type I error rate (false positive rate) is 
 $$
-F_0(T)\sim \text{Uniform}(0,1)
-\qquad\text{under }H_0.
+\frac{`r tab[1,2]`}{`r tab[1,2]`+`r tab[1,1]`}=`r type1`\approx \alpha=`r alpha`.
+$$
+- The power (true positive rate) is
+$$
+\frac{`r tab[2,2]`}{`r tab[2,2]`+`r tab[2,1]`}=`r sim_power`\approx \power(`r mu_sim`)=`r theoretical_power`.
 $$
 
-Thus
+So the simulation agrees with the theory: 
 
-$$
-P(F_0(T)\ge 1-\alpha)=\alpha.
-$$
+- when $H_0$ is true, the rejection rate is about $\alpha$, and 
+- when $H_0$ is false with $\mu=0.5$, the rejection rate is about the theoretical power.
 
-Hence
 
-$$
-P(p\le \alpha\mid H_0)=\alpha.
-$$
 
-Therefore the test achieves Type I error probability exactly $\alpha$.
-:::
+

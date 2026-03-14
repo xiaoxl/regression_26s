@@ -19,7 +19,7 @@ execute:
 knitr:
   opts_chunk:
     # comment: "#>"
-    collapse: true
+    collapse: false
 
 jupyter: stats
 
@@ -94,5 +94,7 @@ book:
   #       - contents/index.qmd
   page-navigation: true
   bread-crumbs: false
+  search: true
+  reader-mode: true
  
    

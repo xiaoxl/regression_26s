@@ -1,0 +1,304 @@
+
+
+Then the probability of Type I errors are
+
+
+$$
+\Pr(T>c_{\alpha}\mid H_0)=\Pr(\text{reject } H_0\mid H_0\text{ is true})=\alpha.
+$$
+
+::: {.callout-note}
+A hypothesis test with rejection region $R$ has significance level $\alpha$ if
+$$
+\Pr(T\in R\mid H_0)\leq \alpha.
+$$
+If the rejection region is chosen so that
+$$
+\Pr(T\in R\mid H_0)= \alpha,
+$$
+then the test achieves Type I error probability exactly $\alpha$. Equivalently, for a continuous test, if we reject whenever $p\leq \alpha$, then
+$$
+\Pr(p\leq \alpha\mid H_0)= \alpha,
+$$
+:::
+
+
+
+::: {#prf-}
+## Proof
+
+Suppose $T$ is a test statistic for which large values provide evidence against $H_0$, and let $F_0$ be the cumulative distribution function of $T$ under $H_0$. Since the test is continuous, $F_0$ is continuous.
+
+For an observed value $t_{\mathrm{obs}}$, the p-value is
+
+$$
+p=P(T\ge t_{\mathrm{obs}}\mid H_0)=1-F_0(t_{\mathrm{obs}}).
+$$
+
+Therefore, under $H_0$, the random p-value can be written as
+
+$$
+p=1-F_0(T).
+$$
+
+Then
+
+$$
+P(p\le \alpha\mid H_0)
+=
+P(1-F_0(T)\le \alpha\mid H_0)
+=
+P(F_0(T)\ge 1-\alpha\mid H_0).
+$$
+
+By the probability integral transform, since $F_0$ is continuous,
+
+$$
+F_0(T)\sim \text{Uniform}(0,1)
+\qquad\text{under }H_0.
+$$
+
+Thus
+
+$$
+P(F_0(T)\ge 1-\alpha)=\alpha.
+$$
+
+Hence
+
+$$
+P(p\le \alpha\mid H_0)=\alpha.
+$$
+
+Therefore the test achieves Type I error probability exactly $\alpha$.
+:::
+
+
+
+
+We review the one-sample t-test. We have a dataset that follows normal distribution $N(\mu,\sigma^2)$. We want to test
+$$
+H_0:\mu=\mu_0 \qquad\text{versus}\qquad H_a:\mu\ne \mu_0.
+$$
+
+After observing a dataset $\vb x=(x_1,x_2,\ldots,x_n)$, we compute the sample mean
+$$
+\bar x=\frac{1}{n}\sum_{i=1}^n x_i
+$$
+and the sample standard deviation
+$$
+s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar x)^2}.
+$$
+
+Assume that $x_1,\ldots,x_n$ are independent and identically distributed from $N(\mu,\sigma^2)$. If $\sigma$ were known, then we could standardize the sample mean by
+
+$$
+Z=\frac{\bar x-\mu_0}{\sigma/\sqrt{n}}.
+$$
+
+Under $H_0$, $\mu=\mu_0$. This statistic follows the standard normal distribution:
+$$
+Z\sim N(0,1).
+$$
+
+In practice, however, $\sigma$ is usually unknown, so we replace it by $s$. This gives the t-statistic
+$$
+T=\frac{\bar x-\mu_0}{s/\sqrt{n}}.
+$$
+If $H_0$ is true, that is $\mu=\mu_0$, then
+
+$$
+T\sim t_{n-1}.
+$$
+
+Therefore, for a two-sided test with significance level $\alpha$, we reject $H_0$ when
+$$
+|T|>t_{1-\alpha/2,n-1}.
+$$
+The corresponding p-value is
+$$
+p=2\Pr(T\geq\bas{t_{obs}})=2(1-F_t(\abs{t_{obs}}))
+$$
+where $F_t$ is the cdf of $t_{n-1}. If we use R, we could use 
+
+```{r}
+#| eval: false
+p <- 2 * (1 - pt(abs(t_obs), df = n - 1))
+```
+
+
+If $H_0$ is false, that is, if $\mu\ne\mu_0$, then $T$ no longer follows the central $t$ distribution. Instead, it follows a noncentral $t$ distribution $t_{\nu}(\delta)$:
+$$
+T\sim t_{n-1}(\delta),
+\qquad
+\delta=\frac{\mu-\mu_0}{\sigma/\sqrt n}.
+$$
+
+
+For a two-sided test with rejection region
+
+$$
+|T|>t_{1-\alpha/2,n-1},
+$$
+
+the power function is
+
+$$
+\operatorname{power}(\mu)
+=
+\Pr(|T|>t_{1-\alpha/2,n-1}\mid \mu),
+$$
+
+where
+
+$$
+T\sim t_{n-1}(\delta).
+$$
+
+
+Then the p-value is
+and the power is .
+
+
+
+
+
+$$
+\power(\mu)=\Pr(\text{reject }H_0\mid \mu).
+$$
+
+Thus, when $H_0$ is true, the rejection probability is $\alpha$, while when $H_0$ is false, the rejection probability is the power.
+
+
+### Definition
+
+Let
+
+$$
+Z\sim N(0,1), \qquad
+V\sim \chi^2_\nu,
+$$
+
+and assume $Z$ and $V$ are independent. For a constant $\delta$, define
+
+$$
+T=\frac{Z+\delta}{\sqrt{V/\nu}}.
+$$
+
+Then $T$ is said to follow a **noncentral $t$ distribution** with
+
+- degrees of freedom $\nu$, and  
+- noncentrality parameter $\delta$,
+
+written as
+
+$$
+T\sim t_\nu(\delta).
+$$
+
+When $\delta=0$, this reduces to the usual (central) $t$ distribution.
+
+---
+
+### Why It Appears in the t-Test
+
+Consider the one-sample t-test with
+
+$$
+H_0:\mu=\mu_0.
+$$
+
+The test statistic is
+
+$$
+T=\frac{\bar X-\mu_0}{S/\sqrt n}.
+$$
+
+If $\mu\ne\mu_0$, write
+
+$$
+\bar X-\mu_0=(\bar X-\mu)+(\mu-\mu_0).
+$$
+
+Since
+
+$$
+\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1),
+\qquad
+\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1},
+$$
+
+we obtain
+
+$$
+T\sim t_{n-1}(\delta),
+\qquad
+\delta=\frac{\mu-\mu_0}{\sigma/\sqrt n}.
+$$
+
+The parameter $\delta$ is called the **noncentrality parameter**.
+
+---
+
+### Interpretation
+
+The noncentrality parameter
+
+$$
+\delta=\frac{\mu-\mu_0}{\sigma/\sqrt n}
+$$
+
+measures how far the true mean is from the null value in units of standard error.
+
+- If $\delta=0$, the distribution is centered at 0 (the null case).  
+- If $|\delta|$ increases, the distribution shifts away from 0.  
+- As a result, more probability mass lies in the rejection region.
+
+This is why the rejection probability increases when $H_0$ is false.
+
+---
+
+### Connection with Power
+
+For a two-sided test with rejection region
+
+$$
+|T|>t_{1-\alpha/2,n-1},
+$$
+
+the power function is
+
+$$
+\operatorname{power}(\mu)
+=
+\Pr\bigl(|T|>t_{1-\alpha/2,n-1}\mid \mu\bigr),
+$$
+
+where
+
+$$
+T\sim t_{n-1}(\delta).
+$$
+
+Thus:
+
+- When $\mu=\mu_0$, the rejection probability is $\alpha$.  
+- When $\mu\ne\mu_0$, the rejection probability is the power.
+
+---
+
+### Large-Sample Approximation
+
+For moderate or large $n$, the noncentral $t$ distribution is well approximated by a normal distribution:
+
+$$
+T\approx N(\delta,1).
+$$
+
+This approximation helps explain intuitively why power increases as
+
+- $|\mu-\mu_0|$ increases, or  
+- $n$ increases.
+
+Both increase $\delta$ and shift the distribution further into the rejection region.
+

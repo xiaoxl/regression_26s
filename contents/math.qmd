@@ -24,6 +24,7 @@ $$
  \newcommand{\cor}{\operatorname{cor}}
 
  \newcommand{\nll}{\operatorname{nll}}
+ \newcommand{\power}{\operatorname{power}}
 $$
 
 <!-- Distributions pdf -->
@@ -46,5 +47,6 @@ $$
  \newcommand{\distexp}{\operatorname{Exp}}
  \newcommand{\distpois}{\operatorname{Poisson}}
  \newcommand{\distnormal}{\operatorname{\mathcal N}}
+ \newcommand{\distunif}{\operatorname{Unif}}
 $$
 :::
