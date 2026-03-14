@@ -213,6 +213,11 @@ We could balance Type I and Type II errors by controlling $\alpha$.
 :::
 
 
+::: {.callout-tip}
+## Types of Errors
+More detailed discussions about types of errors and the power of tests can be found in @sec-app-hypo.
+:::
+
 
 ### t-test
 A t-test is used to test a hypothesis about a population mean when the population standard deviation is unknown and the sample size is small or moderate. In our case, we consider the standard one-sample t-test: given a set of random observations, we want to determine whether the population mean of the underlying random variable is equal to 0 or not.

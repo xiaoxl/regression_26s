@@ -69,9 +69,9 @@ book:
       - contents/3/cat.qmd
       # - contents/3/rcode2.qmd
       - contents/3/project2.qmd
-    - part: "Building models"
-      chapters:
-      - contents/4/vs.qmd
+    # - part: "Building models"
+    #   chapters:
+    #   - contents/4/vs.qmd
       # - contents/4/ra.qmd
   appendices:
     - contents/app/data.qmd

@@ -1,8 +1,8 @@
-# Power and Type I Error
+# Types of Errors {#sec-app-hypo}
 
 {{< include ../math.qmd >}} 
 
-## Hypothesis tests
+## Hypothesis tests 
 
 
 When we analyze a dataset, we often formulate a claim and want to determine whether the data provide sufficient evidence to support it. The typical process is:

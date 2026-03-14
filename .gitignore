@@ -5,3 +5,4 @@
 /.quarto/
 /_extensions/
 **/*.quarto_ipynb
+fonts/
