@@ -67,12 +67,12 @@ book:
       - contents/3/mlr.qmd
       - contents/3/anova.qmd
       - contents/3/cat.qmd
-      # - contents/3/project2-2.qmd
       - contents/3/project2.qmd
-    # - part: "Building models"
-    #   chapters:
-    #   - contents/4/vs.qmd
-      # - contents/4/ra.qmd
+    - part: "Building models"
+      chapters:
+      - contents/4/vs.qmd
+      - contents/4/ra.qmd
+      - contents/4/project3.qmd
   appendices:
     - contents/app/data.qmd
     - contents/app/r.qmd

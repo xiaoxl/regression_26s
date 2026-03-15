@@ -1,1 +1,338 @@
 # Residual analysis
+
+Residual analysis is one of the main tools for checking whether a regression model is appropriate.  
+In a regression model, the random errors are not directly observable, so we study the **residuals** instead.
+
+Recall the usual assumptions on the error term $\varepsilon$ in a regression model:
+
+1. $\varepsilon$ has mean $0$.
+2. $\varepsilon$ has constant variance $\sigma^2$.
+3. Different error terms are uncorrelated.
+4. $\varepsilon$ is normally distributed.
+
+This chapter introduces graphical tools and statistical ideas for detecting important departures from these assumptions.
+
+# Regression Residuals
+
+Suppose the regression model is
+$$
+y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \varepsilon_i.
+$$
+
+Because the true error $\varepsilon_i$ is unobservable, we estimate it by the **residual**
+$$
+e_i = y_i - \hat y_i,
+$$
+where $\hat y_i$ is the fitted value from the regression model.
+
+So a residual measures how far the observed response is from the fitted response.
+
+## Interpretation
+
+- If $e_i>0$, the model underpredicts the response at observation $i$.
+- If $e_i<0$, the model overpredicts the response at observation $i$.
+- Large residuals indicate observations that are not well explained by the fitted model.
+
+## Two useful properties of residuals
+
+For an ordinary least squares regression model with an intercept:
+
+1. The residuals sum to zero:
+   $$
+   \sum_{i=1}^n e_i = 0.
+   $$
+2. The residuals are orthogonal to the fitted values and to each predictor used in the model.
+
+These properties are useful both theoretically and computationally.
+
+# Graphical Displays of Residuals
+
+Residual plots are used to assess whether the model assumptions appear reasonable.
+
+If the assumptions are satisfied, then residual plots should generally show:
+
+- no systematic trend,
+- no obvious curvature,
+- no dramatic increase or decrease in spread,
+- only a few unusually large residuals.
+
+A good residual plot looks like a random cloud centered around $0$.
+
+# Detecting Lack of Fit
+
+A residual plot is often the first tool for deciding whether the deterministic part of the model is misspecified.
+
+## Key idea
+
+If the mean function is incorrectly modeled, the residuals will often show a pattern.
+
+Examples of patterns suggesting lack of fit include:
+
+- curved trend,
+- wave pattern,
+- systematic clustering,
+- structure that suggests a missing variable or a missing higher-order term.
+
+## Typical interpretation
+
+- A **random cloud** of residuals suggests the fitted mean structure is reasonable.
+- A **parabolic pattern** suggests a quadratic term may be needed.
+- A **nonlinear pattern** suggests transformation or a more flexible model may be appropriate.
+
+## Example idea from the lecture
+
+For the cholesterol-versus-fat-intake data, the first-order model produced a residual plot with a parabolic pattern. That suggests the straight-line model is inadequate and that a second-order model may fit better. After fitting the quadratic model, the residual plot no longer showed a clear pattern, so the quadratic model was more appropriate.
+
+# Partial Residual Plots
+
+A **partial residual plot** helps assess the relationship between the response and one predictor after accounting for the other predictors in the model.
+
+For predictor $x_j$, a partial residual is often written as
+$$
+e_i + \hat\beta_j x_{ij}.
+$$
+
+Plotting these values against $x_j$ can reveal structure that may be hidden in an ordinary residual plot.
+
+## Why use a partial residual plot?
+
+It may reveal:
+
+- curvature in the effect of a predictor,
+- need for transformation of a predictor,
+- nonlinearity not obvious from the usual residual plot.
+
+## Typical conclusions
+
+A partial residual plot may suggest:
+
+- adding a quadratic term such as $x_j^2$,
+- transforming the variable, for example $\log(x_j)$ or $1/x_j$,
+- reconsidering the functional form of the model.
+
+# Detecting Unequal Variances
+
+One important regression assumption is that the error variance is constant:
+$$
+\operatorname{Var}(\varepsilon_i)=\sigma^2 \quad \text{for all } i.
+$$
+
+## Terminology
+
+- **Homoscedasticity**: constant variance.
+- **Heteroscedasticity**: unequal variance.
+
+## How heteroscedasticity appears in a residual plot
+
+A plot of residuals versus fitted values or versus a predictor may show:
+
+- a funnel shape,
+- a cone shape,
+- spread increasing with the mean,
+- spread decreasing with the mean.
+
+These patterns suggest that the variability of the response changes with the level of the predictor or fitted value.
+
+## Common reasons for heteroscedasticity
+
+Heteroscedasticity often occurs when the variance of the response depends on its mean. Common situations include:
+
+- count data, such as Poisson responses,
+- proportions or percentages, such as binomial responses,
+- multiplicative error structures.
+
+## Remedies
+
+A common remedy is a **response transformation** chosen to stabilize the variance.
+
+Typical variance-stabilizing transformations include:
+
+- $\sqrt{y}$ for count-type data,
+- $\log(y)$ for multiplicative or right-skewed responses,
+- other Box--Cox transformations.
+
+## Example idea from the lecture
+
+For the social worker salary data, a second-order model appeared to fit the mean structure reasonably well, but the residual plot had a cone shape, indicating non-constant variance. After transforming the response to $\log(y)$, the cone shape was greatly reduced, and the model assumptions were more plausible.
+
+## A simple test for heteroscedasticity
+
+One classical approach is to split the data into two groups, fit the model separately, and compare the two error variances using an $F$-test.
+
+If the estimated variances differ substantially, this provides evidence against equal variances.
+
+# Checking the Normality Assumption
+
+Normality is another standard assumption used for many regression inference procedures.
+
+## Graphical tools for checking normality
+
+Common tools include:
+
+- histogram of residuals,
+- stem-and-leaf display,
+- normal probability plot (QQ plot).
+
+Among these, the **normal probability plot** is often the most informative.
+
+## Interpreting a normal probability plot
+
+- If the points follow an approximately straight line, the normality assumption is reasonable.
+- Strong curvature or systematic deviation from a line suggests nonnormality.
+
+## Practical comment
+
+Regression methods are often fairly robust to moderate nonnormality when the sample size is reasonably large. However, severe skewness or heavy tails may still affect inference.
+
+## Fixing nonnormality
+
+Nonnormality is often accompanied by heteroscedasticity. In many cases, a transformation of the response helps with both problems.
+
+A standard family of transformations is the **Box--Cox transformation**, which can help identify a suitable power transformation for the response.
+
+# Detecting Outliers and Influential Observations
+
+Not every unusual point has the same meaning. Some are merely outliers in the response direction, while others strongly affect the fitted model.
+
+## Standardized residuals
+
+A **standardized residual** rescales a residual by an estimate of its standard deviation.
+
+A common rule of thumb is:
+
+- $|r_i| > 2$ may indicate a possible outlier,
+- $|r_i| > 3$ indicates a more serious outlier.
+
+## Studentized deleted residuals
+
+A **studentized deleted residual** is usually preferred because it measures how unusual a point is when that same point is omitted from the variance estimate.
+
+A common rule of thumb is:
+
+- values outside $[-2,2]$ suggest possible outliers.
+
+## Important note
+
+An outlier should not automatically be removed. We first ask:
+
+- Is it a data-entry or recording error?
+- Is the model missing important terms?
+- Is the point valid but scientifically unusual?
+
+Only obvious recording errors should be automatically corrected or removed.
+
+# Influential Observations
+
+An observation is **influential** if it has a substantial effect on the fitted model, parameter estimates, or conclusions.
+
+## Leverage
+
+Leverage measures how extreme an observation is in the predictor space.
+
+High-leverage points have unusual predictor values and may strongly affect the fitted line or surface.
+
+A common rule of thumb flags an observation if its leverage is larger than
+$$
+\frac{2(p+1)}{n}
+$$
+or sometimes
+$$
+\frac{3(p+1)}{n},
+$$
+where $p+1$ is the number of parameters in the model including the intercept.
+
+## Cook's distance
+
+**Cook's distance** combines information about residual size and leverage to assess influence.
+
+Common guidelines:
+
+- $D_i > 1$ suggests an influential observation,
+- larger Cook's distance values deserve further investigation.
+
+Cook's distance is often preferred because it captures overall impact on the fitted regression.
+
+## Example idea from the lecture
+
+In the fast-food sales example, one observation had an extremely large standardized residual. Investigation showed that the recorded sales value contained a data-entry error. After correcting the value, the fitted model improved dramatically, showing how a single bad data point can distort a regression analysis.
+
+# Summary of Diagnostic Tools
+
+## For lack of fit
+
+Use:
+
+- residuals versus predictor,
+- residuals versus fitted values,
+- partial residual plots.
+
+Look for:
+
+- curvature,
+- trends,
+- nonrandom structure.
+
+## For unequal variance
+
+Use:
+
+- residuals versus fitted values,
+- residuals versus predictors.
+
+Look for:
+
+- cone shape,
+- funnel shape,
+- changing spread.
+
+## For normality
+
+Use:
+
+- histogram of residuals,
+- normal probability plot.
+
+Look for:
+
+- approximate linear trend in the QQ plot.
+
+## For outliers
+
+Use:
+
+- standardized residuals,
+- studentized deleted residuals.
+
+## For influential observations
+
+Use:
+
+- leverage,
+- Cook's distance.
+
+# Suggested Model-Building Procedure
+
+A practical regression diagnostic workflow is:
+
+1. Fit an initial model.
+2. Examine residual plots for lack of fit.
+3. Check for heteroscedasticity.
+4. Check the normality of residuals.
+5. Identify possible outliers and influential points.
+6. Investigate unusual observations carefully.
+7. Modify the model if needed:
+   - add missing terms,
+   - transform variables,
+   - correct recording errors,
+   - refit and reassess.
+
+# Key Takeaways
+
+- Residuals are proxies for the unobserved regression errors.
+- Residual plots are central tools for diagnosing model adequacy.
+- Curvature in a residual plot suggests lack of fit.
+- Funnel or cone shapes suggest heteroscedasticity.
+- QQ plots help assess normality.
+- Standardized residuals and studentized deleted residuals help detect outliers.
+- Leverage and Cook's distance help detect influential observations.
+- Model revision should be guided by diagnostics and subject-matter reasoning, not by automatic deletion of unusual points.

@@ -1,4 +1,4 @@
-# Example: MLR phase (continue)
+# Example: Boston Housing dataset full walkthrough
 
 In the previous section we talk about our main tools to handle the `Boston` dataset. In this section we display how to explore the dataset from scratch.
 
@@ -46,7 +46,7 @@ pairs(Boston)
 ```{r}
 #| warning: false
 num_vars <- Boston[, sapply(Boston, is.numeric)]
-cor(num_vars)
+cor_matrix <- cor(num_vars)
 
 library(ggcorrplot)
 ggcorrplot(cor_matrix, hc.order = TRUE)
