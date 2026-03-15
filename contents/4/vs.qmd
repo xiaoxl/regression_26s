@@ -1,4 +1,358 @@
-# Variable selction
 
 
-## 
+
+
+# Variable selection
+
+When we build a multiple regression model, we often begin with many possible predictors. The main question is: **which variables should be included in the model?**
+
+This chapter introduces two systematic methods for screening variables:
+
+1. **Stepwise regression**
+2. **All-possible-regressions selection** (also called **best-subsets regression**)
+
+These methods are intended to help identify the most important predictors before the more careful **model-building phase** begins.
+
+## Why Use a Variable Screening Method
+
+In many applications, researchers collect a response variable $y$ together with a large number of potential independent variables $x_1, x_2, \dots, x_p$. Examples include predicting:
+
+- firm profit,
+- college GPA,
+- inflation rate,
+- salary,
+- or other outcomes of interest.
+
+When there are many candidate predictors, it can be difficult to decide which variables should enter the regression model. Variable screening methods provide a more systematic way to reduce the list.
+
+The two methods emphasized in this chapter are:
+
+- **Stepwise regression**
+- **All-possible-regressions selection**
+
+## Stepwise Regression
+
+### Basic idea
+
+Stepwise regression is a variable screening procedure that builds a model by repeatedly:
+
+- **adding** useful predictors, and
+- **removing** predictors that are no longer useful.
+
+At each step, the procedure examines statistical significance using a **$t$-test** (or the equivalent partial **$F$-test**) for individual regression coefficients.
+
+### General algorithm
+
+A common stepwise procedure works like this:
+
+1. Start with **no predictors** in the model.
+2. Among the predictors not yet in the model, compute test statistics and p-values.
+3. **Add** the variable with the smallest p-value, provided it is significant enough to enter.
+4. After a new variable enters, re-check the predictors already in the model.
+5. **Remove** any variable whose p-value is too large.
+6. Repeat until no variable can be added or removed.
+
+So, unlike pure forward selection, stepwise regression allows a variable to enter first and then later be removed.
+
+### Stepwise regression steps in words
+
+### Step 1
+
+- No variable is currently in the model, so nothing can be removed.
+- Test each predictor individually.
+- Add the variable with the largest absolute $t$-statistic (equivalently, the smallest p-value), assuming it meets the entry criterion.
+
+### Step 2
+
+- Check whether the variable currently in the model should be removed.
+- If not, examine the remaining predictors.
+- Add the one that contributes the most, again based on the relevant test.
+
+### Step 3 and beyond
+
+- Re-check all variables currently in the model.
+- Remove any variable whose p-value is too large.
+- Then test the variables not yet in the model and add the most useful one.
+- Continue until no predictor qualifies for entry or removal.
+
+### Important notes about stepwise regression
+
+Stepwise regression is often described as an **objective** screening method, but it has important limitations.
+
+### 1. Many tests are performed
+
+A very large number of hypothesis tests are carried out during the procedure. Because of this, the chance of making one or more:
+
+- **Type I errors** (including unimportant variables), or
+- **Type II errors** (excluding important variables)
+
+can become quite high.
+
+### 2. Usually only main effects are screened first
+
+In practice, stepwise regression is often applied only to:
+
+- first-order terms, and
+- main effects.
+
+Afterward, a careful analyst should still consider:
+
+- interaction terms,
+- quadratic terms,
+- and possibly higher-order terms.
+
+### 3. It does not search every possible subset
+
+Because stepwise regression only adds or removes one variable at a time, it does **not** examine every possible model. Therefore, for a fixed number of predictors, it may fail to find the model with the largest $R^2$ or the best overall fit.
+
+### 4. Entry and removal criteria
+
+Often we use:
+
+- an **$\alpha$-to-enter**, and
+- an **$\alpha$-to-remove**.
+
+Typically these are not identical; for example, the removal criterion is often set larger than the entry criterion so the algorithm does not cycle too aggressively.
+
+## Forward selection and backward elimination
+
+Stepwise regression is closely related to two other variable screening strategies.
+
+### Forward selection
+
+Forward selection starts with **no predictors** in the model.
+
+- At each step, add the most useful predictor.
+- Once a variable enters, it is **never removed**.
+
+So forward selection is simpler than stepwise regression because it only moves in one direction.
+
+### Backward elimination
+
+Backward elimination starts with the **full model** containing all candidate predictors.
+
+- At each step, remove the least useful nonsignificant predictor.
+- Continue until all remaining predictors are statistically significant.
+
+This method requires that the initial full model can actually be fit.
+
+## Summary of the three strategies
+
+There are three common sequential variable selection strategies:
+
+### Forward selection
+
+Start with no predictors, then repeatedly add the most contributive predictor until no further statistically significant improvement is possible.
+
+### Backward elimination
+
+Start with all predictors, then repeatedly remove the least contributive predictor until all remaining predictors are significant.
+
+### Stepwise selection
+
+Combine both ideas:
+
+- add predictors like forward selection,
+- but after each addition, also check whether any existing predictor should be removed.
+
+# Example: Executive Salary Data
+
+A typical use of stepwise regression is when we have many candidate predictors and want to narrow the field before building a more refined model.
+
+In the executive salary example described in the slides:
+
+- the response variable is the **natural log of executive salary**,
+- there are **10 potential predictors**,
+- and the goal is to identify the most important main effects before considering a more complicated final model.
+
+This is exactly the kind of situation where stepwise regression can serve as a first screening tool.
+
+# 6.3 All-Possible-Regressions Selection Procedure
+
+## Basic idea
+
+Forward selection, backward elimination, and stepwise regression all build models **one variable at a time**. None of them guarantees that the best model with a given number of predictors will be found.
+
+An alternative is to consider **all possible regression models** formed from the candidate predictors.
+
+This approach is called:
+
+- **all-possible-regressions selection**, or
+- **best-subsets regression**.
+
+Its main advantage is that, for each possible model size, it can identify the best subset according to a chosen criterion.
+
+## Why use best-subsets regression?
+
+Suppose there are $p$ candidate predictors.
+
+Then for:
+
+- 1 predictor,
+- 2 predictors,
+- 3 predictors,
+- and so on,
+
+we can compare all models of that size and select the best one according to some measure of quality.
+
+This gives more complete information than a purely sequential method.
+
+# Criteria Used in Best-Subsets Regression
+
+Several criteria may be used to compare subset models.
+
+## $R^2$ criterion
+
+A larger $R^2$ indicates a better fit to the observed data.
+
+However, $R^2$ always increases when more predictors are added, so it tends to favor larger models.
+
+## Adjusted $R^2$ criterion
+
+Adjusted $R^2$ penalizes model size.
+
+In general:
+
+- larger adjusted $R^2$ is better.
+
+Because adjusted $R^2$ increases only when the mean square error decreases enough to justify the added complexity, it is often more useful than ordinary $R^2$.
+
+## MSE criterion
+
+A smaller **mean square error (MSE)** is preferred.
+
+Searching for a model with minimum or near-minimum MSE is equivalent to searching for a model with high adjusted $R^2$.
+
+## Mallows' $C_p$ criterion
+
+A good subset model should have:
+
+- a **small** value of $C_p$, and
+- a value of $C_p$ **near** the number of parameters in the model.
+
+A $C_p$ value near the number of parameters suggests that the subset model has little bias.
+
+## PRESS criterion
+
+PRESS stands for **prediction sum of squares**.
+
+It is based on leave-one-out prediction errors:
+
+$$
+PRESS = \sum_{i=1}^n (y_i - \hat y_{(i)})^2,
+$$
+
+where $\hat y_{(i)}$ is the predicted value for observation $i$ obtained from a model fit **without** using observation $i$.
+
+A smaller PRESS indicates better predictive performance.
+
+# Example: Best-Subsets for Executive Salary
+
+In the executive salary example, best-subsets regression is used to examine the 10 potential predictors more thoroughly.
+
+The goal is again to identify the most important predictors for the natural log of salary, but now the procedure compares possible subsets more directly rather than following only a sequential path.
+
+Plots and software output for $R^2$, adjusted $R^2$, $C_p$, and related criteria can help identify a promising subset size and a promising combination of variables.
+
+# 6.4 Caveats
+
+Both stepwise regression and best-subsets regression should be used carefully.
+
+## Main caveats
+
+### 1. Error rates can be high
+
+Because many models and many tests are examined, the probability of making at least one Type I or Type II error can be quite large.
+
+### 2. These are screening tools, not full model-building procedures
+
+Usually, analysts do **not** include interaction terms and higher-order terms in the initial candidate list.
+
+As a result, these procedures often do **not** perform the full intellectual work of model building.
+
+### 3. They may produce nonsensical models
+
+Even if some interaction or higher-order terms are included, automated methods can still select a model that makes little scientific or practical sense.
+
+### 4. Common sense still matters
+
+You should not abandon:
+
+- subject-matter knowledge,
+- common sense,
+- intuition,
+- and interpretability.
+
+A statistically selected model is not automatically the right model.
+
+# Practical Advice
+
+A good way to use these methods is:
+
+1. Start with a long list of possible predictors.
+2. Use **stepwise regression** or **best-subsets regression** to screen for the most important variables.
+3. Then begin the **real model-building phase**:
+   - check assumptions,
+   - examine residual plots,
+   - consider transformations,
+   - add interactions or higher-order terms when scientifically justified,
+   - and compare models thoughtfully.
+
+So these methods are best viewed as **starting points**, not final answers.
+
+# Quick Comparison Table
+
+| Method | How it starts | How it proceeds | Strength | Limitation |
+|---|---|---|---|---|
+| Forward selection | No predictors | Adds variables only | Simple | Cannot remove variables once added |
+| Backward elimination | Full model | Removes variables only | Starts from full information | Requires fitting the full model |
+| Stepwise selection | No predictors | Adds and removes | More flexible than forward selection | Still does not check all subsets |
+| Best-subsets regression | Considers all subset sizes | Compares all candidate models | Can find best subset for each size | Computationally heavier; may still ignore scientific meaning |
+
+# R Notes
+
+Below are common R approaches for these methods.
+
+## Stepwise regression
+
+```r
+fit_full <- lm(y ~ x1 + x2 + x3 + x4, data = dat)
+fit_null <- lm(y ~ 1, data = dat)
+
+step(fit_null,
+     scope = list(lower = fit_null, upper = fit_full),
+     direction = "both")
+```
+
+## Forward selection
+
+```r
+step(fit_null,
+     scope = list(lower = fit_null, upper = fit_full),
+     direction = "forward")
+```
+
+## Backward elimination
+
+```r
+step(fit_full, direction = "backward")
+```
+
+## Best-subsets regression
+
+```r
+library(leaps)
+
+best <- regsubsets(y ~ x1 + x2 + x3 + x4, data = dat, nvmax = 4)
+summary(best)
+```
+
+# Final Takeaway
+
+Variable screening methods are useful when there are many possible predictors, but they should be used with caution.
+
+- **Stepwise regression** is a convenient automatic screening procedure.
+- **Best-subsets regression** is more exhaustive and can identify the best model for a given size.
+- Neither method should replace thoughtful model building.
+
+The best practice is to use these procedures to **screen variables first**, then build the final regression model using statistical reasoning, subject knowledge, and diagnostic checking.

@@ -337,4 +337,67 @@ So the simulation agrees with the theory:
 
 
 
+## A little Bayesian
 
+One natural question is: in practice, if a hypothesis test leads us to reject $H_0$ at significance level $\alpha$, how confident should we be that $H_0$ is actually false?
+
+This question corresponds to
+$$
+\Pr(H_0\text{ is false}\mid \text{reject }H_0),
+$$
+which is typically not $\alpha$ or $\power$. Recall 
+
+- $\alpha=\Pr(\text{reject }H_0\mid H_0\text{ is true})$
+- $\power=\Pr(\text{reject }H_0\mid H_0\text{ is false})$
+
+Then by Bayes' Theorem
+$$
+\begin{split}
+\Pr(H_0\text{ is false}\mid \text{reject }H_0)&=\frac{\Pr(\text{reject }H_0\mid H_0\text{ is false})\Pr(H_0\text{ is false})}{\Pr(\text{reject }H_0\mid H_0\text{ is false})\Pr(H_0\text{ is false})+\Pr(\text{reject }H_0\mid H_0\text{ is true})\Pr(H_0\text{ is true})}\\
+&=\frac{\power\cdot\Pr(H_0\text{ is false})}{\power\cdot\Pr(H_0\text{ is false})+\alpha\cdot\Pr(H_0\text{ is true})}.
+\end{split}
+$$
+
+This can also be understood using the decision table:
+
+|                       | Reject $H_0$        | Fail to reject $H_0$     |
+|-----------------------|----------------------|--------------------------|
+| **$H_0$ is false**        | True positive rate ($\power$)   | Type II error rate ($\beta=1-\power$)     |
+| **$H_0$ is true** | Type I error rate ($\alpha$) | True negative rate ($1-\alpha$)       |
+
+To interpret a rejection, we focus on the first column. Among all rejections, some are true positives and some are false positives. Therefore, after rejecting $H_0$, our confidence that $H_0$ is false depends not only on the test level $\alpha$ and the power, but also on how likely it was beforehand that $H_0$ was false.
+
+In practice, however, this quantity is difficult to determine. The true power is usually unknown because it depends on the true effect size and variance, and the prior probability that $H_0$ is false is rarely known in real applications.
+
+
+
+## Interpreting a Rejection (Frequentist View)
+
+
+From a frequentist perspective, we do not assign probabilities to whether $H_0$ is true or false. Instead, hypothesis testing evaluates the long-run behavior of a testing procedure under repeated sampling.
+
+The performance of a test can be summarized by the decision table:
+
+|                       | Reject $H_0$        | Fail to reject $H_0$     |
+|-----------------------|----------------------|--------------------------|
+| **$H_0$ is false**        | True positive rate ($\power$)   | Type II error rate ($\beta=1-\power$)     |
+| **$H_0$ is true** | Type I error rate ($\alpha$) | True negative rate ($1-\alpha$)       |
+
+
+In the frequentist framework:
+
+- $\alpha=\Pr(\text{reject }H_0\mid H_0\text{ true})$ describes the long-run false positive rate.
+- $\power=\Pr(\text{reject }H_0\mid H_0\text{ false})$ describes the ability of the test to detect real effects.
+
+These quantities characterize the reliability of the testing procedure across repeated samples. However, they are interpreted separately and are not combined into a single number summarizing the “precision” of a test.
+
+Therefore, after rejecting $H_0$, the correct frequentist interpretation is:
+
+> If $H_0$ were true, a result this extreme would occur with probability at most $\alpha$.
+
+In practice, a good test is one with a small Type I error rate and high power, making its decisions reliable across repeated samples.
+
+
+::: {.callout-note}
+Frequentist inference evaluates long-run performance through error rates, whereas Bayesian inference evaluates how plausible $H_0$ is after observing the data.
+:::

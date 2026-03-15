@@ -1,0 +1,130 @@
+# Example: MLR phase (continue)
+
+In the previous section we talk about our main tools to handle the `Boston` dataset. In this section we display how to explore the dataset from scratch.
+
+
+
+| Variable  | Description                                                                 | Type                    |
+|-----------|-----------------------------------------------------------------------------|-------------------------|
+| `crim`    | Per capita crime rate by town                                                | Numerical, continuous   |
+| `zn`      | Proportion of residential land zoned for lots over 25,000 sq.ft.            | Numerical, continuous   |
+| `indus`   | Proportion of non-retail business acres per town                             | Numerical, continuous   |
+| `chas`    | Charles River dummy variable (1 if tract bounds river; 0 otherwise)          | Categorical, nominal   |
+| `nox`     | Nitrogen oxides concentration (parts per 10 million)                        | Numerical, continuous   |
+| `rm`      | Average number of rooms per dwelling                                         | Numerical, continuous   |
+| `age`     | Proportion of owner-occupied units built prior to 1940                       | Numerical, continuous   |
+| `dis`     | Weighted mean distance to five Boston employment centers                     | Numerical, continuous   |
+| `rad`     | Index of accessibility to radial highways (larger = better accessibility)   | Categorical, ordinal   |
+| `tax`     | Full-value property-tax rate per \$10,000                                    | Numerical, continuous   |
+| `ptratio` | Pupil–teacher ratio by town                                                  | Numerical, continuous   |
+| `black`   | $1000(B_k - 0.63)^2$, where $B_k$ is the proportion of Black residents   | Numerical, continuous   |
+| `lstat`   | Percentage of lower-status population                                       | Numerical, continuous   |
+| `medv`    | Median value of owner-occupied homes (in \$1,000s)                          | Numerical, continuous   |
+
+
+
+## Phase 1: Understand the Data Before Fitting Anything
+Before touching `lm()`, the first step is always exploratory data analysis (EDA). 
+
+
+```{r}
+library(MASS)
+data(Boston)
+
+Boston$chas <- factor(Boston$chas)
+Boston$rad <- factor(Boston$rad)
+
+summary(Boston)
+```
+
+
+```{r}
+pairs(Boston)
+```
+
+
+```{r}
+#| warning: false
+num_vars <- Boston[, sapply(Boston, is.numeric)]
+cor(num_vars)
+
+library(ggcorrplot)
+ggcorrplot(cor_matrix, hc.order = TRUE)
+```
+
+What I'm looking for:
+
+- Skewed variables (may need log transforms — `medv` and `crim` are classically right-skewed)
+- Non-linear relationships between predictors and `medv`
+- High pairwise correlations between predictors (multicollinearity warning signs)
+- Outliers or influential observations
+
+Here are some key takeaways from the observations:
+
+- `lstat` vs `medv`: curved, which indicates quadratic or log transform likely needed
+- `crim` is extremely right-skewed, which indicates `log(crim)` often works better
+- `rm` vs `medv`: mostly linear but with some spread
+- `nox`, `dis`, `age` are highly intercorrelated (all related to urban density)
+- `tax` and `rad` are nearly collinear
+
+## Phase 2: Start with All Predictors — Full Model
+
+
+```{r}
+fit_full <- lm(medv ~ ., data = Boston)
+summary(fit_full)
+```
+Why: This gives me the lay of the land. I check:
+
+- Adjusted $R^2$ (baseline: ~0.73 for raw Boston)
+- Which predictors are significant in the presence of all others
+- Residual standard error
+- Overall F-test
+
+Then immediately do residual diagnostics on this full model:
+```{r}
+par(mfrow = c(2, 2))
+plot(fit_full)
+```
+
+The four diagnostic plots give me:
+
+1. Residuals vs Fitted — checks linearity and homoscedasticity
+2. Normal Q-Q — checks normality of residuals
+3. Scale-Location — another view of heteroscedasticity
+4. Residuals vs Leverage — identifies influential points (Cook's distance)
+
+On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.
+
+
+## Phase 3: Consider Transformations
+
+### Check if `log(medv)` improves things
+
+I'd also use Box-Cox to formally choose the best power transformation for `medv`:
+
+```{r}
+library(MASS)
+boxcox(fit_full)  
+```
+
+Reading this specific plot
+
+- The peak appears to be right around $\lambda\approx0$, and 
+- the 95% CI dotted lines straddle 0 closely. They look to be roughly $(-0.1, 0.2)$ or so.
+
+By the standard rule, if $\lambda=0$ is inside the 95% CI, `log(y)` is the transformation.
+
+```{r}
+fit_log <- lm(log(medv) ~ ., data = Boston)
+plot(fit_log)
+```
+
+```{r}
+summary(fit_log)
+```
+
+With `log(medv)` as the response:
+
+- Coefficients are now interpreted as percent changes
+- The residual fan shape (heteroscedasticity) is slightly improved

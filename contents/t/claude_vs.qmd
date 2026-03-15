@@ -1,0 +1,160 @@
+# Variable selction
+
+
+# Introduction: Why Use a Variable Screening Method {#sec-intro}
+
+When building regression models with many candidate predictors, it becomes impractical to manually evaluate every possible combination of variables. Variable screening methods provide systematic approaches to identifying the most important independent variables for predicting a response $y$, before fitting a final model.
+
+---
+
+# Stepwise Regression {#sec-stepwise}
+
+## Algorithm Overview
+
+Stepwise regression builds a model by iteratively adding and removing predictors based on statistical significance. The algorithm proceeds as follows:
+
+1. **Start** with no independent variables in the model.
+2. **Compute** $t$-statistics (or equivalent $F$-statistics) and $p$-values for each variable not yet in the model.
+3. **Enter** the variable with the smallest $p$-value, if it is below the threshold $\alpha_\text{enter}$.
+4. **Compute** $t$-statistics and $p$-values for each variable currently in the model.
+5. **Remove** the variable with the largest $p$-value, if it exceeds the threshold $\alpha_\text{remove}$.
+6. **Repeat** until no variable meets the enter or remove criteria → **Stop**.
+
+> **Key thresholds:** $\alpha_\text{enter}$ (e.g., 0.15) and $\alpha_\text{remove}$ (e.g., 0.15) are set by the analyst.
+
+## Variants of Stepwise Regression
+
+There are three main strategies (James et al. 2014; P. Bruce and Bruce 2017):
+
+| Method | Description |
+|---|---|
+| **Forward Selection** | Starts with no predictors; iteratively adds the most contributive predictor; stops when no further statistically significant improvement is found. |
+| **Backward Elimination** | Starts with all predictors (full model); iteratively removes the least contributive predictor; stops when all remaining predictors are statistically significant. |
+| **Stepwise Selection** | Combination of forward and backward: adds predictors sequentially, but after each addition, checks whether any previously entered variable should be removed. |
+
+## R Code Summary
+
+| Method | R Code |
+|---|---|
+| Stepwise Regression | `step(model, direction = "both")` |
+| Forward Selection | `step(null_model, scope = list(upper = full_model), direction = "forward")` |
+| Backward Elimination | `step(full_model, direction = "backward")` |
+
+## Example 6.1: Executive Salary
+
+**Setting:** A firm measured 10 potential independent variables (7 quantitative, 3 qualitative) for a sample of 100 executives (data: `EXECSAL2`). The goal is to identify which variables to include in a model for the **natural log of executive salary**.
+
+**Approach:** Apply stepwise regression to screen the 10 candidate predictors.
+
+**Results (MINITAB / SAS output):** The stepwise procedure identifies a subset of the 10 variables that are statistically significant at the chosen $\alpha$ thresholds. Software output (Figures 6.1 and 6.2) shows the variables entered/removed at each step along with their $p$-values.
+
+---
+
+# All-Possible-Regressions Selection Procedure {#sec-allpossible}
+
+## Motivation
+
+Forward, backward, and stepwise methods evaluate models **one variable at a time** and do not guarantee finding the globally best model for a given number of predictors. The **all-possible-regressions** (or **best-subsets**) procedure addresses this by evaluating **all possible subsets** of predictors.
+
+> Best-subsets regression finds, for a given number of predictors $k$, the single best regression model.
+
+## Model Selection Criteria
+
+Several criteria are used to compare models across different numbers of predictors:
+
+### Coefficient of Determination ($R^2$)
+
+$$R^2 = 1 - \frac{SS_E}{SS_{yy}}$$
+
+Higher $R^2$ is better, but it always increases with more predictors — use with caution for model selection.
+
+### Adjusted $R^2$
+
+$$R^2_\text{adj} = 1 - \frac{SS_E / (n - k - 1)}{SS_{yy} / (n - 1)}$$
+
+Penalizes model complexity; **higher is better**.
+
+### Mallows' $C_p$
+
+$$C_p = \frac{SS_E}{\hat{\sigma}^2} - (n - 2p)$$
+
+Where $p$ = number of parameters (including intercept). Models with $C_p \approx p$ (or below) are preferred; large $C_p$ indicates bias.
+
+### AIC / BIC (Information Criteria)
+
+$$\text{AIC} = n \ln\!\left(\frac{SS_E}{n}\right) + 2p \qquad \text{BIC} = n \ln\!\left(\frac{SS_E}{n}\right) + p \ln(n)$$
+
+**Lower is better**. BIC penalizes model complexity more heavily than AIC.
+
+## R Code Summary
+
+| Method | R Code |
+|---|---|
+| Best-subset regression | `regsubsets()` from `leaps` package |
+| Plot selection criteria | `plot(regsubsets_object, scale = "adjr2")` |
+
+```r
+library(leaps)
+best_sub <- regsubsets(log_salary ~ ., data = execsal2, nvmax = 10)
+summary(best_sub)
+plot(best_sub, scale = "Cp")
+```
+
+## Example 6.2: Executive Salary (All-Possible-Regressions)
+
+**Setting:** Same data as Example 6.1 (`EXECSAL2`, $n = 100$, 10 candidate predictors).
+
+**Goal:** Apply best-subsets regression to identify the most important predictors for `log(salary)`.
+
+**Results (MINITAB output, Figure 6.3–6.4):** MINITAB outputs $R^2$, $R^2_\text{adj}$, $C_p$, and other criteria for all subsets. Plots of the criteria vs. number of predictors guide the selection of an optimal model size.
+
+**Summary guidance:**
+- Look for the "elbow" in the $R^2_\text{adj}$ or $C_p$ plot where adding more variables yields diminishing returns.
+- The model with $C_p$ closest to $p$ (number of parameters) is typically preferred.
+
+---
+
+# Caveats {#sec-caveats}
+
+## Limitations of Stepwise and Best-Subset Methods
+
+::: {.callout-warning}
+**These methods have important limitations that must be kept in mind:**
+:::
+
+- **No guarantee of optimality:** Stepwise procedures may miss the globally best model because they add/remove variables one at a time.
+- **Multiple testing inflation:** Running many significance tests inflates the overall Type I error rate; $p$-values from stepwise output should not be interpreted at face value.
+- **Omitted terms:** Interaction terms and higher-order (polynomial) terms are typically excluded from the candidate list, so the "best" model found may still be misspecified.
+- **Subjectivity in all-possible-regressions:** Best-subset procedures lack the procedural objectivity of stepwise methods — the analyst must choose among multiple "good" models using judgment.
+- **Overfitting risk:** Selecting the model that maximizes in-sample fit criteria ($R^2$, etc.) can lead to overfitting; always validate on a holdout sample when possible.
+
+## Practical Advice
+
+::: {.callout-tip}
+**Recommendations for using variable screening methods:**
+:::
+
+1. **Use screening as a starting point, not an endpoint.** Treat variables selected by stepwise or best-subsets as candidates for further, theory-guided model building.
+2. **Always include higher-order and interaction terms** for substantively important variables, even if they were not selected by the screening procedure.
+3. **Validate the final model** on new or held-out data to assess generalizability.
+4. **Cross-validate** when sample size is limited to avoid overestimating predictive performance.
+5. **Consider domain knowledge** — a variable with a marginally non-significant $p$-value may still deserve inclusion on theoretical grounds.
+
+---
+
+# Summary
+
+| Procedure | Guarantees Best Subset? | Typical Use |
+|---|---|---|
+| Forward Selection | No | Large $p$, small $n$ |
+| Backward Elimination | No | Moderate $p$, large $n$ |
+| Stepwise (bidirectional) | No | General-purpose screening |
+| Best-Subsets (all-possible) | Yes (for fixed $k$) | When $p$ is manageable ($\lesssim 30$) |
+
+Variable screening methods are useful tools for navigating high-dimensional predictor spaces, but they are **not substitutes for careful model building**. The final model should be grounded in both statistical evidence and subject-matter expertise.
+
+---
+
+*Notes based on: Mendenhall & Sincich, A Second Course in Statistics: Regression Analysis, 8th Edition, Chapter 6.*
+
+
