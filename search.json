@@ -755,5 +755,27 @@
       "Appendices",
       "<span class='chapter-number'>C</span>  <span class='chapter-title'>Types of Errors</span>"
     ]
+  },
+  {
+    "objectID": "contents/app/hypo.html#a-little-bayesian",
+    "href": "contents/app/hypo.html#a-little-bayesian",
+    "title": "Appendix C — Types of Errors",
+    "section": "C.5 A little Bayesian",
+    "text": "C.5 A little Bayesian\nOne natural question is: in practice, if a hypothesis test leads us to reject \\(H_0\\) at significance level \\(\\alpha\\), how confident should we be that \\(H_0\\) is actually false?\nThis question corresponds to \\[\n\\Pr(H_0\\text{ is false}\\mid \\text{reject }H_0),\n\\] which is typically not \\(\\alpha\\) or \\(\\operatorname{power}\\). Recall\n\n\\(\\alpha=\\Pr(\\text{reject }H_0\\mid H_0\\text{ is true})\\)\n\\(\\operatorname{power}=\\Pr(\\text{reject }H_0\\mid H_0\\text{ is false})\\)\n\nThen by Bayes’ Theorem \\[\n\\begin{split}\n\\Pr(H_0\\text{ is false}\\mid \\text{reject }H_0)&=\\frac{\\Pr(\\text{reject }H_0\\mid H_0\\text{ is false})\\Pr(H_0\\text{ is false})}{\\Pr(\\text{reject }H_0\\mid H_0\\text{ is false})\\Pr(H_0\\text{ is false})+\\Pr(\\text{reject }H_0\\mid H_0\\text{ is true})\\Pr(H_0\\text{ is true})}\\\\\n&=\\frac{\\operatorname{power}\\cdot\\Pr(H_0\\text{ is false})}{\\operatorname{power}\\cdot\\Pr(H_0\\text{ is false})+\\alpha\\cdot\\Pr(H_0\\text{ is true})}.\n\\end{split}\n\\]\nThis can also be understood using the decision table:\n\n\n\n\n\n\n\n\n\nReject \\(H_0\\)\nFail to reject \\(H_0\\)\n\n\n\n\n\\(H_0\\) is false\nTrue positive rate (\\(\\operatorname{power}\\))\nType II error rate (\\(\\beta=1-\\operatorname{power}\\))\n\n\n\\(H_0\\) is true\nType I error rate (\\(\\alpha\\))\nTrue negative rate (\\(1-\\alpha\\))\n\n\n\nTo interpret a rejection, we focus on the first column. Among all rejections, some are true positives and some are false positives. Therefore, after rejecting \\(H_0\\), our confidence that \\(H_0\\) is false depends not only on the test level \\(\\alpha\\) and the power, but also on how likely it was beforehand that \\(H_0\\) was false.\nIn practice, however, this quantity is difficult to determine. The true power is usually unknown because it depends on the true effect size and variance, and the prior probability that \\(H_0\\) is false is rarely known in real applications.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Types of Errors</span>"
+    ]
+  },
+  {
+    "objectID": "contents/app/hypo.html#interpreting-a-rejection-frequentist-view",
+    "href": "contents/app/hypo.html#interpreting-a-rejection-frequentist-view",
+    "title": "Appendix C — Types of Errors",
+    "section": "C.6 Interpreting a Rejection (Frequentist View)",
+    "text": "C.6 Interpreting a Rejection (Frequentist View)\nFrom a frequentist perspective, we do not assign probabilities to whether \\(H_0\\) is true or false. Instead, hypothesis testing evaluates the long-run behavior of a testing procedure under repeated sampling.\nThe performance of a test can be summarized by the decision table:\n\n\n\n\n\n\n\n\n\nReject \\(H_0\\)\nFail to reject \\(H_0\\)\n\n\n\n\n\\(H_0\\) is false\nTrue positive rate (\\(\\operatorname{power}\\))\nType II error rate (\\(\\beta=1-\\operatorname{power}\\))\n\n\n\\(H_0\\) is true\nType I error rate (\\(\\alpha\\))\nTrue negative rate (\\(1-\\alpha\\))\n\n\n\nIn the frequentist framework:\n\n\\(\\alpha=\\Pr(\\text{reject }H_0\\mid H_0\\text{ true})\\) describes the long-run false positive rate.\n\\(\\operatorname{power}=\\Pr(\\text{reject }H_0\\mid H_0\\text{ false})\\) describes the ability of the test to detect real effects.\n\nThese quantities characterize the reliability of the testing procedure across repeated samples. However, they are interpreted separately and are not combined into a single number summarizing the “precision” of a test.\nTherefore, after rejecting \\(H_0\\), the correct frequentist interpretation is:\n\nIf \\(H_0\\) were true, a result this extreme would occur with probability at most \\(\\alpha\\).\n\nIn practice, a good test is one with a small Type I error rate and high power, making its decisions reliable across repeated samples.\n\n\n\n\n\n\nNote\n\n\n\nFrequentist inference evaluates long-run performance through error rates, whereas Bayesian inference evaluates how plausible \\(H_0\\) is after observing the data.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Types of Errors</span>"
+    ]
   }
 ]

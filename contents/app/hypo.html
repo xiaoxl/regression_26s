@@ -495,6 +495,8 @@ window.Quarto = {
   <li><a href="#errors" id="toc-errors" class="nav-link" data-scroll-target="#errors"><span class="header-section-number">C.2</span> Errors</a></li>
   <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">C.3</span> One-Sample t-Test</a></li>
   <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">C.4</span> Example</a></li>
+  <li><a href="#a-little-bayesian" id="toc-a-little-bayesian" class="nav-link" data-scroll-target="#a-little-bayesian"><span class="header-section-number">C.5</span> A little Bayesian</a></li>
+  <li><a href="#interpreting-a-rejection-frequentist-view" id="toc-interpreting-a-rejection-frequentist-view" class="nav-link" data-scroll-target="#interpreting-a-rejection-frequentist-view"><span class="header-section-number">C.6</span> Interpreting a Rejection (Frequentist View)</a></li>
   </ul>
 </nav>
     </div>
@@ -859,6 +861,107 @@ truth     0     1
 <li>when <span class="math inline">\(H_0\)</span> is true, the rejection rate is about <span class="math inline">\(\alpha\)</span>, and</li>
 <li>when <span class="math inline">\(H_0\)</span> is false with <span class="math inline">\(\mu=0.5\)</span>, the rejection rate is about the theoretical power.</li>
 </ul>
+</section>
+<section id="a-little-bayesian" class="level2" data-number="C.5">
+<h2 data-number="C.5" class="anchored" data-anchor-id="a-little-bayesian"><span class="header-section-number">C.5</span> A little Bayesian</h2>
+<p>One natural question is: in practice, if a hypothesis test leads us to reject <span class="math inline">\(H_0\)</span> at significance level <span class="math inline">\(\alpha\)</span>, how confident should we be that <span class="math inline">\(H_0\)</span> is actually false?</p>
+<p>This question corresponds to <span class="math display">\[
+\Pr(H_0\text{ is false}\mid \text{reject }H_0),
+\]</span> which is typically not <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\operatorname{power}\)</span>. Recall</p>
+<ul>
+<li><span class="math inline">\(\alpha=\Pr(\text{reject }H_0\mid H_0\text{ is true})\)</span></li>
+<li><span class="math inline">\(\operatorname{power}=\Pr(\text{reject }H_0\mid H_0\text{ is false})\)</span></li>
+</ul>
+<p>Then by Bayes’ Theorem <span class="math display">\[
+\begin{split}
+\Pr(H_0\text{ is false}\mid \text{reject }H_0)&amp;=\frac{\Pr(\text{reject }H_0\mid H_0\text{ is false})\Pr(H_0\text{ is false})}{\Pr(\text{reject }H_0\mid H_0\text{ is false})\Pr(H_0\text{ is false})+\Pr(\text{reject }H_0\mid H_0\text{ is true})\Pr(H_0\text{ is true})}\\
+&amp;=\frac{\operatorname{power}\cdot\Pr(H_0\text{ is false})}{\operatorname{power}\cdot\Pr(H_0\text{ is false})+\alpha\cdot\Pr(H_0\text{ is true})}.
+\end{split}
+\]</span></p>
+<p>This can also be understood using the decision table:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 30%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Reject <span class="math inline">\(H_0\)</span></th>
+<th>Fail to reject <span class="math inline">\(H_0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\(H_0\)</span> is false</strong></td>
+<td>True positive rate (<span class="math inline">\(\operatorname{power}\)</span>)</td>
+<td>Type II error rate (<span class="math inline">\(\beta=1-\operatorname{power}\)</span>)</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(H_0\)</span> is true</strong></td>
+<td>Type I error rate (<span class="math inline">\(\alpha\)</span>)</td>
+<td>True negative rate (<span class="math inline">\(1-\alpha\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>To interpret a rejection, we focus on the first column. Among all rejections, some are true positives and some are false positives. Therefore, after rejecting <span class="math inline">\(H_0\)</span>, our confidence that <span class="math inline">\(H_0\)</span> is false depends not only on the test level <span class="math inline">\(\alpha\)</span> and the power, but also on how likely it was beforehand that <span class="math inline">\(H_0\)</span> was false.</p>
+<p>In practice, however, this quantity is difficult to determine. The true power is usually unknown because it depends on the true effect size and variance, and the prior probability that <span class="math inline">\(H_0\)</span> is false is rarely known in real applications.</p>
+</section>
+<section id="interpreting-a-rejection-frequentist-view" class="level2" data-number="C.6">
+<h2 data-number="C.6" class="anchored" data-anchor-id="interpreting-a-rejection-frequentist-view"><span class="header-section-number">C.6</span> Interpreting a Rejection (Frequentist View)</h2>
+<p>From a frequentist perspective, we do not assign probabilities to whether <span class="math inline">\(H_0\)</span> is true or false. Instead, hypothesis testing evaluates the long-run behavior of a testing procedure under repeated sampling.</p>
+<p>The performance of a test can be summarized by the decision table:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 30%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Reject <span class="math inline">\(H_0\)</span></th>
+<th>Fail to reject <span class="math inline">\(H_0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\(H_0\)</span> is false</strong></td>
+<td>True positive rate (<span class="math inline">\(\operatorname{power}\)</span>)</td>
+<td>Type II error rate (<span class="math inline">\(\beta=1-\operatorname{power}\)</span>)</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(H_0\)</span> is true</strong></td>
+<td>Type I error rate (<span class="math inline">\(\alpha\)</span>)</td>
+<td>True negative rate (<span class="math inline">\(1-\alpha\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<p>In the frequentist framework:</p>
+<ul>
+<li><span class="math inline">\(\alpha=\Pr(\text{reject }H_0\mid H_0\text{ true})\)</span> describes the long-run false positive rate.</li>
+<li><span class="math inline">\(\operatorname{power}=\Pr(\text{reject }H_0\mid H_0\text{ false})\)</span> describes the ability of the test to detect real effects.</li>
+</ul>
+<p>These quantities characterize the reliability of the testing procedure across repeated samples. However, they are interpreted separately and are not combined into a single number summarizing the “precision” of a test.</p>
+<p>Therefore, after rejecting <span class="math inline">\(H_0\)</span>, the correct frequentist interpretation is:</p>
+<blockquote class="blockquote">
+<p>If <span class="math inline">\(H_0\)</span> were true, a result this extreme would occur with probability at most <span class="math inline">\(\alpha\)</span>.</p>
+</blockquote>
+<p>In practice, a good test is one with a small Type I error rate and high power, making its decisions reliable across repeated samples.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Frequentist inference evaluates long-run performance through error rates, whereas Bayesian inference evaluates how plausible <span class="math inline">\(H_0\)</span> is after observing the data.</p>
+</div>
+</div>
 
 
 </section>

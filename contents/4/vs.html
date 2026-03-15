@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>12&nbsp; Variable selction – Regression 26 Spring</title>
+<title>12&nbsp; Overview – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -76,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/blocks.css">
 </head>
@@ -252,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selction</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Overview</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -269,6 +333,11 @@ ul.task-list li input[type="checkbox"] {
       <a href="../../">Regression 26 Spring</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -396,7 +465,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/4/vs.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
   </div>
 </li>
       </ul>
@@ -422,6 +491,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/hypo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Types of Errors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -429,8 +504,78 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#why-use-a-variable-screening-method" id="toc-why-use-a-variable-screening-method" class="nav-link active" data-scroll-target="#why-use-a-variable-screening-method"><span class="header-section-number">13</span> 6.1 Why Use a Variable Screening Method</a></li>
+  <li><a href="#stepwise-regression" id="toc-stepwise-regression" class="nav-link" data-scroll-target="#stepwise-regression"><span class="header-section-number">14</span> 6.2 Stepwise Regression</a>
+  <ul class="collapse">
+  <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea"><span class="header-section-number">14.1</span> Basic idea</a></li>
+  <li><a href="#general-algorithm" id="toc-general-algorithm" class="nav-link" data-scroll-target="#general-algorithm"><span class="header-section-number">14.2</span> General algorithm</a></li>
+  <li><a href="#stepwise-regression-steps-in-words" id="toc-stepwise-regression-steps-in-words" class="nav-link" data-scroll-target="#stepwise-regression-steps-in-words"><span class="header-section-number">14.3</span> Stepwise regression steps in words</a>
+  <ul class="collapse">
+  <li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1"><span class="header-section-number">14.3.1</span> Step 1</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2"><span class="header-section-number">14.3.2</span> Step 2</a></li>
+  <li><a href="#step-3-and-beyond" id="toc-step-3-and-beyond" class="nav-link" data-scroll-target="#step-3-and-beyond"><span class="header-section-number">14.3.3</span> Step 3 and beyond</a></li>
+  </ul></li>
+  <li><a href="#important-notes-about-stepwise-regression" id="toc-important-notes-about-stepwise-regression" class="nav-link" data-scroll-target="#important-notes-about-stepwise-regression"><span class="header-section-number">14.4</span> Important notes about stepwise regression</a>
+  <ul class="collapse">
+  <li><a href="#many-tests-are-performed" id="toc-many-tests-are-performed" class="nav-link" data-scroll-target="#many-tests-are-performed"><span class="header-section-number">14.4.1</span> 1. Many tests are performed</a></li>
+  <li><a href="#usually-only-main-effects-are-screened-first" id="toc-usually-only-main-effects-are-screened-first" class="nav-link" data-scroll-target="#usually-only-main-effects-are-screened-first"><span class="header-section-number">14.4.2</span> 2. Usually only main effects are screened first</a></li>
+  <li><a href="#it-does-not-search-every-possible-subset" id="toc-it-does-not-search-every-possible-subset" class="nav-link" data-scroll-target="#it-does-not-search-every-possible-subset"><span class="header-section-number">14.4.3</span> 3. It does not search every possible subset</a></li>
+  <li><a href="#entry-and-removal-criteria" id="toc-entry-and-removal-criteria" class="nav-link" data-scroll-target="#entry-and-removal-criteria"><span class="header-section-number">14.4.4</span> 4. Entry and removal criteria</a></li>
+  </ul></li>
+  <li><a href="#forward-selection-and-backward-elimination" id="toc-forward-selection-and-backward-elimination" class="nav-link" data-scroll-target="#forward-selection-and-backward-elimination"><span class="header-section-number">14.5</span> Forward selection and backward elimination</a>
+  <ul class="collapse">
+  <li><a href="#forward-selection" id="toc-forward-selection" class="nav-link" data-scroll-target="#forward-selection"><span class="header-section-number">14.5.1</span> Forward selection</a></li>
+  <li><a href="#backward-elimination" id="toc-backward-elimination" class="nav-link" data-scroll-target="#backward-elimination"><span class="header-section-number">14.5.2</span> Backward elimination</a></li>
+  </ul></li>
+  <li><a href="#summary-of-the-three-strategies" id="toc-summary-of-the-three-strategies" class="nav-link" data-scroll-target="#summary-of-the-three-strategies"><span class="header-section-number">14.6</span> Summary of the three strategies</a>
+  <ul class="collapse">
+  <li><a href="#forward-selection-1" id="toc-forward-selection-1" class="nav-link" data-scroll-target="#forward-selection-1"><span class="header-section-number">14.6.1</span> Forward selection</a></li>
+  <li><a href="#backward-elimination-1" id="toc-backward-elimination-1" class="nav-link" data-scroll-target="#backward-elimination-1"><span class="header-section-number">14.6.2</span> Backward elimination</a></li>
+  <li><a href="#stepwise-selection" id="toc-stepwise-selection" class="nav-link" data-scroll-target="#stepwise-selection"><span class="header-section-number">14.6.3</span> Stepwise selection</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#example-executive-salary-data" id="toc-example-executive-salary-data" class="nav-link" data-scroll-target="#example-executive-salary-data"><span class="header-section-number">15</span> Example: Executive Salary Data</a></li>
+  <li><a href="#all-possible-regressions-selection-procedure" id="toc-all-possible-regressions-selection-procedure" class="nav-link" data-scroll-target="#all-possible-regressions-selection-procedure"><span class="header-section-number">16</span> 6.3 All-Possible-Regressions Selection Procedure</a>
+  <ul class="collapse">
+  <li><a href="#basic-idea-1" id="toc-basic-idea-1" class="nav-link" data-scroll-target="#basic-idea-1"><span class="header-section-number">16.1</span> Basic idea</a></li>
+  <li><a href="#why-use-best-subsets-regression" id="toc-why-use-best-subsets-regression" class="nav-link" data-scroll-target="#why-use-best-subsets-regression"><span class="header-section-number">16.2</span> Why use best-subsets regression?</a></li>
+  </ul></li>
+  <li><a href="#criteria-used-in-best-subsets-regression" id="toc-criteria-used-in-best-subsets-regression" class="nav-link" data-scroll-target="#criteria-used-in-best-subsets-regression"><span class="header-section-number">17</span> Criteria Used in Best-Subsets Regression</a>
+  <ul class="collapse">
+  <li><a href="#r2-criterion" id="toc-r2-criterion" class="nav-link" data-scroll-target="#r2-criterion"><span class="header-section-number">17.1</span> <span class="math inline">\(R^2\)</span> criterion</a></li>
+  <li><a href="#adjusted-r2-criterion" id="toc-adjusted-r2-criterion" class="nav-link" data-scroll-target="#adjusted-r2-criterion"><span class="header-section-number">17.2</span> Adjusted <span class="math inline">\(R^2\)</span> criterion</a></li>
+  <li><a href="#mse-criterion" id="toc-mse-criterion" class="nav-link" data-scroll-target="#mse-criterion"><span class="header-section-number">17.3</span> MSE criterion</a></li>
+  <li><a href="#mallows-c_p-criterion" id="toc-mallows-c_p-criterion" class="nav-link" data-scroll-target="#mallows-c_p-criterion"><span class="header-section-number">17.4</span> Mallows’ <span class="math inline">\(C_p\)</span> criterion</a></li>
+  <li><a href="#press-criterion" id="toc-press-criterion" class="nav-link" data-scroll-target="#press-criterion"><span class="header-section-number">17.5</span> PRESS criterion</a></li>
+  </ul></li>
+  <li><a href="#example-best-subsets-for-executive-salary" id="toc-example-best-subsets-for-executive-salary" class="nav-link" data-scroll-target="#example-best-subsets-for-executive-salary"><span class="header-section-number">18</span> Example: Best-Subsets for Executive Salary</a></li>
+  <li><a href="#caveats" id="toc-caveats" class="nav-link" data-scroll-target="#caveats"><span class="header-section-number">19</span> 6.4 Caveats</a>
+  <ul class="collapse">
+  <li><a href="#main-caveats" id="toc-main-caveats" class="nav-link" data-scroll-target="#main-caveats"><span class="header-section-number">19.1</span> Main caveats</a>
+  <ul class="collapse">
+  <li><a href="#error-rates-can-be-high" id="toc-error-rates-can-be-high" class="nav-link" data-scroll-target="#error-rates-can-be-high"><span class="header-section-number">19.1.1</span> 1. Error rates can be high</a></li>
+  <li><a href="#these-are-screening-tools-not-full-model-building-procedures" id="toc-these-are-screening-tools-not-full-model-building-procedures" class="nav-link" data-scroll-target="#these-are-screening-tools-not-full-model-building-procedures"><span class="header-section-number">19.1.2</span> 2. These are screening tools, not full model-building procedures</a></li>
+  <li><a href="#they-may-produce-nonsensical-models" id="toc-they-may-produce-nonsensical-models" class="nav-link" data-scroll-target="#they-may-produce-nonsensical-models"><span class="header-section-number">19.1.3</span> 3. They may produce nonsensical models</a></li>
+  <li><a href="#common-sense-still-matters" id="toc-common-sense-still-matters" class="nav-link" data-scroll-target="#common-sense-still-matters"><span class="header-section-number">19.1.4</span> 4. Common sense still matters</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#practical-advice" id="toc-practical-advice" class="nav-link" data-scroll-target="#practical-advice"><span class="header-section-number">20</span> Practical Advice</a></li>
+  <li><a href="#quick-comparison-table" id="toc-quick-comparison-table" class="nav-link" data-scroll-target="#quick-comparison-table"><span class="header-section-number">21</span> Quick Comparison Table</a></li>
+  <li><a href="#r-notes" id="toc-r-notes" class="nav-link" data-scroll-target="#r-notes"><span class="header-section-number">22</span> R Notes</a>
+  <ul class="collapse">
+  <li><a href="#stepwise-regression-1" id="toc-stepwise-regression-1" class="nav-link" data-scroll-target="#stepwise-regression-1"><span class="header-section-number">22.1</span> Stepwise regression</a></li>
+  <li><a href="#forward-selection-2" id="toc-forward-selection-2" class="nav-link" data-scroll-target="#forward-selection-2"><span class="header-section-number">22.2</span> Forward selection</a></li>
+  <li><a href="#backward-elimination-2" id="toc-backward-elimination-2" class="nav-link" data-scroll-target="#backward-elimination-2"><span class="header-section-number">22.3</span> Backward elimination</a></li>
+  <li><a href="#best-subsets-regression" id="toc-best-subsets-regression" class="nav-link" data-scroll-target="#best-subsets-regression"><span class="header-section-number">22.4</span> Best-subsets regression</a></li>
+  </ul></li>
+  <li><a href="#final-takeaway" id="toc-final-takeaway" class="nav-link" data-scroll-target="#final-takeaway"><span class="header-section-number">23</span> Final Takeaway</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -438,7 +583,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selction</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Overview</span></h1>
 </div>
 
 
@@ -455,8 +600,392 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>When we build a multiple regression model, we often begin with many possible predictors. The main question is: <strong>which variables should be included in the model?</strong></p>
+<p>This chapter introduces two systematic methods for screening variables:</p>
+<ol type="1">
+<li><strong>Stepwise regression</strong></li>
+<li><strong>All-possible-regressions selection</strong> (also called <strong>best-subsets regression</strong>)</li>
+</ol>
+<p>These methods are intended to help identify the most important predictors before the more careful <strong>model-building phase</strong> begins.</p>
+<section id="why-use-a-variable-screening-method" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> 6.1 Why Use a Variable Screening Method</h1>
+<p>In many applications, researchers collect a response variable <span class="math inline">\(y\)</span> together with a large number of potential independent variables <span class="math inline">\(x_1, x_2, \dots, x_p\)</span>. Examples include predicting:</p>
+<ul>
+<li>firm profit,</li>
+<li>college GPA,</li>
+<li>inflation rate,</li>
+<li>salary,</li>
+<li>or other outcomes of interest.</li>
+</ul>
+<p>When there are many candidate predictors, it can be difficult to decide which variables should enter the regression model. Variable screening methods provide a more systematic way to reduce the list.</p>
+<p>The two methods emphasized in this chapter are:</p>
+<ul>
+<li><strong>Stepwise regression</strong></li>
+<li><strong>All-possible-regressions selection</strong></li>
+</ul>
+</section>
+<section id="stepwise-regression" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> 6.2 Stepwise Regression</h1>
+<section id="basic-idea" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="basic-idea"><span class="header-section-number">14.1</span> Basic idea</h2>
+<p>Stepwise regression is a variable screening procedure that builds a model by repeatedly:</p>
+<ul>
+<li><strong>adding</strong> useful predictors, and</li>
+<li><strong>removing</strong> predictors that are no longer useful.</li>
+</ul>
+<p>At each step, the procedure examines statistical significance using a <strong><span class="math inline">\(t\)</span>-test</strong> (or the equivalent partial <strong><span class="math inline">\(F\)</span>-test</strong>) for individual regression coefficients.</p>
+</section>
+<section id="general-algorithm" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="general-algorithm"><span class="header-section-number">14.2</span> General algorithm</h2>
+<p>A common stepwise procedure works like this:</p>
+<ol type="1">
+<li>Start with <strong>no predictors</strong> in the model.</li>
+<li>Among the predictors not yet in the model, compute test statistics and p-values.</li>
+<li><strong>Add</strong> the variable with the smallest p-value, provided it is significant enough to enter.</li>
+<li>After a new variable enters, re-check the predictors already in the model.</li>
+<li><strong>Remove</strong> any variable whose p-value is too large.</li>
+<li>Repeat until no variable can be added or removed.</li>
+</ol>
+<p>So, unlike pure forward selection, stepwise regression allows a variable to enter first and then later be removed.</p>
+</section>
+<section id="stepwise-regression-steps-in-words" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="stepwise-regression-steps-in-words"><span class="header-section-number">14.3</span> Stepwise regression steps in words</h2>
+<section id="step-1" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="step-1"><span class="header-section-number">14.3.1</span> Step 1</h3>
+<ul>
+<li>No variable is currently in the model, so nothing can be removed.</li>
+<li>Test each predictor individually.</li>
+<li>Add the variable with the largest absolute <span class="math inline">\(t\)</span>-statistic (equivalently, the smallest p-value), assuming it meets the entry criterion.</li>
+</ul>
+</section>
+<section id="step-2" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="step-2"><span class="header-section-number">14.3.2</span> Step 2</h3>
+<ul>
+<li>Check whether the variable currently in the model should be removed.</li>
+<li>If not, examine the remaining predictors.</li>
+<li>Add the one that contributes the most, again based on the relevant test.</li>
+</ul>
+</section>
+<section id="step-3-and-beyond" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="step-3-and-beyond"><span class="header-section-number">14.3.3</span> Step 3 and beyond</h3>
+<ul>
+<li>Re-check all variables currently in the model.</li>
+<li>Remove any variable whose p-value is too large.</li>
+<li>Then test the variables not yet in the model and add the most useful one.</li>
+<li>Continue until no predictor qualifies for entry or removal.</li>
+</ul>
+</section>
+</section>
+<section id="important-notes-about-stepwise-regression" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="important-notes-about-stepwise-regression"><span class="header-section-number">14.4</span> Important notes about stepwise regression</h2>
+<p>Stepwise regression is often described as an <strong>objective</strong> screening method, but it has important limitations.</p>
+<section id="many-tests-are-performed" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="many-tests-are-performed"><span class="header-section-number">14.4.1</span> 1. Many tests are performed</h3>
+<p>A very large number of hypothesis tests are carried out during the procedure. Because of this, the chance of making one or more:</p>
+<ul>
+<li><strong>Type I errors</strong> (including unimportant variables), or</li>
+<li><strong>Type II errors</strong> (excluding important variables)</li>
+</ul>
+<p>can become quite high.</p>
+</section>
+<section id="usually-only-main-effects-are-screened-first" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="usually-only-main-effects-are-screened-first"><span class="header-section-number">14.4.2</span> 2. Usually only main effects are screened first</h3>
+<p>In practice, stepwise regression is often applied only to:</p>
+<ul>
+<li>first-order terms, and</li>
+<li>main effects.</li>
+</ul>
+<p>Afterward, a careful analyst should still consider:</p>
+<ul>
+<li>interaction terms,</li>
+<li>quadratic terms,</li>
+<li>and possibly higher-order terms.</li>
+</ul>
+</section>
+<section id="it-does-not-search-every-possible-subset" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="it-does-not-search-every-possible-subset"><span class="header-section-number">14.4.3</span> 3. It does not search every possible subset</h3>
+<p>Because stepwise regression only adds or removes one variable at a time, it does <strong>not</strong> examine every possible model. Therefore, for a fixed number of predictors, it may fail to find the model with the largest <span class="math inline">\(R^2\)</span> or the best overall fit.</p>
+</section>
+<section id="entry-and-removal-criteria" class="level3" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="entry-and-removal-criteria"><span class="header-section-number">14.4.4</span> 4. Entry and removal criteria</h3>
+<p>Often we use:</p>
+<ul>
+<li>an <strong><span class="math inline">\(\alpha\)</span>-to-enter</strong>, and</li>
+<li>an <strong><span class="math inline">\(\alpha\)</span>-to-remove</strong>.</li>
+</ul>
+<p>Typically these are not identical; for example, the removal criterion is often set larger than the entry criterion so the algorithm does not cycle too aggressively.</p>
+</section>
+</section>
+<section id="forward-selection-and-backward-elimination" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="forward-selection-and-backward-elimination"><span class="header-section-number">14.5</span> Forward selection and backward elimination</h2>
+<p>Stepwise regression is closely related to two other variable screening strategies.</p>
+<section id="forward-selection" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="forward-selection"><span class="header-section-number">14.5.1</span> Forward selection</h3>
+<p>Forward selection starts with <strong>no predictors</strong> in the model.</p>
+<ul>
+<li>At each step, add the most useful predictor.</li>
+<li>Once a variable enters, it is <strong>never removed</strong>.</li>
+</ul>
+<p>So forward selection is simpler than stepwise regression because it only moves in one direction.</p>
+</section>
+<section id="backward-elimination" class="level3" data-number="14.5.2">
+<h3 data-number="14.5.2" class="anchored" data-anchor-id="backward-elimination"><span class="header-section-number">14.5.2</span> Backward elimination</h3>
+<p>Backward elimination starts with the <strong>full model</strong> containing all candidate predictors.</p>
+<ul>
+<li>At each step, remove the least useful nonsignificant predictor.</li>
+<li>Continue until all remaining predictors are statistically significant.</li>
+</ul>
+<p>This method requires that the initial full model can actually be fit.</p>
+</section>
+</section>
+<section id="summary-of-the-three-strategies" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="summary-of-the-three-strategies"><span class="header-section-number">14.6</span> Summary of the three strategies</h2>
+<p>There are three common sequential variable selection strategies:</p>
+<section id="forward-selection-1" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="forward-selection-1"><span class="header-section-number">14.6.1</span> Forward selection</h3>
+<p>Start with no predictors, then repeatedly add the most contributive predictor until no further statistically significant improvement is possible.</p>
+</section>
+<section id="backward-elimination-1" class="level3" data-number="14.6.2">
+<h3 data-number="14.6.2" class="anchored" data-anchor-id="backward-elimination-1"><span class="header-section-number">14.6.2</span> Backward elimination</h3>
+<p>Start with all predictors, then repeatedly remove the least contributive predictor until all remaining predictors are significant.</p>
+</section>
+<section id="stepwise-selection" class="level3" data-number="14.6.3">
+<h3 data-number="14.6.3" class="anchored" data-anchor-id="stepwise-selection"><span class="header-section-number">14.6.3</span> Stepwise selection</h3>
+<p>Combine both ideas:</p>
+<ul>
+<li>add predictors like forward selection,</li>
+<li>but after each addition, also check whether any existing predictor should be removed.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="example-executive-salary-data" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Example: Executive Salary Data</h1>
+<p>A typical use of stepwise regression is when we have many candidate predictors and want to narrow the field before building a more refined model.</p>
+<p>In the executive salary example described in the slides:</p>
+<ul>
+<li>the response variable is the <strong>natural log of executive salary</strong>,</li>
+<li>there are <strong>10 potential predictors</strong>,</li>
+<li>and the goal is to identify the most important main effects before considering a more complicated final model.</li>
+</ul>
+<p>This is exactly the kind of situation where stepwise regression can serve as a first screening tool.</p>
+</section>
+<section id="all-possible-regressions-selection-procedure" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> 6.3 All-Possible-Regressions Selection Procedure</h1>
+<section id="basic-idea-1" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="basic-idea-1"><span class="header-section-number">16.1</span> Basic idea</h2>
+<p>Forward selection, backward elimination, and stepwise regression all build models <strong>one variable at a time</strong>. None of them guarantees that the best model with a given number of predictors will be found.</p>
+<p>An alternative is to consider <strong>all possible regression models</strong> formed from the candidate predictors.</p>
+<p>This approach is called:</p>
+<ul>
+<li><strong>all-possible-regressions selection</strong>, or</li>
+<li><strong>best-subsets regression</strong>.</li>
+</ul>
+<p>Its main advantage is that, for each possible model size, it can identify the best subset according to a chosen criterion.</p>
+</section>
+<section id="why-use-best-subsets-regression" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="why-use-best-subsets-regression"><span class="header-section-number">16.2</span> Why use best-subsets regression?</h2>
+<p>Suppose there are <span class="math inline">\(p\)</span> candidate predictors.</p>
+<p>Then for:</p>
+<ul>
+<li>1 predictor,</li>
+<li>2 predictors,</li>
+<li>3 predictors,</li>
+<li>and so on,</li>
+</ul>
+<p>we can compare all models of that size and select the best one according to some measure of quality.</p>
+<p>This gives more complete information than a purely sequential method.</p>
+</section>
+</section>
+<section id="criteria-used-in-best-subsets-regression" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> Criteria Used in Best-Subsets Regression</h1>
+<p>Several criteria may be used to compare subset models.</p>
+<section id="r2-criterion" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="r2-criterion"><span class="header-section-number">17.1</span> <span class="math inline">\(R^2\)</span> criterion</h2>
+<p>A larger <span class="math inline">\(R^2\)</span> indicates a better fit to the observed data.</p>
+<p>However, <span class="math inline">\(R^2\)</span> always increases when more predictors are added, so it tends to favor larger models.</p>
+</section>
+<section id="adjusted-r2-criterion" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="adjusted-r2-criterion"><span class="header-section-number">17.2</span> Adjusted <span class="math inline">\(R^2\)</span> criterion</h2>
+<p>Adjusted <span class="math inline">\(R^2\)</span> penalizes model size.</p>
+<p>In general:</p>
+<ul>
+<li>larger adjusted <span class="math inline">\(R^2\)</span> is better.</li>
+</ul>
+<p>Because adjusted <span class="math inline">\(R^2\)</span> increases only when the mean square error decreases enough to justify the added complexity, it is often more useful than ordinary <span class="math inline">\(R^2\)</span>.</p>
+</section>
+<section id="mse-criterion" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="mse-criterion"><span class="header-section-number">17.3</span> MSE criterion</h2>
+<p>A smaller <strong>mean square error (MSE)</strong> is preferred.</p>
+<p>Searching for a model with minimum or near-minimum MSE is equivalent to searching for a model with high adjusted <span class="math inline">\(R^2\)</span>.</p>
+</section>
+<section id="mallows-c_p-criterion" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="mallows-c_p-criterion"><span class="header-section-number">17.4</span> Mallows’ <span class="math inline">\(C_p\)</span> criterion</h2>
+<p>A good subset model should have:</p>
+<ul>
+<li>a <strong>small</strong> value of <span class="math inline">\(C_p\)</span>, and</li>
+<li>a value of <span class="math inline">\(C_p\)</span> <strong>near</strong> the number of parameters in the model.</li>
+</ul>
+<p>A <span class="math inline">\(C_p\)</span> value near the number of parameters suggests that the subset model has little bias.</p>
+</section>
+<section id="press-criterion" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="press-criterion"><span class="header-section-number">17.5</span> PRESS criterion</h2>
+<p>PRESS stands for <strong>prediction sum of squares</strong>.</p>
+<p>It is based on leave-one-out prediction errors:</p>
+<p><span class="math display">\[
+PRESS = \sum_{i=1}^n (y_i - \hat y_{(i)})^2,
+\]</span></p>
+<p>where <span class="math inline">\(\hat y_{(i)}\)</span> is the predicted value for observation <span class="math inline">\(i\)</span> obtained from a model fit <strong>without</strong> using observation <span class="math inline">\(i\)</span>.</p>
+<p>A smaller PRESS indicates better predictive performance.</p>
+</section>
+</section>
+<section id="example-best-subsets-for-executive-salary" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Example: Best-Subsets for Executive Salary</h1>
+<p>In the executive salary example, best-subsets regression is used to examine the 10 potential predictors more thoroughly.</p>
+<p>The goal is again to identify the most important predictors for the natural log of salary, but now the procedure compares possible subsets more directly rather than following only a sequential path.</p>
+<p>Plots and software output for <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, <span class="math inline">\(C_p\)</span>, and related criteria can help identify a promising subset size and a promising combination of variables.</p>
+</section>
+<section id="caveats" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> 6.4 Caveats</h1>
+<p>Both stepwise regression and best-subsets regression should be used carefully.</p>
+<section id="main-caveats" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="main-caveats"><span class="header-section-number">19.1</span> Main caveats</h2>
+<section id="error-rates-can-be-high" class="level3" data-number="19.1.1">
+<h3 data-number="19.1.1" class="anchored" data-anchor-id="error-rates-can-be-high"><span class="header-section-number">19.1.1</span> 1. Error rates can be high</h3>
+<p>Because many models and many tests are examined, the probability of making at least one Type I or Type II error can be quite large.</p>
+</section>
+<section id="these-are-screening-tools-not-full-model-building-procedures" class="level3" data-number="19.1.2">
+<h3 data-number="19.1.2" class="anchored" data-anchor-id="these-are-screening-tools-not-full-model-building-procedures"><span class="header-section-number">19.1.2</span> 2. These are screening tools, not full model-building procedures</h3>
+<p>Usually, analysts do <strong>not</strong> include interaction terms and higher-order terms in the initial candidate list.</p>
+<p>As a result, these procedures often do <strong>not</strong> perform the full intellectual work of model building.</p>
+</section>
+<section id="they-may-produce-nonsensical-models" class="level3" data-number="19.1.3">
+<h3 data-number="19.1.3" class="anchored" data-anchor-id="they-may-produce-nonsensical-models"><span class="header-section-number">19.1.3</span> 3. They may produce nonsensical models</h3>
+<p>Even if some interaction or higher-order terms are included, automated methods can still select a model that makes little scientific or practical sense.</p>
+</section>
+<section id="common-sense-still-matters" class="level3" data-number="19.1.4">
+<h3 data-number="19.1.4" class="anchored" data-anchor-id="common-sense-still-matters"><span class="header-section-number">19.1.4</span> 4. Common sense still matters</h3>
+<p>You should not abandon:</p>
+<ul>
+<li>subject-matter knowledge,</li>
+<li>common sense,</li>
+<li>intuition,</li>
+<li>and interpretability.</li>
+</ul>
+<p>A statistically selected model is not automatically the right model.</p>
+</section>
+</section>
+</section>
+<section id="practical-advice" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Practical Advice</h1>
+<p>A good way to use these methods is:</p>
+<ol type="1">
+<li>Start with a long list of possible predictors.</li>
+<li>Use <strong>stepwise regression</strong> or <strong>best-subsets regression</strong> to screen for the most important variables.</li>
+<li>Then begin the <strong>real model-building phase</strong>:
+<ul>
+<li>check assumptions,</li>
+<li>examine residual plots,</li>
+<li>consider transformations,</li>
+<li>add interactions or higher-order terms when scientifically justified,</li>
+<li>and compare models thoughtfully.</li>
+</ul></li>
+</ol>
+<p>So these methods are best viewed as <strong>starting points</strong>, not final answers.</p>
+</section>
+<section id="quick-comparison-table" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> Quick Comparison Table</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>How it starts</th>
+<th>How it proceeds</th>
+<th>Strength</th>
+<th>Limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Forward selection</td>
+<td>No predictors</td>
+<td>Adds variables only</td>
+<td>Simple</td>
+<td>Cannot remove variables once added</td>
+</tr>
+<tr class="even">
+<td>Backward elimination</td>
+<td>Full model</td>
+<td>Removes variables only</td>
+<td>Starts from full information</td>
+<td>Requires fitting the full model</td>
+</tr>
+<tr class="odd">
+<td>Stepwise selection</td>
+<td>No predictors</td>
+<td>Adds and removes</td>
+<td>More flexible than forward selection</td>
+<td>Still does not check all subsets</td>
+</tr>
+<tr class="even">
+<td>Best-subsets regression</td>
+<td>Considers all subset sizes</td>
+<td>Compares all candidate models</td>
+<td>Can find best subset for each size</td>
+<td>Computationally heavier; may still ignore scientific meaning</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-notes" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> R Notes</h1>
+<p>Below are common R approaches for these methods.</p>
+<section id="stepwise-regression-1" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="stepwise-regression-1"><span class="header-section-number">22.1</span> Stepwise regression</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, <span class="at">data =</span> dat)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fit_null <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dat)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(fit_null,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">direction =</span> <span class="st">"both"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="forward-selection-2" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="forward-selection-2"><span class="header-section-number">22.2</span> Forward selection</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(fit_null,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">scope =</span> <span class="fu">list</span>(<span class="at">lower =</span> fit_null, <span class="at">upper =</span> fit_full),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">direction =</span> <span class="st">"forward"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="backward-elimination-2" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="backward-elimination-2"><span class="header-section-number">22.3</span> Backward elimination</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(fit_full, <span class="at">direction =</span> <span class="st">"backward"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="best-subsets-regression" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="best-subsets-regression"><span class="header-section-number">22.4</span> Best-subsets regression</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, <span class="at">data =</span> dat, <span class="at">nvmax =</span> <span class="dv">4</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(best)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="final-takeaway" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span> Final Takeaway</h1>
+<p>Variable screening methods are useful when there are many possible predictors, but they should be used with caution.</p>
+<ul>
+<li><strong>Stepwise regression</strong> is a convenient automatic screening procedure.</li>
+<li><strong>Best-subsets regression</strong> is more exhaustive and can identify the best model for a given size.</li>
+<li>Neither method should replace thoughtful model building.</li>
+</ul>
+<p>The best practice is to use these procedures to <strong>screen variables first</strong>, then build the final regression model using statistical reasoning, subject knowledge, and diagnostic checking.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
