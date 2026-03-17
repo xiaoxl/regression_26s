@@ -11,9 +11,9 @@ This chapter introduces two systematic methods for screening variables:
 1. **Stepwise regression**
 2. **All-possible-regressions selection** (also called **best-subsets regression**)
 
-These methods are intended to help identify the most important predictors before the more careful **model-building phase** begins.
+These methods are intended to help identify the most important predictors before the more careful model-building phase begins.
 
-## Why Use a Variable Screening Method
+<!-- ## Why Use a Variable Screening Method
 
 In many applications, researchers collect a response variable $y$ together with a large number of potential independent variables $x_1, x_2, \dots, x_p$. Examples include predicting:
 
@@ -28,33 +28,56 @@ When there are many candidate predictors, it can be difficult to decide which va
 The two methods emphasized in this chapter are:
 
 - **Stepwise regression**
-- **All-possible-regressions selection**
+- **All-possible-regressions selection** -->
 
 ## Stepwise Regression
 
-### Basic idea
+
 
 Stepwise regression is a variable screening procedure that builds a model by repeatedly:
 
-- **adding** useful predictors, and
-- **removing** predictors that are no longer useful.
+- **removing** predictors that are no longer useful, and
+- **adding** useful predictors
 
-At each step, the procedure examines statistical significance using a **$t$-test** (or the equivalent partial **$F$-test**) for individual regression coefficients.
 
-### General algorithm
+At each step, the procedure examines statistical significance using a $t$-test (or the equivalent partial $F$-test) for individual regression coefficients.
+
 
 A common stepwise procedure works like this:
 
-1. Start with **no predictors** in the model.
-2. Among the predictors not yet in the model, compute test statistics and p-values.
-3. **Add** the variable with the smallest p-value, provided it is significant enough to enter.
-4. After a new variable enters, re-check the predictors already in the model.
-5. **Remove** any variable whose p-value is too large.
+1. Start with no predictors in the model.
+2. Among the predictors in the model, compute test statistics and p-values.
+3. Remove **any** variable whose p-value is too large, provided it is not significant enough to remove.
+4. Among the predictors not yet in the model, compute test statistics and p-values.
+5. Add **one** variable with the smallest p-value, provided it is significant enough to enter.
 6. Repeat until no variable can be added or removed.
 
-So, unlike pure forward selection, stepwise regression allows a variable to enter first and then later be removed.
+A variable should meet certain criteria to enter or remove. The most obvious one is that whether it is significant, or whether its p-value is smaller than $\alpha$ or not. However, in order to make the process more flexible, this threshold is modified to be 2 numbers.
 
-### Stepwise regression steps in words
+- A variable can be removed if it is bigger than alpha-to-remove $\alpha_{r}$
+- When increasing $\alpha_r$, variables are harder to be removed. 
+- A variable can be added if it is smaller than alpha-to-enter $\alpha_{a}$
+- When decreasing $\alpha_a$, variables are harder to be added. 
+- In practice, one usually chooses $\alpha_a\leq \alpha_r$, often with values like $\alpha_a=0.05$ and $\alpha_r=0.10$.
+
+
+
+
+
+
+
+
+<!-- 
+If $\alpha_a=\alpha_r$, the procedure reduces to a simpler rule but becomes less flexible.
+
+Stepwise methods are heuristic and may not yield the optimal model; they should be used cautiously (especially in inference settings). -->
+
+
+
+
+<!-- So, unlike pure forward selection, stepwise regression allows a variable to enter first and then later be removed. -->
+
+<!-- ### Stepwise regression steps in words
 
 ### Step 1
 
@@ -73,89 +96,91 @@ So, unlike pure forward selection, stepwise regression allows a variable to ente
 - Re-check all variables currently in the model.
 - Remove any variable whose p-value is too large.
 - Then test the variables not yet in the model and add the most useful one.
-- Continue until no predictor qualifies for entry or removal.
+- Continue until no predictor qualifies for entry or removal. -->
 
 ### Important notes about stepwise regression
 
 Stepwise regression is often described as an **objective** screening method, but it has important limitations.
 
-### 1. Many tests are performed
+1. Many tests are performed: A very large number of hypothesis tests are carried out during the procedure. Because of this, the chance of making one or more Type I errors (including unimportant variables) or Type II errors (excluding important variables) can become quite high.
+2. Usually only main effects are screened. Interaction terms and higher degree terms should be considered later. 
+3. It does not search every possible subset. The search is a greedy algorithm that might get stuck in local optimum. 
 
-A very large number of hypothesis tests are carried out during the procedure. Because of this, the chance of making one or more:
 
-- **Type I errors** (including unimportant variables), or
-- **Type II errors** (excluding important variables)
-
-can become quite high.
-
-### 2. Usually only main effects are screened first
-
-In practice, stepwise regression is often applied only to:
-
-- first-order terms, and
-- main effects.
-
-Afterward, a careful analyst should still consider:
-
-- interaction terms,
-- quadratic terms,
-- and possibly higher-order terms.
-
-### 3. It does not search every possible subset
-
-Because stepwise regression only adds or removes one variable at a time, it does **not** examine every possible model. Therefore, for a fixed number of predictors, it may fail to find the model with the largest $R^2$ or the best overall fit.
-
-### 4. Entry and removal criteria
-
-Often we use:
-
-- an **$\alpha$-to-enter**, and
-- an **$\alpha$-to-remove**.
-
-Typically these are not identical; for example, the removal criterion is often set larger than the entry criterion so the algorithm does not cycle too aggressively.
-
-## Forward selection and backward elimination
+### Forward selection and backward elimination
 
 Stepwise regression is closely related to two other variable screening strategies.
 
-### Forward selection
+1. Forward selection: Forward selection starts with **no predictors** in the model.
+   - At each step, add the most useful predictor.
+   - Once a variable enters, it is **never removed**.
+2. Backward elimination: Backward elimination starts with the **full model** containing all candidate predictors.
+   - At each step, remove the least useful nonsignificant predictor.
+   - Continue until all remaining predictors are statistically significant.
+   - This method requires that the initial full model can actually be fit.
 
-Forward selection starts with **no predictors** in the model.
-
-- At each step, add the most useful predictor.
-- Once a variable enters, it is **never removed**.
-
-So forward selection is simpler than stepwise regression because it only moves in one direction.
-
-### Backward elimination
-
-Backward elimination starts with the **full model** containing all candidate predictors.
-
-- At each step, remove the least useful nonsignificant predictor.
-- Continue until all remaining predictors are statistically significant.
-
-This method requires that the initial full model can actually be fit.
-
-## Summary of the three strategies
-
-There are three common sequential variable selection strategies:
-
-### Forward selection
-
-Start with no predictors, then repeatedly add the most contributive predictor until no further statistically significant improvement is possible.
-
-### Backward elimination
-
-Start with all predictors, then repeatedly remove the least contributive predictor until all remaining predictors are significant.
-
-### Stepwise selection
-
-Combine both ideas:
+So stepwise selection combine both ideas:
 
 - add predictors like forward selection,
 - but after each addition, also check whether any existing predictor should be removed.
 
-# Example: Executive Salary Data
+### R code
+
+In R, we could use `olsrr::ols_step_both_p` to perform the stepwise regression.
+
+
+
+::: {#exm-}
+
+The [dataset](EXAMPLE.csv) contains 10 predictors and 1 response variable.
+
+```{r}
+#| echo: false
+#| eval: false
+
+# set.seed(123)
+
+# n <- 120
+
+# # ---- independent vars ----
+# X1 <- rnorm(n, 10, 2)
+# X2 <- rnorm(n, 5, 1.5)
+# X3 <- 0.6 * X1 + rnorm(n)
+# X5 <- 0.7 * X2 + rnorm(n)
+# X4 <- X1 - X2 + rnorm(n, 0, 0.5)
+# X7 <- rbinom(n, 1, 0.5)
+# X6 <- rnorm(n)
+# X8 <- rnorm(n) + X6^2
+# X9 <- rnorm(n) + X3 * X5
+# X10 <- rnorm(n) - X2 * X4
+
+# # ---- response ----
+# eps <- rnorm(n, 0, 2)
+
+# Y <- 3 + 2 * X1 - 1.8 * X2 - 1.1 * X6^2 + 1.1 * X8 - X10 + eps
+
+# dat <- data.frame(
+#     Y, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10
+# )
+# write.csv(dat, "EXAMPLE.csv")
+```
+
+```{r}
+dat <- read.csv("EXAMPLE.csv")
+head(dat)
+```
+
+We first use `lm` to get a 1st order model with all predictors.
+```{r}
+fit <- lm(Y ~ ., data = dat)
+```
+
+There are 10 variables and we don't know which one to pick. 
+Then we could run 
+
+:::
+
+<!-- # Example: Executive Salary Data
 
 A typical use of stepwise regression is when we have many candidate predictors and want to narrow the field before building a more refined model.
 
@@ -163,9 +188,31 @@ In the executive salary example described in the slides:
 
 - the response variable is the **natural log of executive salary**,
 - there are **10 potential predictors**,
-- and the goal is to identify the most important main effects before considering a more complicated final model.
+- and the goal is to identify the most important main effects before considering a more complicated final model. -->
 
 This is exactly the kind of situation where stepwise regression can serve as a first screening tool.
+
+
+
+
+
+
+```{r}
+library(olsrr)
+ols_step_both_p(fit, details = TRUE)
+```
+
+
+```{r}
+step(fit)
+```
+
+```{r}
+library(leaps)
+models <- regsubsets(Y~., data=dat, nvmax=10)
+plot(summary(models)$adjr2)
+```
+
 
 # 6.3 All-Possible-Regressions Selection Procedure
 
