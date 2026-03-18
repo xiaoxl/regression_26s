@@ -4,6 +4,9 @@
 
 # Variable selection
 
+
+{{< include ../math.qmd >}} 
+
 When we build a multiple regression model, we often begin with many possible predictors. The main question is: **which variables should be included in the model?**
 
 This chapter introduces two systematic methods for screening variables:
@@ -39,16 +42,84 @@ Variable selections can be treated as a model comparison process. Therefore we n
 
 When talking about approximation ability, some tend to use MSE. This is very similar to $R^2$ and $R_a^2$ since they are computed using MSE.
 
-### AIC/BIC
-The Akaike Information Criterion (AIC) is a statistical metric used to compare and select the best-performing model from a set of candidates by estimating the relative information lost. It balances model fit (goodness of fit) with complexity to avoid over or underfitting. Lower AIC values indicate a better, more efficient model.
+### AIC
+The Akaike Information Criterion (AIC) is a statistical metric used to evaluate the performance of a model. It balances model fit (goodness of fit) with complexity to avoid over or underfitting. Lower AIC values indicate a better, more efficient model.
 
 A common formula is
 
 $$
-AIC = -2\log L + 2k,
+AIC = -2 L + 2k,
 $$
 
-where $L$ is the likelihood of the fitted model and $k$ is the number of estimated parameters. The first term rewards good fit, while the second term penalizes model complexity.
+where $L$ is the likelihood of the fitted model and $k$ is the number of estimated parameters. The first term rewards good fit, while the second term  penalizes model complexity. In the case of linear regression, AIC is 
+$$
+AIC=n\log\frac{SSE}{n}+2k
+$$
+where $SSE$ is the sum of squared errors of the model, $n$ is the number of observations and $k$ is the number of estimated predictors.
+
+
+
+::: {.callout-note collapse="true"}
+## The rough story of AIC
+
+AIC is derived as an estimate of expected out-of-sample prediction error, measured via Kullback–Leibler (KL) divergence.
+
+1. Let $g(y)$ be the true but unknown data-generating distribution coming from the real world, and $f(y\mid\theta)$ be the candidate model to estimate $g(y)$, where $\theta$ is the parameters vector of the model. 
+2. Akaike's idea to measure the difference between $g$ and $f$ is KL divergence $D_{KL}$. We would like to find the parameters $\hat\theta$ such that $D_{KL}(g\,\|\,f_{\theta})$ is minimized.
+$$
+\begin{split}
+D_{KL}(g\,\|\,f)&=\int g(y)\log\frac{g(y)}{f(y\mid \theta)}\dl3y=\underbrace{\int g(y)\log g(y)\dl3y}_{\text{constant}}-\int g(y)\log f(y\mid\theta)\dl3y\\
+&=\int g(y)\log g(y)\dl3y-\Exp_g[\log f(Y\mid\theta)].
+\end{split}
+$$
+So we need to find the $\hat\theta$ such that $\Exp_g[\log f(Y\mid\theta)]$ is maximized.
+3. Since we don't know the real $g$, but we have samples from real world $Y_1,\ldots,Y_n$, so we maximize the sample log-likelihood:
+$$
+\ell(\theta)=\sum_{i=1}^n\log f(Y_i\mid\theta).
+$$
+This gives the MLE estimator $\hat\theta$.
+4. However $\ell(\hat\theta)$ is optimistically biased for the out-of-sample log-likelihood $\ell^*(\hat\theta)$, because the same data is used for fitting and evaluation.
+5. Akaike’s key result (asymptotic bias correction) proved that under some regularity conditions, 
+$$
+\Exp_g[\ell(\hat\theta)]\approx \Exp_g[\ell^*(\hat\theta)]+k,
+$$
+where $k$ is the number of estimated parameters. Therefore 
+$$
+\Exp_g[\ell^*(\hat\theta)]\approx \Exp_g[\ell(\hat\theta)-k].
+$$
+So a natural estimator for $\ell^*(\hat\theta)$ is $\ell(\hat\theta)-k$. 
+6. The estimator suggests the definition
+$$
+AIC=-2\ell(\hat\theta)+2k.
+$$
+The factor $-2$ is conventional. It puts AIC on the deviance scale, making it consistent with likelihood-ratio theory and convenient for model comparison.
+7. Consider a MLR model, $Y=X^T\beta+\varepsilon$, where $\varepsilon\sim N(0,\sigma^2)$. Then based on the MLE estimator calculation, the log-likelihood is
+$$
+\ell(\beta,\sigma^2)= -\frac{n}{2}\log(2\pi)- \frac{n}{2}\log(\sigma^2)- \frac{1}{2\sigma^2}\mathrm{SSE}.
+$$
+Using the MLE $\hat{\sigma}^2 = \mathrm{SSE}/n$, we obtain
+$$
+\ell(\hat{\theta})= -\frac{n}{2}\left[\log(2\pi) + 1 + \log\left(\frac{\mathrm{SSE}}{n}\right)\right]=-\frac{n}{2}\log\left(\frac{\mathrm{SSE}}{n}\right)- \underbrace{\frac{n}{2}\left(1 + \log(2\pi)\right)}_{\text{irrelevant constant}}.
+$$
+Since the constant does not depend on the model, for comparing linear regression models we often use
+$$
+\ell(\hat{\theta}) \propto -\frac{n}{2}\log\left(\frac{\mathrm{SSE}}{n}\right).
+$$
+8. Multiplying by $-2$ gives the final form of AIC in MLR:
+$$
+AIC=n\log\qty(\frac{SSE}n)+2k.
+$$
+
+
+
+
+
+:::
+
+
+
+
+
 
 The Bayesian Information Criterion (BIC) is very similar:
 
