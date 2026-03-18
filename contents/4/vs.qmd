@@ -30,6 +30,127 @@ The two methods emphasized in this chapter are:
 - **Stepwise regression**
 - **All-possible-regressions selection** -->
 
+## Model Selection Criteria
+Variable selections can be treated as a model comparison process. Therefore we need to discuss criteria on comparing models.
+
+### What we already covered
+1. p-value: when comparing nested models, the p-value can be used to determine whether the added variables are significant as a group.
+2. $R^2$ and $R_a^2$: the proportion of the varaiance that can be explained. This is one of the metrics that is used to determine the performance of a model.
+
+When talking about approximation ability, some tend to use MSE. This is very similar to $R^2$ and $R_a^2$ since they are computed using MSE.
+
+### AIC/BIC
+The Akaike Information Criterion (AIC) is a statistical metric used to compare and select the best-performing model from a set of candidates by estimating the relative information lost. It balances model fit (goodness of fit) with complexity to avoid over or underfitting. Lower AIC values indicate a better, more efficient model.
+
+A common formula is
+
+$$
+AIC = -2\log L + 2k,
+$$
+
+where $L$ is the likelihood of the fitted model and $k$ is the number of estimated parameters. The first term rewards good fit, while the second term penalizes model complexity.
+
+The Bayesian Information Criterion (BIC) is very similar:
+
+$$
+BIC = -2\log L + k\log(n),
+$$
+
+where $n$ is the sample size. Since $\log(n)>2$ for most practical sample sizes, BIC usually penalizes extra variables more heavily than AIC.
+
+Important points:
+
+- AIC and BIC are used to compare models fit to the **same response on the same data**.
+- Smaller values are preferred.
+- These numbers are not meaningful by themselves; only **differences** between candidate models matter.
+
+For a very easy example, suppose we compare two regression models fit to the same dataset:
+
+- Model 1: $AIC=120$, $BIC=126$
+- Model 2: $AIC=116$, $BIC=124$
+
+Then Model 2 is preferred by both criteria because both numbers are smaller.
+
+Now suppose instead we have:
+
+- Model 1: $AIC=116$, $BIC=120$
+- Model 2: $AIC=114$, $BIC=127$
+
+Then AIC prefers Model 2, but BIC prefers Model 1. This usually means Model 2 fits a little better, but Model 1 is more parsimonious. In practice, AIC often leans toward prediction, while BIC often leans toward simpler models.
+
+
+
+
+
+### C_p
+Mallows' $C_p$ is another criterion for comparing subset regression models. It tries to balance lack of fit and model size.
+
+For a candidate subset model with $p$ parameters (including the intercept), the statistic is
+
+$$
+C_p=\frac{SSE_p}{MSE_{\text{full}}}-(n-2p),
+$$
+
+where:
+
+- $SSE_p$ is the error sum of squares for the candidate subset model,
+- $MSE_{\text{full}}$ is the mean square error from the full model,
+- $n$ is the sample size.
+
+How to interpret it:
+
+- A **smaller** $C_p$ is better.
+- A good model often has $C_p$ **close to $p$**.
+- If $C_p$ is much larger than $p$, the subset model may have substantial bias because important variables are missing.
+
+Easy example:
+
+- Model A has $p=3$ parameters and $C_p=12$
+- Model B has $p=5$ parameters and $C_p=5.4$
+
+Model B is usually preferred. Its $C_p$ is small and very close to $p=5$, which suggests that the model is capturing the important predictors without too much bias. Model A has a much larger $C_p$ than $p=3$, so it likely leaves out useful variables.
+
+
+### PRESS
+PRESS stands for **prediction sum of squares**. It measures how well a model predicts new observations by using leave-one-out prediction errors.
+
+For each observation:
+
+1. remove that observation,
+2. fit the model using the remaining $n-1$ observations,
+3. predict the omitted response,
+4. compute the squared prediction error.
+
+Then add all these squared prediction errors:
+
+$$
+PRESS = \sum_{i=1}^n (y_i-\hat y_{(i)})^2,
+$$
+
+where $\hat y_{(i)}$ is the predicted value for observation $i$ from the model fit without observation $i$.
+
+Interpretation:
+
+- A smaller PRESS means better out-of-sample predictive ability.
+- Unlike ordinary SSE, PRESS directly focuses on prediction rather than only fit to the current sample.
+
+Easy example:
+
+- Model A has $PRESS=85$
+- Model B has $PRESS=62$
+
+Then Model B is preferred for prediction, because its leave-one-out prediction errors are smaller overall.
+
+So in practice:
+
+- use $R^2$, adjusted $R^2$, or MSE to study fit,
+- use AIC/BIC to balance fit and complexity,
+- use $C_p$ to compare subset models,
+- use PRESS when prediction is the main goal.
+
+
+
+
 ## Stepwise Regression
 
 
@@ -143,26 +264,28 @@ The [dataset](EXAMPLE.csv) contains 10 predictors and 1 response variable.
 # n <- 120
 
 # # ---- independent vars ----
-# X1 <- rnorm(n, 10, 2)
-# X2 <- rnorm(n, 5, 1.5)
-# X3 <- 0.6 * X1 + rnorm(n)
+# X1 <- rnorm(n, 1, 2)
+# X2 <- rnorm(n, 1, 1.5)
+# X3 <- 0.6 * X1 + rnorm(n, 0, 0.1)
 # X5 <- 0.7 * X2 + rnorm(n)
 # X4 <- X1 - X2 + rnorm(n, 0, 0.5)
 # X7 <- rbinom(n, 1, 0.5)
 # X6 <- rnorm(n)
 # X8 <- rnorm(n) + X6^2
-# X9 <- rnorm(n) + X3 * X5
+# X9 <- rnorm(n) + X3 * X5 + X7
 # X10 <- rnorm(n) - X2 * X4
 
 # # ---- response ----
 # eps <- rnorm(n, 0, 2)
 
-# Y <- 3 + 2 * X1 - 1.8 * X2 - 1.1 * X6^2 + 1.1 * X8 - X10 + eps
+# Y <- 3 + 2 * X1 - 1.8 * X2 - 1.1 * X6^2 + 1.1 * X8 - X10 + X9 + eps
 
 # dat <- data.frame(
 #     Y, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10
 # )
-# write.csv(dat, "EXAMPLE.csv")
+# fit <- lm(Y ~ ., data = dat)
+# ols_step_both_p(fit, details = FALSE)
+# write.csv(dat, "EXAMPLE.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -173,10 +296,17 @@ head(dat)
 We first use `lm` to get a 1st order model with all predictors.
 ```{r}
 fit <- lm(Y ~ ., data = dat)
+summary(fit)
 ```
 
-There are 10 variables and we don't know which one to pick. 
-Then we could run 
+There are 10 variables presented. We could use stepwise regression to screen variables.
+
+```{r}
+#| warning: false
+library(olsrr)
+ols_step_both_p(fit)
+```
+From this process, `X10 + X9 + X6 + X1 + X2 + X8` are our choice of variables.
 
 :::
 
@@ -190,8 +320,10 @@ In the executive salary example described in the slides:
 - there are **10 potential predictors**,
 - and the goal is to identify the most important main effects before considering a more complicated final model. -->
 
-This is exactly the kind of situation where stepwise regression can serve as a first screening tool.
+<!-- This is exactly the kind of situation where stepwise regression can serve as a first screening tool. -->
 
+
+### Other metrics
 
 
 
@@ -207,9 +339,16 @@ ols_step_both_p(fit, details = TRUE)
 step(fit)
 ```
 
+
+
+
 ```{r}
 library(leaps)
-models <- regsubsets(Y~., data=dat, nvmax=10)
+models <- regsubsets(Y ~ ., data = dat, nvmax = 10)
+summary(models)
+```
+
+```{r}
 plot(summary(models)$adjr2)
 ```
 

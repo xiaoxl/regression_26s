@@ -1,6 +1,6 @@
 
 
-## Example: MLR phase
+## Example: Boston Housing part 2
 
 We continue to look at the Boston Housing price dataset.
 

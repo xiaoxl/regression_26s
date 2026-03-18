@@ -1,0 +1,112 @@
+
+# Example: `possum`
+
+We study how body measurements explain total length (`totlngth`) of possums.  
+The goal is to demonstrate a **complete regression model-building workflow**:
+
+1. Exploratory analysis  
+2. Initial linear model  
+3. Checking assumptions  
+4. Nonlinearity diagnosis  
+5. Interaction modeling  
+6. Model comparison  
+7. Final model interpretation  
+
+---
+
+## 2. Setup
+
+```{r}
+library(DAAG)
+data(possum)
+summary(possum)
+```
+
+---
+
+## 3. Exploratory Analysis
+
+```{r}
+dat0 <- possum[c("hdlngth", "skullw", "totlngth", "taill", "footlgth", "earconch", "eye", "chest", "belly", "age", "sex")]
+dat0$sex <- factor(dat0$sex)
+fit0 <- lm(totlngth ~ ., data = dat0)
+summary(fit0)
+```
+
+---
+
+```{r}
+dat <- possum[c("hdlngth", "totlngth", "taill", "footlgth", "sex")]
+```
+
+## 4. Initial Linear Model
+
+```{r}
+fit0 <- lm(totlngth ~ hdlngth + taill + footlgth + sex, data = dat)
+summary(fit0)
+
+```
+
+---
+
+## 5. Diagnostics
+
+
+
+## 6. CR Plots
+
+```{r}
+#| warning: false
+library(car)
+crPlots(fit0)
+
+
+```
+
+
+```{r}
+fit_final <- lm(
+    totlngth ~ hdlngth +
+        taill +
+        footlgth +
+        hdlngth:taill +
+        hdlngth:footlgth +
+        sex,
+    data = dat
+)
+summary(fit_final)
+```
+
+
+## 11. Summary
+
+This example demonstrates:
+
+- Model building  
+- Nonlinearity checking  
+- Interaction modeling  
+- Model comparison  
+
+
+
+The final model includes head length, tail length, foot length, and sex, along with interaction terms between head length and other body measurements. The interaction terms indicate that the effects of tail length and foot length on total length depend on head size, suggesting a non-additive body structure. In particular, the contribution of tail length decreases with increasing head length, while the contribution of foot length increases. This model provides a parsimonious yet flexible representation of the relationship between body measurements and total length.
+
+
+
+
+
+```{r}
+dat$c_hd <- scale(dat$hdlngth, center = TRUE, scale = FALSE)
+dat$c_tail <- scale(dat$taill, center = TRUE, scale = FALSE)
+dat$c_foot <- scale(dat$footlgth, center = TRUE, scale = FALSE)
+
+fit_c <- lm(
+    totlngth ~ c_hd + c_tail + c_foot +
+        c_hd:c_tail +
+        c_hd:c_foot +
+        sex,
+    data = dat
+)
+
+summary(fit_c)
+```
