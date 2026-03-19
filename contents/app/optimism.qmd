@@ -1,0 +1,533 @@
+# Optimism
+
+## Efron's Optimism Theorem
+
+## Cp
+
+## AIC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Historical Development of Model Selection Criteria {#sec-history-timeline}
+
+::: {.callout-note}
+### Big Picture
+Modern model selection criteria such as $C_p$, AIC, and BIC all aim to estimate
+**prediction error**. However, they were developed from different perspectives
+and only later unified through the concept of **optimism**.
+:::
+
+---
+
+### 1. Early Foundations (1970s)
+
+The 1970s saw the independent development of several foundational criteria.
+
+#### Allen (1974): PRESS and Cross-Validation
+
+Allen introduced the **PRESS statistic**, an early form of leave-one-out cross-validation:
+
+$$
+\text{PRESS} = \sum_{i=1}^n (y_i - \hat{y}_{(i)})^2.
+$$
+
+This provided a **direct estimate of test error** without analytic correction.
+
+---
+
+#### Mallows (1973): $C_p$
+
+Mallows proposed:
+
+$$
+C_p = RSS + 2p\sigma^2,
+$$
+
+motivated as an approximately unbiased estimator of prediction error
+in linear regression.
+
+---
+
+#### Akaike (1973): AIC
+
+Akaike introduced:
+
+$$
+\text{AIC} = -2\log L + 2k,
+$$
+
+derived from minimizing expected **Kullback–Leibler divergence** between the true model
+and a candidate model.
+
+---
+
+::: {.callout-warning}
+### Key Observation
+At this stage, these methods were **not unified**:
+
+- $C_p$: prediction error (squared loss)
+- AIC: information theory (KL divergence)
+- PRESS: resampling
+
+They shared a similar form but lacked a common explanation.
+:::
+
+---
+
+### 2. Late 1970s: Extensions and Connections
+
+#### Stone (1977): AIC ≈ Cross-Validation
+
+Stone showed that:
+
+$$
+\boxed{
+\text{AIC} \approx \text{LOOCV}
+}
+$$
+
+establishing a deep connection between analytic criteria and resampling methods.
+
+---
+
+#### Sugiura (1978): AICc
+
+To address small-sample bias, Sugiura proposed:
+
+$$
+\text{AICc} = \text{AIC} + \frac{2k(k+1)}{n-k-1}.
+$$
+
+---
+
+#### Schwarz (1978): BIC
+
+Schwarz introduced:
+
+$$
+\text{BIC} = -2\log L + k\log n,
+$$
+
+derived from a **Bayesian perspective**.
+
+---
+
+### 3. Efron’s Unification (1986)
+
+A major conceptual breakthrough came from **Efron (1986)**,
+who introduced the concept of **optimism**.
+
+#### Definition
+
+$$
+\text{Optimism}
+= E[\text{Test Error} - \text{Training Error}].
+$$
+
+#### General Result
+
+$$
+\text{Optimism}
+= 2 \sum_{i=1}^n \operatorname{Cov}(\hat{y}_i, y_i).
+$$
+
+---
+
+#### Special Cases
+
+- Linear models:
+  $$
+  \text{Optimism} = 2p\sigma^2 \quad \Rightarrow \quad C_p
+  $$
+
+- Likelihood models:
+  $$
+  \text{Optimism} = 2k \quad \Rightarrow \quad \text{AIC}
+  $$
+
+---
+
+::: {.callout-important}
+### Key Insight
+All these criteria can be written as:
+$$
+\boxed{
+\text{Training Error} + \text{Optimism}
+}
+$$
+:::
+
+---
+
+### 4. Modern Framework (1990s–2000s)
+
+#### Ye (1998): Generalized Degrees of Freedom
+
+Ye extended the concept of model complexity:
+
+$$
+\text{df} = \sum_{i=1}^n \frac{\partial \hat{y}_i}{\partial y_i}.
+$$
+
+This allows the optimism framework to apply to nonlinear and adaptive models.
+
+---
+
+#### ESL (2000s): Unified Teaching Framework
+
+In *The Elements of Statistical Learning*, Hastie, Tibshirani, and Friedman
+present model selection systematically via:
+
+$$
+\text{Optimism} = 2\sigma^2 \cdot \text{df}.
+$$
+
+This connects:
+
+- $C_p$
+- AIC
+- cross-validation
+- modern regularization methods
+
+---
+
+### 5. Final Summary
+
+::: {.callout-tip}
+### Timeline
+
+- 1973: Mallows ($C_p$), Akaike (AIC)  
+- 1974: Allen (PRESS / CV)  
+- 1977–1978: Stone, Sugiura, Schwarz (connections and extensions)  
+- 1986: Efron (optimism, unification)  
+- 1998+: Ye and others (generalized degrees of freedom)  
+- 2000s: ESL (modern framework)
+
+:::
+
+---
+
+### 6. Final Interpretation
+
+$$
+\boxed{
+\text{Model Selection}
+= \text{Training Error} + \text{Bias Correction (Optimism)}
+}
+$$
+
+where the correction accounts for overfitting due to using the same data
+for fitting and evaluation.
+
+---
+
+### References
+
+- Mallows, C. L. (1973). *Some Comments on $C_p$*.  
+- Akaike, H. (1973). *Information Theory and an Extension of Maximum Likelihood*.  
+- Allen, D. M. (1974). *The Relationship Between Variable Selection and Data Augmentation*.  
+- Stone, M. (1977). *An Asymptotic Equivalence of Choice of Model by Cross-Validation and Akaike’s Criterion*.  
+- Sugiura, N. (1978). *Further Analysis of the Data by Akaike’s Information Criterion*.  
+- Schwarz, G. (1978). *Estimating the Dimension of a Model*.  
+- Efron, B. (1986). *How Biased is the Apparent Error Rate of a Prediction Rule?*  
+- Ye, J. (1998). *On Measuring and Correcting the Effects of Data Mining and Model Selection*.  
+- Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning*.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Historical Development of $C_p$, AIC, and Optimism {#sec-history-cp-aic}
+
+::: {.callout-note}
+### Big Picture
+Modern model selection criteria such as $C_p$ and AIC can be understood as
+**training error plus a correction for optimism**.
+This interpretation, however, emerged only after their original development.
+:::
+
+---
+
+### 1. Early Criteria (1970s)
+
+Two fundamental model selection criteria were introduced independently:
+
+- **Mallows' $C_p$** (Mallows, 1973)
+- **Akaike Information Criterion (AIC)** (Akaike, 1973)
+
+#### Mallows' $C_p$
+
+Mallows proposed:
+$$
+C_p = RSS + 2p\sigma^2,
+$$
+motivated as an approximately unbiased estimator of prediction error in linear models.
+
+#### Akaike's AIC
+
+Akaike proposed:
+$$
+\text{AIC} = -2\log L + 2k,
+$$
+derived from minimizing the expected **Kullback–Leibler divergence** between the true model and a candidate model.
+
+---
+
+::: {.callout-warning}
+### Important
+At this stage, $C_p$ and AIC were derived from **different principles**:
+
+- $C_p$: unbiased estimation of squared prediction error  
+- AIC: information-theoretic (KL divergence)
+
+There was **no unified framework** explaining why both take the form:
+$$
+\text{fit} + \text{penalty}.
+$$
+:::
+
+---
+
+### 2. Efron's Unification (1986)
+
+A major conceptual breakthrough came from **Efron (1986)**, who introduced the concept of **optimism**.
+
+#### Definition (Optimism)
+
+$$
+\text{Optimism}
+= E[\text{Test Error} - \text{Training Error}].
+$$
+
+#### General Result
+
+Efron showed:
+$$
+\text{Optimism}
+= 2 \sum_{i=1}^n \operatorname{Cov}(\hat{y}_i, y_i).
+$$
+
+---
+
+#### Special Cases
+
+- **Linear models**:
+  $$
+  \text{Optimism} = 2p\sigma^2
+  \quad \Rightarrow \quad C_p
+  $$
+
+- **Likelihood-based models**:
+  $$
+  \text{Optimism} = 2k
+  \quad \Rightarrow \quad \text{AIC}
+  $$
+
+---
+
+::: {.callout-important}
+### Key Insight
+Both $C_p$ and AIC can be written as:
+$$
+\boxed{
+\text{Training Error} + \text{Optimism}
+}
+$$
+:::
+
+---
+
+### 3. ESL Framework (2000s)
+
+In *The Elements of Statistical Learning*, Hastie, Tibshirani, and Friedman
+systematically presented model selection using the **optimism framework**.
+
+They showed:
+
+$$
+\text{Optimism} = 2\sigma^2 \cdot \text{df},
+$$
+
+where $\text{df}$ (degrees of freedom) generalizes model complexity.
+
+---
+
+### 4. Conceptual Summary
+
+::: {.callout-tip}
+### Historical Flow
+
+1. **Mallows (1973)**: $C_p$ (prediction error perspective)  
+2. **Akaike (1973)**: AIC (information-theoretic perspective)  
+3. **Efron (1986)**: optimism (unified explanation)  
+4. **ESL (2000s)**: modern teaching framework  
+
+:::
+
+---
+
+### 5. Final Interpretation
+
+$$
+\boxed{
+\text{Model Selection Criteria}
+= \text{Training Error} + \text{Bias Correction}
+}
+$$
+
+where the bias correction is the **optimism**, i.e.,
+the expected amount by which training error underestimates test error.
+
+---
+
+### References
+
+- Mallows, C. L. (1973). *Some Comments on $C_p$*. Technometrics.
+- Akaike, H. (1973). *Information Theory and an Extension of the Maximum Likelihood Principle*.
+- Efron, B. (1986). *How Biased is the Apparent Error Rate of a Prediction Rule?*
+- Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning*.
+
+### 6. Other Notable Contributors
+
+Beyond Mallows, Akaike, and Efron, several researchers played key roles
+in shaping modern model selection theory.
+
+---
+
+#### 🔹 Hirotugu Akaike → Bayesian extension (BIC precursor)
+
+Although AIC is frequentist, it inspired:
+
+- **Schwarz (1978)**: Bayesian Information Criterion (BIC)
+
+$$
+\text{BIC} = -2\log L + k \log n
+$$
+
+- Derived from Bayesian model selection
+- Stronger penalty than AIC
+- Consistent (selects the true model under assumptions)
+
+---
+
+#### 🔹 Gideon Schwarz (1978)
+
+- Introduced **BIC**
+- Connected model selection with **Bayesian marginal likelihood**
+
+---
+
+#### 🔹 Sugiura (1978) → AICc
+
+- Introduced **AICc (corrected AIC)**
+
+$$
+\text{AICc} = \text{AIC} + \frac{2k(k+1)}{n-k-1}
+$$
+
+- Fixes small-sample bias in AIC
+- Important when $n$ is not much larger than $k$
+
+---
+
+#### 🔹 Allen (1974) → PRESS / Cross-Validation
+
+- Introduced **PRESS statistic**
+- Early form of **leave-one-out cross-validation (LOOCV)**
+
+$$
+\text{PRESS} = \sum (y_i - \hat{y}_{(i)})^2
+$$
+
+- Provides a **direct estimate of test error**
+- No analytic correction needed
+
+---
+
+#### 🔹 Stone (1977)
+
+- Showed:
+
+$$
+\boxed{
+\text{AIC} \;\approx\; \text{LOOCV}
+}
+$$
+
+👉 Major bridge between:
+- analytic criteria (AIC)
+- resampling methods (CV)
+
+---
+
+#### 🔹 Ye (1998) → Generalized Degrees of Freedom
+
+- Extended Efron’s idea to nonlinear models
+
+$$
+\text{df} = \sum \frac{\partial \hat{y}_i}{\partial y_i}
+$$
+
+- Applies to:
+  - ridge
+  - smoothing splines
+  - other adaptive procedures
+
+---
+
+#### 🔹 Tibshirani & Taylor (2012)
+
+- Degrees of freedom for **lasso**
+- Extended optimism framework to modern regularization
+
+---
+
+### 7. Expanded Conceptual View
+
+::: {.callout-tip}
+### Unified Perspective
+
+All major methods can be viewed as estimating prediction error:
+
+- $C_p$, AIC → analytic bias correction  
+- BIC → Bayesian approximation  
+- CV / PRESS → direct estimation  
+- Modern df → generalize optimism  
+
+:::
+
+---
+
+### 8. Final Takeaway
+
+$$
+\boxed{
+\text{Model selection evolved from formulas to a general theory of prediction error estimation}
+}
+$$

@@ -78,6 +78,7 @@ book:
     - contents/app/data.qmd
     - contents/app/r.qmd
     - contents/app/hypo.qmd
+    - contents/app/optimism.qmd
   sidebar:
     style: "docked"
     # pinned: true

@@ -99,21 +99,60 @@ $$
 $$
 Using the MLE $\hat{\sigma}^2 = \mathrm{SSE}/n$, we obtain
 $$
-\ell(\hat{\theta})= -\frac{n}{2}\left[\log(2\pi) + 1 + \log\left(\frac{\mathrm{SSE}}{n}\right)\right]=-\frac{n}{2}\log\left(\frac{\mathrm{SSE}}{n}\right)- \underbrace{\frac{n}{2}\left(1 + \log(2\pi)\right)}_{\text{irrelevant constant}}.
+\ell(\hat{\theta})= -\frac{n}{2}\left[\log(2\pi) + 1 + \log\left(\frac{\mathrm{SSE}}{n}\right)\right]=-\frac{n}{2}\log\left(\frac{\mathrm{SSE}}{n}\right)- \underbrace{\frac{n}{2}\left(1 + \log(2\pi)\right)}_{\text{constant}}.
 $$
-Since the constant does not depend on the model, for comparing linear regression models we often use
+8. Multiplying by $-2$ and add $2k$ gives the final form of AIC in MLR:
 $$
-\ell(\hat{\theta}) \propto -\frac{n}{2}\log\left(\frac{\mathrm{SSE}}{n}\right).
+AIC=n\log\qty(\frac{SSE}n)+2k+\underbrace{n\log(2\pi)}_{\text{constant}}.
 $$
-8. Multiplying by $-2$ gives the final form of AIC in MLR:
+9. Since the constant does not depend on the model, for comparing linear regression models we might abuse the notation and use
 $$
 AIC=n\log\qty(\frac{SSE}n)+2k.
 $$
 
+:::
+
+
+::: {.callout-caution}
+## About $k$
+The $k$ is AIC is the number of estiamted parameters. In the case of MLR, all parameters that have to be estimated include all $\beta$'s as well as the variance of the error term $\sigma^2$.
+
+- $\beta_0$: 1
+- One $\beta_i$ for each predicator: $p$
+- $\sigma^2$: 1
+
+Therefore if there are $p$ predicator, $k$ is usually $p+2$. 
+:::
+
+::: {#exm-}
+
+```{r}
+set.seed(123)
+n <- 30
+x1 <- runif(n, 1, 10)
+x2 <- runif(n, 1, 10)
+y <- 20 + 5 * x1 -4*x2 + rnorm(n, 0, 5)
+fit <- lm(y~x1+x2)
+AIC(fit)
+```
+
+We can compare it with the manual calculation.
+
+```{r}
+sse <- anova(fit)["Residuals", "Sum Sq"]
+p <- 2
+k <- p + 2
+aic_manual <- n*log(sse/n) + n*(1 + log(2*pi)) + 2 * k
+aic_manual
+```
+
+:::
 
 
 
-
+::: {.callout-warning}
+## in-sample and out-of-sample
+Although AIC is originally from estimation of out-of-sample log-likelihood using in-sample data, we could compute in-sample AIC and out-of-sample AIC, depends on which data we use for computing SSE.
 :::
 
 
@@ -121,40 +160,186 @@ $$
 
 
 
-The Bayesian Information Criterion (BIC) is very similar:
+
+::: {.callout-caution}
+## In-sample vs. Out-of-sample AIC
+
+AIC is derived as an estimator of the **expected out-of-sample log-likelihood**, but in practice it is **computed using in-sample data**. This distinction is subtle but important.
+
+### 1. In-sample AIC (standard AIC)
+
+The usual AIC is computed as
+$$
+AIC = -2\ell(\hat\theta) + 2k,
+$$
+where $\ell(\hat\theta)$ is evaluated on the **same data used to fit the model**.
+
+- This is what `AIC(fit)` in R returns.
+- It uses in-sample log-likelihood (or equivalently SSE in linear regression).
+- The penalty term \(2k\) is a correction for **optimism bias** caused by evaluating on training data.
+
+👉 Interpretation:
+> AIC uses in-sample fit, but adjusts it to estimate out-of-sample performance.
+
+---
+
+### 2. Out-of-sample log-likelihood (test AIC idea)
+
+Suppose we split data into training and test sets:
+
+- Fit the model on training data → obtain \(\hat\theta\)
+- Evaluate log-likelihood on test data:
+$$
+\ell^*(\hat\theta) = \sum_{i \in \text{test}} \log f(Y_i \mid \hat\theta)
+$$
+
+Then we could define a quantity like
+$$
+-2\ell^*(\hat\theta)
+$$
+
+This is a **direct estimate of out-of-sample performance**, without needing the \(2k\) correction.
+
+👉 Important:
+- This is **not the standard AIC**
+- It is closer to **test error / cross-validation**
+
+---
+
+### 3. Why AIC does NOT use test data
+
+AIC was designed for situations where:
+
+- We only have one dataset
+- We want to estimate generalization error without splitting data
+
+So Akaike showed that:
 
 $$
-BIC = -2\log L + k\log(n),
+\mathbb{E}[\ell(\hat\theta)] 
+\approx 
+\mathbb{E}[\ell^*(\hat\theta)] + k
 $$
 
-where $n$ is the sample size. Since $\log(n)>2$ for most practical sample sizes, BIC usually penalizes extra variables more heavily than AIC.
+which leads to the correction:
 
-Important points:
+$$
+AIC = -2\ell(\hat\theta) + 2k.
+$$
 
-- AIC and BIC are used to compare models fit to the **same response on the same data**.
-- Smaller values are preferred.
-- These numbers are not meaningful by themselves; only **differences** between candidate models matter.
+👉 So AIC is essentially:
+> “training log-likelihood + bias correction”
 
-For a very easy example, suppose we compare two regression models fit to the same dataset:
+---
 
-- Model 1: $AIC=120$, $BIC=126$
-- Model 2: $AIC=116$, $BIC=124$
+### 4. Relationship to SSE in linear regression
 
-Then Model 2 is preferred by both criteria because both numbers are smaller.
+For linear regression:
 
-Now suppose instead we have:
+- In-sample AIC:
+$$
+AIC \propto n\log(SSE_{\text{train}}/n) + 2k
+$$
 
-- Model 1: $AIC=116$, $BIC=120$
-- Model 2: $AIC=114$, $BIC=127$
+- If using test data:
+$$
+\text{Test criterion} \propto n_{\text{test}}\log(SSE_{\text{test}}/n_{\text{test}})
+$$
 
-Then AIC prefers Model 2, but BIC prefers Model 1. This usually means Model 2 fits a little better, but Model 1 is more parsimonious. In practice, AIC often leans toward prediction, while BIC often leans toward simpler models.
+👉 Notice:
+- Test version has **no \(2k\)** penalty
+- Because overfitting is already penalized naturally by test error
+
+---
+
+### 5. Key takeaway
+
+- **AIC uses in-sample data + penalty to mimic out-of-sample performance**
+- If you already have test data (or cross-validation),  
+  you usually do **not need AIC**
+
+---
+
+### 6. Practical guidance
+
+| Situation | Recommended approach |
+|----------|---------------------|
+| No test data | Use AIC |
+| Have test data | Use test error / log-likelihood |
+| Want more stable estimate | Use cross-validation |
+
+---
+
+:::
+
+
+Based on the formula
+$$
+AIC=n\log\qty(\frac{SSE}n)+2k+C,
+$$
+there might be some variations. Consider the Taylor polynomial expansion of $\log x$ at $x_0$:
+$$
+\log x\approx \log x_0+\frac1{x_0}(x-x_0)=\log x_0-1+\frac x{x_0}.
+$$
+Let $x_0=\hat\sigma^2$. We have
+$$
+\begin{split}
+\frac{AIC}n&\sim \log\qty(\frac{SSE}n)+\frac{2k}n\\
+&\approx \log \hat\sigma^2-1+\frac1{\hat\sigma^2}\frac{SSE}{n}+\frac{2k}n\\
+&=\frac{1}{\hat\sigma^2}\frac1n\qty(SSE+2k\hat\sigma^2)+C.
+\end{split}
+$$
+Therefore if we ignore the added constant
+$$
+\frac{\hat\sigma^2}n AIC\approx \frac1n \qty(SSE + 2k\hat\sigma^2).
+$$
+
+When we treat both $\hat\sigma^2$ and $n$ as constants that are approximately irrevalent to the model, we have may have the relation
+$$
+AIC\propto \frac1n \qty(SSE + 2k\hat\sigma^2).
+$$
+This is the definition of AIC in some references @Jam2021. 
 
 
 
 
 
-### C_p
+### $C_p$
+
 Mallows' $C_p$ is another criterion for comparing subset regression models. It tries to balance lack of fit and model size.
+
+The most fundamental definition of $C_p$ is 
+$$
+C_p\approx \Exp[\text{Test MSE}]
+$$
+that $C_p$ is an approximatedly unbiased estimatro of test error (MSE).
+
+The usual approximation is
+$$
+C_p\approx \Exp\qty[\frac1n\sum_{i=1}^n(Y_i^{*}-\hat Y_i)^2]\apporx \frac1n(SSE+2k\sigma^2),
+$$
+where $Y_i^*$ represents testing data.
+
+
+Mallow' original definition is that 
+$$
+C_p=\frac{SSE_p}{MSE_{\text{full}}}-(n-2p),
+$$
+
+where:
+
+- $SSE_p$ is the error sum of squares for the candidate subset model,
+- $MSE_{\text{full}}$ is the mean square error from the full model,
+- $n$ is the sample size.
+
+
+
+
+
+
+
+
+
 
 For a candidate subset model with $p$ parameters (including the intercept), the statistic is
 
@@ -218,6 +403,39 @@ So in practice:
 - use AIC/BIC to balance fit and complexity,
 - use $C_p$ to compare subset models,
 - use PRESS when prediction is the main goal.
+
+
+### BIC
+
+The Bayesian Information Criterion (BIC) is very similar:
+
+$$
+BIC = -2\log L + k\log(n),
+$$
+
+where $n$ is the sample size. Since $\log(n)>2$ for most practical sample sizes, BIC usually penalizes extra variables more heavily than AIC.
+
+Important points:
+
+- AIC and BIC are used to compare models fit to the **same response on the same data**.
+- Smaller values are preferred.
+- These numbers are not meaningful by themselves; only **differences** between candidate models matter.
+
+For a very easy example, suppose we compare two regression models fit to the same dataset:
+
+- Model 1: $AIC=120$, $BIC=126$
+- Model 2: $AIC=116$, $BIC=124$
+
+Then Model 2 is preferred by both criteria because both numbers are smaller.
+
+Now suppose instead we have:
+
+- Model 1: $AIC=116$, $BIC=120$
+- Model 2: $AIC=114$, $BIC=127$
+
+Then AIC prefers Model 2, but BIC prefers Model 1. This usually means Model 2 fits a little better, but Model 1 is more parsimonious. In practice, AIC often leans toward prediction, while BIC often leans toward simpler models.
+
+
 
 
 
