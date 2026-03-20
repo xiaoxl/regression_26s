@@ -55,7 +55,9 @@ where $L$ is the likelihood of the fitted model and $k$ is the number of estimat
 $$
 AIC=n\log\frac{SSE}{n}+2k
 $$
-where $SSE$ is the sum of squared errors of the model, $n$ is the number of observations and $k$ is the number of estimated predictors.
+where $SSE$ is the sum of squared errors of the model, $n$ is the number of observations and $k$ is the number of estimated predictors. 
+
+> AIC can be treated as adjusting the training error with a penalty term to provide an unbiased estimate of the test error.
 
 
 
@@ -131,8 +133,8 @@ set.seed(123)
 n <- 30
 x1 <- runif(n, 1, 10)
 x2 <- runif(n, 1, 10)
-y <- 20 + 5 * x1 -4*x2 + rnorm(n, 0, 5)
-fit <- lm(y~x1+x2)
+y <- 20 + 5 * x1 - 4 * x2 + rnorm(n, 0, 5)
+fit <- lm(y ~ x1 + x2)
 AIC(fit)
 ```
 
@@ -142,7 +144,7 @@ We can compare it with the manual calculation.
 sse <- anova(fit)["Residuals", "Sum Sq"]
 p <- 2
 k <- p + 2
-aic_manual <- n*log(sse/n) + n*(1 + log(2*pi)) + 2 * k
+aic_manual <- n * log(sse / n) + n * (1 + log(2 * pi)) + 2 * k
 aic_manual
 ```
 
@@ -150,127 +152,6 @@ aic_manual
 
 
 
-::: {.callout-warning}
-## in-sample and out-of-sample
-Although AIC is originally from estimation of out-of-sample log-likelihood using in-sample data, we could compute in-sample AIC and out-of-sample AIC, depends on which data we use for computing SSE.
-:::
-
-
-
-
-
-
-
-::: {.callout-caution}
-## In-sample vs. Out-of-sample AIC
-
-AIC is derived as an estimator of the **expected out-of-sample log-likelihood**, but in practice it is **computed using in-sample data**. This distinction is subtle but important.
-
-### 1. In-sample AIC (standard AIC)
-
-The usual AIC is computed as
-$$
-AIC = -2\ell(\hat\theta) + 2k,
-$$
-where $\ell(\hat\theta)$ is evaluated on the **same data used to fit the model**.
-
-- This is what `AIC(fit)` in R returns.
-- It uses in-sample log-likelihood (or equivalently SSE in linear regression).
-- The penalty term \(2k\) is a correction for **optimism bias** caused by evaluating on training data.
-
-👉 Interpretation:
-> AIC uses in-sample fit, but adjusts it to estimate out-of-sample performance.
-
----
-
-### 2. Out-of-sample log-likelihood (test AIC idea)
-
-Suppose we split data into training and test sets:
-
-- Fit the model on training data → obtain \(\hat\theta\)
-- Evaluate log-likelihood on test data:
-$$
-\ell^*(\hat\theta) = \sum_{i \in \text{test}} \log f(Y_i \mid \hat\theta)
-$$
-
-Then we could define a quantity like
-$$
--2\ell^*(\hat\theta)
-$$
-
-This is a **direct estimate of out-of-sample performance**, without needing the \(2k\) correction.
-
-👉 Important:
-- This is **not the standard AIC**
-- It is closer to **test error / cross-validation**
-
----
-
-### 3. Why AIC does NOT use test data
-
-AIC was designed for situations where:
-
-- We only have one dataset
-- We want to estimate generalization error without splitting data
-
-So Akaike showed that:
-
-$$
-\mathbb{E}[\ell(\hat\theta)] 
-\approx 
-\mathbb{E}[\ell^*(\hat\theta)] + k
-$$
-
-which leads to the correction:
-
-$$
-AIC = -2\ell(\hat\theta) + 2k.
-$$
-
-👉 So AIC is essentially:
-> “training log-likelihood + bias correction”
-
----
-
-### 4. Relationship to SSE in linear regression
-
-For linear regression:
-
-- In-sample AIC:
-$$
-AIC \propto n\log(SSE_{\text{train}}/n) + 2k
-$$
-
-- If using test data:
-$$
-\text{Test criterion} \propto n_{\text{test}}\log(SSE_{\text{test}}/n_{\text{test}})
-$$
-
-👉 Notice:
-- Test version has **no \(2k\)** penalty
-- Because overfitting is already penalized naturally by test error
-
----
-
-### 5. Key takeaway
-
-- **AIC uses in-sample data + penalty to mimic out-of-sample performance**
-- If you already have test data (or cross-validation),  
-  you usually do **not need AIC**
-
----
-
-### 6. Practical guidance
-
-| Situation | Recommended approach |
-|----------|---------------------|
-| No test data | Use AIC |
-| Have test data | Use test error / log-likelihood |
-| Want more stable estimate | Use cross-validation |
-
----
-
-:::
 
 
 Based on the formula
@@ -297,74 +178,114 @@ $$
 When we treat both $\hat\sigma^2$ and $n$ as constants that are approximately irrevalent to the model, we have may have the relation
 $$
 AIC\propto \frac1n \qty(SSE + 2k\hat\sigma^2).
-$$
+$$ {#eq-aic}
 This is the definition of AIC in some references @Jam2021. 
 
 
 
 
 
-### $C_p$
+### Mallows’ $C_p$
 
-Mallows' $C_p$ is another criterion for comparing subset regression models. It tries to balance lack of fit and model size.
-
-The most fundamental definition of $C_p$ is 
+Mallows' $C_p$ is a criterion for comparing subset regression models. It balances goodness of fit and model complexity, with the goal of estimating prediction error. For a candidate subset model with $p$ parameters (including the intercept), Mallows' $C_p$ is defined as 
 $$
-C_p\approx \Exp[\text{Test MSE}]
-$$
-that $C_p$ is an approximatedly unbiased estimatro of test error (MSE).
-
-The usual approximation is
-$$
-C_p\approx \Exp\qty[\frac1n\sum_{i=1}^n(Y_i^{*}-\hat Y_i)^2]\apporx \frac1n(SSE+2k\sigma^2),
-$$
-where $Y_i^*$ represents testing data.
-
-
-Mallow' original definition is that 
-$$
-C_p=\frac{SSE_p}{MSE_{\text{full}}}-(n-2p),
+C_p=\frac{SSE_p}{\hat\sigma^2}-(n-2p),
 $$
 
 where:
 
-- $SSE_p$ is the error sum of squares for the candidate subset model,
-- $MSE_{\text{full}}$ is the mean square error from the full model,
-- $n$ is the sample size.
+- $SSE_p$ is the residual sum of squares for the subset model,
+- $\hat\sigma^2=MSE_{\text{full}}$ is the mean square error estimated from the full model,
+- $n$ is the sample size,
+- $p$ is the number of parameters in the subset model.
 
 
-
-
-
-
-
-
-
-
-For a candidate subset model with $p$ parameters (including the intercept), the statistic is
-
-$$
-C_p=\frac{SSE_p}{MSE_{\text{full}}}-(n-2p),
-$$
-
-where:
-
-- $SSE_p$ is the error sum of squares for the candidate subset model,
-- $MSE_{\text{full}}$ is the mean square error from the full model,
-- $n$ is the sample size.
 
 How to interpret it:
 
-- A **smaller** $C_p$ is better.
-- A good model often has $C_p$ **close to $p$**.
-- If $C_p$ is much larger than $p$, the subset model may have substantial bias because important variables are missing.
+- A smaller $C_p$ is better.
+- A good model typically has $C_p\approx p$.
+- If $C_p$ is much larger than $p$, the model likely suffers from bias that important variables are missing.
+- If $C_p<p$, it may indicate overfitting or that $\hat\sigma^2$ is overestimated.
 
-Easy example:
+
+::: {#exm-}
 
 - Model A has $p=3$ parameters and $C_p=12$
 - Model B has $p=5$ parameters and $C_p=5.4$
 
 Model B is usually preferred. Its $C_p$ is small and very close to $p=5$, which suggests that the model is capturing the important predictors without too much bias. Model A has a much larger $C_p$ than $p=3$, so it likely leaves out useful variables.
+:::
+
+
+<!-- ::: {.callout-note collapse="true"}
+## A rough story of $C_p$
+
+
+
+::: -->
+
+
+::: {#exm-}
+
+```{r}
+set.seed(123)
+n <- 30
+x1 <- runif(n, 1, 10)
+x2 <- runif(n, 1, 10)
+y <- 20 + 5 * x1 - 4 * x2 + rnorm(n, 0, 5)
+fit <- lm(y ~ x1 + x2)
+```
+
+```{r}
+fit_full <- lm(y ~ x1 + x2)
+sigma2_hat <- summary(fit_full)$sigma^2 # MSE_full
+
+fit_sub <- lm(y ~ x1)
+
+SSE_p <- sum(residuals(fit_sub)^2)
+p <- length(coef(fit_sub))
+
+Cp <- SSE_p / sigma2_hat - (n - 2 * p)
+Cp
+```
+
+:::
+
+$C_p$ also has other formats. Rewrite its formula. Since
+$$
+\frac1n\hat\sigma^2(C_p+n)=\frac1n\hat\sigma^2\qty(\frac{SSE_p}{\hat\sigma^2}-n+2p)=\frac{1}n\qty(SSE_p+2p\hat\sigma^2),
+$$
+this shows that $C_p$ corresponds to 
+$$
+\text{training error + penality for model size.}
+$$
+Therefore some reference uses this formula to define $C_p$ @Jam2021:
+$$
+C_p=\frac1n(SSE+2p\hat\sigma^2).
+$$
+
+Thus, comparing to @eq-aic, $C_p$ and AIC are equivalent up to a constant scaling factor, and they rank models in essentially the same way.
+
+From this perspective, $C_p$ can be viewed as the training error SSE plus a penalty term  $2p\hat\sigma^2$ that accounts for model complexity. More importantly, under the standard linear model assumptions, this adjustment corrects for the optimism of the training error, so that $C_p$ serves as an approximately unbiased estimator of the expected prediction error on new responses (at the same design points $X$). In this sense, $C_p$ estimates prediction error by adjusting the in-sample fit.
+
+
+
+
+
+::: {.callout-caution}
+## Number of parameters in \(C_p\) and AIC
+
+- In Mallows’ $C_p$, $p$ denotes the number of regression parameters, including the intercept.
+- In AIC, the penalty uses the total number of estimated parameters. For a Gaussian linear model, this includes:
+  - regression coefficients (including intercept), and
+  - the error variance $\sigma^2$.
+
+Thus, if $p$ counts regression parameters, AIC uses $k = p + 1$.
+
+The difference between $C_p$ and AIC is only an additive constant across models. Therefore, when comparing models, these differences do not affect ranking, as long as a consistent definition is used.
+:::
+
 
 
 ### PRESS
@@ -390,21 +311,63 @@ Interpretation:
 - A smaller PRESS means better out-of-sample predictive ability.
 - Unlike ordinary SSE, PRESS directly focuses on prediction rather than only fit to the current sample.
 
-Easy example:
+::: {#exm-}
 
 - Model A has $PRESS=85$
 - Model B has $PRESS=62$
 
 Then Model B is preferred for prediction, because its leave-one-out prediction errors are smaller overall.
+:::
+
+
+
+::: {#exm-}
+
+We still use this generated dataset as an example.
+
+```{r}
+set.seed(123)
+n <- 30
+x1 <- runif(n, 1, 10)
+x2 <- runif(n, 1, 10)
+y <- 20 + 5 * x1 - 4 * x2 + rnorm(n, 0, 5)
+
+dat <- data.frame(x1 = x1, x2 = x2, y = y)
+```
+
+```{r}
+y_i <- numeric(n)
+for (i in 1:n) {
+    fit_i <- lm(y ~ x1 + x2, data = dat[-i, ])
+    y_i[i] <- predict(fit_i, newdata = dat[i, ])
+}
+press_manual <- sum((y - y_i)^2)
+press_manual
+```
+
+We could use `olsrr::ols_press` to compute PRESS. 
+
+```{r}
+#| warning: false
+library(olsrr)
+ols_press(fit)
+```
+
+
+:::
+
+
+### Summary
+
 
 So in practice:
 
 - use $R^2$, adjusted $R^2$, or MSE to study fit,
-- use AIC/BIC to balance fit and complexity,
+- use AIC to balance fit and complexity,
 - use $C_p$ to compare subset models,
 - use PRESS when prediction is the main goal.
 
-
+<!-- 
 ### BIC
 
 The Bayesian Information Criterion (BIC) is very similar:
@@ -433,7 +396,23 @@ Now suppose instead we have:
 - Model 1: $AIC=116$, $BIC=120$
 - Model 2: $AIC=114$, $BIC=127$
 
-Then AIC prefers Model 2, but BIC prefers Model 1. This usually means Model 2 fits a little better, but Model 1 is more parsimonious. In practice, AIC often leans toward prediction, while BIC often leans toward simpler models.
+Then AIC prefers Model 2, but BIC prefers Model 1. This usually means Model 2 fits a little better, but Model 1 is more parsimonious. In practice, AIC often leans toward prediction, while BIC often leans toward simpler models. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -517,6 +496,14 @@ Stepwise regression is often described as an **objective** screening method, but
 3. It does not search every possible subset. The search is a greedy algorithm that might get stuck in local optimum. 
 
 
+
+::: {.callout-note}
+The method covered here is the traditional p-value based stepwise regression. There are other versions that will be covered later.
+:::
+
+
+
+
 ### Forward selection and backward elimination
 
 Stepwise regression is closely related to two other variable screening strategies.
@@ -541,6 +528,11 @@ In R, we could use `olsrr::ols_step_both_p` to perform the stepwise regression.
 
 
 ::: {#exm-}
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
 
 The [dataset](EXAMPLE.csv) contains 10 predictors and 1 response variable.
 
@@ -597,6 +589,8 @@ ols_step_both_p(fit)
 ```
 From this process, `X10 + X9 + X6 + X1 + X2 + X8` are our choice of variables.
 
+</details>
+
 :::
 
 <!-- # Example: Executive Salary Data
@@ -611,145 +605,185 @@ In the executive salary example described in the slides:
 
 <!-- This is exactly the kind of situation where stepwise regression can serve as a first screening tool. -->
 
+### Other versions
 
-### Other metrics
+There are many issues about the traditional p-value based stepwise regression. Therefore we other other versions of the idea. `step` in base R is one of them.
+
+There are two major changes here. 
+
+1. The order of adding/removing variables are changed. During each step, `step` will compare the current model with each model that has one more varialbe, and with each model that has one few variable, and choose the best one for the next iteration. In other words, it perform adding and removing simutanously.
+2. The best in this function is the smallest AIC. 
 
 
+::: {#exm-}
 
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+```{r}
+step(fit, direction = "both")
+```
+
+If we want to start from `y~x1+x2+x3+x4` and to search until `x10`, we need to first fit a model with 4 variables, and define the upper bound to be 10 variables.
 
 
 ```{r}
-library(olsrr)
-ols_step_both_p(fit, details = TRUE)
+fit_sub <- lm(Y~X1+X2+X3+X4, data=dat)
+step(
+    fit_sub,
+    scope = list(
+        lower = ~1,
+        upper = ~ X1+X2+X3+X4+X5+X6+X7+X8+X9+X10
+    )
+)
 ```
 
 
+</details>
+
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## All-Possible-Regressions Selection Procedure
+
+
+Forward selection, backward elimination, and stepwise regression all build models one variable at a time. None of them guarantees that the best model with a given number of predictors will be found.
+
+Aall-possible-regressions selection, or alternatively named best-subsets regression, is to consider all possible regression models formed from the candidate predictors. The idea is very simple: for each possible model size, search all possible models and identify the best subset according to a chosen criterion by brute force.
+
+Typical criteria contain
+
+- $R^2$ or Adjusted $R^2$
+- MSE
+- Mallows' $C_p$ or AIC
+- PRESS 
+
+In R, we could use `leaps::regsubsets` to search for the variables.
+
+
+::: {#exm-}
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
 ```{r}
-step(fit)
-```
+#| warning: false
 
-
-
-
-```{r}
 library(leaps)
+dat <- read.csv("EXAMPLE.csv")
+```
+
+
+```{r}
 models <- regsubsets(Y ~ ., data = dat, nvmax = 10)
-summary(models)
+models_summary <- summary(models)
+```
+
+We could then check the which subset is the best according to different creteria.
+
+
+```{r}
+best_cp <- which.min(models_summary$cp)
+plot(models_summary$cp, xlab = "Number of varaiables", type = "l")
+points(best_cp, models_summary$cp[best_cp], col = "red", cex = 2, pch = 20)
+```
+
+
+
+```{r}
+best_adjr2 <- which.max(models_summary$adjr2)
+plot(models_summary$adjr2, xlab = "Number of varaiables", type = "l")
+points(best_adjr2, models_summary$adjr2[best_adjr2], col = "red", cex = 2, pch = 20)
 ```
 
 ```{r}
-plot(summary(models)$adjr2)
+best_rsq <- which.max(models_summary$rsq)
+plot(models_summary$rsq, xlab = "Number of varaiables", type = "l")
+points(best_rsq, models_summary$rsq[best_rsq], col = "red", cex = 2, pch = 20)
+```
+
+```{r}
+best_rss <- which.min(models_summary$rss)
+plot(models_summary$rss, xlab = "Number of varaiables", type = "l")
+points(best_rss, models_summary$rss[best_rss], col = "red", cex = 2, pch = 20)
 ```
 
 
-# 6.3 All-Possible-Regressions Selection Procedure
+</details>
 
-## Basic idea
+:::
 
-Forward selection, backward elimination, and stepwise regression all build models **one variable at a time**. None of them guarantees that the best model with a given number of predictors will be found.
 
-An alternative is to consider **all possible regression models** formed from the candidate predictors.
 
-This approach is called:
 
-- **all-possible-regressions selection**, or
-- **best-subsets regression**.
 
-Its main advantage is that, for each possible model size, it can identify the best subset according to a chosen criterion.
 
-## Why use best-subsets regression?
 
-Suppose there are $p$ candidate predictors.
 
-Then for:
+::: {.callout-note collapse="true"}
+## Stepwise Regression in Statistical Learning
 
-- 1 predictor,
-- 2 predictors,
-- 3 predictors,
-- and so on,
+This description follows @Jam2021. The key idea is to approximate best subset selection using a greedy procedure.
 
-we can compare all models of that size and select the best one according to some measure of quality.
+1. For each model size (number of predictors), stepwise procedures generate a set of candidate models by adding or removing variables.
+2. Among models of the same size, we select the “best” model based on training fit (e.g., largest $R^2$ or smallest SSE). This yields one representative model for each model size.
+3. We then compare these models across different sizes using an estimate of test error, such as AIC, $C_p$, or really using a validation set to estimate the test error. 
 
-This gives more complete information than a purely sequential method.
+Note that this stepwise regression is actually a variation of the best-of-subset method. Therefore its R implementation is done through `leaps::regsubsets`.
 
-# Criteria Used in Best-Subsets Regression
 
-Several criteria may be used to compare subset models.
+```{r}
+#| warning: false
 
-## $R^2$ criterion
+library(leaps)
+fit_fwd <- regsubsets(Y ~ ., data = dat, nvmax = 10, method = "forward")
+summary(fit_fwd)
+```
 
-A larger $R^2$ indicates a better fit to the observed data.
 
-However, $R^2$ always increases when more predictors are added, so it tends to favor larger models.
+```{r}
+fwd_sum <- summary(fit_fwd)
+best_cp <- which.min(fwd_sum$cp)
+best_cp
+```
 
-## Adjusted $R^2$ criterion
+```{r}
+plot(fwd_sum$cp, xlab='Number of varaiables', type='l')
+points(best_cp, fwd_sum$cp[best_cp], col = "red", cex = 2, pch = 20)
+```
 
-Adjusted $R^2$ penalizes model size.
+Note that `regsubsets` doesn't use AIC since AIC and $C_p$ are essentially the same in the case of linear regression. 
 
-In general:
+:::
 
-- larger adjusted $R^2$ is better.
 
-Because adjusted $R^2$ increases only when the mean square error decreases enough to justify the added complexity, it is often more useful than ordinary $R^2$.
 
-## MSE criterion
 
-A smaller **mean square error (MSE)** is preferred.
 
-Searching for a model with minimum or near-minimum MSE is equivalent to searching for a model with high adjusted $R^2$.
 
-## Mallows' $C_p$ criterion
 
-A good subset model should have:
 
-- a **small** value of $C_p$, and
-- a value of $C_p$ **near** the number of parameters in the model.
 
-A $C_p$ value near the number of parameters suggests that the subset model has little bias.
-
-## PRESS criterion
-
-PRESS stands for **prediction sum of squares**.
-
-It is based on leave-one-out prediction errors:
-
-$$
-PRESS = \sum_{i=1}^n (y_i - \hat y_{(i)})^2,
-$$
-
-where $\hat y_{(i)}$ is the predicted value for observation $i$ obtained from a model fit **without** using observation $i$.
-
-A smaller PRESS indicates better predictive performance.
-
-# Example: Best-Subsets for Executive Salary
-
-In the executive salary example, best-subsets regression is used to examine the 10 potential predictors more thoroughly.
-
-The goal is again to identify the most important predictors for the natural log of salary, but now the procedure compares possible subsets more directly rather than following only a sequential path.
-
-Plots and software output for $R^2$, adjusted $R^2$, $C_p$, and related criteria can help identify a promising subset size and a promising combination of variables.
-
-# 6.4 Caveats
+## Caveats
 
 Both stepwise regression and best-subsets regression should be used carefully.
 
-## Main caveats
-
-### 1. Error rates can be high
-
-Because many models and many tests are examined, the probability of making at least one Type I or Type II error can be quite large.
-
-### 2. These are screening tools, not full model-building procedures
-
-Usually, analysts do **not** include interaction terms and higher-order terms in the initial candidate list.
-
-As a result, these procedures often do **not** perform the full intellectual work of model building.
-
-### 3. They may produce nonsensical models
-
-Even if some interaction or higher-order terms are included, automated methods can still select a model that makes little scientific or practical sense.
-
-### 4. Common sense still matters
+- Test error rates can be high
+- These are screening tools, not full model-building procedures, since usually, analysts do not include interaction terms and higher-order terms in the initial candidate list.
+- They may produce nonsensical models, therefore common sense still matters. 
 
 You should not abandon:
 
@@ -758,76 +792,26 @@ You should not abandon:
 - intuition,
 - and interpretability.
 
-A statistically selected model is not automatically the right model.
-
-# Practical Advice
+A statistically selected model is not automatically the right model. 
 
 A good way to use these methods is:
 
 1. Start with a long list of possible predictors.
-2. Use **stepwise regression** or **best-subsets regression** to screen for the most important variables.
-3. Then begin the **real model-building phase**:
+2. Use stepwise regression or best-subsets regression to screen for the most important variables.
+3. Then begin the real model-building phase:
    - check assumptions,
    - examine residual plots,
    - consider transformations,
    - add interactions or higher-order terms when scientifically justified,
    - and compare models thoughtfully.
 
-So these methods are best viewed as **starting points**, not final answers.
+So these methods are best viewed as starting points, not final answers.
 
-# Quick Comparison Table
 
-| Method | How it starts | How it proceeds | Strength | Limitation |
-|---|---|---|---|---|
-| Forward selection | No predictors | Adds variables only | Simple | Cannot remove variables once added |
-| Backward elimination | Full model | Removes variables only | Starts from full information | Requires fitting the full model |
-| Stepwise selection | No predictors | Adds and removes | More flexible than forward selection | Still does not check all subsets |
-| Best-subsets regression | Considers all subset sizes | Compares all candidate models | Can find best subset for each size | Computationally heavier; may still ignore scientific meaning |
 
-# R Notes
+::: {.callout-tip}
+## LASSO
+LASSO is fundamentally different from ordinary least squares (OLS). While OLS focuses on unbiased estimation and supports classical inference (such as confidence intervals and hypothesis tests), LASSO introduces a penalty that shrinks coefficients and can set some of them exactly to zero. This makes LASSO particularly effective for prediction and variable selection, especially in settings with many or highly correlated predictors. 
 
-Below are common R approaches for these methods.
-
-## Stepwise regression
-
-```r
-fit_full <- lm(y ~ x1 + x2 + x3 + x4, data = dat)
-fit_null <- lm(y ~ 1, data = dat)
-
-step(fit_null,
-     scope = list(lower = fit_null, upper = fit_full),
-     direction = "both")
-```
-
-## Forward selection
-
-```r
-step(fit_null,
-     scope = list(lower = fit_null, upper = fit_full),
-     direction = "forward")
-```
-
-## Backward elimination
-
-```r
-step(fit_full, direction = "backward")
-```
-
-## Best-subsets regression
-
-```r
-library(leaps)
-
-best <- regsubsets(y ~ x1 + x2 + x3 + x4, data = dat, nvmax = 4)
-summary(best)
-```
-
-# Final Takeaway
-
-Variable screening methods are useful when there are many possible predictors, but they should be used with caution.
-
-- **Stepwise regression** is a convenient automatic screening procedure.
-- **Best-subsets regression** is more exhaustive and can identify the best model for a given size.
-- Neither method should replace thoughtful model building.
-
-The best practice is to use these procedures to **screen variables first**, then build the final regression model using statistical reasoning, subject knowledge, and diagnostic checking.
+However, because the estimates are biased and the selection process is data-dependent, standard inferential tools (like p-values and standard errors) are no longer valid in the usual sense. For this reason, LASSO is not emphasized in introductory regression courses. Instead, it plays a central role in modern statistical learning, and we will study it in more detail in other courses which focused on prediction and model regularization if there is an opportunity.
+:::

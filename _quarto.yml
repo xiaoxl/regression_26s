@@ -72,13 +72,13 @@ book:
     - part: "Building models"
       chapters:
       - contents/4/vs.qmd
-      - contents/4/ra.qmd
-      - contents/4/project3.qmd
+      # - contents/4/ra.qmd
+      # - contents/4/project3.qmd
   appendices:
     - contents/app/data.qmd
     - contents/app/r.qmd
     - contents/app/hypo.qmd
-    - contents/app/optimism.qmd
+    # - contents/app/optimism.qmd
   sidebar:
     style: "docked"
     # pinned: true
