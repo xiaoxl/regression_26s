@@ -543,10 +543,7 @@ window.Quarto = {
   <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">12.2.3</span> R code</a></li>
   <li><a href="#other-versions" id="toc-other-versions" class="nav-link" data-scroll-target="#other-versions"><span class="header-section-number">12.2.4</span> Other versions</a></li>
   </ul></li>
-  <li><a href="#all-possible-regressions-selection-procedure" id="toc-all-possible-regressions-selection-procedure" class="nav-link" data-scroll-target="#all-possible-regressions-selection-procedure"><span class="header-section-number">12.3</span> All-Possible-Regressions Selection Procedure</a>
-  <ul class="collapse">
-  <li><a href="#basic-idea" id="toc-basic-idea" class="nav-link" data-scroll-target="#basic-idea"><span class="header-section-number">12.3.1</span> Basic idea</a></li>
-  </ul></li>
+  <li><a href="#all-possible-regressions-selection-procedure" id="toc-all-possible-regressions-selection-procedure" class="nav-link" data-scroll-target="#all-possible-regressions-selection-procedure"><span class="header-section-number">12.3</span> All-Possible-Regressions Selection Procedure</a></li>
   <li><a href="#caveats" id="toc-caveats" class="nav-link" data-scroll-target="#caveats"><span class="header-section-number">12.4</span> Caveats</a></li>
   </ul>
 </nav>
@@ -1442,8 +1439,6 @@ Coefficients:
 </section>
 <section id="all-possible-regressions-selection-procedure" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="all-possible-regressions-selection-procedure"><span class="header-section-number">12.3</span> All-Possible-Regressions Selection Procedure</h2>
-<section id="basic-idea" class="level3" data-number="12.3.1">
-<h3 data-number="12.3.1" class="anchored" data-anchor-id="basic-idea"><span class="header-section-number">12.3.1</span> Basic idea</h3>
 <p>Forward selection, backward elimination, and stepwise regression all build models one variable at a time. None of them guarantees that the best model with a given number of predictors will be found.</p>
 <p>Aall-possible-regressions selection, or alternatively named best-subsets regression, is to consider all possible regression models formed from the candidate predictors. The idea is very simple: for each possible model size, search all possible models and identify the best subset according to a chosen criterion by brute force.</p>
 <p>Typical criteria contain</p>
@@ -1595,7 +1590,6 @@ Selection Algorithm: forward
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="caveats" class="level2" data-number="12.4">
 <h2 data-number="12.4" class="anchored" data-anchor-id="caveats"><span class="header-section-number">12.4</span> Caveats</h2>
