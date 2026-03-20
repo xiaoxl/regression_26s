@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/app/data.html" rel="next">
+<link href="../../contents/4/project3.html" rel="next">
 <link href="../../contents/4/vs.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -76,6 +76,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles/blocks.css">
 </head>
@@ -269,6 +298,11 @@ ul.task-list li input[type="checkbox"] {
       <a href="../../">Regression 26 Spring</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
     </div>
       </div>
@@ -396,13 +430,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/4/vs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/4/ra.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Residual analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/project3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></span></a>
   </div>
 </li>
       </ul>
@@ -428,6 +468,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Quick intro to R</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/hypo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Types of Errors</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -435,8 +481,68 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#regression-residuals" id="toc-regression-residuals" class="nav-link active" data-scroll-target="#regression-residuals"><span class="header-section-number">14</span> Regression Residuals</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">14.1</span> Interpretation</a></li>
+  <li><a href="#two-useful-properties-of-residuals" id="toc-two-useful-properties-of-residuals" class="nav-link" data-scroll-target="#two-useful-properties-of-residuals"><span class="header-section-number">14.2</span> Two useful properties of residuals</a></li>
+  </ul></li>
+  <li><a href="#graphical-displays-of-residuals" id="toc-graphical-displays-of-residuals" class="nav-link" data-scroll-target="#graphical-displays-of-residuals"><span class="header-section-number">15</span> Graphical Displays of Residuals</a></li>
+  <li><a href="#detecting-lack-of-fit" id="toc-detecting-lack-of-fit" class="nav-link" data-scroll-target="#detecting-lack-of-fit"><span class="header-section-number">16</span> Detecting Lack of Fit</a>
+  <ul class="collapse">
+  <li><a href="#key-idea" id="toc-key-idea" class="nav-link" data-scroll-target="#key-idea"><span class="header-section-number">16.1</span> Key idea</a></li>
+  <li><a href="#typical-interpretation" id="toc-typical-interpretation" class="nav-link" data-scroll-target="#typical-interpretation"><span class="header-section-number">16.2</span> Typical interpretation</a></li>
+  <li><a href="#example-idea-from-the-lecture" id="toc-example-idea-from-the-lecture" class="nav-link" data-scroll-target="#example-idea-from-the-lecture"><span class="header-section-number">16.3</span> Example idea from the lecture</a></li>
+  </ul></li>
+  <li><a href="#partial-residual-plots" id="toc-partial-residual-plots" class="nav-link" data-scroll-target="#partial-residual-plots"><span class="header-section-number">17</span> Partial Residual Plots</a>
+  <ul class="collapse">
+  <li><a href="#why-use-a-partial-residual-plot" id="toc-why-use-a-partial-residual-plot" class="nav-link" data-scroll-target="#why-use-a-partial-residual-plot"><span class="header-section-number">17.1</span> Why use a partial residual plot?</a></li>
+  <li><a href="#typical-conclusions" id="toc-typical-conclusions" class="nav-link" data-scroll-target="#typical-conclusions"><span class="header-section-number">17.2</span> Typical conclusions</a></li>
+  </ul></li>
+  <li><a href="#detecting-unequal-variances" id="toc-detecting-unequal-variances" class="nav-link" data-scroll-target="#detecting-unequal-variances"><span class="header-section-number">18</span> Detecting Unequal Variances</a>
+  <ul class="collapse">
+  <li><a href="#terminology" id="toc-terminology" class="nav-link" data-scroll-target="#terminology"><span class="header-section-number">18.1</span> Terminology</a></li>
+  <li><a href="#how-heteroscedasticity-appears-in-a-residual-plot" id="toc-how-heteroscedasticity-appears-in-a-residual-plot" class="nav-link" data-scroll-target="#how-heteroscedasticity-appears-in-a-residual-plot"><span class="header-section-number">18.2</span> How heteroscedasticity appears in a residual plot</a></li>
+  <li><a href="#common-reasons-for-heteroscedasticity" id="toc-common-reasons-for-heteroscedasticity" class="nav-link" data-scroll-target="#common-reasons-for-heteroscedasticity"><span class="header-section-number">18.3</span> Common reasons for heteroscedasticity</a></li>
+  <li><a href="#remedies" id="toc-remedies" class="nav-link" data-scroll-target="#remedies"><span class="header-section-number">18.4</span> Remedies</a></li>
+  <li><a href="#example-idea-from-the-lecture-1" id="toc-example-idea-from-the-lecture-1" class="nav-link" data-scroll-target="#example-idea-from-the-lecture-1"><span class="header-section-number">18.5</span> Example idea from the lecture</a></li>
+  <li><a href="#a-simple-test-for-heteroscedasticity" id="toc-a-simple-test-for-heteroscedasticity" class="nav-link" data-scroll-target="#a-simple-test-for-heteroscedasticity"><span class="header-section-number">18.6</span> A simple test for heteroscedasticity</a></li>
+  </ul></li>
+  <li><a href="#checking-the-normality-assumption" id="toc-checking-the-normality-assumption" class="nav-link" data-scroll-target="#checking-the-normality-assumption"><span class="header-section-number">19</span> Checking the Normality Assumption</a>
+  <ul class="collapse">
+  <li><a href="#graphical-tools-for-checking-normality" id="toc-graphical-tools-for-checking-normality" class="nav-link" data-scroll-target="#graphical-tools-for-checking-normality"><span class="header-section-number">19.1</span> Graphical tools for checking normality</a></li>
+  <li><a href="#interpreting-a-normal-probability-plot" id="toc-interpreting-a-normal-probability-plot" class="nav-link" data-scroll-target="#interpreting-a-normal-probability-plot"><span class="header-section-number">19.2</span> Interpreting a normal probability plot</a></li>
+  <li><a href="#practical-comment" id="toc-practical-comment" class="nav-link" data-scroll-target="#practical-comment"><span class="header-section-number">19.3</span> Practical comment</a></li>
+  <li><a href="#fixing-nonnormality" id="toc-fixing-nonnormality" class="nav-link" data-scroll-target="#fixing-nonnormality"><span class="header-section-number">19.4</span> Fixing nonnormality</a></li>
+  </ul></li>
+  <li><a href="#detecting-outliers-and-influential-observations" id="toc-detecting-outliers-and-influential-observations" class="nav-link" data-scroll-target="#detecting-outliers-and-influential-observations"><span class="header-section-number">20</span> Detecting Outliers and Influential Observations</a>
+  <ul class="collapse">
+  <li><a href="#standardized-residuals" id="toc-standardized-residuals" class="nav-link" data-scroll-target="#standardized-residuals"><span class="header-section-number">20.1</span> Standardized residuals</a></li>
+  <li><a href="#studentized-deleted-residuals" id="toc-studentized-deleted-residuals" class="nav-link" data-scroll-target="#studentized-deleted-residuals"><span class="header-section-number">20.2</span> Studentized deleted residuals</a></li>
+  <li><a href="#important-note" id="toc-important-note" class="nav-link" data-scroll-target="#important-note"><span class="header-section-number">20.3</span> Important note</a></li>
+  </ul></li>
+  <li><a href="#influential-observations" id="toc-influential-observations" class="nav-link" data-scroll-target="#influential-observations"><span class="header-section-number">21</span> Influential Observations</a>
+  <ul class="collapse">
+  <li><a href="#leverage" id="toc-leverage" class="nav-link" data-scroll-target="#leverage"><span class="header-section-number">21.1</span> Leverage</a></li>
+  <li><a href="#cooks-distance" id="toc-cooks-distance" class="nav-link" data-scroll-target="#cooks-distance"><span class="header-section-number">21.2</span> Cook’s distance</a></li>
+  <li><a href="#example-idea-from-the-lecture-2" id="toc-example-idea-from-the-lecture-2" class="nav-link" data-scroll-target="#example-idea-from-the-lecture-2"><span class="header-section-number">21.3</span> Example idea from the lecture</a></li>
+  </ul></li>
+  <li><a href="#summary-of-diagnostic-tools" id="toc-summary-of-diagnostic-tools" class="nav-link" data-scroll-target="#summary-of-diagnostic-tools"><span class="header-section-number">22</span> Summary of Diagnostic Tools</a>
+  <ul class="collapse">
+  <li><a href="#for-lack-of-fit" id="toc-for-lack-of-fit" class="nav-link" data-scroll-target="#for-lack-of-fit"><span class="header-section-number">22.1</span> For lack of fit</a></li>
+  <li><a href="#for-unequal-variance" id="toc-for-unequal-variance" class="nav-link" data-scroll-target="#for-unequal-variance"><span class="header-section-number">22.2</span> For unequal variance</a></li>
+  <li><a href="#for-normality" id="toc-for-normality" class="nav-link" data-scroll-target="#for-normality"><span class="header-section-number">22.3</span> For normality</a></li>
+  <li><a href="#for-outliers" id="toc-for-outliers" class="nav-link" data-scroll-target="#for-outliers"><span class="header-section-number">22.4</span> For outliers</a></li>
+  <li><a href="#for-influential-observations" id="toc-for-influential-observations" class="nav-link" data-scroll-target="#for-influential-observations"><span class="header-section-number">22.5</span> For influential observations</a></li>
+  </ul></li>
+  <li><a href="#suggested-model-building-procedure" id="toc-suggested-model-building-procedure" class="nav-link" data-scroll-target="#suggested-model-building-procedure"><span class="header-section-number">23</span> Suggested Model-Building Procedure</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways"><span class="header-section-number">24</span> Key Takeaways</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -461,8 +567,345 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Residual analysis is one of the main tools for checking whether a regression model is appropriate.<br>
+In a regression model, the random errors are not directly observable, so we study the <strong>residuals</strong> instead.</p>
+<p>Recall the usual assumptions on the error term <span class="math inline">\(\varepsilon\)</span> in a regression model:</p>
+<ol type="1">
+<li><span class="math inline">\(\varepsilon\)</span> has mean <span class="math inline">\(0\)</span>.</li>
+<li><span class="math inline">\(\varepsilon\)</span> has constant variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li>Different error terms are uncorrelated.</li>
+<li><span class="math inline">\(\varepsilon\)</span> is normally distributed.</li>
+</ol>
+<p>This chapter introduces graphical tools and statistical ideas for detecting important departures from these assumptions.</p>
+<section id="regression-residuals" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Regression Residuals</h1>
+<p>Suppose the regression model is <span class="math display">\[
+y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \varepsilon_i.
+\]</span></p>
+<p>Because the true error <span class="math inline">\(\varepsilon_i\)</span> is unobservable, we estimate it by the <strong>residual</strong> <span class="math display">\[
+e_i = y_i - \hat y_i,
+\]</span> where <span class="math inline">\(\hat y_i\)</span> is the fitted value from the regression model.</p>
+<p>So a residual measures how far the observed response is from the fitted response.</p>
+<section id="interpretation" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">14.1</span> Interpretation</h2>
+<ul>
+<li>If <span class="math inline">\(e_i&gt;0\)</span>, the model underpredicts the response at observation <span class="math inline">\(i\)</span>.</li>
+<li>If <span class="math inline">\(e_i&lt;0\)</span>, the model overpredicts the response at observation <span class="math inline">\(i\)</span>.</li>
+<li>Large residuals indicate observations that are not well explained by the fitted model.</li>
+</ul>
+</section>
+<section id="two-useful-properties-of-residuals" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="two-useful-properties-of-residuals"><span class="header-section-number">14.2</span> Two useful properties of residuals</h2>
+<p>For an ordinary least squares regression model with an intercept:</p>
+<ol type="1">
+<li>The residuals sum to zero: <span class="math display">\[
+\sum_{i=1}^n e_i = 0.
+\]</span></li>
+<li>The residuals are orthogonal to the fitted values and to each predictor used in the model.</li>
+</ol>
+<p>These properties are useful both theoretically and computationally.</p>
+</section>
+</section>
+<section id="graphical-displays-of-residuals" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Graphical Displays of Residuals</h1>
+<p>Residual plots are used to assess whether the model assumptions appear reasonable.</p>
+<p>If the assumptions are satisfied, then residual plots should generally show:</p>
+<ul>
+<li>no systematic trend,</li>
+<li>no obvious curvature,</li>
+<li>no dramatic increase or decrease in spread,</li>
+<li>only a few unusually large residuals.</li>
+</ul>
+<p>A good residual plot looks like a random cloud centered around <span class="math inline">\(0\)</span>.</p>
+</section>
+<section id="detecting-lack-of-fit" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> Detecting Lack of Fit</h1>
+<p>A residual plot is often the first tool for deciding whether the deterministic part of the model is misspecified.</p>
+<section id="key-idea" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="key-idea"><span class="header-section-number">16.1</span> Key idea</h2>
+<p>If the mean function is incorrectly modeled, the residuals will often show a pattern.</p>
+<p>Examples of patterns suggesting lack of fit include:</p>
+<ul>
+<li>curved trend,</li>
+<li>wave pattern,</li>
+<li>systematic clustering,</li>
+<li>structure that suggests a missing variable or a missing higher-order term.</li>
+</ul>
+</section>
+<section id="typical-interpretation" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="typical-interpretation"><span class="header-section-number">16.2</span> Typical interpretation</h2>
+<ul>
+<li>A <strong>random cloud</strong> of residuals suggests the fitted mean structure is reasonable.</li>
+<li>A <strong>parabolic pattern</strong> suggests a quadratic term may be needed.</li>
+<li>A <strong>nonlinear pattern</strong> suggests transformation or a more flexible model may be appropriate.</li>
+</ul>
+</section>
+<section id="example-idea-from-the-lecture" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="example-idea-from-the-lecture"><span class="header-section-number">16.3</span> Example idea from the lecture</h2>
+<p>For the cholesterol-versus-fat-intake data, the first-order model produced a residual plot with a parabolic pattern. That suggests the straight-line model is inadequate and that a second-order model may fit better. After fitting the quadratic model, the residual plot no longer showed a clear pattern, so the quadratic model was more appropriate.</p>
+</section>
+</section>
+<section id="partial-residual-plots" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> Partial Residual Plots</h1>
+<p>A <strong>partial residual plot</strong> helps assess the relationship between the response and one predictor after accounting for the other predictors in the model.</p>
+<p>For predictor <span class="math inline">\(x_j\)</span>, a partial residual is often written as <span class="math display">\[
+e_i + \hat\beta_j x_{ij}.
+\]</span></p>
+<p>Plotting these values against <span class="math inline">\(x_j\)</span> can reveal structure that may be hidden in an ordinary residual plot.</p>
+<section id="why-use-a-partial-residual-plot" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="why-use-a-partial-residual-plot"><span class="header-section-number">17.1</span> Why use a partial residual plot?</h2>
+<p>It may reveal:</p>
+<ul>
+<li>curvature in the effect of a predictor,</li>
+<li>need for transformation of a predictor,</li>
+<li>nonlinearity not obvious from the usual residual plot.</li>
+</ul>
+</section>
+<section id="typical-conclusions" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="typical-conclusions"><span class="header-section-number">17.2</span> Typical conclusions</h2>
+<p>A partial residual plot may suggest:</p>
+<ul>
+<li>adding a quadratic term such as <span class="math inline">\(x_j^2\)</span>,</li>
+<li>transforming the variable, for example <span class="math inline">\(\log(x_j)\)</span> or <span class="math inline">\(1/x_j\)</span>,</li>
+<li>reconsidering the functional form of the model.</li>
+</ul>
+</section>
+</section>
+<section id="detecting-unequal-variances" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Detecting Unequal Variances</h1>
+<p>One important regression assumption is that the error variance is constant: <span class="math display">\[
+\operatorname{Var}(\varepsilon_i)=\sigma^2 \quad \text{for all } i.
+\]</span></p>
+<section id="terminology" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="terminology"><span class="header-section-number">18.1</span> Terminology</h2>
+<ul>
+<li><strong>Homoscedasticity</strong>: constant variance.</li>
+<li><strong>Heteroscedasticity</strong>: unequal variance.</li>
+</ul>
+</section>
+<section id="how-heteroscedasticity-appears-in-a-residual-plot" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="how-heteroscedasticity-appears-in-a-residual-plot"><span class="header-section-number">18.2</span> How heteroscedasticity appears in a residual plot</h2>
+<p>A plot of residuals versus fitted values or versus a predictor may show:</p>
+<ul>
+<li>a funnel shape,</li>
+<li>a cone shape,</li>
+<li>spread increasing with the mean,</li>
+<li>spread decreasing with the mean.</li>
+</ul>
+<p>These patterns suggest that the variability of the response changes with the level of the predictor or fitted value.</p>
+</section>
+<section id="common-reasons-for-heteroscedasticity" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="common-reasons-for-heteroscedasticity"><span class="header-section-number">18.3</span> Common reasons for heteroscedasticity</h2>
+<p>Heteroscedasticity often occurs when the variance of the response depends on its mean. Common situations include:</p>
+<ul>
+<li>count data, such as Poisson responses,</li>
+<li>proportions or percentages, such as binomial responses,</li>
+<li>multiplicative error structures.</li>
+</ul>
+</section>
+<section id="remedies" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="remedies"><span class="header-section-number">18.4</span> Remedies</h2>
+<p>A common remedy is a <strong>response transformation</strong> chosen to stabilize the variance.</p>
+<p>Typical variance-stabilizing transformations include:</p>
+<ul>
+<li><span class="math inline">\(\sqrt{y}\)</span> for count-type data,</li>
+<li><span class="math inline">\(\log(y)\)</span> for multiplicative or right-skewed responses,</li>
+<li>other Box–Cox transformations.</li>
+</ul>
+</section>
+<section id="example-idea-from-the-lecture-1" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="example-idea-from-the-lecture-1"><span class="header-section-number">18.5</span> Example idea from the lecture</h2>
+<p>For the social worker salary data, a second-order model appeared to fit the mean structure reasonably well, but the residual plot had a cone shape, indicating non-constant variance. After transforming the response to <span class="math inline">\(\log(y)\)</span>, the cone shape was greatly reduced, and the model assumptions were more plausible.</p>
+</section>
+<section id="a-simple-test-for-heteroscedasticity" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="a-simple-test-for-heteroscedasticity"><span class="header-section-number">18.6</span> A simple test for heteroscedasticity</h2>
+<p>One classical approach is to split the data into two groups, fit the model separately, and compare the two error variances using an <span class="math inline">\(F\)</span>-test.</p>
+<p>If the estimated variances differ substantially, this provides evidence against equal variances.</p>
+</section>
+</section>
+<section id="checking-the-normality-assumption" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> Checking the Normality Assumption</h1>
+<p>Normality is another standard assumption used for many regression inference procedures.</p>
+<section id="graphical-tools-for-checking-normality" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="graphical-tools-for-checking-normality"><span class="header-section-number">19.1</span> Graphical tools for checking normality</h2>
+<p>Common tools include:</p>
+<ul>
+<li>histogram of residuals,</li>
+<li>stem-and-leaf display,</li>
+<li>normal probability plot (QQ plot).</li>
+</ul>
+<p>Among these, the <strong>normal probability plot</strong> is often the most informative.</p>
+</section>
+<section id="interpreting-a-normal-probability-plot" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="interpreting-a-normal-probability-plot"><span class="header-section-number">19.2</span> Interpreting a normal probability plot</h2>
+<ul>
+<li>If the points follow an approximately straight line, the normality assumption is reasonable.</li>
+<li>Strong curvature or systematic deviation from a line suggests nonnormality.</li>
+</ul>
+</section>
+<section id="practical-comment" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="practical-comment"><span class="header-section-number">19.3</span> Practical comment</h2>
+<p>Regression methods are often fairly robust to moderate nonnormality when the sample size is reasonably large. However, severe skewness or heavy tails may still affect inference.</p>
+</section>
+<section id="fixing-nonnormality" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="fixing-nonnormality"><span class="header-section-number">19.4</span> Fixing nonnormality</h2>
+<p>Nonnormality is often accompanied by heteroscedasticity. In many cases, a transformation of the response helps with both problems.</p>
+<p>A standard family of transformations is the <strong>Box–Cox transformation</strong>, which can help identify a suitable power transformation for the response.</p>
+</section>
+</section>
+<section id="detecting-outliers-and-influential-observations" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Detecting Outliers and Influential Observations</h1>
+<p>Not every unusual point has the same meaning. Some are merely outliers in the response direction, while others strongly affect the fitted model.</p>
+<section id="standardized-residuals" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="standardized-residuals"><span class="header-section-number">20.1</span> Standardized residuals</h2>
+<p>A <strong>standardized residual</strong> rescales a residual by an estimate of its standard deviation.</p>
+<p>A common rule of thumb is:</p>
+<ul>
+<li><span class="math inline">\(|r_i| &gt; 2\)</span> may indicate a possible outlier,</li>
+<li><span class="math inline">\(|r_i| &gt; 3\)</span> indicates a more serious outlier.</li>
+</ul>
+</section>
+<section id="studentized-deleted-residuals" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="studentized-deleted-residuals"><span class="header-section-number">20.2</span> Studentized deleted residuals</h2>
+<p>A <strong>studentized deleted residual</strong> is usually preferred because it measures how unusual a point is when that same point is omitted from the variance estimate.</p>
+<p>A common rule of thumb is:</p>
+<ul>
+<li>values outside <span class="math inline">\([-2,2]\)</span> suggest possible outliers.</li>
+</ul>
+</section>
+<section id="important-note" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="important-note"><span class="header-section-number">20.3</span> Important note</h2>
+<p>An outlier should not automatically be removed. We first ask:</p>
+<ul>
+<li>Is it a data-entry or recording error?</li>
+<li>Is the model missing important terms?</li>
+<li>Is the point valid but scientifically unusual?</li>
+</ul>
+<p>Only obvious recording errors should be automatically corrected or removed.</p>
+</section>
+</section>
+<section id="influential-observations" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> Influential Observations</h1>
+<p>An observation is <strong>influential</strong> if it has a substantial effect on the fitted model, parameter estimates, or conclusions.</p>
+<section id="leverage" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="leverage"><span class="header-section-number">21.1</span> Leverage</h2>
+<p>Leverage measures how extreme an observation is in the predictor space.</p>
+<p>High-leverage points have unusual predictor values and may strongly affect the fitted line or surface.</p>
+<p>A common rule of thumb flags an observation if its leverage is larger than <span class="math display">\[
+\frac{2(p+1)}{n}
+\]</span> or sometimes <span class="math display">\[
+\frac{3(p+1)}{n},
+\]</span> where <span class="math inline">\(p+1\)</span> is the number of parameters in the model including the intercept.</p>
+</section>
+<section id="cooks-distance" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="cooks-distance"><span class="header-section-number">21.2</span> Cook’s distance</h2>
+<p><strong>Cook’s distance</strong> combines information about residual size and leverage to assess influence.</p>
+<p>Common guidelines:</p>
+<ul>
+<li><span class="math inline">\(D_i &gt; 1\)</span> suggests an influential observation,</li>
+<li>larger Cook’s distance values deserve further investigation.</li>
+</ul>
+<p>Cook’s distance is often preferred because it captures overall impact on the fitted regression.</p>
+</section>
+<section id="example-idea-from-the-lecture-2" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="example-idea-from-the-lecture-2"><span class="header-section-number">21.3</span> Example idea from the lecture</h2>
+<p>In the fast-food sales example, one observation had an extremely large standardized residual. Investigation showed that the recorded sales value contained a data-entry error. After correcting the value, the fitted model improved dramatically, showing how a single bad data point can distort a regression analysis.</p>
+</section>
+</section>
+<section id="summary-of-diagnostic-tools" class="level1" data-number="22">
+<h1 data-number="22"><span class="header-section-number">22</span> Summary of Diagnostic Tools</h1>
+<section id="for-lack-of-fit" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="for-lack-of-fit"><span class="header-section-number">22.1</span> For lack of fit</h2>
+<p>Use:</p>
+<ul>
+<li>residuals versus predictor,</li>
+<li>residuals versus fitted values,</li>
+<li>partial residual plots.</li>
+</ul>
+<p>Look for:</p>
+<ul>
+<li>curvature,</li>
+<li>trends,</li>
+<li>nonrandom structure.</li>
+</ul>
+</section>
+<section id="for-unequal-variance" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="for-unequal-variance"><span class="header-section-number">22.2</span> For unequal variance</h2>
+<p>Use:</p>
+<ul>
+<li>residuals versus fitted values,</li>
+<li>residuals versus predictors.</li>
+</ul>
+<p>Look for:</p>
+<ul>
+<li>cone shape,</li>
+<li>funnel shape,</li>
+<li>changing spread.</li>
+</ul>
+</section>
+<section id="for-normality" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="for-normality"><span class="header-section-number">22.3</span> For normality</h2>
+<p>Use:</p>
+<ul>
+<li>histogram of residuals,</li>
+<li>normal probability plot.</li>
+</ul>
+<p>Look for:</p>
+<ul>
+<li>approximate linear trend in the QQ plot.</li>
+</ul>
+</section>
+<section id="for-outliers" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="for-outliers"><span class="header-section-number">22.4</span> For outliers</h2>
+<p>Use:</p>
+<ul>
+<li>standardized residuals,</li>
+<li>studentized deleted residuals.</li>
+</ul>
+</section>
+<section id="for-influential-observations" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="for-influential-observations"><span class="header-section-number">22.5</span> For influential observations</h2>
+<p>Use:</p>
+<ul>
+<li>leverage,</li>
+<li>Cook’s distance.</li>
+</ul>
+</section>
+</section>
+<section id="suggested-model-building-procedure" class="level1" data-number="23">
+<h1 data-number="23"><span class="header-section-number">23</span> Suggested Model-Building Procedure</h1>
+<p>A practical regression diagnostic workflow is:</p>
+<ol type="1">
+<li>Fit an initial model.</li>
+<li>Examine residual plots for lack of fit.</li>
+<li>Check for heteroscedasticity.</li>
+<li>Check the normality of residuals.</li>
+<li>Identify possible outliers and influential points.</li>
+<li>Investigate unusual observations carefully.</li>
+<li>Modify the model if needed:
+<ul>
+<li>add missing terms,</li>
+<li>transform variables,</li>
+<li>correct recording errors,</li>
+<li>refit and reassess.</li>
+</ul></li>
+</ol>
+</section>
+<section id="key-takeaways" class="level1" data-number="24">
+<h1 data-number="24"><span class="header-section-number">24</span> Key Takeaways</h1>
+<ul>
+<li>Residuals are proxies for the unobserved regression errors.</li>
+<li>Residual plots are central tools for diagnosing model adequacy.</li>
+<li>Curvature in a residual plot suggests lack of fit.</li>
+<li>Funnel or cone shapes suggest heteroscedasticity.</li>
+<li>QQ plots help assess normality.</li>
+<li>Standardized residuals and studentized deleted residuals help detect outliers.</li>
+<li>Leverage and Cook’s distance help detect influential observations.</li>
+<li>Model revision should be guided by diagnostics and subject-matter reasoning, not by automatic deletion of unusual points.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -880,13 +1323,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/4/vs.html" class="pagination-link" aria-label="Variable selction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selction</span></span>
+      <a href="../../contents/4/vs.html" class="pagination-link" aria-label="Variable selection">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selection</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/4/project3.html" class="pagination-link" aria-label="Example: Boston Housing dataset full walkthrough">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

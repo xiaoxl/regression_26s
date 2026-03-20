@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Probability – Regression 26 Spring</title>
+<title>14&nbsp; Example: Boston Housing dataset full walkthrough – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,26 +55,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -84,8 +65,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/1/inferences.html" rel="next">
-<link href="../../contents/1/basics.html" rel="prev">
+<link href="../../contents/app/data.html" rel="next">
+<link href="../../contents/4/ra.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -335,7 +316,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -375,13 +356,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Review</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/basics.html" class="sidebar-item-text sidebar-link">
@@ -390,7 +371,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/prob.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/1/prob.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></span></a>
   </div>
 </li>
@@ -432,7 +413,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: Boston Housing part 1</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></span></a>
   </div>
 </li>
       </ul>
@@ -467,24 +448,36 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: Boston Housing part 2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: MLR phase</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Building models</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/4/vs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/ra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Residual analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/project3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></span></a>
   </div>
 </li>
       </ul>
@@ -528,21 +521,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#notations" id="toc-notations" class="nav-link active" data-scroll-target="#notations"><span class="header-section-number">2.1</span> Notations</a></li>
-  <li><a href="#random-variables" id="toc-random-variables" class="nav-link" data-scroll-target="#random-variables"><span class="header-section-number">2.2</span> Random variables</a>
+  <li><a href="#phase-1-understand-the-data-before-fitting-anything" id="toc-phase-1-understand-the-data-before-fitting-anything" class="nav-link active" data-scroll-target="#phase-1-understand-the-data-before-fitting-anything"><span class="header-section-number">14.1</span> Phase 1: Understand the Data Before Fitting Anything</a></li>
+  <li><a href="#phase-2-start-with-all-predictors-full-model" id="toc-phase-2-start-with-all-predictors-full-model" class="nav-link" data-scroll-target="#phase-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Phase 2: Start with All Predictors — Full Model</a></li>
+  <li><a href="#phase-3-consider-transformations" id="toc-phase-3-consider-transformations" class="nav-link" data-scroll-target="#phase-3-consider-transformations"><span class="header-section-number">14.3</span> Phase 3: Consider Transformations</a>
   <ul class="collapse">
-  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">2.2.1</span> R code</a></li>
-  </ul></li>
-  <li><a href="#some-relations" id="toc-some-relations" class="nav-link" data-scroll-target="#some-relations"><span class="header-section-number">2.3</span> Some relations</a>
-  <ul class="collapse">
-  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">2.3.1</span> Covariance</a></li>
-  <li><a href="#pearson-correlation-coefficient" id="toc-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</a></li>
-  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">2.3.3</span> Independence</a></li>
-  </ul></li>
-  <li><a href="#some-important-distributions" id="toc-some-important-distributions" class="nav-link" data-scroll-target="#some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</a>
-  <ul class="collapse">
-  <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</a></li>
-  <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</a></li>
+  <li><a href="#check-if-logmedv-improves-things" id="toc-check-if-logmedv-improves-things" class="nav-link" data-scroll-target="#check-if-logmedv-improves-things"><span class="header-section-number">14.3.1</span> Check if <code>log(medv)</code> improves things</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -553,7 +536,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></h1>
 </div>
 
 
@@ -570,355 +553,355 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
-<!-- Constants and basic symbols -->
-<p><span class="math display">\[
-\require{physics}
-\require{braket}
-\]</span></p>
-<p><span class="math display">\[
-\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
-\newcommand{\me}{{\mathrm e}}
-\newcommand{\argmin}{\operatorname{argmin}}
-\]</span></p>
-<!-- Probability -->
-<p>$$ </p>
-<p> $$</p>
-<!-- Distributions pdf -->
-<p><span class="math display">\[
-\newcommand{\pdfbinom}{{\tt binom}}
-\newcommand{\pdfbeta}{{\tt beta}}
-\newcommand{\pdfpois}{{\tt poisson}}
-\newcommand{\pdfgamma}{{\tt gamma}}
-\newcommand{\pdfnormal}{{\tt norm}}
-  \newcommand{\pdfexp}{{\tt expon}}
-\]</span></p>
-<!-- Distributions -->
-<p><span class="math display">\[
-\newcommand{\distbinom}{\operatorname{B}}
-\newcommand{\distbeta}{\operatorname{Beta}}
-\newcommand{\distgamma}{\operatorname{Gamma}}
-\newcommand{\distexp}{\operatorname{Exp}}
-\newcommand{\distpois}{\operatorname{Poisson}}
-\newcommand{\distnormal}{\operatorname{\mathcal N}}
-\newcommand{\distunif}{\operatorname{Unif}}
-\]</span></p>
-</div>
-<section id="notations" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="notations"><span class="header-section-number">2.1</span> Notations</h2>
-<ul>
-<li><span class="math inline">\(Y\)</span>: a random variable (captial letters)</li>
-<li><span class="math inline">\(y\)</span>: a sample of <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\Pr\qty(Y\in A\mid\theta)\)</span>: the probability of <span class="math inline">\(Y\)</span> being in <span class="math inline">\(A\)</span></li>
-<li><span class="math inline">\(p(y\mid\theta)=\Pr\qty(Y=y\mid\theta)\)</span>: the probability mass function (discrete case)</li>
-<li><span class="math inline">\(f(y\mid\theta)=\displaystyle\dv{y}\Pr\qty(Y\leq y\mid\theta)\)</span>: the probability density function (continuous case)</li>
-<li><span class="math inline">\(\operatorname{E}\qty(Y)\)</span>: the expectation of <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\operatorname{Var}\qty(Y)\)</span>: the variance of <span class="math inline">\(Y\)</span></li>
-</ul>
-</section>
-<section id="random-variables" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="random-variables"><span class="header-section-number">2.2</span> Random variables</h2>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.1 (Expectation)</strong></span> <span class="math display">\[
-\operatorname{E}\mqty[u(X)] = \int_{-\infty}^{\infty}u(x)f(x)\dl3x.
-\]</span></p>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.2</strong></span> &nbsp;</p>
-<ol type="1">
-<li><span class="math inline">\(\mu=\operatorname{E}(X)\)</span> is called the <strong>mean value</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(\sigma^2=\operatorname{Var}(X)=\operatorname{E}\mqty[(X-\mu)^2]\)</span> is called the <strong>variance</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(M_X(t)=\operatorname{E}\mqty[\me^{tX}]\)</span> is called the <strong>moment generating function</strong> of <span class="math inline">\(X\)</span>.</li>
-</ol>
-</div>
-<div id="prp-" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2.1</strong></span> &nbsp;</p>
-<ol type="1">
-<li><span class="math inline">\(\operatorname{E}\mqty[ag(X)+bh(X)]=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)]\)</span>.</li>
-<li><span class="math inline">\(\operatorname{Var}\mqty[X]=\operatorname{E}\mqty[(X-\mu)^2]=\operatorname{E}(X^2)-\mu^2\)</span>.</li>
-<li>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, <span class="math inline">\(\operatorname{Var}\mqty[aX+bY]=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y)\)</span>.</li>
-</ol>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{E}\mqty[ag(X)+bh(X)]&amp;=\int_{-\infty}^{\infty}\mqty[ag(x)+bh(x)]f(x)\dl3x\\
-                 &amp;=a\int_{-\infty}^{\infty}g(x)f(x)\dl3x+b\int_{-\infty}^{\infty}h(x)f(x)\dl3x\\
-                 &amp;=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)].
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{E}\mqty[(X-\mu)^2]&amp;=\operatorname{E}\mqty[\qty(X^2-2\mu X+\mu^2)]=\operatorname{E}(X^2)-2\mu\operatorname{E}(X)+\operatorname{E}(\mu^2)\\
-&amp;=\operatorname{E}(X^2)-2\mu\mu+\mu^2=\operatorname{E}(X^2)-\mu^2.
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{Var}\mqty[aX]&amp;=\operatorname{E}(a^2X^2)-a^2\mu^2=a^2\qty(\operatorname{E}(X^2)-\mu^2)=a^2\operatorname{Var}(X),\\
-\operatorname{Var}\mqty[X+Y]&amp;=\operatorname{E}((X+Y)^2)-(\operatorname{E}(X+Y))^2\\
-&amp;=\operatorname{E}(X^2)+\operatorname{E}(Y^2)+2\operatorname{E}(XY)-\operatorname{E}(X)^2-\operatorname{E}(Y)^2-2\operatorname{E}(X)\operatorname{E}(Y)\\
-&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y)+2(E(XY)-E(X)E(Y))\\
-&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y),\\
-\operatorname{Var}\mqty[aX+bY]&amp;=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y).
-\end{split}
-\]</span></p>
-</details>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Assume <span class="math inline">\(X_1,\ldots, X_n\)</span> i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Then <span class="math inline">\(\operatorname{Var}(\frac1n\sum X_i)=\sigma^2/n\)</span>. This implies that the more samples you pick, the smaller the variance is. This explains why, when possible, we want a large sample size. Note that we don’t specify any concrete distribution in this remark. This is related to estimation, which will be discussed in detail later.</p>
-</div>
-</div>
-<section id="r-code" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="r-code"><span class="header-section-number">2.2.1</span> R code</h3>
-<p>R has built-in random variables with different distributions. The naming convention is a prefix <code>d-</code>, <code>p-</code>, <code>q-</code> and <code>r-</code> together with the name of distribution.</p>
-<ul>
-<li><code>d-</code>: density function of the given distribution;</li>
-<li><code>p-</code>: cumulative density function of the given distribution;</li>
-<li><code>q-</code>: quantile function of the given distribution (which is the inverse of <code>p-</code> function);</li>
-<li><code>r-</code>: random sampling from the given distribution.</li>
-</ul>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.1 (Normal distribution)</strong></span> &nbsp;</p>
-<details>
-<summary>
-<strong>Click to expand.</strong>
-</summary>
+<p>In the previous section we talk about our main tools to handle the <code>Boston</code> dataset. In this section we display how to explore the dataset from scratch.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 68%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>crim</code></td>
+<td>Per capita crime rate by town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>zn</code></td>
+<td>Proportion of residential land zoned for lots over 25,000 sq.ft.</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>indus</code></td>
+<td>Proportion of non-retail business acres per town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>chas</code></td>
+<td>Charles River dummy variable (1 if tract bounds river; 0 otherwise)</td>
+<td>Categorical, nominal</td>
+</tr>
+<tr class="odd">
+<td><code>nox</code></td>
+<td>Nitrogen oxides concentration (parts per 10 million)</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>rm</code></td>
+<td>Average number of rooms per dwelling</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>Proportion of owner-occupied units built prior to 1940</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>dis</code></td>
+<td>Weighted mean distance to five Boston employment centers</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>rad</code></td>
+<td>Index of accessibility to radial highways (larger = better accessibility)</td>
+<td>Categorical, ordinal</td>
+</tr>
+<tr class="even">
+<td><code>tax</code></td>
+<td>Full-value property-tax rate per $10,000</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>ptratio</code></td>
+<td>Pupil–teacher ratio by town</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>black</code></td>
+<td><span class="math inline">\(1000(B_k - 0.63)^2\)</span>, where <span class="math inline">\(B_k\)</span> is the proportion of Black residents</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="odd">
+<td><code>lstat</code></td>
+<td>Percentage of lower-status population</td>
+<td>Numerical, continuous</td>
+</tr>
+<tr class="even">
+<td><code>medv</code></td>
+<td>Median value of owner-occupied homes (in $1,000s)</td>
+<td>Numerical, continuous</td>
+</tr>
+</tbody>
+</table>
+<section id="phase-1-understand-the-data-before-fitting-anything" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="phase-1-understand-the-data-before-fitting-anything"><span class="header-section-number">14.1</span> Phase 1: Understand the Data Before Fitting Anything</h2>
+<p>Before touching <code>lm()</code>, the first step is always exploratory data analysis (EDA).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>chas <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>chas)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>rad <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>rad)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      crim                zn             indus       chas         nox        
+ Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471   Min.   :0.3850  
+ 1st Qu.: 0.08205   1st Qu.:  0.00   1st Qu.: 5.19   1: 35   1st Qu.:0.4490  
+ Median : 0.25651   Median :  0.00   Median : 9.69           Median :0.5380  
+ Mean   : 3.61352   Mean   : 11.36   Mean   :11.14           Mean   :0.5547  
+ 3rd Qu.: 3.67708   3rd Qu.: 12.50   3rd Qu.:18.10           3rd Qu.:0.6240  
+ Max.   :88.97620   Max.   :100.00   Max.   :27.74           Max.   :0.8710  
+                                                                             
+       rm             age              dis              rad     
+ Min.   :3.561   Min.   :  2.90   Min.   : 1.130   24     :132  
+ 1st Qu.:5.886   1st Qu.: 45.02   1st Qu.: 2.100   5      :115  
+ Median :6.208   Median : 77.50   Median : 3.207   4      :110  
+ Mean   :6.285   Mean   : 68.57   Mean   : 3.795   3      : 38  
+ 3rd Qu.:6.623   3rd Qu.: 94.08   3rd Qu.: 5.188   6      : 26  
+ Max.   :8.780   Max.   :100.00   Max.   :12.127   2      : 24  
+                                                   (Other): 61  
+      tax           ptratio          black            lstat      
+ Min.   :187.0   Min.   :12.60   Min.   :  0.32   Min.   : 1.73  
+ 1st Qu.:279.0   1st Qu.:17.40   1st Qu.:375.38   1st Qu.: 6.95  
+ Median :330.0   Median :19.05   Median :391.44   Median :11.36  
+ Mean   :408.2   Mean   :18.46   Mean   :356.67   Mean   :12.65  
+ 3rd Qu.:666.0   3rd Qu.:20.20   3rd Qu.:396.23   3rd Qu.:16.95  
+ Max.   :711.0   Max.   :22.00   Max.   :396.90   Max.   :37.97  
+                                                                 
+      medv      
+ Min.   : 5.00  
+ 1st Qu.:17.02  
+ Median :21.20  
+ Mean   :22.53  
+ 3rd Qu.:25.00  
+ Max.   :50.00  
+                </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project3_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>num_vars <span class="ot">&lt;-</span> Boston[, <span class="fu">sapply</span>(Boston, is.numeric)]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(num_vars)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_matrix, <span class="at">hc.order =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -1.959964</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.959964</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] -2.1520996  0.8154634  1.3972201 -0.3558444  0.9952280 -0.8886770
- [7]  1.1540617  0.3979143 -0.3107844 -0.8612821</code></pre>
-</div>
-</div>
-</details>
-</div>
-</section>
-</section>
-<section id="some-relations" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="some-relations"><span class="header-section-number">2.3</span> Some relations</h2>
-<section id="covariance" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="covariance"><span class="header-section-number">2.3.1</span> Covariance</h3>
-<p>Assuming we have two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we have two sets of realizations <span class="math inline">\(x_1,\ldots, x_n\)</span> and <span class="math inline">\(y_1,\ldots, y_n\)</span>.</p>
-<p>The sum of squares and cross-products are defined as</p>
+<p>What I’m looking for:</p>
 <ul>
-<li><span class="math inline">\(SS_{xx}=\sum_{i=1}^n(x_i-\bar x)^2\)</span></li>
-<li><span class="math inline">\(SS_{yy}=\sum_{i=1}^n(y_i-\bar y)^2\)</span></li>
-<li><span class="math inline">\(SS_{xy}=\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span></li>
+<li>Skewed variables (may need log transforms — <code>medv</code> and <code>crim</code> are classically right-skewed)</li>
+<li>Non-linear relationships between predictors and <code>medv</code></li>
+<li>High pairwise correlations between predictors (multicollinearity warning signs)</li>
+<li>Outliers or influential observations</li>
 </ul>
-<p>where <span class="math inline">\(\bar x\)</span> and <span class="math inline">\(\bar y\)</span> are sample mean. Note that if we normalize these quantities by <span class="math inline">\(n-1\)</span>, we will get the usual unbiased sample varaince and covariance.</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.3 (Covariance and sample covariance)</strong></span> &nbsp;</p>
+<p>Here are some key takeaways from the observations:</p>
 <ul>
-<li><span class="math inline">\(\operatorname{Cov}(X,Y)=\operatorname{E}[(X-\mu_X)(Y-\mu_Y)]\)</span>, where <span class="math inline">\(\mu_X=\operatorname{E}(X)\)</span> and <span class="math inline">\(\mu_Y=\operatorname{E}(Y)\)</span>.</li>
-<li><span class="math inline">\(s_{xy}=\frac1{n-1}SS_{xy}=\frac1{n-1}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span>.</li>
+<li><code>lstat</code> vs <code>medv</code>: curved, which indicates quadratic or log transform likely needed</li>
+<li><code>crim</code> is extremely right-skewed, which indicates <code>log(crim)</code> often works better</li>
+<li><code>rm</code> vs <code>medv</code>: mostly linear but with some spread</li>
+<li><code>nox</code>, <code>dis</code>, <code>age</code> are highly intercorrelated (all related to urban density)</li>
+<li><code>tax</code> and <code>rad</code> are nearly collinear</li>
 </ul>
-</div>
 </section>
-<section id="pearson-correlation-coefficient" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</h3>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.4 (Pearson correlation coefficient <span class="math inline">\(r\)</span>)</strong></span> <span class="math display">\[
-r=\operatorname{cor}(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
-\]</span></p>
+<section id="phase-2-start-with-all-predictors-full-model" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="phase-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Phase 2: Start with All Predictors — Full Model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = medv ~ ., data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.1020  -2.7355  -0.4565   1.6821  25.9450 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  35.259615   5.433641   6.489 2.14e-10 ***
+crim         -0.108821   0.032685  -3.329 0.000937 ***
+zn            0.054896   0.014149   3.880 0.000119 ***
+indus         0.023760   0.063648   0.373 0.709081    
+chas1         2.524163   0.863181   2.924 0.003614 ** 
+nox         -17.573132   3.896362  -4.510 8.13e-06 ***
+rm            3.665491   0.421196   8.703  &lt; 2e-16 ***
+age           0.000461   0.013227   0.035 0.972210    
+dis          -1.554546   0.201909  -7.699 7.75e-14 ***
+rad2          1.488905   1.477509   1.008 0.314095    
+rad3          4.681254   1.335295   3.506 0.000498 ***
+rad4          2.576234   1.187369   2.170 0.030514 *  
+rad5          2.918493   1.207610   2.417 0.016028 *  
+rad6          1.185839   1.464013   0.810 0.418342    
+rad7          4.878992   1.571198   3.105 0.002012 ** 
+rad8          4.839836   1.491657   3.245 0.001257 ** 
+rad24         7.461674   1.788679   4.172 3.58e-05 ***
+tax          -0.008748   0.003895  -2.246 0.025144 *  
+ptratio      -0.972419   0.144478  -6.731 4.78e-11 ***
+black         0.009394   0.002661   3.531 0.000454 ***
+lstat        -0.529226   0.050640 -10.451  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.694 on 485 degrees of freedom
+Multiple R-squared:  0.7499,    Adjusted R-squared:  0.7396 
+F-statistic:  72.7 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.1 (Properties of Correlation)</strong></span> &nbsp;</p>
+</div>
+<p>Why: This gives me the lay of the land. I check:</p>
+<ul>
+<li>Adjusted <span class="math inline">\(R^2\)</span> (baseline: ~0.73 for raw Boston)</li>
+<li>Which predictors are significant in the presence of all others</li>
+<li>Residual standard error</li>
+<li>Overall F-test</li>
+</ul>
+<p>Then immediately do residual diagnostics on this full model:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The four diagnostic plots give me:</p>
 <ol type="1">
-<li><span class="math inline">\(-1\leq r\leq 1\)</span>.</li>
-<li><ul>
-<li><span class="math inline">\(r&gt;0\)</span> means positive correlation.</li>
-<li><span class="math inline">\(r&lt;0\)</span> means negative correlation.</li>
-<li><span class="math inline">\(r=0\)</span> means no positive or negative linear correlation.</li>
-</ul></li>
-<li><span class="math inline">\(\operatorname{cor}(x,y)=\operatorname{cor}(y, x)\)</span></li>
-<li>The correlation coefficient <span class="math inline">\(r\)</span> is scaleless (which means that it doesn’t depend on the units of measurement used for the variables).</li>
+<li>Residuals vs Fitted — checks linearity and homoscedasticity</li>
+<li>Normal Q-Q — checks normality of residuals</li>
+<li>Scale-Location — another view of heteroscedasticity</li>
+<li>Residuals vs Leverage — identifies influential points (Cook’s distance)</li>
 </ol>
-</div>
-<p>The Pearson correlation coefficient is used to measure the correlation of the two variables. If the relation is more closely stick to a straight line, the relation is stronger, and the resulted <span class="math inline">\(r\)</span> will be bigger. If <span class="math inline">\(r=1\)</span>, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will have a perfectly linear relation. This is not the same as the slope.</p>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2</strong></span> Let <span class="math inline">\(x_i=i\)</span> and <span class="math inline">\(y_i=0.001x_i\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> and the <span class="math inline">\(r=1\)</span>. We may add a small noise to it so <span class="math inline">\(y_i=0.001x_i+\varepsilon_i\)</span> while <span class="math inline">\(\varepsilon_i\sim N(0,0.001)\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> but <span class="math inline">\(r\)</span> is still close to <span class="math inline">\(1\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.001</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">1e-3</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="fl">0.001</span>, <span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9995071</code></pre>
-</div>
-</div>
-</div>
+<p>On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.</p>
 </section>
-<section id="independence" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="independence"><span class="header-section-number">2.3.3</span> Independence</h3>
-<p>Independence is the relation between two random variables.</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.5 (Independence)</strong></span> Random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(𝑌\)</span> are said to be independent if their joint distribution factorizes into the product of their marginal distributions. That is, for all <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> <span class="math display">\[
-F_{X,Y}(x,y)=F_X(x)F_Y(y).
-\]</span></p>
-<p>If a joint density exists, this is equivalently written as</p>
-<p><span class="math display">\[
-f_{X,Y}(x,y)=f_X(x)f_Y(y).
-\]</span></p>
-<p>It is equivalent to say that for all measurable functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>,</p>
-<p><span class="math display">\[
-\operatorname{E}[g(X)h(Y)]=\operatorname{E}[g(X)]\operatorname{E}[h(Y)].
-\]</span></p>
-</div>
-<p>Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from <span class="math inline">\(\operatorname{Cov}\)</span> and <span class="math inline">\(\operatorname{cor}\)</span>.</p>
-<div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.2</strong></span> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> and <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>. The converse is not true in general.</p>
-</div>
-<p><span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> (equivalently, <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>) means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no positive or negative linear relationship. However, this does not imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are unrelated; they may still exhibit a nonlinear dependence.</p>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3</strong></span> &nbsp;</p>
+<section id="phase-3-consider-transformations" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="phase-3-consider-transformations"><span class="header-section-number">14.3</span> Phase 3: Consider Transformations</h2>
+<section id="check-if-logmedv-improves-things" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="check-if-logmedv-improves-things"><span class="header-section-number">14.3.1</span> Check if <code>log(medv)</code> improves things</h3>
+<p>I’d also use Box-Cox to formally choose the best power transformation for <code>medv</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">abs</span>(x)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(fit_full)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="project3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>They are not independent because <span class="math inline">\(y\)</span> is literally defined as a function of <span class="math inline">\(x\)</span>. But their covariance and correlation are <span class="math inline">\(0\)</span>s.</p>
-</div>
-</section>
-</section>
-<section id="some-important-distributions" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</h2>
-<section id="normal-distribution-1" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</h3>
-<div id="thm-norm" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.3 (Normal Sample Mean–Variance)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Define</p>
+<p>Reading this specific plot</p>
 <ul>
-<li>Sample mean: <span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
-<li>Sample variance: <span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
+<li>The peak appears to be right around <span class="math inline">\(\lambda\approx0\)</span>, and</li>
+<li>the 95% CI dotted lines straddle 0 closely. They look to be roughly <span class="math inline">\((-0.1, 0.2)\)</span> or so.</li>
 </ul>
-<p>Then</p>
-<ol type="1">
-<li><span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span></li>
-<li><span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span></li>
-<li><span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</li>
-</ol>
+<p>By the standard rule, if <span class="math inline">\(\lambda=0\)</span> is inside the 95% CI, <code>log(y)</code> is the transformation.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<p>The complete proof is lengthy and out of scope of the course. Please refer to <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span> for details.</p>
-</section>
-<section id="sec-t-dist" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</h3>
-<div id="thm-t" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.4 (Student’s t-Distribution <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span>)</strong></span> Let</p>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-7-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ ., data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.73163 -0.10074 -0.01271  0.09153  0.86209 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  4.0078476  0.2188374  18.314  &lt; 2e-16 ***
+crim        -0.0102270  0.0013164  -7.769 4.75e-14 ***
+zn           0.0015096  0.0005698   2.649 0.008333 ** 
+indus        0.0027748  0.0025634   1.082 0.279575    
+chas1        0.1002734  0.0347642   2.884 0.004096 ** 
+nox         -0.7728738  0.1569242  -4.925 1.16e-06 ***
+rm           0.0868708  0.0169635   5.121 4.39e-07 ***
+age          0.0001981  0.0005327   0.372 0.710086    
+dis         -0.0511276  0.0081318  -6.287 7.21e-10 ***
+rad2         0.0833711  0.0595060   1.401 0.161838    
+rad3         0.1766617  0.0537784   3.285 0.001094 ** 
+rad4         0.1002350  0.0478207   2.096 0.036595 *  
+rad5         0.1344828  0.0486359   2.765 0.005908 ** 
+rad6         0.0961606  0.0589625   1.631 0.103565    
+rad7         0.2075191  0.0632793   3.279 0.001115 ** 
+rad8         0.1939560  0.0600758   3.229 0.001329 ** 
+rad24        0.3504602  0.0720382   4.865 1.55e-06 ***
+tax         -0.0005052  0.0001569  -3.221 0.001365 ** 
+ptratio     -0.0370069  0.0058188  -6.360 4.67e-10 ***
+black        0.0004148  0.0001072   3.871 0.000123 ***
+lstat       -0.0291645  0.0020395 -14.300  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.189 on 485 degrees of freedom
+Multiple R-squared:  0.7946,    Adjusted R-squared:  0.7861 
+F-statistic: 93.81 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>With <code>log(medv)</code> as the response:</p>
 <ul>
-<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
-<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
-<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
+<li>Coefficients are now interpreted as percent changes</li>
+<li>The residual fan shape (heteroscedasticity) is slightly improved</li>
 </ul>
-<p>Then <span class="math display">\[
-T=\frac{Z}{\sqrt{U/\nu}}
-\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
-</div>
-<p>These two theorems are usually used together. Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Then</p>
-<ul>
-<li><span class="math inline">\(\bar X\sim N(\mu,\sigma^2/n)\)</span>;</li>
-<li><span class="math inline">\(U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span>.</li>
-</ul>
-<p>Therefore</p>
-<ul>
-<li><span class="math inline">\(Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)\)</span>;</li>
-<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are indepedent.</li>
-</ul>
-<p>So <span class="math display">\[
-T=\frac{Z}{\sqrt{U/\nu}}=\frac{\frac1{\sigma/\sqrt n}(\bar X-\mu)}{\sqrt{\frac{(n-1)s^2}{\sigma^2}/(n-1)}}=\frac{\bar X-\mu}{s/\sqrt n}\sim t_{n-1}.
-\]</span></p>
-<p>In other words, if we standardize the sample mean using the sample standard deviation, we obtain a statistic that follows a t-distribution. This result is mainly used in the t-test.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The normal distribution and the t-distribution are both bell-shaped and symmetric. When the sample size is large (typically (n &gt; 30)), the t-distribution becomes very similar to the standard normal distribution, so the normal approximation is usually acceptable. When the sample size is small, however, the t-distribution has noticeably heavier tails, and it is better to use the t-distribution directly for inference.</p>
-</div>
-</div>
 
 
-<div id="refs" class="references csl-bib-body" role="list" style="display: none">
-<div id="ref-Hog2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
-</div>
-</div>
 </section>
 </section>
 
@@ -1338,13 +1321,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/1/basics.html" class="pagination-link" aria-label="Basics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span>
+      <a href="../../contents/4/ra.html" class="pagination-link" aria-label="Residual analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Residual analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/1/inferences.html" class="pagination-link" aria-label="Inferences">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferences</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../contents/app/data.html" class="pagination-link" aria-label="Datasets">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Datasets</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

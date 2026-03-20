@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Probability – Regression 26 Spring</title>
+<title>Appendix D — Optimism – Regression 26 Spring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,61 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -84,8 +30,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../contents/1/inferences.html" rel="next">
-<link href="../../contents/1/basics.html" rel="prev">
+<link href="../../contents/app/hypo.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -335,7 +280,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+          <h1 class="quarto-secondary-nav-title">Appendix D — Optimism</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -375,13 +320,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
  <span class="menu-text">Review</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/1/basics.html" class="sidebar-item-text sidebar-link">
@@ -390,7 +335,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../contents/1/prob.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../contents/1/prob.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></span></a>
   </div>
 </li>
@@ -487,17 +432,29 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Variable selection</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/ra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Residual analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/project3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/app/data.html" class="sidebar-item-text sidebar-link">
@@ -516,6 +473,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Types of Errors</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/app/optimism.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Optimism</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -528,21 +491,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#notations" id="toc-notations" class="nav-link active" data-scroll-target="#notations"><span class="header-section-number">2.1</span> Notations</a></li>
-  <li><a href="#random-variables" id="toc-random-variables" class="nav-link" data-scroll-target="#random-variables"><span class="header-section-number">2.2</span> Random variables</a>
+  <li><a href="#efrons-optimism-theorem" id="toc-efrons-optimism-theorem" class="nav-link active" data-scroll-target="#efrons-optimism-theorem"><span class="header-section-number">D.1</span> Efron’s Optimism Theorem</a></li>
+  <li><a href="#cp" id="toc-cp" class="nav-link" data-scroll-target="#cp"><span class="header-section-number">D.2</span> Cp</a></li>
+  <li><a href="#aic" id="toc-aic" class="nav-link" data-scroll-target="#aic"><span class="header-section-number">D.3</span> AIC</a></li>
+  <li><a href="#sec-history-cp-aic" id="toc-sec-history-cp-aic" class="nav-link" data-scroll-target="#sec-history-cp-aic"><span class="header-section-number">D.4</span> Historical Development of <span class="math inline">\(C_p\)</span>, AIC, and Optimism</a>
   <ul class="collapse">
-  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">2.2.1</span> R code</a></li>
-  </ul></li>
-  <li><a href="#some-relations" id="toc-some-relations" class="nav-link" data-scroll-target="#some-relations"><span class="header-section-number">2.3</span> Some relations</a>
-  <ul class="collapse">
-  <li><a href="#covariance" id="toc-covariance" class="nav-link" data-scroll-target="#covariance"><span class="header-section-number">2.3.1</span> Covariance</a></li>
-  <li><a href="#pearson-correlation-coefficient" id="toc-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</a></li>
-  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">2.3.3</span> Independence</a></li>
-  </ul></li>
-  <li><a href="#some-important-distributions" id="toc-some-important-distributions" class="nav-link" data-scroll-target="#some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</a>
-  <ul class="collapse">
-  <li><a href="#normal-distribution-1" id="toc-normal-distribution-1" class="nav-link" data-scroll-target="#normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</a></li>
-  <li><a href="#sec-t-dist" id="toc-sec-t-dist" class="nav-link" data-scroll-target="#sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</a></li>
+  <li><a href="#early-criteria-1970s" id="toc-early-criteria-1970s" class="nav-link" data-scroll-target="#early-criteria-1970s"><span class="header-section-number">D.4.1</span> 1. Early Criteria (1970s)</a></li>
+  <li><a href="#efrons-unification-1986" id="toc-efrons-unification-1986" class="nav-link" data-scroll-target="#efrons-unification-1986"><span class="header-section-number">D.4.2</span> 2. Efron’s Unification (1986)</a></li>
+  <li><a href="#esl-framework-2000s" id="toc-esl-framework-2000s" class="nav-link" data-scroll-target="#esl-framework-2000s"><span class="header-section-number">D.4.3</span> 3. ESL Framework (2000s)</a></li>
+  <li><a href="#conceptual-summary" id="toc-conceptual-summary" class="nav-link" data-scroll-target="#conceptual-summary"><span class="header-section-number">D.4.4</span> 4. Conceptual Summary</a></li>
+  <li><a href="#final-interpretation" id="toc-final-interpretation" class="nav-link" data-scroll-target="#final-interpretation"><span class="header-section-number">D.4.5</span> 5. Final Interpretation</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">D.4.6</span> References</a></li>
+  <li><a href="#other-notable-contributors" id="toc-other-notable-contributors" class="nav-link" data-scroll-target="#other-notable-contributors"><span class="header-section-number">D.4.7</span> 6. Other Notable Contributors</a></li>
+  <li><a href="#expanded-conceptual-view" id="toc-expanded-conceptual-view" class="nav-link" data-scroll-target="#expanded-conceptual-view"><span class="header-section-number">D.4.8</span> 7. Expanded Conceptual View</a></li>
+  <li><a href="#final-takeaway" id="toc-final-takeaway" class="nav-link" data-scroll-target="#final-takeaway"><span class="header-section-number">D.4.9</span> 8. Final Takeaway</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -553,7 +515,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Probability</span></h1>
+<h1 class="title d-none d-lg-block">Appendix D — Optimism</h1>
 </div>
 
 
@@ -570,355 +532,312 @@ window.Quarto = {
 </header>
 
 
-<div class="hidden">
-<!-- Constants and basic symbols -->
-<p><span class="math display">\[
-\require{physics}
-\require{braket}
-\]</span></p>
-<p><span class="math display">\[
-\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
-\newcommand{\me}{{\mathrm e}}
-\newcommand{\argmin}{\operatorname{argmin}}
-\]</span></p>
-<!-- Probability -->
-<p>$$ </p>
-<p> $$</p>
-<!-- Distributions pdf -->
-<p><span class="math display">\[
-\newcommand{\pdfbinom}{{\tt binom}}
-\newcommand{\pdfbeta}{{\tt beta}}
-\newcommand{\pdfpois}{{\tt poisson}}
-\newcommand{\pdfgamma}{{\tt gamma}}
-\newcommand{\pdfnormal}{{\tt norm}}
-  \newcommand{\pdfexp}{{\tt expon}}
-\]</span></p>
-<!-- Distributions -->
-<p><span class="math display">\[
-\newcommand{\distbinom}{\operatorname{B}}
-\newcommand{\distbeta}{\operatorname{Beta}}
-\newcommand{\distgamma}{\operatorname{Gamma}}
-\newcommand{\distexp}{\operatorname{Exp}}
-\newcommand{\distpois}{\operatorname{Poisson}}
-\newcommand{\distnormal}{\operatorname{\mathcal N}}
-\newcommand{\distunif}{\operatorname{Unif}}
-\]</span></p>
-</div>
-<section id="notations" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="notations"><span class="header-section-number">2.1</span> Notations</h2>
-<ul>
-<li><span class="math inline">\(Y\)</span>: a random variable (captial letters)</li>
-<li><span class="math inline">\(y\)</span>: a sample of <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\Pr\qty(Y\in A\mid\theta)\)</span>: the probability of <span class="math inline">\(Y\)</span> being in <span class="math inline">\(A\)</span></li>
-<li><span class="math inline">\(p(y\mid\theta)=\Pr\qty(Y=y\mid\theta)\)</span>: the probability mass function (discrete case)</li>
-<li><span class="math inline">\(f(y\mid\theta)=\displaystyle\dv{y}\Pr\qty(Y\leq y\mid\theta)\)</span>: the probability density function (continuous case)</li>
-<li><span class="math inline">\(\operatorname{E}\qty(Y)\)</span>: the expectation of <span class="math inline">\(Y\)</span></li>
-<li><span class="math inline">\(\operatorname{Var}\qty(Y)\)</span>: the variance of <span class="math inline">\(Y\)</span></li>
-</ul>
+<section id="efrons-optimism-theorem" class="level2" data-number="D.1">
+<h2 data-number="D.1" class="anchored" data-anchor-id="efrons-optimism-theorem"><span class="header-section-number">D.1</span> Efron’s Optimism Theorem</h2>
 </section>
-<section id="random-variables" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="random-variables"><span class="header-section-number">2.2</span> Random variables</h2>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.1 (Expectation)</strong></span> <span class="math display">\[
-\operatorname{E}\mqty[u(X)] = \int_{-\infty}^{\infty}u(x)f(x)\dl3x.
-\]</span></p>
-</div>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.2</strong></span> &nbsp;</p>
-<ol type="1">
-<li><span class="math inline">\(\mu=\operatorname{E}(X)\)</span> is called the <strong>mean value</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(\sigma^2=\operatorname{Var}(X)=\operatorname{E}\mqty[(X-\mu)^2]\)</span> is called the <strong>variance</strong> of <span class="math inline">\(X\)</span>.</li>
-<li><span class="math inline">\(M_X(t)=\operatorname{E}\mqty[\me^{tX}]\)</span> is called the <strong>moment generating function</strong> of <span class="math inline">\(X\)</span>.</li>
-</ol>
-</div>
-<div id="prp-" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2.1</strong></span> &nbsp;</p>
-<ol type="1">
-<li><span class="math inline">\(\operatorname{E}\mqty[ag(X)+bh(X)]=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)]\)</span>.</li>
-<li><span class="math inline">\(\operatorname{Var}\mqty[X]=\operatorname{E}\mqty[(X-\mu)^2]=\operatorname{E}(X^2)-\mu^2\)</span>.</li>
-<li>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, <span class="math inline">\(\operatorname{Var}\mqty[aX+bY]=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y)\)</span>.</li>
-</ol>
-<details>
-<summary>
-<strong>Click for proof.</strong>
-</summary>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{E}\mqty[ag(X)+bh(X)]&amp;=\int_{-\infty}^{\infty}\mqty[ag(x)+bh(x)]f(x)\dl3x\\
-                 &amp;=a\int_{-\infty}^{\infty}g(x)f(x)\dl3x+b\int_{-\infty}^{\infty}h(x)f(x)\dl3x\\
-                 &amp;=a\operatorname{E}\mqty[g(X)]+b\operatorname{E}\mqty[h(X)].
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{E}\mqty[(X-\mu)^2]&amp;=\operatorname{E}\mqty[\qty(X^2-2\mu X+\mu^2)]=\operatorname{E}(X^2)-2\mu\operatorname{E}(X)+\operatorname{E}(\mu^2)\\
-&amp;=\operatorname{E}(X^2)-2\mu\mu+\mu^2=\operatorname{E}(X^2)-\mu^2.
-\end{split}
-\]</span></p>
-<p><span class="math display">\[
-\begin{split}
-\operatorname{Var}\mqty[aX]&amp;=\operatorname{E}(a^2X^2)-a^2\mu^2=a^2\qty(\operatorname{E}(X^2)-\mu^2)=a^2\operatorname{Var}(X),\\
-\operatorname{Var}\mqty[X+Y]&amp;=\operatorname{E}((X+Y)^2)-(\operatorname{E}(X+Y))^2\\
-&amp;=\operatorname{E}(X^2)+\operatorname{E}(Y^2)+2\operatorname{E}(XY)-\operatorname{E}(X)^2-\operatorname{E}(Y)^2-2\operatorname{E}(X)\operatorname{E}(Y)\\
-&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y)+2(E(XY)-E(X)E(Y))\\
-&amp;=\operatorname{Var}(X)+\operatorname{Var}(Y),\\
-\operatorname{Var}\mqty[aX+bY]&amp;=a^2\operatorname{Var}(X)+b^2\operatorname{Var}(Y).
-\end{split}
-\]</span></p>
-</details>
-</div>
+<section id="cp" class="level2" data-number="D.2">
+<h2 data-number="D.2" class="anchored" data-anchor-id="cp"><span class="header-section-number">D.2</span> Cp</h2>
+</section>
+<section id="aic" class="level2" data-number="D.3">
+<h2 data-number="D.3" class="anchored" data-anchor-id="aic"><span class="header-section-number">D.3</span> AIC</h2>
+</section>
+<section id="sec-history-cp-aic" class="level2" data-number="D.4">
+<h2 data-number="D.4" class="anchored" data-anchor-id="sec-history-cp-aic"><span class="header-section-number">D.4</span> Historical Development of <span class="math inline">\(C_p\)</span>, AIC, and Optimism</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Note</span>Big Picture
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Assume <span class="math inline">\(X_1,\ldots, X_n\)</span> i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Then <span class="math inline">\(\operatorname{Var}(\frac1n\sum X_i)=\sigma^2/n\)</span>. This implies that the more samples you pick, the smaller the variance is. This explains why, when possible, we want a large sample size. Note that we don’t specify any concrete distribution in this remark. This is related to estimation, which will be discussed in detail later.</p>
+<p>Modern model selection criteria such as <span class="math inline">\(C_p\)</span> and AIC can be understood as <strong>training error plus a correction for optimism</strong>. This interpretation, however, emerged only after their original development.</p>
 </div>
 </div>
-<section id="r-code" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="r-code"><span class="header-section-number">2.2.1</span> R code</h3>
-<p>R has built-in random variables with different distributions. The naming convention is a prefix <code>d-</code>, <code>p-</code>, <code>q-</code> and <code>r-</code> together with the name of distribution.</p>
+<hr>
+<section id="early-criteria-1970s" class="level3" data-number="D.4.1">
+<h3 data-number="D.4.1" class="anchored" data-anchor-id="early-criteria-1970s"><span class="header-section-number">D.4.1</span> 1. Early Criteria (1970s)</h3>
+<p>Two fundamental model selection criteria were introduced independently:</p>
 <ul>
-<li><code>d-</code>: density function of the given distribution;</li>
-<li><code>p-</code>: cumulative density function of the given distribution;</li>
-<li><code>q-</code>: quantile function of the given distribution (which is the inverse of <code>p-</code> function);</li>
-<li><code>r-</code>: random sampling from the given distribution.</li>
+<li><strong>Mallows’ <span class="math inline">\(C_p\)</span></strong> (Mallows, 1973)</li>
+<li><strong>Akaike Information Criterion (AIC)</strong> (Akaike, 1973)</li>
 </ul>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.1 (Normal distribution)</strong></span> &nbsp;</p>
-<details>
-<summary>
-<strong>Click to expand.</strong>
-</summary>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(x, <span class="at">mean=</span><span class="dv">2</span>, <span class="at">sd=</span><span class="fl">0.5</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type=</span><span class="st">"l"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -1.959964</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.959964</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] -2.1520996  0.8154634  1.3972201 -0.3558444  0.9952280 -0.8886770
- [7]  1.1540617  0.3979143 -0.3107844 -0.8612821</code></pre>
-</div>
-</div>
-</details>
-</div>
+<section id="mallows-c_p" class="level4" data-number="D.4.1.1">
+<h4 data-number="D.4.1.1" class="anchored" data-anchor-id="mallows-c_p"><span class="header-section-number">D.4.1.1</span> Mallows’ <span class="math inline">\(C_p\)</span></h4>
+<p>Mallows proposed: <span class="math display">\[
+C_p = RSS + 2p\sigma^2,
+\]</span> motivated as an approximately unbiased estimator of prediction error in linear models.</p>
 </section>
-</section>
-<section id="some-relations" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="some-relations"><span class="header-section-number">2.3</span> Some relations</h2>
-<section id="covariance" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="covariance"><span class="header-section-number">2.3.1</span> Covariance</h3>
-<p>Assuming we have two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we have two sets of realizations <span class="math inline">\(x_1,\ldots, x_n\)</span> and <span class="math inline">\(y_1,\ldots, y_n\)</span>.</p>
-<p>The sum of squares and cross-products are defined as</p>
+<section id="akaikes-aic" class="level4" data-number="D.4.1.2">
+<h4 data-number="D.4.1.2" class="anchored" data-anchor-id="akaikes-aic"><span class="header-section-number">D.4.1.2</span> Akaike’s AIC</h4>
+<p>Akaike proposed: <span class="math display">\[
+\text{AIC} = -2\log L + 2k,
+\]</span> derived from minimizing the expected <strong>Kullback–Leibler divergence</strong> between the true model and a candidate model.</p>
+<hr>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>At this stage, <span class="math inline">\(C_p\)</span> and AIC were derived from <strong>different principles</strong>:</p>
 <ul>
-<li><span class="math inline">\(SS_{xx}=\sum_{i=1}^n(x_i-\bar x)^2\)</span></li>
-<li><span class="math inline">\(SS_{yy}=\sum_{i=1}^n(y_i-\bar y)^2\)</span></li>
-<li><span class="math inline">\(SS_{xy}=\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span></li>
+<li><span class="math inline">\(C_p\)</span>: unbiased estimation of squared prediction error<br>
+</li>
+<li>AIC: information-theoretic (KL divergence)</li>
 </ul>
-<p>where <span class="math inline">\(\bar x\)</span> and <span class="math inline">\(\bar y\)</span> are sample mean. Note that if we normalize these quantities by <span class="math inline">\(n-1\)</span>, we will get the usual unbiased sample varaince and covariance.</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.3 (Covariance and sample covariance)</strong></span> &nbsp;</p>
-<ul>
-<li><span class="math inline">\(\operatorname{Cov}(X,Y)=\operatorname{E}[(X-\mu_X)(Y-\mu_Y)]\)</span>, where <span class="math inline">\(\mu_X=\operatorname{E}(X)\)</span> and <span class="math inline">\(\mu_Y=\operatorname{E}(Y)\)</span>.</li>
-<li><span class="math inline">\(s_{xy}=\frac1{n-1}SS_{xy}=\frac1{n-1}\sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)\)</span>.</li>
-</ul>
-</div>
-</section>
-<section id="pearson-correlation-coefficient" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="pearson-correlation-coefficient"><span class="header-section-number">2.3.2</span> Pearson correlation coefficient</h3>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.4 (Pearson correlation coefficient <span class="math inline">\(r\)</span>)</strong></span> <span class="math display">\[
-r=\operatorname{cor}(x,y)=\frac{SS_{xy}}{\sqrt{{SS_{xx}SS_{yy}}}}.
+<p>There was <strong>no unified framework</strong> explaining why both take the form: <span class="math display">\[
+\text{fit} + \text{penalty}.
 \]</span></p>
 </div>
-<div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.1 (Properties of Correlation)</strong></span> &nbsp;</p>
+</div>
+<hr>
+</section>
+</section>
+<section id="efrons-unification-1986" class="level3" data-number="D.4.2">
+<h3 data-number="D.4.2" class="anchored" data-anchor-id="efrons-unification-1986"><span class="header-section-number">D.4.2</span> 2. Efron’s Unification (1986)</h3>
+<p>A major conceptual breakthrough came from <strong>Efron (1986)</strong>, who introduced the concept of <strong>optimism</strong>.</p>
+<section id="definition-optimism" class="level4" data-number="D.4.2.1">
+<h4 data-number="D.4.2.1" class="anchored" data-anchor-id="definition-optimism"><span class="header-section-number">D.4.2.1</span> Definition (Optimism)</h4>
+<p><span class="math display">\[
+\text{Optimism}
+= E[\text{Test Error} - \text{Training Error}].
+\]</span></p>
+</section>
+<section id="general-result" class="level4" data-number="D.4.2.2">
+<h4 data-number="D.4.2.2" class="anchored" data-anchor-id="general-result"><span class="header-section-number">D.4.2.2</span> General Result</h4>
+<p>Efron showed: <span class="math display">\[
+\text{Optimism}
+= 2 \sum_{i=1}^n \operatorname{Cov}(\hat{y}_i, y_i).
+\]</span></p>
+<hr>
+</section>
+<section id="special-cases" class="level4" data-number="D.4.2.3">
+<h4 data-number="D.4.2.3" class="anchored" data-anchor-id="special-cases"><span class="header-section-number">D.4.2.3</span> Special Cases</h4>
+<ul>
+<li><p><strong>Linear models</strong>: <span class="math display">\[
+\text{Optimism} = 2p\sigma^2
+\quad \Rightarrow \quad C_p
+\]</span></p></li>
+<li><p><strong>Likelihood-based models</strong>: <span class="math display">\[
+\text{Optimism} = 2k
+\quad \Rightarrow \quad \text{AIC}
+\]</span></p></li>
+</ul>
+<hr>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Key Insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both <span class="math inline">\(C_p\)</span> and AIC can be written as: <span class="math display">\[
+\boxed{
+\text{Training Error} + \text{Optimism}
+}
+\]</span></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="esl-framework-2000s" class="level3" data-number="D.4.3">
+<h3 data-number="D.4.3" class="anchored" data-anchor-id="esl-framework-2000s"><span class="header-section-number">D.4.3</span> 3. ESL Framework (2000s)</h3>
+<p>In <em>The Elements of Statistical Learning</em>, Hastie, Tibshirani, and Friedman systematically presented model selection using the <strong>optimism framework</strong>.</p>
+<p>They showed:</p>
+<p><span class="math display">\[
+\text{Optimism} = 2\sigma^2 \cdot \text{df},
+\]</span></p>
+<p>where <span class="math inline">\(\text{df}\)</span> (degrees of freedom) generalizes model complexity.</p>
+<hr>
+</section>
+<section id="conceptual-summary" class="level3" data-number="D.4.4">
+<h3 data-number="D.4.4" class="anchored" data-anchor-id="conceptual-summary"><span class="header-section-number">D.4.4</span> 4. Conceptual Summary</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Historical Flow
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
-<li><span class="math inline">\(-1\leq r\leq 1\)</span>.</li>
-<li><ul>
-<li><span class="math inline">\(r&gt;0\)</span> means positive correlation.</li>
-<li><span class="math inline">\(r&lt;0\)</span> means negative correlation.</li>
-<li><span class="math inline">\(r=0\)</span> means no positive or negative linear correlation.</li>
+<li><strong>Mallows (1973)</strong>: <span class="math inline">\(C_p\)</span> (prediction error perspective)<br>
+</li>
+<li><strong>Akaike (1973)</strong>: AIC (information-theoretic perspective)<br>
+</li>
+<li><strong>Efron (1986)</strong>: optimism (unified explanation)<br>
+</li>
+<li><strong>ESL (2000s)</strong>: modern teaching framework</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+<section id="final-interpretation" class="level3" data-number="D.4.5">
+<h3 data-number="D.4.5" class="anchored" data-anchor-id="final-interpretation"><span class="header-section-number">D.4.5</span> 5. Final Interpretation</h3>
+<p><span class="math display">\[
+\boxed{
+\text{Model Selection Criteria}
+= \text{Training Error} + \text{Bias Correction}
+}
+\]</span></p>
+<p>where the bias correction is the <strong>optimism</strong>, i.e., the expected amount by which training error underestimates test error.</p>
+<hr>
+</section>
+<section id="references" class="level3" data-number="D.4.6">
+<h3 data-number="D.4.6" class="anchored" data-anchor-id="references"><span class="header-section-number">D.4.6</span> References</h3>
+<ul>
+<li>Mallows, C. L. (1973). <em>Some Comments on <span class="math inline">\(C_p\)</span></em>. Technometrics.</li>
+<li>Akaike, H. (1973). <em>Information Theory and an Extension of the Maximum Likelihood Principle</em>.</li>
+<li>Efron, B. (1986). <em>How Biased is the Apparent Error Rate of a Prediction Rule?</em></li>
+<li>Hastie, T., Tibshirani, R., &amp; Friedman, J. (2009). <em>The Elements of Statistical Learning</em>.</li>
+</ul>
+</section>
+<section id="other-notable-contributors" class="level3" data-number="D.4.7">
+<h3 data-number="D.4.7" class="anchored" data-anchor-id="other-notable-contributors"><span class="header-section-number">D.4.7</span> 6. Other Notable Contributors</h3>
+<p>Beyond Mallows, Akaike, and Efron, several researchers played key roles in shaping modern model selection theory.</p>
+<hr>
+<section id="hirotugu-akaike-bayesian-extension-bic-precursor" class="level4" data-number="D.4.7.1">
+<h4 data-number="D.4.7.1" class="anchored" data-anchor-id="hirotugu-akaike-bayesian-extension-bic-precursor"><span class="header-section-number">D.4.7.1</span> 🔹 Hirotugu Akaike → Bayesian extension (BIC precursor)</h4>
+<p>Although AIC is frequentist, it inspired:</p>
+<ul>
+<li><strong>Schwarz (1978)</strong>: Bayesian Information Criterion (BIC)</li>
+</ul>
+<p><span class="math display">\[
+\text{BIC} = -2\log L + k \log n
+\]</span></p>
+<ul>
+<li>Derived from Bayesian model selection</li>
+<li>Stronger penalty than AIC</li>
+<li>Consistent (selects the true model under assumptions)</li>
+</ul>
+<hr>
+</section>
+<section id="gideon-schwarz-1978" class="level4" data-number="D.4.7.2">
+<h4 data-number="D.4.7.2" class="anchored" data-anchor-id="gideon-schwarz-1978"><span class="header-section-number">D.4.7.2</span> 🔹 Gideon Schwarz (1978)</h4>
+<ul>
+<li>Introduced <strong>BIC</strong></li>
+<li>Connected model selection with <strong>Bayesian marginal likelihood</strong></li>
+</ul>
+<hr>
+</section>
+<section id="sugiura-1978-aicc" class="level4" data-number="D.4.7.3">
+<h4 data-number="D.4.7.3" class="anchored" data-anchor-id="sugiura-1978-aicc"><span class="header-section-number">D.4.7.3</span> 🔹 Sugiura (1978) → AICc</h4>
+<ul>
+<li>Introduced <strong>AICc (corrected AIC)</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{AICc} = \text{AIC} + \frac{2k(k+1)}{n-k-1}
+\]</span></p>
+<ul>
+<li>Fixes small-sample bias in AIC</li>
+<li>Important when <span class="math inline">\(n\)</span> is not much larger than <span class="math inline">\(k\)</span></li>
+</ul>
+<hr>
+</section>
+<section id="allen-1974-press-cross-validation" class="level4" data-number="D.4.7.4">
+<h4 data-number="D.4.7.4" class="anchored" data-anchor-id="allen-1974-press-cross-validation"><span class="header-section-number">D.4.7.4</span> 🔹 Allen (1974) → PRESS / Cross-Validation</h4>
+<ul>
+<li>Introduced <strong>PRESS statistic</strong></li>
+<li>Early form of <strong>leave-one-out cross-validation (LOOCV)</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{PRESS} = \sum (y_i - \hat{y}_{(i)})^2
+\]</span></p>
+<ul>
+<li>Provides a <strong>direct estimate of test error</strong></li>
+<li>No analytic correction needed</li>
+</ul>
+<hr>
+</section>
+<section id="stone-1977" class="level4" data-number="D.4.7.5">
+<h4 data-number="D.4.7.5" class="anchored" data-anchor-id="stone-1977"><span class="header-section-number">D.4.7.5</span> 🔹 Stone (1977)</h4>
+<ul>
+<li>Showed:</li>
+</ul>
+<p><span class="math display">\[
+\boxed{
+\text{AIC} \;\approx\; \text{LOOCV}
+}
+\]</span></p>
+<p>👉 Major bridge between: - analytic criteria (AIC) - resampling methods (CV)</p>
+<hr>
+</section>
+<section id="ye-1998-generalized-degrees-of-freedom" class="level4" data-number="D.4.7.6">
+<h4 data-number="D.4.7.6" class="anchored" data-anchor-id="ye-1998-generalized-degrees-of-freedom"><span class="header-section-number">D.4.7.6</span> 🔹 Ye (1998) → Generalized Degrees of Freedom</h4>
+<ul>
+<li>Extended Efron’s idea to nonlinear models</li>
+</ul>
+<p><span class="math display">\[
+\text{df} = \sum \frac{\partial \hat{y}_i}{\partial y_i}
+\]</span></p>
+<ul>
+<li>Applies to:
+<ul>
+<li>ridge</li>
+<li>smoothing splines</li>
+<li>other adaptive procedures</li>
 </ul></li>
-<li><span class="math inline">\(\operatorname{cor}(x,y)=\operatorname{cor}(y, x)\)</span></li>
-<li>The correlation coefficient <span class="math inline">\(r\)</span> is scaleless (which means that it doesn’t depend on the units of measurement used for the variables).</li>
-</ol>
-</div>
-<p>The Pearson correlation coefficient is used to measure the correlation of the two variables. If the relation is more closely stick to a straight line, the relation is stronger, and the resulted <span class="math inline">\(r\)</span> will be bigger. If <span class="math inline">\(r=1\)</span>, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> will have a perfectly linear relation. This is not the same as the slope.</p>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2</strong></span> Let <span class="math inline">\(x_i=i\)</span> and <span class="math inline">\(y_i=0.001x_i\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> and the <span class="math inline">\(r=1\)</span>. We may add a small noise to it so <span class="math inline">\(y_i=0.001x_i+\varepsilon_i\)</span> while <span class="math inline">\(\varepsilon_i\sim N(0,0.001)\)</span>. Then the slope is <span class="math inline">\(0.001\)</span> but <span class="math inline">\(r\)</span> is still close to <span class="math inline">\(1\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">0.001</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="fl">1e-3</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="fl">0.001</span>, <span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9995071</code></pre>
-</div>
-</div>
-</div>
+</ul>
+<hr>
 </section>
-<section id="independence" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="independence"><span class="header-section-number">2.3.3</span> Independence</h3>
-<p>Independence is the relation between two random variables.</p>
-<div id="def-" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.5 (Independence)</strong></span> Random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(𝑌\)</span> are said to be independent if their joint distribution factorizes into the product of their marginal distributions. That is, for all <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> <span class="math display">\[
-F_{X,Y}(x,y)=F_X(x)F_Y(y).
-\]</span></p>
-<p>If a joint density exists, this is equivalently written as</p>
-<p><span class="math display">\[
-f_{X,Y}(x,y)=f_X(x)f_Y(y).
-\]</span></p>
-<p>It is equivalent to say that for all measurable functions <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span>,</p>
-<p><span class="math display">\[
-\operatorname{E}[g(X)h(Y)]=\operatorname{E}[g(X)]\operatorname{E}[h(Y)].
-\]</span></p>
-</div>
-<p>Independence concerns the entire joint distribution, not just a summary statistic. Specifically, it cannot be derived from <span class="math inline">\(\operatorname{Cov}\)</span> and <span class="math inline">\(\operatorname{cor}\)</span>.</p>
-<div id="thm-" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.2</strong></span> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> and <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>. The converse is not true in general.</p>
-</div>
-<p><span class="math inline">\(\operatorname{Cov}(X,Y)=0\)</span> (equivalently, <span class="math inline">\(\operatorname{cor}(X,Y)=0\)</span>) means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no positive or negative linear relationship. However, this does not imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are unrelated; they may still exhibit a nonlinear dependence.</p>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3</strong></span> &nbsp;</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">abs</span>(x)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="prob_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>They are not independent because <span class="math inline">\(y\)</span> is literally defined as a function of <span class="math inline">\(x\)</span>. But their covariance and correlation are <span class="math inline">\(0\)</span>s.</p>
-</div>
+<section id="tibshirani-taylor-2012" class="level4" data-number="D.4.7.7">
+<h4 data-number="D.4.7.7" class="anchored" data-anchor-id="tibshirani-taylor-2012"><span class="header-section-number">D.4.7.7</span> 🔹 Tibshirani &amp; Taylor (2012)</h4>
+<ul>
+<li>Degrees of freedom for <strong>lasso</strong></li>
+<li>Extended optimism framework to modern regularization</li>
+</ul>
+<hr>
 </section>
 </section>
-<section id="some-important-distributions" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="some-important-distributions"><span class="header-section-number">2.4</span> Some important distributions</h2>
-<section id="normal-distribution-1" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="normal-distribution-1"><span class="header-section-number">2.4.1</span> Normal Distribution</h3>
-<div id="thm-norm" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.3 (Normal Sample Mean–Variance)</strong></span> Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Define</p>
-<ul>
-<li>Sample mean: <span class="math inline">\(\bar X=\frac1n\sum_{i=1}^nX_i\)</span></li>
-<li>Sample variance: <span class="math inline">\(s^2=\frac1{n-1}\sum_{i=1}^n(X_i-\bar X)^2\)</span></li>
-</ul>
-<p>Then</p>
-<ol type="1">
-<li><span class="math inline">\(\bar X\sim N(\mu,\frac{\sigma^2}n)\)</span></li>
-<li><span class="math inline">\(\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span></li>
-<li><span class="math inline">\(\bar X\)</span> and <span class="math inline">\(s^2\)</span> are independent.</li>
-</ol>
-</div>
-<p>The complete proof is lengthy and out of scope of the course. Please refer to <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span> for details.</p>
-</section>
-<section id="sec-t-dist" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="sec-t-dist"><span class="header-section-number">2.4.2</span> Student’s t-Distribution</h3>
-<div id="thm-t" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 2.4 (Student’s t-Distribution <span class="citation" data-cites="Hog2019">[<a href="../../index.html#ref-Hog2019" role="doc-biblioref">1</a>]</span>)</strong></span> Let</p>
-<ul>
-<li><span class="math inline">\(Z\sim N(0,1)\)</span> be a standard normal random variable</li>
-<li><span class="math inline">\(U\sim \chi_{\nu}^2\)</span> be a chi-square random variable with <span class="math inline">\(\nu\)</span> degrees of freedom.</li>
-<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are independent.</li>
-</ul>
-<p>Then <span class="math display">\[
-T=\frac{Z}{\sqrt{U/\nu}}
-\]</span> has a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom: <span class="math inline">\(T\sim t_{\nu}\)</span>.</p>
-</div>
-<p>These two theorems are usually used together. Let <span class="math inline">\(X_1,\ldots,X_n\sim N(\mu,\sigma^2)\)</span> i.i.d. Then</p>
-<ul>
-<li><span class="math inline">\(\bar X\sim N(\mu,\sigma^2/n)\)</span>;</li>
-<li><span class="math inline">\(U=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\)</span>.</li>
-</ul>
-<p>Therefore</p>
-<ul>
-<li><span class="math inline">\(Z=\frac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)\)</span>;</li>
-<li><span class="math inline">\(Z\)</span> and <span class="math inline">\(U\)</span> are indepedent.</li>
-</ul>
-<p>So <span class="math display">\[
-T=\frac{Z}{\sqrt{U/\nu}}=\frac{\frac1{\sigma/\sqrt n}(\bar X-\mu)}{\sqrt{\frac{(n-1)s^2}{\sigma^2}/(n-1)}}=\frac{\bar X-\mu}{s/\sqrt n}\sim t_{n-1}.
-\]</span></p>
-<p>In other words, if we standardize the sample mean using the sample standard deviation, we obtain a statistic that follows a t-distribution. This result is mainly used in the t-test.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<section id="expanded-conceptual-view" class="level3" data-number="D.4.8">
+<h3 data-number="D.4.8" class="anchored" data-anchor-id="expanded-conceptual-view"><span class="header-section-number">D.4.8</span> 7. Expanded Conceptual View</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Tip</span>Unified Perspective
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The normal distribution and the t-distribution are both bell-shaped and symmetric. When the sample size is large (typically (n &gt; 30)), the t-distribution becomes very similar to the standard normal distribution, so the normal approximation is usually acceptable. When the sample size is small, however, the t-distribution has noticeably heavier tails, and it is better to use the t-distribution directly for inference.</p>
+<p>All major methods can be viewed as estimating prediction error:</p>
+<ul>
+<li><span class="math inline">\(C_p\)</span>, AIC → analytic bias correction<br>
+</li>
+<li>BIC → Bayesian approximation<br>
+</li>
+<li>CV / PRESS → direct estimation<br>
+</li>
+<li>Modern df → generalize optimism</li>
+</ul>
 </div>
 </div>
+<hr>
+</section>
+<section id="final-takeaway" class="level3" data-number="D.4.9">
+<h3 data-number="D.4.9" class="anchored" data-anchor-id="final-takeaway"><span class="header-section-number">D.4.9</span> 8. Final Takeaway</h3>
+<p><span class="math display">\[
+\boxed{
+\text{Model selection evolved from formulas to a general theory of prediction error estimation}
+}
+\]</span></p>
 
 
-<div id="refs" class="references csl-bib-body" role="list" style="display: none">
-<div id="ref-Hog2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline"><span class="smallcaps">Hogg</span>, R. V., <span class="smallcaps">McKean</span>, J. W. and <span class="smallcaps">Craig</span>, A. T. (2020). <em>Introduction to mathematical statistics</em>. Pearson, Harlow, Essex, United Kingdom.</div>
-</div>
-</div>
 </section>
 </section>
 
@@ -1338,14 +1257,11 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../contents/1/basics.html" class="pagination-link" aria-label="Basics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basics</span></span>
+      <a href="../../contents/app/hypo.html" class="pagination-link" aria-label="Types of Errors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Types of Errors</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../contents/1/inferences.html" class="pagination-link" aria-label="Inferences">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferences</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
