@@ -5,11 +5,12 @@ In a regression model, the random errors are not directly observable, so we stud
 
 Recall the usual assumptions on the error term $\varepsilon$ in a regression model:
 
-1. $\varepsilon$ has mean $0$.
-2. $\varepsilon$ has constant variance $\sigma^2$.
-3. Different error terms are uncorrelated.
-4. $\varepsilon$ is normally distributed.
+1. $\varepsilon$ is normally distributed.
+2. $\varepsilon$ has mean $0$.
+3. $\varepsilon$ has constant variance $\sigma^2$.
+4. All pairs of error terms are uncorrelated.
 
+ 
 This chapter introduces graphical tools and statistical ideas for detecting important departures from these assumptions.
 
 ## Regression Residuals
@@ -19,21 +20,21 @@ $$
 y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \varepsilon_i.
 $$
 
-Because the true error $\varepsilon_i$ is unobservable, we estimate it by the **residual**
+Because the true error $\varepsilon_i$ is unobservable, we estimate it by the residual
 $$
-e_i = y_i - \hat y_i,
+\hat \varepsilon_i = y_i - \hat y_i,
 $$
 where $\hat y_i$ is the fitted value from the regression model.
 
-So a residual measures how far the observed response is from the fitted response.
-
-### Interpretation
+Therefore a residual measures how far the observed response is from the fitted response.
 
 - If $e_i>0$, the model underpredicts the response at observation $i$.
 - If $e_i<0$, the model overpredicts the response at observation $i$.
 - Large residuals indicate observations that are not well explained by the fitted model.
 
-### Two useful properties of residuals
+
+::: {#prp-}
+## Two useful properties of residuals
 
 For an ordinary least squares regression model with an intercept:
 
@@ -41,9 +42,13 @@ For an ordinary least squares regression model with an intercept:
    $$
    \sum_{i=1}^n e_i = 0.
    $$
-2. The residuals are orthogonal to the fitted values and to each predictor used in the model.
 
-These properties are useful both theoretically and computationally.
+2. The standard deviation of the residuals is equal to the standard deviation of the fitted regression model, $s$:
+   $$
+    s=\sqrt{\frac{SSE}{n-(p+1)}}
+   $$
+
+:::
 
 ## Graphical Displays of Residuals
 
@@ -54,24 +59,126 @@ If the assumptions are satisfied, then residual plots should generally show:
 - no systematic trend,
 - no obvious curvature,
 - no dramatic increase or decrease in spread,
-- only a few unusually large residuals.
+- only a few residuals (around $5\%$) more than 2 estimated standard deviations ($2s$) of $\varepsilon$ above or below $0$.
 
 A good residual plot looks like a random cloud centered around $0$.
 
-## Detecting Lack of Fit
 
 A residual plot is often the first tool for deciding whether the deterministic part of the model is misspecified.
 
-### Key idea
 
-If the mean function is incorrectly modeled, the residuals will often show a pattern.
+::: {#prp-}
+## Detecting Model Lack of Fit with Residuals
 
-Examples of patterns suggesting lack of fit include:
+1. Plot the residuals, $\hat\varepsilon$, on the vertical axis against each of the independent variables $x_1$, ..., $x_k$ on the horizontal axis.
+2. Plot the residuals, $\hat\varepsilon$, on the vertical axis against the predicted value $\hat y$ on the horizontal axis.
+3. In each plot, look for treands, dramatic changes in variability, and / or more than $5\%$ of residuals that lie outside $2s$ of $0$.
 
-- curved trend,
-- wave pattern,
-- systematic clustering,
-- structure that suggests a missing variable or a missing higher-order term.
+Any of these patterns indicates a problem with model fit.
+:::
+
+
+
+::: {#exm-}
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+
+
+```{r}
+set.seed(123)
+
+n <- 500
+
+x <- runif(n, 12, 30)
+y <- 55.7 + 0.5969 * x - 2 * (x)^2 + rnorm(n, 0, 10)
+
+dat <- data.frame(x, y)
+```
+
+
+```{r}
+fit <- lm(y ~ x, data = dat)
+plot(x, resid(fit), xlab = "x", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+```{r}
+fit2 <- lm(y ~ x + I(x^2), data = dat)
+plot(x, resid(fit2), xlab = "x", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+</details>
+
+:::
+
+
+
+::: {#exm-}
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+
+
+```{r}
+set.seed(123)
+
+n <- 500
+
+x1 <- runif(n, 10, 20)
+x2 <- runif(n, 15, 30)
+y <- 5 + 4 * x1 + 3 * x2^2 + rnorm(n, 0, 5)
+```
+
+
+```{r}
+#| fig-show: hold
+#| fig-width: 10
+#| fig-height: 4
+fit <- lm(y ~ x1 + x2)
+
+par(mfrow = c(1, 3))
+plot(x1, resid(fit), xlab = "x1", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+plot(x2, resid(fit), xlab = "x2", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+plot(y, resid(fit), xlab = "y", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+par(mfrow = c(1, 1))
+```
+
+
+
+
+
+```{r}
+#| fig-show: hold
+#| fig-width: 10
+#| fig-height: 4
+fit2 <- lm(y ~ x1 + x2 + I(x2^2))
+
+par(mfrow = c(1, 3))
+plot(x1, resid(fit2), xlab = "x1", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+plot(x2, resid(fit2), xlab = "x2", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+plot(y, resid(fit2), xlab = "y", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+par(mfrow = c(1, 1))
+```
+
+
+
+
+</details>
+
+:::
+
 
 ### Typical interpretation
 
