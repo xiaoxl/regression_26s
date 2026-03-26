@@ -1,5 +1,7 @@
 # Residual analysis
 
+{{< include ../math.qmd >}} 
+
 Residual analysis is one of the main tools for checking whether a regression model is appropriate.  
 In a regression model, the random errors are not directly observable, so we study the **residuals** instead.
 
@@ -63,8 +65,7 @@ If the assumptions are satisfied, then residual plots should generally show:
 
 A good residual plot looks like a random cloud centered around $0$.
 
-
-A residual plot is often the first tool for deciding whether the deterministic part of the model is misspecified.
+Residual plots are often the first diagnostic tool used to determine whether the deterministic part of the model may be misspecified.
 
 
 ::: {#prp-}
@@ -72,14 +73,19 @@ A residual plot is often the first tool for deciding whether the deterministic p
 
 1. Plot the residuals, $\hat\varepsilon$, on the vertical axis against each of the independent variables $x_1$, ..., $x_k$ on the horizontal axis.
 2. Plot the residuals, $\hat\varepsilon$, on the vertical axis against the predicted value $\hat y$ on the horizontal axis.
-3. In each plot, look for treands, dramatic changes in variability, and / or more than $5\%$ of residuals that lie outside $2s$ of $0$.
+3. In each plot, look for 
+   - systematic treands,
+   - curvature,
+   - dramatic changes in variability,
+   - or more than $5\%$ of residuals outside the range $\pm 2s$.
 
-Any of these patterns indicates a problem with model fit.
+Any of these patterns suggests that the model may not fit the data adequately.
 :::
 
 
 
 ::: {#exm-}
+## Detecting Curvature
 
 <details>
 <summary><strong>Click to expand.</strong></summary>
@@ -93,23 +99,26 @@ n <- 500
 
 x <- runif(n, 12, 30)
 y <- 55.7 + 0.5969 * x - 2 * (x)^2 + rnorm(n, 0, 10)
-
-dat <- data.frame(x, y)
 ```
 
+Linear model
 
 ```{r}
-fit <- lm(y ~ x, data = dat)
+fit <- lm(y ~ x)
 plot(x, resid(fit), xlab = "x", ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
 ```
 
+Quadratic model
 
 ```{r}
-fit2 <- lm(y ~ x + I(x^2), data = dat)
+fit2 <- lm(y ~ x + I(x^2))
 plot(x, resid(fit2), xlab = "x", ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
 ```
+
+The residual plot from the linear model typically shows a parabolic pattern, indicating that the straight-line model is inadequate. After including the quadratic term, the residuals become more randomly scattered, suggesting the quadratic model better captures the mean structure.
+
 
 </details>
 
@@ -118,7 +127,7 @@ abline(h = 0, col = "red", lty = 2)
 
 
 ::: {#exm-}
-
+## Multiple Predictors
 
 <details>
 <summary><strong>Click to expand.</strong></summary>
@@ -135,6 +144,7 @@ x2 <- runif(n, 15, 30)
 y <- 5 + 4 * x1 + 3 * x2^2 + rnorm(n, 0, 5)
 ```
 
+Linear model
 
 ```{r}
 #| fig-show: hold
@@ -147,13 +157,13 @@ plot(x1, resid(fit), xlab = "x1", ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
 plot(x2, resid(fit), xlab = "x2", ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
-plot(y, resid(fit), xlab = "y", ylab = "Residual")
+plot(y, resid(fit), xlab = "fitted y", ylab = "Residual")
 abline(h = 0, col = "red", lty = 2)
 par(mfrow = c(1, 1))
 ```
 
 
-
+Model with quadratic term
 
 
 ```{r}
@@ -179,7 +189,7 @@ par(mfrow = c(1, 1))
 
 :::
 
-
+<!-- 
 ### Typical interpretation
 
 - A **random cloud** of residuals suggests the fitted mean structure is reasonable.
@@ -188,28 +198,24 @@ par(mfrow = c(1, 1))
 
 ### Example idea from the lecture
 
-For the cholesterol-versus-fat-intake data, the first-order model produced a residual plot with a parabolic pattern. That suggests the straight-line model is inadequate and that a second-order model may fit better. After fitting the quadratic model, the residual plot no longer showed a clear pattern, so the quadratic model was more appropriate.
+For the cholesterol-versus-fat-intake data, the first-order model produced a residual plot with a parabolic pattern. That suggests the straight-line model is inadequate and that a second-order model may fit better. After fitting the quadratic model, the residual plot no longer showed a clear pattern, so the quadratic model was more appropriate. -->
 
-## Partial Residual Plots
+### Partial Residual Plots
 
-A **partial residual plot** helps assess the relationship between the response and one predictor after accounting for the other predictors in the model.
+A partial residual plot (also called a component + residual plot) helps assess the relationship between the response and one predictor after accounting for the other predictors in the model.
 
-For predictor $x_j$, a partial residual is often written as
+For predictor $x_j$, the partial residual is 
 $$
 e_i + \hat\beta_j x_{ij}.
 $$
 
-Plotting these values against $x_j$ can reveal structure that may be hidden in an ordinary residual plot.
+Plotting these values against $x_j$ can reveal structure that may be hidden in an ordinary residual plot. Such plots can help detect:
 
-### Why use a partial residual plot?
+- curvature in the relationship between the response and a predictor,
+- the need for transformation of a predictor,
+- nonlinear relationships not visible in standard residual plots.
 
-It may reveal:
 
-- curvature in the effect of a predictor,
-- need for transformation of a predictor,
-- nonlinearity not obvious from the usual residual plot.
-
-### Typical conclusions
 
 A partial residual plot may suggest:
 
@@ -217,46 +223,357 @@ A partial residual plot may suggest:
 - transforming the variable, for example $\log(x_j)$ or $1/x_j$,
 - reconsidering the functional form of the model.
 
+The function `car::crPlots()` produces partial residual plots for each predictor. Each plot contains:
+
+- Points: component + residual values
+- Blue line: the fitted linear component $\hat\beta_j x_j$
+- Red line: a smooth trend (typically obtained using LOESS smoothing) fitted to the partial residuals
+
+
+
+If the red and blue lines are similar, the linear specification for that predictor is reasonable. If the red line deviates noticeably, especially if it shows curvature, the model may need a transformation or nonlinear term.
+<!-- 
+We may use `car::crPlots` to make the parttial residual plot for each variable. In the plot, other than the points representing the component+residuals, there is a red line and a blue line. The blue line is the straight line based on $\hat\beta_jx_j$, and the red line is a smooth trend line, typically obtained using LOESS smoothing, applied to the partial residuals. 
+
+- If the two lines match, this variable is explained by the model well. 
+- If the two lines differ, especially if the red line is visually curved, this variable is not represented by the model well, and it is highly possible that a nonlinear transformation should be applied to this variable. -->
+
+
+::: {#exm-}
+
+
+```{r}
+set.seed(123)
+
+n <- 500
+
+x1 <- runif(n, .1, 1)
+x2 <- runif(n, 0, 2)
+y <- 5 + 1 / x1 + 3 * x2^2 + rnorm(n, 0, 1)
+```
+
+
+```{r}
+#| warning: false
+#| fig-width: 10
+#| fig-height: 4
+library(car)
+
+fit <- lm(y ~ x1 + x2)
+summary(fit)
+crPlots(fit)
+```
+
+For both predictors, the red smooth curves show clear curvature, suggesting that the linear specification is inadequate.
+
+Based on the shapes of the curves:
+
+- for $x_1$, a reciprocal transformation appears appropriate,
+- for $x_2$, a quadratic term appears appropriate.
+
+
+
+```{r}
+#| fig-width: 10
+#| fig-height: 4
+fit1 <- lm(y ~ I(1 / x1) + I(x2^2))
+summary(fit1)
+crPlots(fit1)
+```
+
+After applying these transformations, the red and blue lines closely match, indicating that the functional form is now more appropriate.
+
+
+
+
+
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Detecting Unequal Variances
 
 One important regression assumption is that the error variance is constant:
 $$
-\operatorname{Var}(\varepsilon_i)=\sigma^2 \quad \text{for all } i.
+\Var(\varepsilon_i)=\sigma^2 \quad \text{for all } i.
 $$
 
-### Terminology
+
+::: {#def-}
+
 
 - **Homoscedasticity**: constant variance.
 - **Heteroscedasticity**: unequal variance.
 
-## How heteroscedasticity appears in a residual plot
+:::
 
-A plot of residuals versus fitted values or versus a predictor may show:
+Heteroscedasticity can often be detected from a residual plot. A plot of residuals versus fitted values, or versus a predictor, may show
 
 - a funnel shape,
 - a cone shape,
 - spread increasing with the mean,
 - spread decreasing with the mean.
 
-These patterns suggest that the variability of the response changes with the level of the predictor or fitted value.
+These patterns suggest that the variability of the response changes with the level of the predictor or fitted value. In many such cases, the variance of $y$ is a function of its mean $\Exp(y)$. 
 
-### Common reasons for heteroscedasticity
+
+
+::: {#exm-}
+## Common reasons for heteroscedasticity
 
 Heteroscedasticity often occurs when the variance of the response depends on its mean. Common situations include:
 
 - count data, such as Poisson responses,
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 0, 25)
+y <- rpois(n, 1 + 2 * x)
+
+dat1 <- data.frame(x = x, y = y)
+
+fit1 <- lm(y ~ x, data = dat1)
+
+plot(fitted(fit1), resid(fit1), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
 - proportions or percentages, such as binomial responses,
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+m <- 100
+x <- runif(n, 0, 1)
+y <- rbinom(n, m, x) / m
+
+dat2 <- data.frame(x = x, y = y)
+
+fit2 <- lm(y ~ x, data = dat2)
+
+plot(fitted(fit2), resid(fit2), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+
 - multiplicative error structures.
 
-### Remedies
+```{r}
+set.seed(1)
 
-A common remedy is a **response transformation** chosen to stabilize the variance.
+n <- 2000
+x <- runif(n, 1, 20)
+eps <- exp(rnorm(n, 0, 0.4))
+y <- x * eps
+
+dat3 <- data.frame(x = x, y = y)
+
+fit3 <- lm(y ~ x, data = dat3)
+
+plot(fitted(fit3), resid(fit3), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+:::
+
+
+
+
+A common remedy is to apply a response transformation chosen to stabilize the variance.
 
 Typical variance-stabilizing transformations include:
 
 - $\sqrt{y}$ for count-type data,
 - $\log(y)$ for multiplicative or right-skewed responses,
-- other Box--Cox transformations.
+- other Box--Cox transformations: see @sec-boxcox. 
+
+| Type of Response      | Variance                     | Stabilizing Transformation |
+|:----------------------|:-----------------------------|:---------------------------|
+| Poisson               | $\Var(y)=\Exp(y)$                       | $\sqrt{y}$                 |
+| Binomial proportion   | $\Var(y)=\dfrac{\Exp(y)(1-\Exp(y))}{m}$    | $\sin^{-1}(\sqrt{y})$      |
+| Multiplicative        | $\Var(y)\propto [\Exp(y)]^2$          | $\log(y)$                   |
+
+: Stabilizing transformations for heteroscedastic responses          
+
+
+::: {#exm-}
+
+- For count data, a square-root transformation is often used to stabilize the variance.
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 0, 25)
+y <- rpois(n, 1 + 2 * x)
+
+dat1 <- data.frame(x = x, y = y)
+
+fit1 <- lm(I(sqrt(y)) ~ x, data = dat1)
+
+plot(fitted(fit1), resid(fit1), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+- For binomial-type responses, the arcsine square-root transformation is sometimes used to reduce heteroscedasticity.
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+m <- 100
+x <- runif(n, 0, 1)
+y <- rbinom(n, m, x) / m
+
+dat2 <- data.frame(x = x, y = y)
+
+fit2 <- lm(I(asin(sqrt(y))) ~ x, data = dat2)
+
+plot(fitted(fit2), resid(fit2), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+
+- When the variability increases proportionally to the mean, a log transformation is often useful. A more natural multiplicative-error model is $y=x\cdot\varepsilon$, where $\varepsilon>0$ is a random error term. Taking logs gives
+$$
+\log y=\log x+\log \varepsilon,
+$$
+so the log transformation converts multiplicative errors into additive ones.
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 1, 20)
+eps <- exp(rnorm(n, 0, 0.4))
+y <- x * eps
+
+dat3 <- data.frame(x = x, y = y)
+
+fit3 <- lm(log(y) ~ log(x), data = dat3)
+
+plot(fitted(fit3), resid(fit3), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+```
+
+
+:::
+
+
+::: {.callout-tip}
+For count and proportion responses, generalized linear models (GLM) are often more natural than transforming the response and fitting ordinary least squares.
+:::
+
+
+### Box-Cox transformation {#sec-boxcox}
+
+
+When a simple transformation such as $\sqrt{y}$ or $\log(y)$ is not clearly appropriate, the Box-Cox transformation provides a systematic family of power transformations for a positive response variable $y>0$.
+
+For a parameter $\lambda$, the Box--Cox transformation is defined as
+$$
+y^{(\lambda)}=
+\begin{cases}
+\dfrac{y^\lambda-1}{\lambda}, & \lambda \neq 0,\\[1em]
+\log(y), & \lambda = 0.
+\end{cases}
+$$
+
+This family includes several common transformations as special cases:
+
+- $\lambda=1$: no transformation (approximately),
+- $\lambda=\frac{1}{2}$: square-root transformation,
+- $\lambda=0$: log transformation,
+- $\lambda=-1$: reciprocal transformation.
+
+The main idea is to choose a value of $\lambda$ that makes the regression assumptions more reasonable, especially:
+
+- linearity,
+- constant variance,
+- approximate normality of errors.
+
+In practice, $\lambda$ is usually estimated from the data by maximizing the likelihood over a range of candidate values.
+
+::: {.callout-note}
+## Interpretation
+
+The Box--Cox method does not create a new model by itself. Instead, it helps us find a transformation of the response so that an ordinary linear regression model may fit better.
+:::
+
+A fitted model after transformation has the form
+$$
+y^{(\lambda)}=\beta_0+\beta_1x_1+\cdots+\beta_px_p+\varepsilon.
+$$
+
+After fitting the model, we check whether the transformed response leads to improved residual plots and more stable variance.
+
+::: {.callout-warning}
+## Important restriction
+
+The Box--Cox transformation requires $y>0$. If the response contains zeros or negative values, this method cannot be applied directly without modification.
+:::
+
+### Example in R
+
+
+
+```{r}
+set.seed(123)
+
+n <- 500
+
+x1 <- runif(n, 10, 20)
+x2 <- runif(n, 15, 30)
+y <- 5 + 4 * x1 + 3 * x2^2 + rnorm(n, 0, 5)
+dat <- data.frame(x1 = x1, x2 = x2, y = y)
+```
+
+```{r}
+library(MASS)
+
+fit <- lm(y ~ x1 + x2, data = dat)
+boxcox(fit)
+```
+
+The plot shows the profile log-likelihood as a function of $\lambda$. A value of $\lambda$ near the peak is often selected. If the peak is near a simple value such as $0$, $0.5$, or $1$, we often choose that simpler transformation for interpretation.
+
+
+Box--Cox is most useful when:
+
+- residual plots suggest heteroscedasticity or nonlinearity,
+- the response is positive and right-skewed,
+- no obvious transformation is known in advance.
+
+It is best viewed as a guide for choosing a reasonable transformation rather than a purely automatic rule.
 
 ### Example idea from the lecture
 
