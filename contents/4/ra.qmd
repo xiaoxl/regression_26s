@@ -84,6 +84,7 @@ Any of these patterns suggests that the model may not fit the data adequately.
 
 
 
+
 ::: {#exm-}
 ## Detecting Curvature
 
@@ -188,6 +189,11 @@ par(mfrow = c(1, 1))
 </details>
 
 :::
+
+
+
+When drawing the plot that fitted values vs residuals, you may manually plot it as shown in the examples, or you may use `plot(fit, which=1)`. This `plot(fit)` will be discussed later.
+
 
 <!-- 
 ### Typical interpretation
@@ -515,19 +521,13 @@ This family includes several common transformations as special cases:
 - $\lambda=0$: log transformation,
 - $\lambda=-1$: reciprocal transformation.
 
-The main idea is to choose a value of $\lambda$ that makes the regression assumptions more reasonable, especially:
+<!-- The main idea is to choose a value of $\lambda$ that makes the regression assumptions more reasonable, especially:
 
 - linearity,
 - constant variance,
-- approximate normality of errors.
+- approximate normality of errors. -->
 
 In practice, $\lambda$ is usually estimated from the data by maximizing the likelihood over a range of candidate values.
-
-::: {.callout-note}
-## Interpretation
-
-The Box--Cox method does not create a new model by itself. Instead, it helps us find a transformation of the response so that an ordinary linear regression model may fit better.
-:::
 
 A fitted model after transformation has the form
 $$
@@ -542,8 +542,14 @@ After fitting the model, we check whether the transformed response leads to impr
 The Box--Cox transformation requires $y>0$. If the response contains zeros or negative values, this method cannot be applied directly without modification.
 :::
 
-### Example in R
 
+::: {#exm-}
+## Box-Cox transformation
+
+
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
 
 
 ```{r}
@@ -551,9 +557,9 @@ set.seed(123)
 
 n <- 500
 
-x1 <- runif(n, 10, 20)
-x2 <- runif(n, 15, 30)
-y <- 5 + 4 * x1 + 3 * x2^2 + rnorm(n, 0, 5)
+x1 <- runif(n, 1, 2)
+x2 <- runif(n, 1, 3)
+y <- exp(3 * x1 + 4 * x2 + rnorm(n, 0, 1))
 dat <- data.frame(x1 = x1, x2 = x2, y = y)
 ```
 
@@ -564,32 +570,60 @@ fit <- lm(y ~ x1 + x2, data = dat)
 boxcox(fit)
 ```
 
-The plot shows the profile log-likelihood as a function of $\lambda$. A value of $\lambda$ near the peak is often selected. If the peak is near a simple value such as $0$, $0.5$, or $1$, we often choose that simpler transformation for interpretation.
+The plot shows that $\lambda$ is very close to $0$. Therefore it is recommended to use `log(y)` as the transformation. You can compare the results below.
+
+```{r}
+fit1 <- lm(y ~ ., data = dat)
+summary(fit1)
+plot(fit1, which = 1)
+```
+
+```{r}
+fit2 <- lm(I(sqrt(y)) ~ ., data = dat)
+summary(fit2)
+plot(fit2, which = 1)
+```
 
 
+```{r}
+fit3 <- lm(I(log(y)) ~ ., data = dat)
+summary(fit3)
+plot(fit3, which = 1)
+```
+
+
+</details>
+
+
+
+:::
+
+
+
+<!-- 
 Box--Cox is most useful when:
 
 - residual plots suggest heteroscedasticity or nonlinearity,
 - the response is positive and right-skewed,
 - no obvious transformation is known in advance.
 
-It is best viewed as a guide for choosing a reasonable transformation rather than a purely automatic rule.
+It is best viewed as a guide for choosing a reasonable transformation rather than a purely automatic rule. 
 
 ### Example idea from the lecture
 
-For the social worker salary data, a second-order model appeared to fit the mean structure reasonably well, but the residual plot had a cone shape, indicating non-constant variance. After transforming the response to $\log(y)$, the cone shape was greatly reduced, and the model assumptions were more plausible.
+For the social worker salary data, a second-order model appeared to fit the mean structure reasonably well, but the residual plot had a cone shape, indicating non-constant variance. After transforming the response to $\log(y)$, the cone shape was greatly reduced, and the model assumptions were more plausible. -->
 
-### A simple test for heteroscedasticity
+<!-- ### A simple test for heteroscedasticity
 
 One classical approach is to split the data into two groups, fit the model separately, and compare the two error variances using an $F$-test.
 
-If the estimated variances differ substantially, this provides evidence against equal variances.
+If the estimated variances differ substantially, this provides evidence against equal variances. -->
 
 ## Checking the Normality Assumption
 
 Normality is another standard assumption used for many regression inference procedures.
-
-### Graphical tools for checking normality
+<!-- 
+### Graphical tools for checking normality -->
 
 Common tools include:
 
@@ -597,22 +631,129 @@ Common tools include:
 - stem-and-leaf display,
 - normal probability plot (QQ plot).
 
-Among these, the **normal probability plot** is often the most informative.
+Among these, the QQ plot is often the most informative.
 
-### Interpreting a normal probability plot
 
+### Interpreting a normal probability plot {.unnumbered}
+
+- The x-axis represents the residuals, and the y-axis represents the normal scores. 
 - If the points follow an approximately straight line, the normality assumption is reasonable.
 - Strong curvature or systematic deviation from a line suggests nonnormality.
 
+
+
+::: {#exm-}
+## Examples of QQ plots
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 1, 2)
+eps <- rnorm(n)
+y <- 10 + 2 * x + eps
+dat1 <- data.frame(x = x, y = y)
+fit1 <- lm(y ~ x, data = dat1)
+
+plot(fit1, which = 2)
+```
+
+
+:::
+<!-- 
 ### Practical comment
 
-Regression methods are often fairly robust to moderate nonnormality when the sample size is reasonably large. However, severe skewness or heavy tails may still affect inference.
+Regression methods are often fairly robust to moderate nonnormality when the sample size is reasonably large. However, severe skewness or heavy tails may still affect inference. -->
 
-### Fixing nonnormality
+<!-- ### Fixing nonnormality -->
 
 Nonnormality is often accompanied by heteroscedasticity. In many cases, a transformation of the response helps with both problems.
 
-A standard family of transformations is the **Box--Cox transformation**, which can help identify a suitable power transformation for the response.
+A standard family of transformations is the Box--Cox transformation, which can help identify a suitable power transformation for the response.
+
+::: {#exm-}
+## `dat2`
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 1, 2)
+mu <- exp(1 + x)
+y <- rlnorm(n, log(mu), 0.5)
+dat2 <- data.frame(x = x, y = y)
+fit2 <- lm(y ~ x, data = dat2)
+
+plot(fit2, which = 2)
+```
+
+Since
+```{r}
+boxcox(fit2)
+```
+
+$\lambda=0$. Therefore we need to transform $y\mapsto \log(y)$.
+```{r}
+fit2c <- lm(I(log(y)) ~ x, data = dat2)
+plot(fit2c, which = 2)
+```
+
+The non-normality is fixed by the Box-Cox transformation in this case.
+
+:::
+
+
+
+::: {#exm-}
+## `dat3`
+Consider `dat3`. 
+
+
+```{r}
+set.seed(1)
+
+n <- 2000
+x <- runif(n, 1, 2)
+eps <- rnorm(n, 0, 0.25 * x)^3
+y <- 5 + 2 * x + eps
+dat3 <- data.frame(x = x, y = y)
+fit3 <- lm(y ~ x, data = dat3)
+
+plot(fit3, which = 2)
+```
+
+Since
+```{r}
+boxcox(fit3)
+```
+
+$\lambda\approx 0.5$. Therefore we need to transform $y\mapsto \sqrt{y}$.
+```{r}
+fit3c <- lm(I(sqrt(y)) ~ x, data = dat3)
+plot(fit3c, which = 2)
+```
+
+Note that the non-normality is almost not fixed in this case.
+
+:::
+
+
+
+::: {.callout-caution}
+Among the assumptions of the linear regression model, the normality assumption usually has the least impact on the estimation itself. The main role of the normality assumption is to justify the use of t-tests and F-tests for assessing the significance of variables.
+
+If the error terms are not normally distributed, these tests may not be exact when the sample size is small. In such cases, directly applying the usual t-test and F-test formulas may lead to less accurate inference.
+
+Therefore, it is desirable for the error term to be approximately normally distributed. However, in practice this assumption is not crucial. As long as the other key assumptions—such as linearity, independence, and constant variance—are reasonably satisfied, the regression results are usually still reliable, especially when the sample size is large. In large samples, the central limit theorem implies that the sampling distribution of the estimated coefficients is approximately normal, even if the error terms are not normally distributed.
+:::
+
+
+::: {.callout-note}
+## Box-Cox transformation
+The Box–Cox transformation is used to find a power transformation of the response variable that stabilizes variance and improves the linear model assumptions. So its main usage is to stabilize variance, and it could move the error term towards the normal distribution as a byproduct.
+:::
+
 
 ## Detecting Outliers and Influential Observations
 
