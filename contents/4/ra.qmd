@@ -428,8 +428,9 @@ Typical variance-stabilizing transformations include:
 
 
 ::: {#exm-}
+## Count data
 
-- For count data, a square-root transformation is often used to stabilize the variance.
+For count data, a square-root transformation is often used to stabilize the variance.
 
 
 ```{r}
@@ -448,7 +449,94 @@ abline(h = 0, col = "red", lty = 2)
 ```
 
 
-- For binomial-type responses, the arcsine square-root transformation is sometimes used to reduce heteroscedasticity.
+
+<details>
+<summary><strong>Click to expand.</strong></summary>
+
+Note that since there is an obvious curve, we could consider to add $x^2$ term.
+
+
+```{r}
+fit1c <- lm(I(sqrt(y)) ~ x + I(x^2), data = dat1)
+
+plot(fitted(fit1c), resid(fit1c), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+summary(fit1c)
+```
+
+
+
+Here are some calculations related to the model. Suppose the response follows a Poisson model
+
+$$
+Y \sim \text{Poisson}(\lambda), \qquad \lambda = 1 + 2x .
+$$
+
+We consider the transformed response $\sqrt{Y}$. Using a second–order delta method approximation,
+
+$$
+E(\sqrt{Y}) \approx \sqrt{\lambda} - \frac{1}{8\sqrt{\lambda}},
+\qquad \lambda = 1 + 2x .
+$$
+
+Let
+$$
+m(x) = \sqrt{1+2x} - \frac{1}{8\sqrt{1+2x}}.
+$$
+
+We approximate $m(x)$ near $x_0 = 12.5$ using the 2nd order Taylor polynomial. We choose $12.5$ since $12.5$ is the mean of $\distunif(0,25)$. At this point,
+
+$$
+\lambda_0 = 1 + 2x_0 = 26 .
+$$
+
+Evaluating derivatives 
+$$
+\begin{split}
+m'(x)&=\frac1{\sqrt{1+2x}}+\frac{1}{8(1+2x)^{3/2}},\\
+m''(x)&=-\frac{1}{(1+2x)^{3/2}}-\frac3{8(1+2x)^{5/2}}.
+\end{split}
+$$
+
+Then
+
+$$
+m(12.5) \approx 5.0745, \qquad
+m'(12.5) \approx 0.1971, \qquad
+m''(12.5) \approx -0.00765 .
+$$
+
+The second-order Taylor expansion around $12.5$ is
+
+$$
+m(x)
+\approx
+5.0745
++
+0.1971(x-12.5)
+-
+0.00382(x-12.5)^2 \approx 2.014 + 0.293x - 0.00382x^2 .
+$$
+
+Compare it to our estimation.
+
+```{r}
+fit1c
+```
+
+
+
+</details>
+
+
+
+:::
+
+::: {#exm-}
+## Binomial-type
+
+
+For binomial-type responses, the arcsine square-root transformation is sometimes used to reduce heteroscedasticity.
 
 
 ```{r}
@@ -468,8 +556,30 @@ abline(h = 0, col = "red", lty = 2)
 ```
 
 
+<details>
+<summary><strong>Click to expand.</strong></summary>
+Similar to the previous example, we could add 2nd order and 3rd order term since there is an obvious curvy pattern.
 
-- When the variability increases proportionally to the mean, a log transformation is often useful. A more natural multiplicative-error model is $y=x\cdot\varepsilon$, where $\varepsilon>0$ is a random error term. Taking logs gives
+
+```{r}
+fit2c <- lm(I(asin(sqrt(y))) ~ x + I(x^2) + I(x^3), data = dat2)
+
+plot(fitted(fit2c), resid(fit2c), xlab = "Fitted value", ylab = "Residual")
+abline(h = 0, col = "red", lty = 2)
+
+summary(fit2c)
+```
+
+
+
+</details>
+
+:::
+
+::: {#exm-}
+## Multiplicative error structures
+
+When the variability increases proportionally to the mean, a log transformation is often useful. A more natural multiplicative-error model is $y=x\cdot\varepsilon$, where $\varepsilon>0$ is a random error term. Taking logs gives
 $$
 \log y=\log x+\log \varepsilon,
 $$
@@ -541,6 +651,9 @@ After fitting the model, we check whether the transformed response leads to impr
 
 The Box--Cox transformation requires $y>0$. If the response contains zeros or negative values, this method cannot be applied directly without modification.
 :::
+
+
+
 
 
 ::: {#exm-}
