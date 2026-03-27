@@ -870,26 +870,101 @@ The Box–Cox transformation is used to find a power transformation of the respo
 
 ## Detecting Outliers and Influential Observations
 
+### Outliers
+
 Not every unusual point has the same meaning. Some are merely outliers in the response direction, while others strongly affect the fitted model.
 
-### Standardized residuals
+::: {#def-}
+## Standardized residuals
 
-A **standardized residual** rescales a residual by an estimate of its standard deviation.
+The **standardized residual**, denoted $z_i$, for the ith observation is the residual for the observation divided by $s$, that is,
+$$
+z_i=\hat\varepsilon_i/s=(y_i-\hat y_i)/s.
+$$
+<!-- rescales a residual by an estimate of its standard deviation. -->
+
+:::
 
 A common rule of thumb is:
 
-- $|r_i| > 2$ may indicate a possible outlier,
-- $|r_i| > 3$ indicates a more serious outlier.
+- $|z_i| > 2$ may indicate a possible outlier,
+- $|z_i| > 3$ indicates a more serious outlier.
 
-### Studentized deleted residuals
 
-A **studentized deleted residual** is usually preferred because it measures how unusual a point is when that same point is omitted from the variance estimate.
+Standardized residuals can be computed using `rstandard()` from base R.
+
+::: {#exm-}
+
+```{r}
+dat <- data.frame(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+    y = c(3, 6, 7, 9, 11, 13, 14, 17, 19, 40)
+)
+fit <- lm(y ~ x, data = dat)
+```
+
+```{r}
+rstandard(fit)
+```
+
+
+
+```{r}
+plot(dat$x, rstandard(fit))
+```
+
+
+:::
+
+
+
+::: {#def-}
+## Studentized deleted residuals
+
+- **Deleted residual** is the prediction error when the observation is left out of the model fitting:
+$$
+d_i=y_i-\hat y_{(i)}
+$$
+where $\hat y_{(i)}$ is the fitted $y$-value using data excluding the ith data point.
+- The **studentized deleted residual**, denoted $d^*_i$, is calculated by dividing the deleted residual $d_i$ by its standard error $s_{d_i}$:
+$$
+d^*_i=\frac{d_i}{s_{d_i}}.
+$$
+It is usually preferred because it measures how unusual a point is when that same point is omitted from the variance estimate.
+
+:::
 
 A common rule of thumb is:
 
 - values outside $[-2,2]$ suggest possible outliers.
 
-### Important note
+Studentized deleted residuals can be computed using `rstudent()` from base R.
+
+::: {#exm-}
+
+```{r}
+dat <- data.frame(
+    x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+    y = c(3, 6, 7, 9, 11, 13, 14, 17, 19, 40)
+)
+fit <- lm(y ~ x, data = dat)
+```
+
+```{r}
+rstudent(fit)
+```
+
+
+
+```{r}
+plot(dat$x, rstudent(fit))
+```
+
+:::
+
+
+
+::: {.callout-caution}
 
 An outlier should not automatically be removed. We first ask:
 
@@ -899,16 +974,44 @@ An outlier should not automatically be removed. We first ask:
 
 Only obvious recording errors should be automatically corrected or removed.
 
-## Influential Observations
+:::
 
+
+### Influential Observations
+
+
+::: {#def-}
+## Influential observation
 An observation is **influential** if it has a substantial effect on the fitted model, parameter estimates, or conclusions.
 
+:::
+
+
+
+::: {#def-}
+## Leverage
+The **leverage** of the ith observation is the weight $h_i$ associated with $y_i$ in the equation
+$$
+\hat y_i=h_1y_1+h_2y_2+\ldots+h_iy_i+\ldots+h_ny_n
+$$
+where $h1,\ldots,h_n$ are functions of only the values of the independent variables ($x$'s ) in the model. The leverage measures the influence of $y_i$ on its predicted value $\hat y_i$.
+:::
+<!-- 
 ### Leverage
 
 Leverage measures how extreme an observation is in the predictor space.
 
-High-leverage points have unusual predictor values and may strongly affect the fitted line or surface.
+High-leverage points have unusual predictor values and may strongly affect the fitted line or surface. -->
 
+A common rule of thumb is:
+
+- an observation is influential if 
+$$
+h_i>\frac{2(k+1)}{n}
+$$
+where $k$ is the number of $\beta$'s in the model excluding $\beta_0$.
+
+<!-- 
 A common rule of thumb flags an observation if its leverage is larger than
 $$
 \frac{2(p+1)}{n}
@@ -917,18 +1020,236 @@ or sometimes
 $$
 \frac{3(p+1)}{n},
 $$
-where $p+1$ is the number of parameters in the model including the intercept.
+where $p+1$ is the number of parameters in the model including the intercept. -->
 
-### Cook's distance
 
-**Cook's distance** combines information about residual size and leverage to assess influence.
+Leverage can be computed using `hatvalues()` from base R.
 
-Common guidelines:
+::: {#exm-}
+
+```{r}
+x <- c(1, 2, 3, 4, 5, 10)
+y <- c(2, 3, 5, 7, 8, 2)
+
+dat <- data.frame(x, y)
+
+fit <- lm(y ~ x, data = dat)
+
+plot(x, y)
+abline(fit, col = "red", lwd = 2)
+
+hatvalues(fit)
+```
+
+:::
+
+
+::: {#def-}
+## Cook's distance
+
+**Cook's distance** combines information about residual size and leverage to assess the influence of an observation on the fitted regression model.
+
+Formally, Cook's distance for observation $i$ is
+
+$$
+D_i =
+\frac{\sum_{j=1}^{n}(\hat{y}_j-\hat{y}_{j(i)})^2}{p\,\text{MSE}}
+$$
+
+where
+
+- $\hat{y}_j$ is the fitted value using all observations,
+- $\hat{y}_{j(i)}$ is the fitted value after removing observation $i$,
+- $p$ is the number of regression parameters (including the intercept),
+- $\text{MSE}$ is the mean squared error from the fitted model.
+
+Thus, Cook's distance measures how much the fitted regression changes if observation $i$ is removed.
+:::
+
+A common rule of thumb is:
 
 - $D_i > 1$ suggests an influential observation,
 - larger Cook's distance values deserve further investigation.
 
-Cook's distance is often preferred because it captures overall impact on the fitted regression.
+Cook's distance is often preferred because it captures the overall impact of an observation on the fitted model, taking into account both its residual and leverage. An observation tends to have a large Cook's distance when it has **both high leverage and a large residual**.
+
+It can be computed in R using `cooks.distance()`.
+
+
+
+```{r}
+x <- c(1, 2, 3, 4, 5, 10)
+y <- c(2, 3, 5, 7, 8, 2)
+
+dat <- data.frame(x, y)
+
+fit <- lm(y ~ x, data = dat)
+
+plot(x, y)
+abline(fit, col = "red", lwd = 2)
+
+cooks.distance(fit)
+```
+
+
+
+<!-- 
+
+### Summary on detecting outliers
+
+1. Method I: Standardized residual
+* Compare standardized residual with -2 and 2. If beyond [-2, 2] (or even beyond [-3, 3]) range, the observation is an outlier. 
+2. Method II: Studentized deleted residual (preferred)
+* Compare standardized residual with -2 and 2. If beyond [-2, 2] range, the observation is an outlier. -->
+
+<!-- 
+### Summary on detecting influential observations:
+
+1. Method I: Leverage values
+* Compare leverage values with (2(𝑘+1))/𝑛. If leverage value is larger, the observation is an influential observation.
+2. Method II: Cook’s distance (preferred)
+Range rule of thumb: If cook’s distance >1, the observation is influential.
+Critical value is 𝐹_(0.5,   𝑘+1,   𝑛−(𝑘+1)). If cook’s distance is greater than the critical value, the observation is influential.   
+
+ -->
+
+
+
+
+
+
+## Graphic tools `plot(fit)`
+
+In R, all above tools are summarized in the R command `plot(fit)`. This command produces several standard diagnostic plots that help assess the regression assumptions and detect unusual observations.
+
+The most commonly used plots include:
+
+1. Residuals vs Fitted (`which=1`)
+    - Used to check linearity and constant variance.
+    - A random scatter around zero suggests the model is appropriate.
+    - Curvature suggests model misspecification (e.g., missing nonlinear terms).
+    - A funnel shape suggests heteroscedasticity.
+2. Normal Q–Q Plot (`which=2`)
+    - Used to assess whether the error terms are approximately normal.
+    - Points should lie roughly along the straight reference line.
+3. Scale–Location Plot (`which=3`)
+    - Also used to examine constant variance.
+    - Ideally the points should show a roughly horizontal band.
+4. Residuals vs Leverage (`which=5`)
+    - Used to identify influential observations.
+    - Points with high leverage and large residuals may strongly affect the fitted model.
+    - Cook's distance contours are shown to highlight potentially influential observations.
+
+These graphical tools provide a quick visual way to evaluate regression assumptions and identify observations that may require further investigation.
+
+
+
+
+::: {.callout-note}
+In practice, diagnostic plots are often the **first step** in regression diagnostics before applying formal tests or numerical measures.
+:::
+
+
+::: {#exm-}
+
+```{r}
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 12)
+y <- c(2, 4, 5, 4, 6, 7, 8, 9, 3)
+
+dat <- data.frame(x, y)
+fit <- lm(y ~ x, data = dat)
+```
+
+
+```{r}
+summary(fit)
+```
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit)
+par(mfrow = c(1, 1))
+```
+
+
+
+:::
+
+
+
+
+## Model Building Procedure
+
+Here is a flowchart for model building.
+
+
+```{mermaid}
+flowchart TD
+
+A["How many independent variables?"]
+
+A --> B["Numerous (e.g., 10 or more)"]
+A --> C["Few in number"]
+
+B --> D["Run variable selection <br>to determine most important x's"]
+
+C --> E["Hypothesize model(s) for E(y)<br>consider interaction and higher-order terms"]
+
+D --> E
+
+E --> F["Determine best model for E(y)<br>1. Nested model F-tests<br>2. t-tests on important betas<br>3. Compare R2 values<br>4. Compare s values"]
+
+F --> G["Check assumptions on random error<br>1. zero mean<br>2. constant variance<br>3. normal distribution<br>4. independence"]
+
+G --> H["If necessary, make model modifications"]
+
+H --> I["Assess adequacy of best model<br>1. Global F-test significant<br>2. R2 value high<br>3. s value small"]
+
+I --> J{"Model adequate?"}
+
+J -->|Yes| K["Use model for estimation / prediction<br>1. Confidence interval for E(y)<br>2. Prediction interval for y"]
+
+J -->|No| L["Consider other independent variables<br>and/or models"]
+
+L --> E
+
+```
+
+<!-- 
+Here are some detailed steps for some of the process.
+
+
+**Suggested Model-Building Procedure**
+
+A practical regression diagnostic workflow is:
+
+1. Fit an initial model.
+2. Examine residual plots for lack of fit.
+3. Check for heteroscedasticity.
+4. Check the normality of residuals.
+5. Identify possible outliers and influential points.
+6. Investigate unusual observations carefully.
+7. Modify the model if needed:
+   - add missing terms,
+   - transform variables,
+   - correct recording errors,
+   - refit and reassess.
+
+**Key Takeaways**
+
+- Residuals are proxies for the unobserved regression errors.
+- Residual plots are central tools for diagnosing model adequacy.
+- Curvature in a residual plot suggests lack of fit.
+- Funnel or cone shapes suggest heteroscedasticity.
+- QQ plots help assess normality.
+- Standardized residuals and studentized deleted residuals help detect outliers.
+- Leverage and Cook's distance help detect influential observations.
+- Model revision should be guided by diagnostics and subject-matter reasoning, not by automatic deletion of unusual points. -->
+
+<!-- 
+
 
 ### Example idea from the lecture
 
@@ -986,31 +1307,4 @@ Use:
 Use:
 
 - leverage,
-- Cook's distance.
-
-## Suggested Model-Building Procedure
-
-A practical regression diagnostic workflow is:
-
-1. Fit an initial model.
-2. Examine residual plots for lack of fit.
-3. Check for heteroscedasticity.
-4. Check the normality of residuals.
-5. Identify possible outliers and influential points.
-6. Investigate unusual observations carefully.
-7. Modify the model if needed:
-   - add missing terms,
-   - transform variables,
-   - correct recording errors,
-   - refit and reassess.
-
-## Key Takeaways
-
-- Residuals are proxies for the unobserved regression errors.
-- Residual plots are central tools for diagnosing model adequacy.
-- Curvature in a residual plot suggests lack of fit.
-- Funnel or cone shapes suggest heteroscedasticity.
-- QQ plots help assess normality.
-- Standardized residuals and studentized deleted residuals help detect outliers.
-- Leverage and Cook's distance help detect influential observations.
-- Model revision should be guided by diagnostics and subject-matter reasoning, not by automatic deletion of unusual points.
+- Cook's distance. -->
