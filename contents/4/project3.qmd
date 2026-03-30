@@ -29,6 +29,7 @@ Before touching `lm()`, the first step is always exploratory data analysis (EDA)
 
 ```{r}
 library(MASS)
+library(car)
 data(Boston)
 
 Boston$chas <- factor(Boston$chas)
@@ -207,3 +208,101 @@ par(mfrow = c(4, 3))
 crPlots(fit2)
 par(mfrow = c(1, 1))
 ```
+
+The quadratic terms improve the model substantially. Compared with `fit_log`, the residual standard error drops from about `0.189` to about `0.171`, and the nested F-test for adding the four squared terms is highly significant.
+
+```{r}
+anova(fit_log, fit2)
+```
+
+At this point, `zn` is no longer significant after the nonlinear terms are added, so we can simplify the model by dropping it and refitting.
+
+```{r}
+fit3 <- update(fit2, . ~ . - zn)
+summary(fit3)
+```
+
+This simpler model has essentially the same fit as `fit2`, so removing `zn` costs us almost nothing while making the model easier to explain.
+
+```{r}
+anova(fit3, fit2)
+```
+
+## Phase 4: Diagnose the Final Model
+
+Now we return to the standard diagnostics for the refined model.
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit3)
+par(mfrow = c(1, 1))
+```
+
+These plots are much better than the ones from the original untransformed model:
+
+- The residuals versus fitted plot shows less curvature.
+- The spread is more stable across fitted values.
+- The Q-Q plot is closer to a straight line, although the tails still deviate somewhat.
+- A few observations remain influential, which is common in this dataset.
+
+We can also check multicollinearity and influence numerically.
+
+```{r}
+vif(fit3)
+```
+
+The polynomial terms create some moderate to large VIF values, especially for `rm` with `I(rm^2)` and `dis` with `I(dis^2)`. This is expected when a variable and its square are both in the model, so it is not automatically a reason to remove them.
+
+```{r}
+rs <- rstudent(fit3)
+cd <- cooks.distance(fit3)
+lev <- hatvalues(fit3)
+
+c(
+  max_abs_studentized = max(abs(rs)),
+  num_abs_studentized_gt_3 = sum(abs(rs) > 3),
+  num_cooks_gt_4_over_n = sum(cd > 4 / nrow(dat)),
+  num_high_leverage = sum(lev > 2 * length(coef(fit3)) / nrow(dat))
+)
+```
+
+This tells us that there are still some unusual observations, but the overall model is far more stable than the original additive fit on the raw response. Unless those data points are recording errors, I would usually keep them and report their presence rather than delete them automatically.
+
+## Final Model
+
+Our final working model is
+
+$$
+\log(\texttt{medv}) = \beta_0 + \beta_1\texttt{crim} + \beta_2\texttt{chas}
++ \beta_3\texttt{nox} + \beta_4\texttt{rm} + \beta_5\texttt{dis}
++ \beta_6\texttt{rad} + \beta_7\texttt{tax} + \beta_8\texttt{ptratio}
++ \beta_9\texttt{black} + \beta_{10}\texttt{lstat}
++ \beta_{11}\texttt{crim}^2 + \beta_{12}\texttt{rm}^2
++ \beta_{13}\texttt{dis}^2 + \beta_{14}\texttt{lstat}^2 + \varepsilon.
+$$
+
+In R formula form, this is:
+
+```{r}
+formula(fit3)
+```
+
+The main conclusions are:
+
+- Transforming the response with `log(medv)` is justified by the Box-Cox plot and improves variance stability.
+- Adding quadratic terms for `crim`, `rm`, `dis`, and `lstat` captures important curvature that the additive linear model misses.
+- After those nonlinear terms are included, `zn` is no longer needed.
+- The final model explains about `83%` of the variation in `log(medv)`, with adjusted $R^2$ around `0.825`.
+
+## Takeaway
+
+This example shows a typical regression workflow:
+
+1. Start with EDA and a full model.
+2. Use residual plots and partial residual plots to detect problems.
+3. Transform the response when the variance and shape suggest it.
+4. Add nonlinear terms where the data indicate curvature.
+5. Recheck diagnostics before settling on the final model.
+
+The important point is that model building is iterative. We do not fit one regression and stop; instead, we repeatedly use diagnostics to decide how to improve the model.

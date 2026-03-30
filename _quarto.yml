@@ -74,6 +74,7 @@ book:
       - contents/4/vs.qmd
       - contents/4/ra.qmd
       - contents/4/project3.qmd
+      - contents/4/project3-2.qmd
   appendices:
     - contents/app/data.qmd
     - contents/app/r.qmd

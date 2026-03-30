@@ -1,0 +1,218 @@
+# Example: DAAG::Possum dataset full walkthrough
+
+In this report we study the `DAAG::possum` data and build a regression model for total length, `totlngth`.
+The goal is not just to fit one model, but to show a typical workflow:
+
+1. explore the data,
+2. fit a reasonable additive model,
+3. use diagnostics to look for problems,
+4. add interactions when the plots suggest non-additive structure,
+5. refit and interpret the final model.
+
+## Variables used in this report
+
+We will focus on the following variables.
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `totlngth` | Total length of the possum | Numerical, continuous |
+| `hdlngth` | Head length | Numerical, continuous |
+| `taill` | Tail length | Numerical, continuous |
+| `footlgth` | Foot length | Numerical, continuous |
+| `Pop` | Population group (`Vic` or `other`) | Categorical |
+| `sex` | Sex (`f` or `m`) | Categorical |
+
+## Phase 1: Set up the data
+
+We keep only the variables needed for this analysis and remove the one observation with a missing `footlgth`.
+
+```{r}
+library(DAAG)
+library(car)
+
+data(possum)
+
+dat <- na.omit(possum[, c("Pop", "sex", "hdlngth", "taill", "footlgth", "totlngth")])
+
+summary(dat)
+```
+
+There are `r nrow(dat)` complete observations in the analysis data set.
+
+## Phase 2: Exploratory data analysis
+
+Before fitting a model, it is useful to see the marginal relationships among the variables.
+
+```{r}
+pairs(dat)
+```
+
+For the numeric variables, the sample correlations are:
+
+```{r}
+round(cor(dat[, c("hdlngth", "taill", "footlgth", "totlngth")]), 3)
+```
+
+From these plots and correlations, a few patterns stand out:
+
+- `totlngth` is strongly related to both `hdlngth` and `taill`.
+- `footlgth` is positively associated with `totlngth`, but the relationship looks weaker than the first two.
+- `hdlngth` and `footlgth` are themselves related, so we should keep an eye on redundancy.
+- The scatterplots suggest that the effect of one body measurement may depend on another, which hints at possible interaction terms.
+
+## Phase 3: Start with an additive model
+
+A natural first model is an additive regression using the two categorical variables and the three body measurements:
+
+```{r}
+fit0 <- lm(totlngth ~ Pop + sex + hdlngth + taill + footlgth, data = dat)
+summary(fit0)
+```
+
+This is already a fairly good model. In the additive fit:
+
+- `hdlngth` and `taill` are strongly significant,
+- `sex` is significant,
+- `Pop` is borderline,
+- `footlgth` is not significant as a main effect.
+
+That last point does not necessarily mean `footlgth` is useless. It may be involved through interaction terms instead of a simple additive contribution.
+
+### Diagnostics for the additive model
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit0)
+par(mfrow = c(1, 1))
+```
+
+The ordinary residual plots do not show a severe variance problem, but they are not very sensitive to hidden interaction structure. For that, component-plus-residual plots are often more informative.
+
+```{r}
+#| warning: false
+par(mfrow = c(2, 2))
+crPlots(fit0)
+par(mfrow = c(1, 1))
+```
+
+The partial residual plots suggest that the effects of `taill` and `footlgth` may change with `hdlngth`. In other words, the mean structure may not be purely additive.
+
+## Phase 4: Add interaction terms
+
+Based on the plots and on the subject matter, we try the model
+
+$$
+\texttt{totlngth} \sim \texttt{Pop} + \texttt{sex} + \texttt{hdlngth} * \texttt{taill} + \texttt{hdlngth} * \texttt{footlgth}.
+$$
+
+```{r}
+fit1 <- lm(totlngth ~ Pop + sex + hdlngth * taill + hdlngth * footlgth, data = dat)
+summary(fit1)
+```
+
+Compared with the additive model, this interaction model fits better:
+
+```{r}
+c(
+    rse_additive = summary(fit0)$sigma,
+    adj_r2_additive = summary(fit0)$adj.r.squared,
+    aic_additive = AIC(fit0),
+    rse_interaction = summary(fit1)$sigma,
+    adj_r2_interaction = summary(fit1)$adj.r.squared,
+    aic_interaction = AIC(fit1)
+)
+```
+
+The interaction model has a smaller residual standard error, larger adjusted $R^2$, and smaller AIC. So the extra complexity is justified here.
+
+## Phase 5: Center the continuous predictors for interpretation
+
+When a model contains interactions, the main-effect coefficients are easier to interpret if we center the continuous variables first.
+
+```{r}
+dat$c_hd <- scale(dat$hdlngth, center = TRUE, scale = FALSE)
+dat$c_tail <- scale(dat$taill, center = TRUE, scale = FALSE)
+dat$c_foot <- scale(dat$footlgth, center = TRUE, scale = FALSE)
+
+fit_final <- lm(
+    totlngth ~ Pop + sex + c_hd * c_tail + c_hd * c_foot,
+    data = dat
+)
+
+summary(fit_final)
+```
+
+After centering:
+
+- the intercept is the expected total length for a female possum from `Vic` with average head, tail, and foot length,
+- the coefficient of `c_hd` is the effect of head length when the other two continuous variables are at their means,
+- the interaction `c_hd:c_tail` shows how the effect of tail length changes as head length changes,
+- the interaction `c_hd:c_foot` shows how the effect of foot length changes as head length changes.
+
+The signs of the interaction terms are informative:
+
+- `c_hd:c_tail` is negative, so the contribution of tail length becomes smaller as head length increases.
+- `c_hd:c_foot` is positive, so the contribution of foot length becomes larger as head length increases.
+
+## Phase 6: Diagnose the final model
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit_final)
+par(mfrow = c(1, 1))
+```
+
+These plots suggest that the final model is reasonably adequate:
+
+- there is no strong funnel shape,
+- the Q-Q plot is acceptable for a sample of this size,
+- there is no obvious systematic pattern left in the residuals,
+- no single observation appears overwhelmingly dominant.
+
+We can also check variance stability and outliers numerically.
+
+```{r}
+ncvTest(fit_final)
+outlierTest(fit_final)
+```
+
+There is no strong evidence of non-constant variance, and no observation is flagged as an extreme outlier after Bonferroni adjustment.
+
+For completeness, we can also look at VIF values.
+
+```{r}
+vif(fit_final)
+```
+
+Because this model contains interactions, `vif()` warns about higher-order terms. The values are still moderate enough that multicollinearity does not look severe after centering.
+
+## Final model
+
+The final model is
+
+$$
+\texttt{totlngth}
+= \beta_0 + \beta_1\texttt{Pop} + \beta_2\texttt{sex}
++ \beta_3 c\_hd + \beta_4 c\_tail + \beta_5 c\_foot
++ \beta_6(c\_hd \cdot c\_tail)
++ \beta_7(c\_hd \cdot c\_foot) + \varepsilon.
+$$
+
+In R formula form:
+
+```{r}
+formula(fit_final)
+```
+
+## Takeaway
+
+This example illustrates an important modeling lesson. A predictor can look weak in a simple additive model and still become useful once interactions are introduced. In the possum data, `footlgth` is not important as a plain main effect, but it becomes relevant through its interaction with `hdlngth`.
+
+So the final conclusion is:
+
+- total length increases with head length and tail length,
+- possums in the `other` population tend to be shorter than those in `Vic`,
+- male possums tend to be slightly shorter after adjusting for the other variables,
+- the effects of tail length and foot length depend on head length, so an interaction model is more appropriate than a purely additive one.
