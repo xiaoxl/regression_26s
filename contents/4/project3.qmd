@@ -42,6 +42,7 @@ summary(Boston)
 pairs(Boston)
 ```
 
+Correlation among numeric variables
 
 ```{r}
 #| warning: false
@@ -54,7 +55,7 @@ ggcorrplot(cor_matrix, hc.order = TRUE)
 
 What I'm looking for:
 
-- Skewed variables (may need log transforms — `medv` and `crim` are classically right-skewed)
+- Skewed variables (may need log transforms)
 - Non-linear relationships between predictors and `medv`
 - High pairwise correlations between predictors (multicollinearity warning signs)
 - Outliers or influential observations
@@ -65,27 +66,33 @@ Here are some key takeaways from the observations:
 - `crim` is extremely right-skewed, which indicates `log(crim)` often works better
 - `rm` vs `medv`: mostly linear but with some spread
 - `nox`, `dis`, `age` are highly intercorrelated (all related to urban density)
-- `tax` and `rad` are nearly collinear
+
 
 ## Phase 2: Start with All Predictors — Full Model
 
+We begin with the full additive regression model.
 
 ```{r}
 fit_full <- lm(medv ~ ., data = Boston)
 summary(fit_full)
 ```
-Why: This gives me the lay of the land. I check:
+This model provides a baseline for comparison. 
 
-- Adjusted $R^2$ (baseline: ~0.73 for raw Boston)
-- Which predictors are significant in the presence of all others
-- Residual standard error
-- Overall F-test
-
-Then immediately do residual diagnostics on this full model:
 ```{r}
+#| fig-show: hold
 par(mfrow = c(2, 2))
 plot(fit_full)
+par(mfrow = c(1, 1))
 ```
+
+Here are some important info we get. 
+
+- $R_{adj}^2\approx0.74$ and $R^2\approx0.75$. So about $74-75\%$ of the variability in median house value is explained by the predictors.
+- Overall p-value for the overall F-test is very small, which means that the whole group of variables work.
+- `indus`, `age` and some of the `rad` levels are not signicant.
+
+Then immediately do residual diagnostics on this full model:
+
 
 The four diagnostic plots give me:
 
@@ -96,16 +103,62 @@ The four diagnostic plots give me:
 
 On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.
 
+### Variable selections
+
+We apply best-of-subset to select variables.
+
+
+```{r}
+library(leaps)
+fits <- regsubsets(
+    medv ~ .,
+    data = Boston,
+    nvmax = ncol(model.matrix(medv ~ ., Boston)) - 1
+)
+models_summary <- summary(fits)
+best_cp <- which.min(models_summary$cp)
+plot(models_summary$cp, xlab = "Number of varaiables", type = "l")
+points(best_cp, models_summary$cp[best_cp], col = "red", cex = 2, pch = 20)
+
+models_summary
+```
+
+Since for dummy variable `rad` we have to choose all or none, based on the best-of-subset results, we will exclude `indus` and `age` from our model. We will delete the two variables from `Boston` and name the dataset `dat`.
+
+
+```{r}
+dat <- subset(Boston, select = -c(indus, age))
+```
+
+
+Therefore our based model is 
+```{r}
+fit_base <- lm(medv~., data=dat)
+summary(fit_base)
+```
+
+The corresponding residual plots are
+```{r}
+par(mfrow = c(2, 2))
+plot(fit_base)
+par(mfrow = c(1, 1))
+```
+
+
+
 
 ## Phase 3: Consider Transformations
 
+
+
+
+
 ### Check if `log(medv)` improves things
 
-I'd also use Box-Cox to formally choose the best power transformation for `medv`:
+Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd also use Box-Cox to formally choose the best power transformation for `medv`:
 
 ```{r}
-library(MASS)
-boxcox(fit_full)  
+boxcox(fit_base)  
 ```
 
 Reading this specific plot
@@ -116,8 +169,10 @@ Reading this specific plot
 By the standard rule, if $\lambda=0$ is inside the 95% CI, `log(y)` is the transformation.
 
 ```{r}
-fit_log <- lm(log(medv) ~ ., data = Boston)
+fit_log <- lm(log(medv) ~ ., data = dat)
+par(mfrow = c(2, 2))
 plot(fit_log)
+par(mfrow = c(1, 1))
 ```
 
 ```{r}
@@ -128,3 +183,27 @@ With `log(medv)` as the response:
 
 - Coefficients are now interpreted as percent changes
 - The residual fan shape (heteroscedasticity) is slightly improved
+
+
+### Partial residual plots
+
+Then we look at the partial residual plots.
+
+First show the partial residual plots.
+
+```{r}
+par(mfrow = c(4, 3))
+crPlots(fit_log)
+par(mfrow = c(1, 1))
+```
+
+Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try squared terms for them.
+
+
+```{r}
+fit2 <- lm(log(medv)~.+I(crim^2)+I(rm^2)+I(dis^2)+I(lstat^2), data=dat)
+summary(fit2)
+par(mfrow = c(4, 3))
+crPlots(fit2)
+par(mfrow = c(1, 1))
+```
