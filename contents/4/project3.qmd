@@ -23,11 +23,12 @@ In the previous section we talk about our main tools to handle the `Boston` data
 
 
 
-## Phase 1: Understand the Data Before Fitting Anything
+## Step 1: Understand the Data
 Before touching `lm()`, the first step is always exploratory data analysis (EDA). 
 
 
 ```{r}
+#| warning: false
 library(MASS)
 library(car)
 data(Boston)
@@ -36,6 +37,22 @@ Boston$chas <- factor(Boston$chas)
 Boston$rad <- factor(Boston$rad)
 
 summary(Boston)
+```
+
+
+
+```{r}
+#| fig-height: 8
+#| fig-show: hold
+
+par(mfrow = c(4, 3))
+num_vars <- Boston[, sapply(Boston, is.numeric)]
+
+for (n in names(num_vars)) {
+    hist(num_vars[[n]], main = n)
+}
+
+par(mfrow = c(1, 1))
 ```
 
 
@@ -54,19 +71,27 @@ library(ggcorrplot)
 ggcorrplot(cor_matrix, hc.order = TRUE)
 ```
 
+<!-- 
 What I'm looking for:
 
 - Skewed variables (may need log transforms)
 - Non-linear relationships between predictors and `medv`
 - High pairwise correlations between predictors (multicollinearity warning signs)
-- Outliers or influential observations
+- Outliers or influential observations -->
 
-Here are some key takeaways from the observations:
+Based on the summary table, pair plots, and the correlation matrix, here are the main takeaways from the EDA:
 
-- `lstat` vs `medv`: curved, which indicates quadratic or log transform likely needed
-- `crim` is extremely right-skewed, which indicates `log(crim)` often works better
-- `rm` vs `medv`: mostly linear but with some spread
-- `nox`, `dis`, `age` are highly intercorrelated (all related to urban density)
+- The response `medv` is not perfectly symmetric and shows some upper-end compression, so a transformation of the response may help stabilize variance.
+- `crim`, `zn`, `dis`, `black`, and `tax` show strong skewness or long tails in the summary table, with `crim` especially right-skewed. This suggests that transformations such as `log(crim)` may be useful.
+- Several predictors are on very different scales, so raw coefficient sizes from a later regression should not be compared directly without standardization or context.
+- The pair plots show a strong negative association between `lstat` and `medv`, but the pattern is clearly curved rather than purely linear. This is a strong sign that a quadratic term or transformation will be needed.
+- `rm` has a strong positive relationship with `medv`, and this is one of the clearest approximately linear patterns in the plots, although the spread increases somewhat for larger fitted values.
+- `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`.
+- `nox`, `indus`, and `age` tend to move together, while `dis` tends to move in the opposite direction. These variables all describe urban intensity or location-related structure, so multicollinearity is a concern.
+- `rad` and `tax` are strongly positively associated, indicating that highway accessibility and tax rate are carrying overlapping information.
+- The correlation matrix confirms that `medv` is most strongly negatively correlated with `lstat` and positively correlated with `rm`, which matches what we see in the pair plots.
+- The matrix also confirms notable predictor-predictor correlations such as `nox` with `indus` and `age`, `dis` with `nox` in the opposite direction, and `rad` with `tax`, all of which warn us that the full model may suffer from collinearity.
+- A few scatterplots suggest outliers or high-leverage towns, especially for `crim`, `tax`, and `rad`, so influence diagnostics will matter later even if we keep all observations.
 
 
 ## Phase 2: Start with All Predictors — Full Model
@@ -134,7 +159,7 @@ dat <- subset(Boston, select = -c(indus, age))
 
 Therefore our based model is 
 ```{r}
-fit_base <- lm(medv~., data=dat)
+fit_base <- lm(medv ~ ., data = dat)
 summary(fit_base)
 ```
 
@@ -159,7 +184,7 @@ par(mfrow = c(1, 1))
 Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd also use Box-Cox to formally choose the best power transformation for `medv`:
 
 ```{r}
-boxcox(fit_base)  
+boxcox(fit_base)
 ```
 
 Reading this specific plot
@@ -202,7 +227,10 @@ Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little cu
 
 
 ```{r}
-fit2 <- lm(log(medv)~.+I(crim^2)+I(rm^2)+I(dis^2)+I(lstat^2), data=dat)
+fit2 <- lm(
+    log(medv) ~ . + I(crim^2) + I(rm^2) + I(dis^2) + I(lstat^2),
+    data = dat
+)
 summary(fit2)
 par(mfrow = c(4, 3))
 crPlots(fit2)
@@ -260,10 +288,10 @@ cd <- cooks.distance(fit3)
 lev <- hatvalues(fit3)
 
 c(
-  max_abs_studentized = max(abs(rs)),
-  num_abs_studentized_gt_3 = sum(abs(rs) > 3),
-  num_cooks_gt_4_over_n = sum(cd > 4 / nrow(dat)),
-  num_high_leverage = sum(lev > 2 * length(coef(fit3)) / nrow(dat))
+    max_abs_studentized = max(abs(rs)),
+    num_abs_studentized_gt_3 = sum(abs(rs) > 3),
+    num_cooks_gt_4_over_n = sum(cd > 4 / nrow(dat)),
+    num_high_leverage = sum(lev > 2 * length(coef(fit3)) / nrow(dat))
 )
 ```
 
