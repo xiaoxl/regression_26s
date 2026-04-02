@@ -36,6 +36,8 @@ data(Boston)
 Boston$chas <- factor(Boston$chas)
 Boston$rad <- factor(Boston$rad)
 
+num_vars <- Boston[, sapply(Boston, is.numeric)]
+
 summary(Boston)
 ```
 
@@ -46,10 +48,9 @@ summary(Boston)
 #| fig-show: hold
 
 par(mfrow = c(4, 3))
-num_vars <- Boston[, sapply(Boston, is.numeric)]
 
 for (n in names(num_vars)) {
-    hist(num_vars[[n]], main = n)
+    hist(num_vars[[n]], main = "", xlab = n)
 }
 
 par(mfrow = c(1, 1))
@@ -64,34 +65,26 @@ Correlation among numeric variables
 
 ```{r}
 #| warning: false
-num_vars <- Boston[, sapply(Boston, is.numeric)]
 cor_matrix <- cor(num_vars)
 
 library(ggcorrplot)
 ggcorrplot(cor_matrix, hc.order = TRUE)
 ```
 
-<!-- 
-What I'm looking for:
 
-- Skewed variables (may need log transforms)
-- Non-linear relationships between predictors and `medv`
-- High pairwise correlations between predictors (multicollinearity warning signs)
-- Outliers or influential observations -->
-
-Based on the summary table, pair plots, and the correlation matrix, here are the main takeaways from the EDA:
+Based on the summary table, histograms, pair plots, and the correlation matrix, here are the main takeaways from the EDA:
 
 - The response `medv` is not perfectly symmetric and shows some upper-end compression, so a transformation of the response may help stabilize variance.
 - `crim`, `zn`, `dis`, `black`, and `tax` show strong skewness or long tails in the summary table, with `crim` especially right-skewed. This suggests that transformations such as `log(crim)` may be useful.
 - Several predictors are on very different scales, so raw coefficient sizes from a later regression should not be compared directly without standardization or context.
+- The correlation matrix confirms that `medv` is most strongly negatively correlated with `lstat` and positively correlated with `rm`, which matches what we see in the pair plots.
 - The pair plots show a strong negative association between `lstat` and `medv`, but the pattern is clearly curved rather than purely linear. This is a strong sign that a quadratic term or transformation will be needed.
 - `rm` has a strong positive relationship with `medv`, and this is one of the clearest approximately linear patterns in the plots, although the spread increases somewhat for larger fitted values.
-- `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`.
-- `nox`, `indus`, and `age` tend to move together, while `dis` tends to move in the opposite direction. These variables all describe urban intensity or location-related structure, so multicollinearity is a concern.
-- `rad` and `tax` are strongly positively associated, indicating that highway accessibility and tax rate are carrying overlapping information.
-- The correlation matrix confirms that `medv` is most strongly negatively correlated with `lstat` and positively correlated with `rm`, which matches what we see in the pair plots.
-- The matrix also confirms notable predictor-predictor correlations such as `nox` with `indus` and `age`, `dis` with `nox` in the opposite direction, and `rad` with `tax`, all of which warn us that the full model may suffer from collinearity.
-- A few scatterplots suggest outliers or high-leverage towns, especially for `crim`, `tax`, and `rad`, so influence diagnostics will matter later even if we keep all observations.
+<!-- - `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`. -->
+- `nox`, `indus`, `age` and `dis` are highly correlated, positive or negative. These variables all describe urban intensity or location-related structure, so multicollinearity is a concern.
+<!-- - `rad` and `tax` are strongly positively associated, indicating that highway accessibility and tax rate are carrying overlapping information. -->
+<!-- - The matrix also confirms notable predictor-predictor correlations such as `nox` with `indus` and `age`, `dis` with `nox` in the opposite direction, and `rad` with `tax`, all of which warn us that the full model may suffer from collinearity. -->
+- A few scatterplots suggest outliers or high-leverage towns, especially for `crim` and `tax`, so influence diagnostics will matter later even if we keep all observations.
 
 
 ## Phase 2: Start with All Predictors — Full Model
@@ -119,15 +112,125 @@ Here are some important info we get.
 
 Then immediately do residual diagnostics on this full model:
 
-
+<!-- 
 The four diagnostic plots give me:
 
 1. Residuals vs Fitted — checks linearity and homoscedasticity
 2. Normal Q-Q — checks normality of residuals
 3. Scale-Location — another view of heteroscedasticity
-4. Residuals vs Leverage — identifies influential points (Cook's distance)
+4. Residuals vs Leverage — identifies influential points (Cook's distance) -->
 
-On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.
+1. From the residual plot, the red line is not flat, with a slight U-shape, and hte residual become slightly larger for larger fitted value.
+2. From the Q-Q plot, points follow the line in the middle, but right tail bends upward, and several points deviate strongly.
+3. From the scale-location plot, the red trend line has a slight U-shape, and the residual spread grows as fitted values increase.
+4. From the residuals vs leverage plot, most points have low leverage with one is around 0.30, and no points have large Cook's distance.
+
+
+These suggest the following observations:
+
+1. There are possible nonlinearity among variables, that we need to try some quadratic term or transformations.
+2. There is a possible heteroscedasticity.
+3. Residuals are not perfectly normal especially in the right tail.
+4. There are no extremely influential observations.
+
+<!-- On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.
+ -->
+Based on all the observations (from this section and the previous section), we would like to start from applying some nonlinear transformations to build the model.
+
+
+
+## Phase 3: Consider Transformations
+
+
+
+### Check if `log(medv)` improves things
+
+
+<!-- Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd  -->
+
+We begin by examining the response variable. To determine an appropriate transformation, we apply the Box–Cox procedure to search for a suitable power transformation of `medv`:
+
+```{r}
+boxcox(fit_full)
+```
+
+The peak of the profile log-likelihood appears to occur around $\lambda\approx0.1$. The $95\%$ confidence interval for $\lambda$ is slightly above $0$, so $0$ lies just outside the interval. This suggests that the optimal transformation is approximately $y^{0.1}$. However, because $0.1$ is very close to $0$, the log transformation $\log(y)$ is often used in practice. The log transformation is simpler, widely used, and produces a model fit very similar to the optimal Box–Cox transformation.
+
+We therefore refit the model using `log(medv)` as the response.
+```{r}
+#| fig-show: hold
+fit_log <- lm(I(log(medv)) ~ ., data = Boston)
+par(mfrow = c(2, 2))
+plot(fit_log)
+par(mfrow = c(1, 1))
+```
+
+```{r}
+summary(fit_log)
+```
+
+
+
+
+With `log(medv)` as the response:
+
+- Coefficients are now interpreted as percent changes in `medv` for a non-unit increase in the predictor, holding other variables constant.
+- $R_a^2$ and $R^2$ increase slightly, indicating a small improvement in model fit.
+- However, the diagnostic plots show that the main issues (nonlinearity, heteroscedasticity, and non-normal residuals) are not substantially improved.
+
+Therefore, transforming the response alone is not sufficient, and we need to consider additional model modifications, such as transformations of predictors, interaction terms, or nonlinear terms.
+
+
+### Partial residual plots
+
+Then we look at the partial residual plots.
+
+First show the partial residual plots.
+
+```{r}
+#| fig-show: hold
+#| fig-width: 8
+par(mfrow = c(4, 3))
+crPlots(fit_log)
+par(mfrow = c(1, 1))
+```
+
+Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try squared terms for them.
+
+
+```{r}
+#| fig-show: hold
+fit2 <- lm(
+    log(medv) ~ . + I(crim^2) + I(rm^2) + I(dis^2) + I(lstat^2),
+    data = Boston
+)
+summary(fit2)
+par(mfrow = c(4, 3))
+crPlots(fit2)
+par(mfrow = c(1, 1))
+```
+
+The quadratic terms improve the model substantially. Compared with `fit_log`, the residual standard error drops from about `0.189` to about `0.171`, and the nested F-test for adding the four squared terms is highly significant.
+
+```{r}
+anova(fit_log, fit2)
+```
+
+At this point, `zn` is no longer significant after the nonlinear terms are added, so we can simplify the model by dropping it and refitting.
+
+```{r}
+fit3 <- update(fit2, . ~ . - zn)
+summary(fit3)
+```
+
+This simpler model has essentially the same fit as `fit2`, so removing `zn` costs us almost nothing while making the model easier to explain.
+
+```{r}
+anova(fit3, fit2)
+```
+
+
+
 
 ### Variable selections
 
@@ -173,88 +276,9 @@ par(mfrow = c(1, 1))
 
 
 
-## Phase 3: Consider Transformations
 
 
 
-
-
-### Check if `log(medv)` improves things
-
-Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd also use Box-Cox to formally choose the best power transformation for `medv`:
-
-```{r}
-boxcox(fit_base)
-```
-
-Reading this specific plot
-
-- The peak appears to be right around $\lambda\approx0$, and 
-- the 95% CI dotted lines straddle 0 closely. They look to be roughly $(-0.1, 0.2)$ or so.
-
-By the standard rule, if $\lambda=0$ is inside the 95% CI, `log(y)` is the transformation.
-
-```{r}
-fit_log <- lm(log(medv) ~ ., data = dat)
-par(mfrow = c(2, 2))
-plot(fit_log)
-par(mfrow = c(1, 1))
-```
-
-```{r}
-summary(fit_log)
-```
-
-With `log(medv)` as the response:
-
-- Coefficients are now interpreted as percent changes
-- The residual fan shape (heteroscedasticity) is slightly improved
-
-
-### Partial residual plots
-
-Then we look at the partial residual plots.
-
-First show the partial residual plots.
-
-```{r}
-par(mfrow = c(4, 3))
-crPlots(fit_log)
-par(mfrow = c(1, 1))
-```
-
-Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try squared terms for them.
-
-
-```{r}
-fit2 <- lm(
-    log(medv) ~ . + I(crim^2) + I(rm^2) + I(dis^2) + I(lstat^2),
-    data = dat
-)
-summary(fit2)
-par(mfrow = c(4, 3))
-crPlots(fit2)
-par(mfrow = c(1, 1))
-```
-
-The quadratic terms improve the model substantially. Compared with `fit_log`, the residual standard error drops from about `0.189` to about `0.171`, and the nested F-test for adding the four squared terms is highly significant.
-
-```{r}
-anova(fit_log, fit2)
-```
-
-At this point, `zn` is no longer significant after the nonlinear terms are added, so we can simplify the model by dropping it and refitting.
-
-```{r}
-fit3 <- update(fit2, . ~ . - zn)
-summary(fit3)
-```
-
-This simpler model has essentially the same fit as `fit2`, so removing `zn` costs us almost nothing while making the model easier to explain.
-
-```{r}
-anova(fit3, fit2)
-```
 
 ## Phase 4: Diagnose the Final Model
 
