@@ -195,24 +195,229 @@ crPlots(fit_log)
 par(mfrow = c(1, 1))
 ```
 
-Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try squared terms for them.
+Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try transformations of them. Note that based on the observations at the beginning, we would like to try `log(crim)`, while quadratic term for other variables. If we go with `log(crim)`, `crim` has to be removed from the model.
+
+
+```{r}
+fit2 <- lm(
+    I(log(medv)) ~ . -crim + I(log(crim)) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+summary(fit2)
+```
 
 
 ```{r}
 #| fig-show: hold
-fit2 <- lm(
-    log(medv) ~ . + I(crim^2) + I(rm^2) + I(dis^2) + I(lstat^2),
-    data = Boston
-)
-summary(fit2)
 par(mfrow = c(4, 3))
 crPlots(fit2)
 par(mfrow = c(1, 1))
 ```
 
-The quadratic terms improve the model substantially. Compared with `fit_log`, the residual standard error drops from about `0.189` to about `0.171`, and the nested F-test for adding the four squared terms is highly significant.
 
 ```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit2)
+par(mfrow = c(1, 1))
+```
+
+Everythign seems okay but not too good. However `log(crim)` is still a little bit curvy, and the p-value of `lstat^2` and `log(crim)` is not very small. Therefore we would like to try more transformations of `crim`. We now focus on the partial residual plot of `crim`. Note that when we don't use quadratic term or cubic term, we usually remove `crim` since we replace it by a nonlinear transformation.
+
+
+```{r}
+fit2.0 <- lm(
+    I(log(medv)) ~ . + I(crim^2) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit2.0, terms=~I(crim^2))
+```
+
+```{r}
+fit0.5 <- lm(
+    I(log(medv)) ~ . - crim + I(crim^0.5) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit0.5, terms=~I(crim^0.5))
+```
+
+```{r}
+fit0.4 <- lm(
+    I(log(medv)) ~ . - crim + I(crim^0.4) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit0.4, terms=~I(crim^0.4))
+```
+
+```{r}
+fit0.3 <- lm(
+    I(log(medv)) ~ . - crim + I(crim^0.3) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit0.3, terms=~I(crim^0.3))
+```
+
+
+```{r}
+fit0.2 <- lm(
+    I(log(medv)) ~ . - crim + I(crim^0.2) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit0.2, terms=~I(crim^0.2))
+```
+
+```{r}
+fit0.1 <- lm(
+    I(log(medv)) ~ . - crim + I(crim^0.1) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+crPlots(fit0.1, terms=~I(crim^0.1))
+```
+
+
+From all these transformations, `crim^0.4` gives the best result in the sense that the partial residual plot is almost linear, while `crim^0.5` and `crim^0.3` is slightly worse but acceptable. In this case we prefer to choose `crim^0.5` since it is actually `sqrt(crim)` which is slightly easier to interpret.
+
+
+```{r}
+fit3 <- lm(
+    I(log(medv)) ~ . - crim + I(sqrt(crim)) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+summary(fit3)
+```
+
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(4, 3))
+crPlots(fit3)
+par(mfrow = c(1, 1))
+```
+
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit3)
+par(mfrow = c(1, 1))
+```
+
+All plots look good. Therefore we would like to use `fit3` as our next step.
+
+Note that we could interepte `sqrt(crim)` in the following way.
+
+- The square-root transformation implies a diminishing marginal effect of crime. Increases in crime have a stronger impact on housing prices in low-crime areas than in high-crime areas.
+- Because the response is in logarithmic scale, the coefficient can be interpreted approximately as the percentage change in housing price associated with a one-unit increase in $sqrt{crim}$. Using $sqrt{crim}$ assumes that crime affects housing prices strongly when crime levels are low, but the impact becomes weaker as crime increases.
+
+
+
+
+<!-- 
+The quadratic terms improve the model substantially. Compared with `fit_log`, although $R_a^2$ doesn't change much, the residual standard error drops from about `0.189` to about `0.175`,  -->
+<!-- 
+Since the two models are not nested models, we could not directly use nested F-test to compare them. Therefore we use externel creteria as well as diagnostic tools and interpretibility.
+
+```{r}
+AIC(fit2, fit3)
+```
+<!-- 
+`fit3` has a much lower AIC, and significantly higher $R_a^2$. Therefore based on the predictoring ability `fit3` is better. -->
+
+Although `fit3` achieves a much lower AIC and better predictive performance, the squared term of `crim` introduces a high leverage observation and the partial residual plot of `I(crim^2)` still shows curvature. In addition, the log transformation of `crim` has a clearer interpretation and is more stable with respect to extreme values. Therefore, for inferential purposes we prefer `fit2`. -->
+
+
+<!-- In our case, we would like to go with `fit2`. -->
+
+### Interaction term
+
+
+
+```{r}
+fit4 <- lm(
+    I(log(medv)) ~ . + crim:rm+crim:lstat+crim:dis + I(sqrt(crim))+I(rm^2) + I(lstat^2),
+    data = Boston
+)
+summary(fit4)
+```
+
+
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit4)
+par(mfrow = c(1, 1))
+```
+
+
+```{r}
+#| warning: false
+library(sjPlot)
+plot_model(fit4, type='int')
+```
+
+
+
+
+
+```{r}
+fit5 <- lm(
+    I(log(medv)) ~ . -crim+I(crim^(0.4)) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+summary(fit5)
+```
+
+
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit5)
+par(mfrow = c(1, 1))
+```
+
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(4, 3))
+crPlots(fit5)
+par(mfrow = c(1, 1))
+```
+
+```{r}
+boxcox(crim~1, data=Boston)
+```
+
+
+
+
+```{r}
+library(sjPlot)
+plot_model(fit4, type='int')
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+, and the nested F-test for adding the four squared terms is highly significant.
+
+```{r}
+#| warning: false
 anova(fit_log, fit2)
 ```
 
@@ -229,6 +434,36 @@ This simpler model has essentially the same fit as `fit2`, so removing `zn` cost
 anova(fit3, fit2)
 ```
 
+
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit2)
+par(mfrow = c(1, 1))
+```
+
+
+
+
+
+
+```{r}
+fit3 <- lm(
+    I(log(medv)) ~ . + I(crim^2) + I(rm^2) + I(lstat^2),
+    data = Boston
+)
+```
+
+
+
+```{r}
+AIC(fit2)
+```
+
+```{r}
+AIC(fit3)
+```
 
 
 
