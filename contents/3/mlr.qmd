@@ -689,6 +689,8 @@ When interactions are present, however, the coefficient is not the effect. The c
 
 ### Interation term
 
+When deciding which interaction terms to consider, a common idea is to ask whether the influence of one variable on the response may change depending on another variable. Such interactions are often reasonable when two predictors describe related aspects of the same phenomenon, when scientific knowledge suggests a combined effect, or when graphical exploration shows that the slope of one predictor appears different at different levels of another predictor. In these situations, adding an interaction term allows the model to capture how the relationship between a predictor and the response varies across conditions.
+
 
 Consider the model
 
@@ -744,6 +746,7 @@ After centering, the main effect of $x_1$ represents its effect at the average l
 
 ### Higher-degree (polynomial) terms
 
+When considering higher-degree terms, we ask whether the relationship between a predictor and the response shows curvature. If exploratory plots or prior knowledge suggest a nonlinear pattern, polynomial terms can be added to allow the model to capture this curvature.
 
 ::: {#def-}
 

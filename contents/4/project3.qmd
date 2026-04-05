@@ -1,5 +1,8 @@
 # Example: Boston Housing dataset full walkthrough
 
+
+{{< include ../math.qmd >}} 
+
 In the previous section we talk about our main tools to handle the `Boston` dataset. In this section we display how to explore the dataset from scratch.
 
 
@@ -58,6 +61,9 @@ par(mfrow = c(1, 1))
 
 
 ```{r}
+#| column: screen-inset-shaded
+#| fig-width: 40
+#| fig-height: 25
 pairs(Boston)
 ```
 
@@ -75,19 +81,19 @@ ggcorrplot(cor_matrix, hc.order = TRUE)
 Based on the summary table, histograms, pair plots, and the correlation matrix, here are the main takeaways from the EDA:
 
 - The response `medv` is not perfectly symmetric and shows some upper-end compression, so a transformation of the response may help stabilize variance.
-- `crim`, `zn`, `dis`, `black`, and `tax` show strong skewness or long tails in the summary table, with `crim` especially right-skewed. This suggests that transformations such as `log(crim)` may be useful.
-- Several predictors are on very different scales, so raw coefficient sizes from a later regression should not be compared directly without standardization or context.
+- `crim`, `zn`, `dis`, `black`, and `tax` show strong skewness or long tails in the summary table, with `crim` especially right-skewed. This suggests that some nonlinear transformations may be useful.
 - The correlation matrix confirms that `medv` is most strongly negatively correlated with `lstat` and positively correlated with `rm`, which matches what we see in the pair plots.
-- The pair plots show a strong negative association between `lstat` and `medv`, but the pattern is clearly curved rather than purely linear. This is a strong sign that a quadratic term or transformation will be needed.
-- `rm` has a strong positive relationship with `medv`, and this is one of the clearest approximately linear patterns in the plots, although the spread increases somewhat for larger fitted values.
-<!-- - `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`. -->
+- The pair plots show some curved pattern between `medv` and some variables like `crim`, `rm` and `lstat`. This is a strong sign that some nonlinear transformations will be needed.
 - `nox`, `indus`, `age` and `dis` are highly correlated, positive or negative. These variables all describe urban intensity or location-related structure, so multicollinearity is a concern.
+- We see no obvious extreme outliers based on the pair plots. However we still need to run diagnostics.
+
+<!-- - Several predictors are on very different scales, so raw coefficient sizes from a later regression should not be compared directly without standardization or context. -->
+<!-- - `rm` has a strong positive relationship with `medv`, and this is one of the clearest approximately linear patterns in the plots, although the spread increases somewhat for larger fitted values. -->
+<!-- - `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`. -->
 <!-- - `rad` and `tax` are strongly positively associated, indicating that highway accessibility and tax rate are carrying overlapping information. -->
 <!-- - The matrix also confirms notable predictor-predictor correlations such as `nox` with `indus` and `age`, `dis` with `nox` in the opposite direction, and `rad` with `tax`, all of which warn us that the full model may suffer from collinearity. -->
-- A few scatterplots suggest outliers or high-leverage towns, especially for `crim` and `tax`, so influence diagnostics will matter later even if we keep all observations.
 
-
-## Phase 2: Start with All Predictors — Full Model
+## Step 2: Start with All Predictors — Full Model
 
 We begin with the full additive regression model.
 
@@ -106,8 +112,8 @@ par(mfrow = c(1, 1))
 
 Here are some important info we get. 
 
-- $R_{adj}^2\approx0.74$ and $R^2\approx0.75$. So about $74-75\%$ of the variability in median house value is explained by the predictors.
-- Overall p-value for the overall F-test is very small, which means that the whole group of variables work.
+- $R_{adj}^2\approx`r summary(fit_full)$adj.r.squared`$ and $R^2\approx`r summary(fit_full)$r.squared`$. 
+- The overall F-test has a very small p-value, indicating that at least one predictor is associated with the response variable.
 - `indus`, `age` and some of the `rad` levels are not signicant.
 
 Then immediately do residual diagnostics on this full model:
@@ -120,7 +126,7 @@ The four diagnostic plots give me:
 3. Scale-Location — another view of heteroscedasticity
 4. Residuals vs Leverage — identifies influential points (Cook's distance) -->
 
-1. From the residual plot, the red line is not flat, with a slight U-shape, and hte residual become slightly larger for larger fitted value.
+1. From the residual plot, the red line is not flat, with a slight U-shape. In addition, residual variance increases slightly as fitted values increase.
 2. From the Q-Q plot, points follow the line in the middle, but right tail bends upward, and several points deviate strongly.
 3. From the scale-location plot, the red trend line has a slight U-shape, and the residual spread grows as fitted values increase.
 4. From the residuals vs leverage plot, most points have low leverage with one is around 0.30, and no points have large Cook's distance.
@@ -128,7 +134,7 @@ The four diagnostic plots give me:
 
 These suggest the following observations:
 
-1. There are possible nonlinearity among variables, that we need to try some quadratic term or transformations.
+1. There are possible nonlinearity among variables.
 2. There is a possible heteroscedasticity.
 3. Residuals are not perfectly normal especially in the right tail.
 4. There are no extremely influential observations.
@@ -139,7 +145,7 @@ Based on all the observations (from this section and the previous section), we w
 
 
 
-## Phase 3: Consider Transformations
+## Step 3: Consider Transformations
 
 
 
@@ -148,7 +154,7 @@ Based on all the observations (from this section and the previous section), we w
 
 <!-- Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd  -->
 
-We begin by examining the response variable. To determine an appropriate transformation, we apply the Box–Cox procedure to search for a suitable power transformation of `medv`:
+We begin by examining the response variable (because of the curvy residual plot and the slightly heteroscedasticity). To determine an appropriate transformation, we apply the Box–Cox procedure to search for a suitable power transformation of `medv`:
 
 ```{r}
 boxcox(fit_full)
@@ -156,17 +162,20 @@ boxcox(fit_full)
 
 The peak of the profile log-likelihood appears to occur around $\lambda\approx0.1$. The $95\%$ confidence interval for $\lambda$ is slightly above $0$, so $0$ lies just outside the interval. This suggests that the optimal transformation is approximately $y^{0.1}$. However, because $0.1$ is very close to $0$, the log transformation $\log(y)$ is often used in practice. The log transformation is simpler, widely used, and produces a model fit very similar to the optimal Box–Cox transformation.
 
+
+
 We therefore refit the model using `log(medv)` as the response.
 ```{r}
-#| fig-show: hold
-fit_log <- lm(I(log(medv)) ~ ., data = Boston)
-par(mfrow = c(2, 2))
-plot(fit_log)
-par(mfrow = c(1, 1))
+fit_log <- lm(log(medv) ~ ., data = Boston)
+summary(fit_log)
 ```
 
 ```{r}
-summary(fit_log)
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit_log)
+par(mfrow = c(1, 1))
+
 ```
 
 
@@ -174,11 +183,52 @@ summary(fit_log)
 
 With `log(medv)` as the response:
 
-- Coefficients are now interpreted as percent changes in `medv` for a non-unit increase in the predictor, holding other variables constant.
-- $R_a^2$ and $R^2$ increase slightly, indicating a small improvement in model fit.
+- Coefficients are interpreted as the approximate percentage change in the median of `medv` associated with a one-unit increase in the predictor, holding other variables constant.
+- $R_{adj}^2$ and $R^2$ increase slightly, indicating a small improvement in model fit.
 - However, the diagnostic plots show that the main issues (nonlinearity, heteroscedasticity, and non-normal residuals) are not substantially improved.
 
 Therefore, transforming the response alone is not sufficient, and we need to consider additional model modifications, such as transformations of predictors, interaction terms, or nonlinear terms.
+
+
+
+
+::: {.callout-note}
+## Interpretation of $\log(y)$
+Assume
+$$
+\log(y)=\beta_0+\sum_{i=1}^k{\beta_i x_i}+\varepsilon=\beta_0+\mathbf{\beta_1x}+\varepsilon
+$$
+Then 
+$$
+y=\me^{\beta_0}\me^{\mathbf{\beta_1x}}\me^{\varepsilon}=\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}}.
+$$
+Therefore if $\mathbf{\Delta x}=[\Delta x_1,\Delta x_2,\ldots,\Delta x_k]$ are all small,
+$$
+\begin{split}
+\Delta y/y&=\qty(\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1(x+\Delta x)}}-\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}})/\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}}=\qty(\me^{\mathbf{\beta_1(x+\Delta x)}}-\me^{\mathbf{\beta_1x}})/\me^{\mathbf{\beta_1x}}=\me^{\mathbf{\beta_1\Delta x}}-1\\
+&\approx 1+\mathbf{\beta_1 \Delta x}-1=\mathbf{\beta_1 \Delta x}=\sum_{i=1}^k{\beta_i \Delta x_i}.
+\end{split}
+$$
+Then the interpretation should be:
+
+A one-unit increase in $x_i$ is associated with an approximate $100 \cdot \beta_i \%$ change in the median of $y$, holding all other predictors constant.
+
+:::
+
+
+::: {.callout-caution}
+
+## The "Mean vs. Median" Trap
+
+When we assume the errors $\varepsilon \sim N(0, \sigma^2)$ are symmetric, our OLS model estimates the conditional mean of $\log(y)$. However, due to Jensen's Inequality, $e^{\Exp[\log(y)]}$ does not equal $\Exp[y]$. Instead:
+
+- $\me^{\hat{y}}$ provides an estimate of the Median of $y$. 
+- The Mean of $y$ is actually shifted by a correction factor: $\Exp[y] = \text{Median}(y) \cdot \me^{\sigma^2/2}$.
+ 
+If you do not wish to apply the correction factor, you should strictly interpret your results as the percentage change in the median of $y$ rather than the mean, just like what we did in the above note block.
+
+:::
+
 
 
 ### Partial residual plots
@@ -195,289 +245,171 @@ crPlots(fit_log)
 par(mfrow = c(1, 1))
 ```
 
-Based on the plots, it seems that `crim`, `rm`, `dis` and `lstat` is a little curvy. Therefore we would like to try transformations of them. Note that based on the observations at the beginning, we would like to try `log(crim)`, while quadratic term for other variables. If we go with `log(crim)`, `crim` has to be removed from the model.
+Based on the partial residual plots, it appears that `crim`, `rm`, and `lstat` exhibit some curvature. Therefore, we consider applying transformations to these variables.
 
+From the earlier EDA, we observed that `crim` is strongly right-skewed. A common way to address this is to apply a transformation such as `log(crim)` or `sqrt(crim)`, both of which reduce right skewness by compressing larger values. In either case, the original variable `crim` must be removed from the model and replaced by its transformed version.
 
+To determine which transformation is more appropriate, we compare their model performance and examine the corresponding partial residual plots.
+
+We first consider the `log(crim)` transformation.
 ```{r}
-fit2 <- lm(
-    I(log(medv)) ~ . -crim + I(log(crim)) + I(rm^2) + I(lstat^2),
+fit_logcrim <- lm(
+    log(medv) ~ . - crim + log(crim) + I(rm^2) + I(lstat^2),
     data = Boston
 )
-summary(fit2)
+summary(fit_logcrim)
+crPlot(fit_logcrim, "log(crim)")
 ```
 
 
+
+Then we consider the `sqrt(crim)` transformation.
 ```{r}
-#| fig-show: hold
-par(mfrow = c(4, 3))
-crPlots(fit2)
-par(mfrow = c(1, 1))
-```
-
-
-```{r}
-#| fig-show: hold
-par(mfrow = c(2, 2))
-plot(fit2)
-par(mfrow = c(1, 1))
-```
-
-Everythign seems okay but not too good. However `log(crim)` is still a little bit curvy, and the p-value of `lstat^2` and `log(crim)` is not very small. Therefore we would like to try more transformations of `crim`. We now focus on the partial residual plot of `crim`. Note that when we don't use quadratic term or cubic term, we usually remove `crim` since we replace it by a nonlinear transformation.
-
-
-```{r}
-fit2.0 <- lm(
-    I(log(medv)) ~ . + I(crim^2) + I(rm^2) + I(lstat^2),
+fit_sqrtcrim <- lm(
+    log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2),
     data = Boston
 )
-crPlots(fit2.0, terms=~I(crim^2))
+summary(fit_sqrtcrim)
+crPlot(fit_sqrtcrim, "sqrt(crim)")
+```
+
+::: {layout-ncol=2}
+
+```{r}
+hist(log(Boston$crim))
 ```
 
 ```{r}
-fit0.5 <- lm(
-    I(log(medv)) ~ . - crim + I(crim^0.5) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-crPlots(fit0.5, terms=~I(crim^0.5))
+hist(sqrt(Boston$crim))
 ```
+
+:::
 
 ```{r}
-fit0.4 <- lm(
-    I(log(medv)) ~ . - crim + I(crim^0.4) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-crPlots(fit0.4, terms=~I(crim^0.4))
+AIC(fit_logcrim, fit_sqrtcrim)
 ```
 
-```{r}
-fit0.3 <- lm(
-    I(log(medv)) ~ . - crim + I(crim^0.3) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-crPlots(fit0.3, terms=~I(crim^0.3))
-```
+Based on the results above:
 
+- Both transformations substantially straighten the partial residual plot, indicating that the nonlinear pattern in `crim` is largely removed.
+- From the partial residual plots alone, it is difficult to determine which transformation is preferable.
+- From the perspective of the variable distribution, `log(crim)` spreads the data more evenly than `sqrt(crim)`.
+- However, in terms of model performance, such as $R^2_{adj}$ and AIC, the model using `sqrt(crim)` performs slightly better. In particular, the AIC is slightly smaller, indicating a better balance between goodness of fit and model complexity.
 
-```{r}
-fit0.2 <- lm(
-    I(log(medv)) ~ . - crim + I(crim^0.2) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-crPlots(fit0.2, terms=~I(crim^0.2))
-```
+Taking all these considerations into account, we choose to use `sqrt(crim)` in the model. Under this transformation, the effect of `crim` on `log(medv)` becomes nonlinear: the marginal impact of crime decreases as `crim` increases, meaning that the slope becomes smaller for larger values of `crim`.
 
-```{r}
-fit0.1 <- lm(
-    I(log(medv)) ~ . - crim + I(crim^0.1) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-crPlots(fit0.1, terms=~I(crim^0.1))
-```
-
-
-From all these transformations, `crim^0.4` gives the best result in the sense that the partial residual plot is almost linear, while `crim^0.5` and `crim^0.3` is slightly worse but acceptable. In this case we prefer to choose `crim^0.5` since it is actually `sqrt(crim)` which is slightly easier to interpret.
-
-
-```{r}
-fit3 <- lm(
-    I(log(medv)) ~ . - crim + I(sqrt(crim)) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-summary(fit3)
-```
+We then examine the full set of partial residual plots again to check for any remaining unusual patterns. No additional strong nonlinear effects are observed.
 
 
 
 ```{r}
 #| fig-show: hold
 par(mfrow = c(4, 3))
-crPlots(fit3)
+crPlots(fit_sqrtcrim)
 par(mfrow = c(1, 1))
 ```
 
-
-
-```{r}
-#| fig-show: hold
-par(mfrow = c(2, 2))
-plot(fit3)
-par(mfrow = c(1, 1))
-```
-
-All plots look good. Therefore we would like to use `fit3` as our next step.
-
-Note that we could interepte `sqrt(crim)` in the following way.
-
-- The square-root transformation implies a diminishing marginal effect of crime. Increases in crime have a stronger impact on housing prices in low-crime areas than in high-crime areas.
-- Because the response is in logarithmic scale, the coefficient can be interpreted approximately as the percentage change in housing price associated with a one-unit increase in $sqrt{crim}$. Using $sqrt{crim}$ assumes that crime affects housing prices strongly when crime levels are low, but the impact becomes weaker as crime increases.
-
-
-
-
-<!-- 
-The quadratic terms improve the model substantially. Compared with `fit_log`, although $R_a^2$ doesn't change much, the residual standard error drops from about `0.189` to about `0.175`,  -->
-<!-- 
-Since the two models are not nested models, we could not directly use nested F-test to compare them. Therefore we use externel creteria as well as diagnostic tools and interpretibility.
+Finally we use nested F-test to confirm the addition.
 
 ```{r}
-AIC(fit2, fit3)
+fit_sc <- lm(log(medv) ~ . - crim + sqrt(crim), data=Boston)
+anova(fit_sc, fit_sqrtcrim)
 ```
-<!-- 
-`fit3` has a much lower AIC, and significantly higher $R_a^2$. Therefore based on the predictoring ability `fit3` is better. -->
-
-Although `fit3` achieves a much lower AIC and better predictive performance, the squared term of `crim` introduces a high leverage observation and the partial residual plot of `I(crim^2)` still shows curvature. In addition, the log transformation of `crim` has a clearer interpretation and is more stable with respect to extreme values. Therefore, for inferential purposes we prefer `fit2`. -->
-
-
-<!-- In our case, we would like to go with `fit2`. -->
-
-### Interaction term
-
-
+This shows that `rm^2` and `lstat^2` are significant to be added. For `crim`, since we replace it with `sqrt(crim)` instead of adding a term, we cannot directly use the nested ANOVA since these are not nested models. We then use AIC to test which model is better.
 
 ```{r}
-fit4 <- lm(
-    I(log(medv)) ~ . + crim:rm+crim:lstat+crim:dis + I(sqrt(crim))+I(rm^2) + I(lstat^2),
-    data = Boston
-)
-summary(fit4)
+fit_sc2 <- lm(log(medv) ~ . + I(rm^2) + I(lstat^2), data = Boston)
+AIC(fit_sc2, fit_sqrtcrim)
 ```
+`fit_sqrtcrim` has a slightly lower AIC. Therefore we would go with `fit_sqrtcrim` as our transformed variable model.
 
 
 
+### Interaction terms
 
-```{r}
-#| fig-show: hold
-par(mfrow = c(2, 2))
-plot(fit4)
-par(mfrow = c(1, 1))
-```
+In the Boston housing dataset, some pairs of predictors naturally suggest possible interaction terms. For instance, `crim` and `lstat` both reflect neighborhood socioeconomic conditions, so the impact of `crime` on housing price may depend on the socioeconomic status of the neighborhood. The variables `nox` and `dis` may also interact, since pollution and distance to employment centers jointly describe environmental and location quality. In addition, `rm` and `lstat` could interact because the value added by larger houses may differ across neighborhoods with different income levels. Exploring these interaction terms helps determine whether the relationship between predictors and the response changes across different conditions.
+
+Possible interaction terms in the Boston dataset include:
+
+- `crim × lstat`: crime and socioeconomic status both describe neighborhood disadvantage.
+- `nox × dis`: pollution and distance jointly characterize environmental and location quality.
+- `rm × lstat`: the value of larger houses may depend on neighborhood socioeconomic status.
+- `rm × crim`: the price premium of larger houses may differ in high-crime areas.
+
+We first use `visreg` to quickly screen these ideas.
 
 
 ```{r}
 #| warning: false
-library(sjPlot)
-plot_model(fit4, type='int')
-```
-
-
-
-
-
-```{r}
-fit5 <- lm(
-    I(log(medv)) ~ . -crim+I(crim^(0.4)) + I(rm^2) + I(lstat^2),
-    data = Boston
-)
-summary(fit5)
-```
-
-
-
-
-```{r}
-#| fig-show: hold
-par(mfrow = c(2, 2))
-plot(fit5)
-par(mfrow = c(1, 1))
+library(visreg)
 ```
 
 
 
 ```{r}
-#| fig-show: hold
-par(mfrow = c(4, 3))
-crPlots(fit5)
-par(mfrow = c(1, 1))
-```
-
-```{r}
-boxcox(crim~1, data=Boston)
-```
-
-
-
-
-```{r}
-library(sjPlot)
-plot_model(fit4, type='int')
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-, and the nested F-test for adding the four squared terms is highly significant.
-
-```{r}
-#| warning: false
-anova(fit_log, fit2)
-```
-
-At this point, `zn` is no longer significant after the nonlinear terms are added, so we can simplify the model by dropping it and refitting.
-
-```{r}
-fit3 <- update(fit2, . ~ . - zn)
-summary(fit3)
-```
-
-This simpler model has essentially the same fit as `fit2`, so removing `zn` costs us almost nothing while making the model easier to explain.
-
-```{r}
-anova(fit3, fit2)
-```
-
-
-
-```{r}
-#| fig-show: hold
-par(mfrow = c(2, 2))
-plot(fit2)
-par(mfrow = c(1, 1))
-```
-
-
-
-
-
-
-```{r}
-fit3 <- lm(
-    I(log(medv)) ~ . + I(crim^2) + I(rm^2) + I(lstat^2),
+fit_ints <- lm(
+    log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim)*lstat + nox*dis + rm*lstat + sqrt(crim)*rm,
     data = Boston
 )
 ```
 
 
-
 ```{r}
-AIC(fit2)
+visreg(fit_ints, "crim", by = "lstat", overlay = TRUE)
 ```
 
 ```{r}
-AIC(fit3)
+visreg(fit_ints, "nox", by = "dis", overlay = TRUE)
 ```
+
+```{r}
+visreg(fit_ints, "rm", by = "lstat", overlay = TRUE)
+```
+
+```{r}
+visreg(fit_ints, "crim", by = "rm", overlay = TRUE)
+```
+
+From these four plots, we are able to visualize differences in slopes across levels of the interacting variable. However `nox` by` dis` and `rm` by `lstat` are weaker, and their p-values are relative big. Therefore we would only keep `lstat:sqrt(crim)` and `rm:sqrt(crim)` in our tentative model and proceed to the next test phase.
+
+```{r}
+fit_int <- lm(
+    log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim)*lstat + sqrt(crim)*rm,
+    data = Boston
+)
+
+summary(fit_int)
+```
+
+```{r}
+#| fig-show: hold
+par(mfrow = c(2, 2))
+plot(fit_int)
+par(mfrow = c(1, 1))
+```
+
+
+
+All plots look good. Finally We use a nested ANOVA to confirm the addition.
+
+```{r}
+anova(fit_sqrtcrim, fit_int)
+```
+Therefore we would like to use `fit_int` as our next step. 
 
 
 
 ### Variable selections
 
-We apply best-of-subset to select variables.
+We apply best-of-subset to select variables since this model doesn't contain too many variables.
 
 
 ```{r}
 library(leaps)
 fits <- regsubsets(
-    medv ~ .,
+    log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * rm,
     data = Boston,
-    nvmax = ncol(model.matrix(medv ~ ., Boston)) - 1
+    nvmax = ncol(model.matrix(log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * rm, Boston)) - 1
 )
 models_summary <- summary(fits)
 best_cp <- which.min(models_summary$cp)
@@ -487,24 +419,40 @@ points(best_cp, models_summary$cp[best_cp], col = "red", cex = 2, pch = 20)
 models_summary
 ```
 
-Since for dummy variable `rad` we have to choose all or none, based on the best-of-subset results, we will exclude `indus` and `age` from our model. We will delete the two variables from `Boston` and name the dataset `dat`.
+We need to pick 20 variables, and from the table, the variables we need to remove are `zn`, `indus` and `age`. Since `rad` is a categorical variable represented by multiple dummy variables, all levels must be kept together in the model. Even if some individual coefficients are not significant, we should test the significance of the entire factor using an F-test rather than removing individual levels.
+
+
+The above selection is the same if we use `step`. 
+```{r}
+step(fit_int)
+```
+
+We now delete these variables, and get a new model.
 
 
 ```{r}
-dat <- subset(Boston, select = -c(indus, age))
+fit <- lm(
+    log(medv) ~ . - crim - zn - indus - age + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * rm,
+    data = Boston
+)
 ```
 
+We apply the nested F-test to confirm the deleting. 
 
-Therefore our based model is 
+
 ```{r}
-fit_base <- lm(medv ~ ., data = dat)
-summary(fit_base)
+anova(fit, fit_int)
 ```
 
-The corresponding residual plots are
+It is not significant. Therefore it is safe to remove them. We do a final check up.
+
+```{r}
+summary(fit)
+```
+
 ```{r}
 par(mfrow = c(2, 2))
-plot(fit_base)
+plot(fit)
 par(mfrow = c(1, 1))
 ```
 
@@ -515,81 +463,122 @@ par(mfrow = c(1, 1))
 
 
 
-## Phase 4: Diagnose the Final Model
+## Step 4: Diagnose the Final Model
+
+
+
+We can also check multicollinearity and influence numerically.
+
+```{r}
+vif(fit)
+```
+
+
+Polynomial and interaction terms often lead to higher VIF values because they are inherently correlated with the variables from which they are constructed. In this model, variables such as `rm`, `lstat`, and `sqrt(crim)` appear together with their squared terms or interaction terms, which naturally induces multicollinearity. This behavior is expected when a variable and its polynomial, transformed, or interaction terms are included in the model. Therefore, moderately large VIF values in this situation do not necessarily indicate a problem and are not, by themselves, a reason to remove these terms.
+
+```{r}
+rs <- rstudent(fit)
+cd <- cooks.distance(fit)
+lev <- hatvalues(fit)
+nr <- nrow(Boston)
+
+c(
+    max_abs_studentized = max(abs(rs)),
+    num_abs_studentized_gt_3 = sum(abs(rs) > 3),
+    num_cooks_gt_4_over_n = sum(cd > 4 / nr),
+    num_high_leverage = sum(lev > 2 * length(coef(fit)) / nr)
+)
+```
+
+
+The diagnostics show that
+
+- the largest absolute studentized residual is about $4.9$,
+- 12 observations exceeding the rule-of-thumb threshold of $3$,
+- about $31$ observations have Cook’s distance greater than $4/n$,
+- roughly 30 observations exceed the $2p/n$. 
+
+These values indicate the presence of some unusual observations, which is not surprising for a dataset of this size and with a model containing several nonlinear and interaction terms. However,
+
+- none of the observations appear to be extremely influential. 
+ 
+Unless these observations correspond to data entry or measurement errors, it is generally preferable to keep them in the analysis and simply report their presence.
+
+To improve interpretability and reduce VIF values, we may center some of the variables. The `vif` output shows relatively large values for `sqrt(crim)`, `rm`, `lstat`, and their associated polynomial and interaction terms. This occurs because such terms are naturally correlated with the variables from which they are constructed. Therefore we center these variables before forming the polynomial and interaction terms.
+
+Note that centering is not required for statistical correctness. It does not change the fitted values or overall model fit, but it can reduce VIF values and make the coefficients easier to interpret.
+
+```{r}
+Boston$sqrt_crim <- sqrt(Boston$crim)
+
+Boston$sqrt_crim_c <- scale(Boston$sqrt_crim, scale = FALSE)
+Boston$rm_c <- scale(Boston$rm, scale = FALSE)
+Boston$lstat_c <- scale(Boston$lstat, scale = FALSE)
+
+fit_final <- lm(
+    log(medv) ~ chas + nox + dis + rad + tax + ptratio + black +
+        sqrt_crim_c + rm_c + lstat_c +
+        I(rm_c^2) + I(lstat_c^2) +
+        sqrt_crim_c:lstat_c + sqrt_crim_c:rm_c,
+    data = Boston
+)
+```
+
+```{r}
+vif(fit_final)
+```
+
+
+```{r}
+summary(fit_final)
+```
+
+
+
+
 
 Now we return to the standard diagnostics for the refined model.
 
 ```{r}
 #| fig-show: hold
 par(mfrow = c(2, 2))
-plot(fit3)
+plot(fit_final)
 par(mfrow = c(1, 1))
 ```
 
-These plots are much better than the ones from the original untransformed model:
 
-- The residuals versus fitted plot shows less curvature.
-- The spread is more stable across fitted values.
-- The Q-Q plot is closer to a straight line, although the tails still deviate somewhat.
-- A few observations remain influential, which is common in this dataset.
+These plots are substantially improved compared with those from the original untransformed model:
 
-We can also check multicollinearity and influence numerically.
+- The residuals versus fitted plot shows no strong systematic pattern, indicating that the nonlinear terms have largely captured the curvature present in the original model.
+- The spread of the residuals is more stable across fitted values, although a mild heteroscedastic pattern may still remain.
+- The Q–Q plot follows the reference line reasonably well in the center but shows deviations in the tails, indicating mild departures from normality.
+- The Scale–Location plot suggests that the variance is more stable than in the original model, although a mild heteroscedastic pattern may still remain.
+- The residuals versus leverage plot shows several observations with moderate leverage, but none appear to have extremely large Cook's distance values.
 
-```{r}
-vif(fit3)
-```
+Overall, the diagnostic plots suggest that the refined model satisfies the regression assumptions much better than the original additive model.
 
-The polynomial terms create some moderate to large VIF values, especially for `rm` with `I(rm^2)` and `dis` with `I(dis^2)`. This is expected when a variable and its square are both in the model, so it is not automatically a reason to remove them.
 
-```{r}
-rs <- rstudent(fit3)
-cd <- cooks.distance(fit3)
-lev <- hatvalues(fit3)
-
-c(
-    max_abs_studentized = max(abs(rs)),
-    num_abs_studentized_gt_3 = sum(abs(rs) > 3),
-    num_cooks_gt_4_over_n = sum(cd > 4 / nrow(dat)),
-    num_high_leverage = sum(lev > 2 * length(coef(fit3)) / nrow(dat))
-)
-```
-
-This tells us that there are still some unusual observations, but the overall model is far more stable than the original additive fit on the raw response. Unless those data points are recording errors, I would usually keep them and report their presence rather than delete them automatically.
 
 ## Final Model
 
 Our final working model is
 
 $$
-\log(\texttt{medv}) = \beta_0 + \beta_1\texttt{crim} + \beta_2\texttt{chas}
-+ \beta_3\texttt{nox} + \beta_4\texttt{rm} + \beta_5\texttt{dis}
-+ \beta_6\texttt{rad} + \beta_7\texttt{tax} + \beta_8\texttt{ptratio}
-+ \beta_9\texttt{black} + \beta_{10}\texttt{lstat}
-+ \beta_{11}\texttt{crim}^2 + \beta_{12}\texttt{rm}^2
-+ \beta_{13}\texttt{dis}^2 + \beta_{14}\texttt{lstat}^2 + \varepsilon.
+\begin{split}
+\log(\texttt{medv}) = &\beta_0 + \beta_1\texttt{chas}+ \beta_2\texttt{nox} +  \beta_3\texttt{dis}
++ \beta_4\texttt{rad} + \beta_5\texttt{tax} + \beta_6\texttt{ptratio}+ \beta_7\texttt{black}+\beta_8\sqrt{\texttt{crim}}\\ 
++&\beta_9\texttt{rm}+ \beta_{10}\texttt{lstat}+ \beta_{11}\texttt{rm}^2+ \beta_{12}\texttt{lstat}^2+\beta_{13}\texttt{lstat}\cdot\sqrt{\texttt{crim}} +\beta_{14}\texttt{rm}\cdot\sqrt{\texttt{crim}}+ \varepsilon.
+\end{split}
 $$
 
 In R formula form, this is:
 
 ```{r}
-formula(fit3)
+formula(fit_final)
 ```
 
 The main conclusions are:
 
-- Transforming the response with `log(medv)` is justified by the Box-Cox plot and improves variance stability.
-- Adding quadratic terms for `crim`, `rm`, `dis`, and `lstat` captures important curvature that the additive linear model misses.
-- After those nonlinear terms are included, `zn` is no longer needed.
-- The final model explains about `83%` of the variation in `log(medv)`, with adjusted $R^2$ around `0.825`.
-
-## Takeaway
-
-This example shows a typical regression workflow:
-
-1. Start with EDA and a full model.
-2. Use residual plots and partial residual plots to detect problems.
-3. Transform the response when the variance and shape suggest it.
-4. Add nonlinear terms where the data indicate curvature.
-5. Recheck diagnostics before settling on the final model.
-
-The important point is that model building is iterative. We do not fit one regression and stop; instead, we repeatedly use diagnostics to decide how to improve the model.
+- Transforming the response using `log(medv)` is supported by the Box–Cox analysis and helps stabilize the variance.
+- Adding quadratic, interaction, and transformed terms captures nonlinear patterns that the simple additive linear model cannot represent.
+- The final model explains about 85% of the variation in `log(medv)`, with an adjusted $R^2_{adj}$ around $0.84$. The residual standard error is $0.1619$.
