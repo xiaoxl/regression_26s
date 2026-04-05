@@ -1018,10 +1018,10 @@ y=\me^{\beta_0}\me^{\mathbf{\beta_1x}}\me^{\varepsilon}=\me^{\beta_0+\varepsilon
 </div>
 </div>
 </div>
-<p>Based on the plots, it seems that <code>crim</code>, <code>rm</code>, and <code>lstat</code> is a little curvy. Therefore we would like to try transformations of them.</p>
-<p>Note that based on the observations in EDA, <code>crim</code> is very right skewed. Therefore we would like to try <code>log(crim)</code> or <code>sqrt(crim)</code>, while both can move the distribution to the left. In both cases, <code>crim</code> has to be removed from the model.</p>
-<p>To see which is better, we look at the performance as well as the partial residual plot.</p>
-<p>First is the <code>log(crim)</code> case.</p>
+<p>Based on the partial residual plots, it appears that <code>crim</code>, <code>rm</code>, and <code>lstat</code> exhibit some curvature. Therefore, we consider applying transformations to these variables.</p>
+<p>From the earlier EDA, we observed that <code>crim</code> is strongly right-skewed. A common way to address this is to apply a transformation such as <code>log(crim)</code> or <code>sqrt(crim)</code>, both of which reduce right skewness by compressing larger values. In either case, the original variable <code>crim</code> must be removed from the model and replaced by its transformed version.</p>
+<p>To determine which transformation is more appropriate, we compare their model performance and examine the corresponding partial residual plots.</p>
+<p>We first consider the <code>log(crim)</code> transformation.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fit_logcrim <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">log</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>),</span>
@@ -1079,7 +1079,7 @@ F-statistic:    85 on 22 and 483 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>Then we have <code>sqrt(crim)</code> case.</p>
+<p>Then we consider the <code>sqrt(crim)</code> transformation.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit_sqrtcrim <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>),</span>
@@ -1169,15 +1169,15 @@ fit_logcrim  24 -223.6377
 fit_sqrtcrim 24 -299.5182</code></pre>
 </div>
 </div>
-<p>Based on the above data:</p>
-<ol type="1">
+<p>Based on the results above:</p>
+<ul>
 <li>Both transformations substantially straighten the partial residual plot, indicating that the nonlinear pattern in <code>crim</code> is largely removed.</li>
-<li>From the partial residual plot it is hard to tell which is better.</li>
-<li>From the point of view of distribution, <code>log(crim)</code> make the data spread better han <code>sqrt(crim)</code></li>
-<li>But from the point of view of performance, like <span class="math inline">\(R^2_{adj}\)</span> and AIC, The model with <code>sqrt(crim)</code> has a slightly lower AIC, indicating a better trade-off between goodness of fit and model complexity.</li>
-</ol>
-<p>To sum up, after taking all the information into consideration, we will use <code>sqrt(crim)</code> in the model. In this case, the interpretation is that <code>crim</code> contributes to <code>log(medv)</code>, but the effect becomes weaker as <code>crim</code> increases; that is, the slope decreases as <code>crim</code> increases.</p>
-<p>Then we show the whole partial residual plots to see whether there are other very strange effects. We don’t see any.</p>
+<li>From the partial residual plots alone, it is difficult to determine which transformation is preferable.</li>
+<li>From the perspective of the variable distribution, <code>log(crim)</code> spreads the data more evenly than <code>sqrt(crim)</code>.</li>
+<li>However, in terms of model performance, such as <span class="math inline">\(R^2_{adj}\)</span> and AIC, the model using <code>sqrt(crim)</code> performs slightly better. In particular, the AIC is slightly smaller, indicating a better balance between goodness of fit and model complexity.</li>
+</ul>
+<p>Taking all these considerations into account, we choose to use <code>sqrt(crim)</code> in the model. Under this transformation, the effect of <code>crim</code> on <code>log(medv)</code> becomes nonlinear: the marginal impact of crime decreases as <code>crim</code> increases, meaning that the slope becomes smaller for larger values of <code>crim</code>.</p>
+<p>We then examine the full set of partial residual plots again to check for any remaining unusual patterns. No additional strong nonlinear effects are observed.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(fit_sqrtcrim)</span>
@@ -1197,7 +1197,7 @@ fit_sqrtcrim 24 -299.5182</code></pre>
 </div>
 </div>
 </div>
-<p>Finally we use nested ANOVA to confirm the addition.</p>
+<p>Finally we use nested F-test to confirm the addition.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fit_sc <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim), <span class="at">data=</span>Boston)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_sc, fit_sqrtcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1877,10 +1877,11 @@ F-statistic: 130.3 on 21 and 484 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2 data-number="14.5" class="anchored" data-anchor-id="final-model"><span class="header-section-number">14.5</span> Final Model</h2>
 <p>Our final working model is</p>
 <p><span class="math display">\[
-\log(\texttt{medv}) = \beta_0 + \beta_1\texttt{chas}+ \beta_2\texttt{nox} +  \beta_3\texttt{dis}
-+ \beta_4\texttt{rad} + \beta_5\texttt{tax} + \beta_6\texttt{ptratio}
-+ \beta_7\texttt{black}+\beta_8\sqrt{\texttt{crim}} +\beta_9\texttt{rm}+ \beta_{10}\texttt{lstat}
-+ \beta_{11}\texttt{rm}^2+ \beta_{12}\texttt{lstat}^2+\beta_{13}\sqrt{\texttt{crim}}\texttt{lstat} +\beta_{14}\sqrt{\texttt{crim}}\texttt{rm}+ \varepsilon.
+\begin{split}
+\log(\texttt{medv}) = &amp;\beta_0 + \beta_1\texttt{chas}+ \beta_2\texttt{nox} +  \beta_3\texttt{dis}
++ \beta_4\texttt{rad} + \beta_5\texttt{tax} + \beta_6\texttt{ptratio}+ \beta_7\texttt{black}+\beta_8\sqrt{\texttt{crim}}\\
++&amp;\beta_9\texttt{rm}+ \beta_{10}\texttt{lstat}+ \beta_{11}\texttt{rm}^2+ \beta_{12}\texttt{lstat}^2+\beta_{13}\texttt{lstat}\cdot\sqrt{\texttt{crim}} +\beta_{14}\texttt{rm}\cdot\sqrt{\texttt{crim}}+ \varepsilon.
+\end{split}
 \]</span></p>
 <p>In R formula form, this is:</p>
 <div class="cell">
