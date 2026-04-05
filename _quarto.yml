@@ -35,7 +35,7 @@ format:
   bookup-html:
         toc: true
         toc-depth: 3
-        css: styles/blocks.css
+        css: blocks.css
   # html:
   #   theme: cosmo
   #   code-block-bg: true
