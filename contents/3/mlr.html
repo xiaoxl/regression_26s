@@ -474,6 +474,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Residual analysis</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../contents/4/project3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example: Boston Housing dataset full walkthrough</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -1228,6 +1234,7 @@ z = x - \bar x.
 <p>When interactions are present, however, the coefficient is not the effect. The coefficient equals the effect only when the interacting variable equals <span class="math inline">\(0\)</span>.</p>
 <section id="interation-term" class="level3" data-number="8.6.1">
 <h3 data-number="8.6.1" class="anchored" data-anchor-id="interation-term"><span class="header-section-number">8.6.1</span> Interation term</h3>
+<p>When deciding which interaction terms to consider, a common idea is to ask whether the influence of one variable on the response may change depending on another variable. Such interactions are often reasonable when two predictors describe related aspects of the same phenomenon, when scientific knowledge suggests a combined effect, or when graphical exploration shows that the slope of one predictor appears different at different levels of another predictor. In these situations, adding an interaction term allows the model to capture how the relationship between a predictor and the response varies across conditions.</p>
 <p>Consider the model</p>
 <p><span class="math display">\[
 y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_1x_2+\varepsilon.
@@ -1284,6 +1291,7 @@ x_2^*=x_2-\bar x_2,\quad \beta_0^*=\beta_0+\beta_2\bar x_2,\quad \beta_1^*=\beta
 </section>
 <section id="higher-degree-polynomial-terms" class="level3" data-number="8.6.2">
 <h3 data-number="8.6.2" class="anchored" data-anchor-id="higher-degree-polynomial-terms"><span class="header-section-number">8.6.2</span> Higher-degree (polynomial) terms</h3>
+<p>When considering higher-degree terms, we ask whether the relationship between a predictor and the response shows curvature. If exploratory plots or prior knowledge suggest a nonlinear pattern, polynomial terms can be added to allow the model to capture this curvature.</p>
 <div id="def-" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 8.9</strong></span> A higher-order term is a nonlinear transformation of a predictor, such as <span class="math inline">\(x^2\)</span>, <span class="math inline">\(x^3\)</span>, <span class="math inline">\(\sqrt{x}\)</span>, or <span class="math inline">\(\log x\)</span>.</p>
 </div>

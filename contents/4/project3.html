@@ -413,7 +413,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/2/project1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: SLR phase</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example: Boston Housing part 1</span></span></a>
   </div>
 </li>
       </ul>
@@ -448,7 +448,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../contents/3/project2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: MLR phase</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Example: Boston Housing part 2</span></span></a>
   </div>
 </li>
       </ul>
@@ -521,17 +521,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#phase-1-understand-the-data-before-fitting-anything" id="toc-phase-1-understand-the-data-before-fitting-anything" class="nav-link active" data-scroll-target="#phase-1-understand-the-data-before-fitting-anything"><span class="header-section-number">14.1</span> Phase 1: Understand the Data Before Fitting Anything</a></li>
-  <li><a href="#phase-2-start-with-all-predictors-full-model" id="toc-phase-2-start-with-all-predictors-full-model" class="nav-link" data-scroll-target="#phase-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Phase 2: Start with All Predictors — Full Model</a></li>
-  <li><a href="#phase-3-consider-transformations" id="toc-phase-3-consider-transformations" class="nav-link" data-scroll-target="#phase-3-consider-transformations"><span class="header-section-number">14.3</span> Phase 3: Consider Transformations</a>
+  <li><a href="#step-1-understand-the-data" id="toc-step-1-understand-the-data" class="nav-link active" data-scroll-target="#step-1-understand-the-data"><span class="header-section-number">14.1</span> Step 1: Understand the Data</a></li>
+  <li><a href="#step-2-start-with-all-predictors-full-model" id="toc-step-2-start-with-all-predictors-full-model" class="nav-link" data-scroll-target="#step-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Step 2: Start with All Predictors — Full Model</a></li>
+  <li><a href="#step-3-consider-transformations" id="toc-step-3-consider-transformations" class="nav-link" data-scroll-target="#step-3-consider-transformations"><span class="header-section-number">14.3</span> Step 3: Consider Transformations</a>
   <ul class="collapse">
   <li><a href="#check-if-logmedv-improves-things" id="toc-check-if-logmedv-improves-things" class="nav-link" data-scroll-target="#check-if-logmedv-improves-things"><span class="header-section-number">14.3.1</span> Check if <code>log(medv)</code> improves things</a></li>
+  <li><a href="#partial-residual-plots" id="toc-partial-residual-plots" class="nav-link" data-scroll-target="#partial-residual-plots"><span class="header-section-number">14.3.2</span> Partial residual plots</a></li>
+  <li><a href="#interaction-terms" id="toc-interaction-terms" class="nav-link" data-scroll-target="#interaction-terms"><span class="header-section-number">14.3.3</span> Interaction terms</a></li>
+  <li><a href="#variable-selections" id="toc-variable-selections" class="nav-link" data-scroll-target="#variable-selections"><span class="header-section-number">14.3.4</span> Variable selections</a></li>
   </ul></li>
+  <li><a href="#step-4-diagnose-the-final-model" id="toc-step-4-diagnose-the-final-model" class="nav-link" data-scroll-target="#step-4-diagnose-the-final-model"><span class="header-section-number">14.4</span> Step 4: Diagnose the Final Model</a></li>
+  <li><a href="#final-model" id="toc-final-model" class="nav-link" data-scroll-target="#final-model"><span class="header-section-number">14.5</span> Final Model</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -553,6 +558,40 @@ window.Quarto = {
 </header>
 
 
+<div class="hidden">
+<!-- Constants and basic symbols -->
+<p><span class="math display">\[
+\require{physics}
+\require{braket}
+\]</span></p>
+<p><span class="math display">\[
+\newcommand{\dl}[1]{{\hspace{#1mu}\mathrm d}}
+\newcommand{\me}{{\mathrm e}}
+\newcommand{\argmin}{\operatorname{argmin}}
+\]</span></p>
+<!-- Probability -->
+<p>$$ </p>
+<p> $$</p>
+<!-- Distributions pdf -->
+<p><span class="math display">\[
+\newcommand{\pdfbinom}{{\tt binom}}
+\newcommand{\pdfbeta}{{\tt beta}}
+\newcommand{\pdfpois}{{\tt poisson}}
+\newcommand{\pdfgamma}{{\tt gamma}}
+\newcommand{\pdfnormal}{{\tt norm}}
+  \newcommand{\pdfexp}{{\tt expon}}
+\]</span></p>
+<!-- Distributions -->
+<p><span class="math display">\[
+\newcommand{\distbinom}{\operatorname{B}}
+\newcommand{\distbeta}{\operatorname{Beta}}
+\newcommand{\distgamma}{\operatorname{Gamma}}
+\newcommand{\distexp}{\operatorname{Exp}}
+\newcommand{\distpois}{\operatorname{Poisson}}
+\newcommand{\distnormal}{\operatorname{\mathcal N}}
+\newcommand{\distunif}{\operatorname{Unif}}
+\]</span></p>
+</div>
 <p>In the previous section we talk about our main tools to handle the <code>Boston</code> dataset. In this section we display how to explore the dataset from scratch.</p>
 <table class="caption-top table">
 <colgroup>
@@ -640,17 +679,20 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<section id="phase-1-understand-the-data-before-fitting-anything" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="phase-1-understand-the-data-before-fitting-anything"><span class="header-section-number">14.1</span> Phase 1: Understand the Data Before Fitting Anything</h2>
+<section id="step-1-understand-the-data" class="level2 page-columns page-full" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="step-1-understand-the-data"><span class="header-section-number">14.1</span> Step 1: Understand the Data</h2>
 <p>Before touching <code>lm()</code>, the first step is always exploratory data analysis (EDA).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>chas <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>chas)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>rad <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>rad)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>chas <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>chas)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>rad <span class="ot">&lt;-</span> <span class="fu">factor</span>(Boston<span class="sc">$</span>rad)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>num_vars <span class="ot">&lt;-</span> Boston[, <span class="fu">sapply</span>(Boston, is.numeric)]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      crim                zn             indus       chas         nox        
  Min.   : 0.00632   Min.   :  0.00   Min.   : 0.46   0:471   Min.   :0.3850  
@@ -687,7 +729,13 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="fu">names</span>(num_vars)) {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(num_vars[[n]], <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> n)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -696,41 +744,51 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>num_vars <span class="ot">&lt;-</span> Boston[, <span class="fu">sapply</span>(Boston, is.numeric)]</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(num_vars)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_matrix, <span class="at">hc.order =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<div class="cell page-columns page-full">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(Boston)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display page-columns page-full">
+<div class="page-columns page-full">
+<figure class="figure page-columns page-full">
+<p class="page-columns page-full"><img src="project3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img column-screen-inset-shaded" width="3840"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>What I’m looking for:</p>
-<ul>
-<li>Skewed variables (may need log transforms — <code>medv</code> and <code>crim</code> are classically right-skewed)</li>
-<li>Non-linear relationships between predictors and <code>medv</code></li>
-<li>High pairwise correlations between predictors (multicollinearity warning signs)</li>
-<li>Outliers or influential observations</li>
-</ul>
-<p>Here are some key takeaways from the observations:</p>
-<ul>
-<li><code>lstat</code> vs <code>medv</code>: curved, which indicates quadratic or log transform likely needed</li>
-<li><code>crim</code> is extremely right-skewed, which indicates <code>log(crim)</code> often works better</li>
-<li><code>rm</code> vs <code>medv</code>: mostly linear but with some spread</li>
-<li><code>nox</code>, <code>dis</code>, <code>age</code> are highly intercorrelated (all related to urban density)</li>
-<li><code>tax</code> and <code>rad</code> are nearly collinear</li>
-</ul>
-</section>
-<section id="phase-2-start-with-all-predictors-full-model" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="phase-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Phase 2: Start with All Predictors — Full Model</h2>
+<p>Correlation among numeric variables</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(num_vars)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(cor_matrix, <span class="at">hc.order =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Based on the summary table, histograms, pair plots, and the correlation matrix, here are the main takeaways from the EDA:</p>
+<ul>
+<li>The response <code>medv</code> is not perfectly symmetric and shows some upper-end compression, so a transformation of the response may help stabilize variance.</li>
+<li><code>crim</code>, <code>zn</code>, <code>dis</code>, <code>black</code>, and <code>tax</code> show strong skewness or long tails in the summary table, with <code>crim</code> especially right-skewed. This suggests that some nonlinear transformations may be useful.</li>
+<li>The correlation matrix confirms that <code>medv</code> is most strongly negatively correlated with <code>lstat</code> and positively correlated with <code>rm</code>, which matches what we see in the pair plots.</li>
+<li>The pair plots show some curved pattern between <code>medv</code> and some variables like <code>crim</code>, <code>rm</code> and <code>lstat</code>. This is a strong sign that some nonlinear transformations will be needed.</li>
+<li><code>nox</code>, <code>indus</code>, <code>age</code> and <code>dis</code> are highly correlated, positive or negative. These variables all describe urban intensity or location-related structure, so multicollinearity is a concern.</li>
+<li>We see no obvious extreme outliers based on the pair plots. However we still need to run diagnostics.</li>
+</ul>
+<!-- - Several predictors are on very different scales, so raw coefficient sizes from a later regression should not be compared directly without standardization or context. -->
+<!-- - `rm` has a strong positive relationship with `medv`, and this is one of the clearest approximately linear patterns in the plots, although the spread increases somewhat for larger fitted values. -->
+<!-- - `ptratio` tends to be negatively associated with `medv`, while `black` tends to be positively associated with `medv`, though both relationships appear weaker than those for `lstat` and `rm`. -->
+<!-- - `rad` and `tax` are strongly positively associated, indicating that highway accessibility and tax rate are carrying overlapping information. -->
+<!-- - The matrix also confirms notable predictor-predictor correlations such as `nox` with `indus` and `age`, `dis` with `nox` in the opposite direction, and `rad` with `tax`, all of which warn us that the full model may suffer from collinearity. -->
+</section>
+<section id="step-2-start-with-all-predictors-full-model" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="step-2-start-with-all-predictors-full-model"><span class="header-section-number">14.2</span> Step 2: Start with All Predictors — Full Model</h2>
+<p>We begin with the full additive regression model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -771,42 +829,11 @@ Multiple R-squared:  0.7499,    Adjusted R-squared:  0.7396
 F-statistic:  72.7 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
-<p>Why: This gives me the lay of the land. I check:</p>
-<ul>
-<li>Adjusted <span class="math inline">\(R^2\)</span> (baseline: ~0.73 for raw Boston)</li>
-<li>Which predictors are significant in the presence of all others</li>
-<li>Residual standard error</li>
-<li>Overall F-test</li>
-</ul>
-<p>Then immediately do residual diagnostics on this full model:</p>
+<p>This model provides a baseline for comparison.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The four diagnostic plots give me:</p>
-<ol type="1">
-<li>Residuals vs Fitted — checks linearity and homoscedasticity</li>
-<li>Normal Q-Q — checks normality of residuals</li>
-<li>Scale-Location — another view of heteroscedasticity</li>
-<li>Residuals vs Leverage — identifies influential points (Cook’s distance)</li>
-</ol>
-<p>On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.</p>
-</section>
-<section id="phase-3-consider-transformations" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="phase-3-consider-transformations"><span class="header-section-number">14.3</span> Phase 3: Consider Transformations</h2>
-<section id="check-if-logmedv-improves-things" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="check-if-logmedv-improves-things"><span class="header-section-number">14.3.1</span> Check if <code>log(medv)</code> improves things</h3>
-<p>I’d also use Box-Cox to formally choose the best power transformation for <code>medv</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(fit_full)  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_full)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -815,15 +842,45 @@ F-statistic:  72.7 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-<p>Reading this specific plot</p>
+<p>Here are some important info we get.</p>
 <ul>
-<li>The peak appears to be right around <span class="math inline">\(\lambda\approx0\)</span>, and</li>
-<li>the 95% CI dotted lines straddle 0 closely. They look to be roughly <span class="math inline">\((-0.1, 0.2)\)</span> or so.</li>
+<li><span class="math inline">\(R_{adj}^2\approx0.7395525\)</span> and <span class="math inline">\(R^2\approx0.7498672\)</span>.</li>
+<li>The overall F-test has a very small p-value, indicating that at least one predictor is associated with the response variable.</li>
+<li><code>indus</code>, <code>age</code> and some of the <code>rad</code> levels are not signicant.</li>
 </ul>
-<p>By the standard rule, if <span class="math inline">\(\lambda=0\)</span> is inside the 95% CI, <code>log(y)</code> is the transformation.</p>
+<p>Then immediately do residual diagnostics on this full model:</p>
+<!-- 
+The four diagnostic plots give me:
+
+1. Residuals vs Fitted — checks linearity and homoscedasticity
+2. Normal Q-Q — checks normality of residuals
+3. Scale-Location — another view of heteroscedasticity
+4. Residuals vs Leverage — identifies influential points (Cook's distance) -->
+<ol type="1">
+<li>From the residual plot, the red line is not flat, with a slight U-shape. In addition, residual variance increases slightly as fitted values increase.</li>
+<li>From the Q-Q plot, points follow the line in the middle, but right tail bends upward, and several points deviate strongly.</li>
+<li>From the scale-location plot, the red trend line has a slight U-shape, and the residual spread grows as fitted values increase.</li>
+<li>From the residuals vs leverage plot, most points have low leverage with one is around 0.30, and no points have large Cook’s distance.</li>
+</ol>
+<p>These suggest the following observations:</p>
+<ol type="1">
+<li>There are possible nonlinearity among variables.</li>
+<li>There is a possible heteroscedasticity.</li>
+<li>Residuals are not perfectly normal especially in the right tail.</li>
+<li>There are no extremely influential observations.</li>
+</ol>
+<!-- On raw Boston data, these plots typically show a fan shape (heteroscedasticity) and non-linearity — which tells me transformations are needed before I proceed.
+ -->
+<p>Based on all the observations (from this section and the previous section), we would like to start from applying some nonlinear transformations to build the model.</p>
+</section>
+<section id="step-3-consider-transformations" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="step-3-consider-transformations"><span class="header-section-number">14.3</span> Step 3: Consider Transformations</h2>
+<section id="check-if-logmedv-improves-things" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="check-if-logmedv-improves-things"><span class="header-section-number">14.3.1</span> Check if <code>log(medv)</code> improves things</h3>
+<!-- Based on all plots, we may need to deal with several curvy patterns as well as the non-constant variance issue. Therefore we would like to start from a transformation for `medv`. I'd  -->
+<p>We begin by examining the response variable (because of the curvy residual plot and the slightly heteroscedasticity). To determine an appropriate transformation, we apply the Box–Cox procedure to search for a suitable power transformation of <code>medv</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(fit_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -831,30 +888,12 @@ F-statistic:  72.7 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="project3_files/figure-html/unnamed-chunk-7-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>The peak of the profile log-likelihood appears to occur around <span class="math inline">\(\lambda\approx0.1\)</span>. The <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\lambda\)</span> is slightly above <span class="math inline">\(0\)</span>, so <span class="math inline">\(0\)</span> lies just outside the interval. This suggests that the optimal transformation is approximately <span class="math inline">\(y^{0.1}\)</span>. However, because <span class="math inline">\(0.1\)</span> is very close to <span class="math inline">\(0\)</span>, the log transformation <span class="math inline">\(\log(y)\)</span> is often used in practice. The log transformation is simpler, widely used, and produces a model fit very similar to the optimal Box–Cox transformation.</p>
+<p>We therefore refit the model using <code>log(medv)</code> as the response.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> ., <span class="at">data =</span> Boston)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -895,14 +934,971 @@ Multiple R-squared:  0.7946,    Adjusted R-squared:  0.7861
 F-statistic: 93.81 on 20 and 485 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_log)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>With <code>log(medv)</code> as the response:</p>
 <ul>
-<li>Coefficients are now interpreted as percent changes</li>
-<li>The residual fan shape (heteroscedasticity) is slightly improved</li>
+<li>Coefficients are interpreted as the approximate percentage change in the median of <code>medv</code> associated with a one-unit increase in the predictor, holding other variables constant.</li>
+<li><span class="math inline">\(R_{adj}^2\)</span> and <span class="math inline">\(R^2\)</span> increase slightly, indicating a small improvement in model fit.</li>
+<li>However, the diagnostic plots show that the main issues (nonlinearity, heteroscedasticity, and non-normal residuals) are not substantially improved.</li>
+</ul>
+<p>Therefore, transforming the response alone is not sufficient, and we need to consider additional model modifications, such as transformations of predictors, interaction terms, or nonlinear terms.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpretation of <span class="math inline">\(\log(y)\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume <span class="math display">\[
+\log(y)=\beta_0+\sum_{i=1}^k{\beta_i x_i}+\varepsilon=\beta_0+\mathbf{\beta_1x}+\varepsilon
+\]</span> Then <span class="math display">\[
+y=\me^{\beta_0}\me^{\mathbf{\beta_1x}}\me^{\varepsilon}=\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}}.
+\]</span> Therefore if <span class="math inline">\(\mathbf{\Delta x}=[\Delta x_1,\Delta x_2,\ldots,\Delta x_k]\)</span> are all small, <span class="math display">\[
+\begin{split}
+\Delta y/y&amp;=\qty(\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1(x+\Delta x)}}-\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}})/\me^{\beta_0+\varepsilon}\me^{\mathbf{\beta_1x}}=\qty(\me^{\mathbf{\beta_1(x+\Delta x)}}-\me^{\mathbf{\beta_1x}})/\me^{\mathbf{\beta_1x}}=\me^{\mathbf{\beta_1\Delta x}}-1\\
+&amp;\approx 1+\mathbf{\beta_1 \Delta x}-1=\mathbf{\beta_1 \Delta x}=\sum_{i=1}^k{\beta_i \Delta x_i}.
+\end{split}
+\]</span> Then the interpretation should be:</p>
+<p>A one-unit increase in <span class="math inline">\(x_i\)</span> is associated with an approximate <span class="math inline">\(100 \cdot \beta_i \%\)</span> change in the median of <span class="math inline">\(y\)</span>, holding all other predictors constant.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>The “Mean vs.&nbsp;Median” Trap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we assume the errors <span class="math inline">\(\varepsilon \sim N(0, \sigma^2)\)</span> are symmetric, our OLS model estimates the conditional mean of <span class="math inline">\(\log(y)\)</span>. However, due to Jensen’s Inequality, <span class="math inline">\(e^{\operatorname{E}[\log(y)]}\)</span> does not equal <span class="math inline">\(\operatorname{E}[y]\)</span>. Instead:</p>
+<ul>
+<li><span class="math inline">\(\me^{\hat{y}}\)</span> provides an estimate of the Median of <span class="math inline">\(y\)</span>.</li>
+<li>The Mean of <span class="math inline">\(y\)</span> is actually shifted by a correction factor: <span class="math inline">\(\operatorname{E}[y] = \text{Median}(y) \cdot \me^{\sigma^2/2}\)</span>.</li>
+</ul>
+<p>If you do not wish to apply the correction factor, you should strictly interpret your results as the percentage change in the median of <span class="math inline">\(y\)</span> rather than the mean, just like what we did in the above note block.</p>
+</div>
+</div>
+</section>
+<section id="partial-residual-plots" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="partial-residual-plots"><span class="header-section-number">14.3.2</span> Partial residual plots</h3>
+<p>Then we look at the partial residual plots.</p>
+<p>First show the partial residual plots.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(fit_log)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Based on the plots, it seems that <code>crim</code>, <code>rm</code>, and <code>lstat</code> is a little curvy. Therefore we would like to try transformations of them.</p>
+<p>Note that based on the observations in EDA, <code>crim</code> is very right skewed. Therefore we would like to try <code>log(crim)</code> or <code>sqrt(crim)</code>, while both can move the distribution to the left. In both cases, <code>crim</code> has to be removed from the model.</p>
+<p>To see which is better, we look at the performance as well as the partial residual plot.</p>
+<p>First is the <code>log(crim)</code> case.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fit_logcrim <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">log</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_logcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ . - crim + log(crim) + I(rm^2) + I(lstat^2), 
+    data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.89730 -0.09521 -0.00077  0.09639  0.86267 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.2627356  0.4503587  13.906  &lt; 2e-16 ***
+zn           0.0003599  0.0005961   0.604 0.546268    
+indus        0.0056910  0.0025803   2.206 0.027886 *  
+chas1        0.1053075  0.0348290   3.024 0.002631 ** 
+nox         -0.5908938  0.1637875  -3.608 0.000341 ***
+rm          -0.7211240  0.1349247  -5.345 1.40e-07 ***
+age          0.0005285  0.0005590   0.945 0.344930    
+dis         -0.0319884  0.0082824  -3.862 0.000128 ***
+rad2         0.0909897  0.0596367   1.526 0.127731    
+rad3         0.1879332  0.0544635   3.451 0.000608 ***
+rad4         0.1313052  0.0503649   2.607 0.009414 ** 
+rad5         0.1612607  0.0499684   3.227 0.001335 ** 
+rad6         0.1555609  0.0601487   2.586 0.009994 ** 
+rad7         0.2137491  0.0658468   3.246 0.001251 ** 
+rad8         0.1809895  0.0639362   2.831 0.004837 ** 
+rad24        0.3188068  0.0837593   3.806 0.000159 ***
+tax         -0.0005060  0.0001571  -3.220 0.001367 ** 
+ptratio     -0.0306837  0.0059746  -5.136 4.08e-07 ***
+black        0.0004187  0.0001083   3.864 0.000127 ***
+lstat       -0.0421794  0.0061665  -6.840 2.40e-11 ***
+log(crim)   -0.0258154  0.0117888  -2.190 0.029014 *  
+I(rm^2)      0.0631674  0.0105952   5.962 4.82e-09 ***
+I(lstat^2)   0.0002960  0.0001622   1.825 0.068613 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1894 on 483 degrees of freedom
+Multiple R-squared:  0.7947,    Adjusted R-squared:  0.7854 
+F-statistic:    85 on 22 and 483 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlot</span>(fit_logcrim, <span class="st">"log(crim)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Then we have <code>sqrt(crim)</code> case.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit_sqrtcrim <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_sqrtcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2), 
+    data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.80769 -0.09297 -0.00499  0.09335  0.85847 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.5867162  0.4193760  15.706  &lt; 2e-16 ***
+zn           0.0007401  0.0005373   1.377 0.169026    
+indus        0.0048775  0.0023898   2.041 0.041796 *  
+chas1        0.0883226  0.0323541   2.730 0.006567 ** 
+nox         -0.6367620  0.1460046  -4.361 1.58e-05 ***
+rm          -0.7330235  0.1247380  -5.877 7.82e-09 ***
+age          0.0007048  0.0005148   1.369 0.171567    
+dis         -0.0380612  0.0077148  -4.934 1.11e-06 ***
+rad2         0.0696192  0.0553303   1.258 0.208910    
+rad3         0.1744046  0.0499968   3.488 0.000531 ***
+rad4         0.1171443  0.0445411   2.630 0.008810 ** 
+rad5         0.1497328  0.0452229   3.311 0.000999 ***
+rad6         0.1336138  0.0551389   2.423 0.015750 *  
+rad7         0.2051604  0.0590059   3.477 0.000553 ***
+rad8         0.1683402  0.0563126   2.989 0.002938 ** 
+rad24        0.4868403  0.0718538   6.775 3.62e-11 ***
+tax         -0.0005255  0.0001458  -3.604 0.000346 ***
+ptratio     -0.0326013  0.0054886  -5.940 5.46e-09 ***
+black        0.0002955  0.0001007   2.933 0.003515 ** 
+lstat       -0.0461610  0.0057383  -8.044 6.76e-15 ***
+sqrt(crim)  -0.1086725  0.0118773  -9.150  &lt; 2e-16 ***
+I(rm^2)      0.0634084  0.0097960   6.473 2.37e-10 ***
+I(lstat^2)   0.0004894  0.0001520   3.219 0.001372 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1757 on 483 degrees of freedom
+Multiple R-squared:  0.8233,    Adjusted R-squared:  0.8153 
+F-statistic: 102.3 on 22 and 483 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlot</span>(fit_sqrtcrim, <span class="st">"sqrt(crim)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">log</span>(Boston<span class="sc">$</span>crim))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">sqrt</span>(Boston<span class="sc">$</span>crim))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit_logcrim, fit_sqrtcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             df       AIC
+fit_logcrim  24 -223.6377
+fit_sqrtcrim 24 -299.5182</code></pre>
+</div>
+</div>
+<p>Based on the above data:</p>
+<ol type="1">
+<li>Both transformations substantially straighten the partial residual plot, indicating that the nonlinear pattern in <code>crim</code> is largely removed.</li>
+<li>From the partial residual plot it is hard to tell which is better.</li>
+<li>From the point of view of distribution, <code>log(crim)</code> make the data spread better han <code>sqrt(crim)</code></li>
+<li>But from the point of view of performance, like <span class="math inline">\(R^2_{adj}\)</span> and AIC, The model with <code>sqrt(crim)</code> has a slightly lower AIC, indicating a better trade-off between goodness of fit and model complexity.</li>
+</ol>
+<p>To sum up, after taking all the information into consideration, we will use <code>sqrt(crim)</code> in the model. In this case, the interpretation is that <code>crim</code> contributes to <code>log(medv)</code>, but the effect becomes weaker as <code>crim</code> increases; that is, the slope decreases as <code>crim</code> increases.</p>
+<p>Then we show the whole partial residual plots to see whether there are other very strange effects. We don’t see any.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPlots</span>(fit_sqrtcrim)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally we use nested ANOVA to confirm the addition.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fit_sc <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim), <span class="at">data=</span>Boston)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_sc, fit_sqrtcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim)
+Model 2: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim) + 
+    I(rm^2) + I(lstat^2)
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    485 17.551                                  
+2    483 14.908  2    2.6436 42.826 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>This shows that <code>rm^2</code> and <code>lstat^2</code> are significant to be added. For <code>crim</code>, since we replace it with <code>sqrt(crim)</code> instead of adding a term, we cannot directly use the nested ANOVA since these are not nested models. We then use AIC to test which model is better.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fit_sc2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> Boston)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit_sc2, fit_sqrtcrim)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             df       AIC
+fit_sc2      24 -299.0543
+fit_sqrtcrim 24 -299.5182</code></pre>
+</div>
+</div>
+<p><code>fit_sqrtcrim</code> has a slightly lower AIC. Therefore we would go with <code>fit_sqrtcrim</code> as our transformed variable model.</p>
+</section>
+<section id="interaction-terms" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="interaction-terms"><span class="header-section-number">14.3.3</span> Interaction terms</h3>
+<p>In the Boston housing dataset, some pairs of predictors naturally suggest possible interaction terms. For instance, <code>crim</code> and <code>lstat</code> both reflect neighborhood socioeconomic conditions, so the impact of <code>crime</code> on housing price may depend on the socioeconomic status of the neighborhood. The variables <code>nox</code> and <code>dis</code> may also interact, since pollution and distance to employment centers jointly describe environmental and location quality. In addition, <code>rm</code> and <code>lstat</code> could interact because the value added by larger houses may differ across neighborhoods with different income levels. Exploring these interaction terms helps determine whether the relationship between predictors and the response changes across different conditions.</p>
+<p>Possible interaction terms in the Boston dataset include:</p>
+<ul>
+<li><code>crim × lstat</code>: crime and socioeconomic status both describe neighborhood disadvantage.</li>
+<li><code>nox × dis</code>: pollution and distance jointly characterize environmental and location quality.</li>
+<li><code>rm × lstat</code>: the value of larger houses may depend on neighborhood socioeconomic status.</li>
+<li><code>rm × crim</code>: the price premium of larger houses may differ in high-crime areas.</li>
+</ul>
+<p>We first use <code>visreg</code> to quickly screen these ideas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visreg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fit_ints <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sqrt</span>(crim)<span class="sc">*</span>lstat <span class="sc">+</span> nox<span class="sc">*</span>dis <span class="sc">+</span> rm<span class="sc">*</span>lstat <span class="sc">+</span> <span class="fu">sqrt</span>(crim)<span class="sc">*</span>rm,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(fit_ints, <span class="st">"crim"</span>, <span class="at">by =</span> <span class="st">"lstat"</span>, <span class="at">overlay =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(fit_ints, <span class="st">"nox"</span>, <span class="at">by =</span> <span class="st">"dis"</span>, <span class="at">overlay =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(fit_ints, <span class="st">"rm"</span>, <span class="at">by =</span> <span class="st">"lstat"</span>, <span class="at">overlay =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visreg</span>(fit_ints, <span class="st">"crim"</span>, <span class="at">by =</span> <span class="st">"rm"</span>, <span class="at">overlay =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From these four plots, we are able to visualize differences in slopes across levels of the interacting variable. However <code>nox</code> by<code>dis</code> and <code>rm</code> by <code>lstat</code> are weaker, and their p-values are relative big. Therefore we would only keep <code>lstat:sqrt(crim)</code> and <code>rm:sqrt(crim)</code> in our tentative model and proceed to the next test phase.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sqrt</span>(crim)<span class="sc">*</span>lstat <span class="sc">+</span> <span class="fu">sqrt</span>(crim)<span class="sc">*</span>rm,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + I(lstat^2) + 
+    sqrt(crim) * lstat + sqrt(crim) * rm, data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.68312 -0.07315 -0.00797  0.08404  0.76102 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       4.497e+00  5.346e-01   8.412 4.63e-16 ***
+zn                6.830e-04  4.990e-04   1.369 0.171751    
+indus             1.444e-03  2.252e-03   0.641 0.521825    
+chas1             6.892e-02  2.995e-02   2.301 0.021799 *  
+nox              -5.663e-01  1.355e-01  -4.180 3.46e-05 ***
+rm               -2.340e-01  1.432e-01  -1.634 0.102888    
+age              -3.385e-04  4.885e-04  -0.693 0.488688    
+dis              -3.716e-02  7.157e-03  -5.192 3.08e-07 ***
+rad2              5.256e-02  5.104e-02   1.030 0.303563    
+rad3              1.453e-01  4.622e-02   3.143 0.001774 ** 
+rad4              8.935e-02  4.122e-02   2.168 0.030662 *  
+rad5              1.322e-01  4.176e-02   3.166 0.001645 ** 
+rad6              1.233e-01  5.086e-02   2.424 0.015727 *  
+rad7              1.625e-01  5.458e-02   2.978 0.003049 ** 
+rad8              1.330e-01  5.204e-02   2.555 0.010916 *  
+rad24             4.014e-01  6.686e-02   6.003 3.82e-09 ***
+tax              -5.485e-04  1.345e-04  -4.077 5.34e-05 ***
+ptratio          -2.723e-02  5.094e-03  -5.345 1.40e-07 ***
+black             3.368e-04  9.297e-05   3.623 0.000322 ***
+lstat            -4.494e-02  5.666e-03  -7.932 1.52e-14 ***
+sqrt(crim)        4.706e-01  8.301e-02   5.670 2.47e-08 ***
+I(rm^2)           3.285e-02  1.035e-02   3.173 0.001605 ** 
+I(lstat^2)        1.092e-03  1.653e-04   6.604 1.06e-10 ***
+lstat:sqrt(crim) -1.098e-02  1.175e-03  -9.342  &lt; 2e-16 ***
+rm:sqrt(crim)    -5.876e-02  1.122e-02  -5.238 2.43e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1619 on 481 degrees of freedom
+Multiple R-squared:  0.8505,    Adjusted R-squared:  0.8431 
+F-statistic:   114 on 24 and 481 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_int)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>All plots look good. Finally We use a nested ANOVA to confirm the addition.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_sqrtcrim, fit_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim) + 
+    I(rm^2) + I(lstat^2)
+Model 2: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim) + 
+    I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * 
+    rm
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    483 14.908                                  
+2    481 12.612  2    2.2955 43.774 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Therefore we would like to use <code>fit_int</code> as our next step.</p>
+</section>
+<section id="variable-selections" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="variable-selections"><span class="header-section-number">14.3.4</span> Variable selections</h3>
+<p>We apply best-of-subset to select variables since this model doesn’t contain too many variables.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fits <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> lstat <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> rm,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nvmax =</span> <span class="fu">ncol</span>(<span class="fu">model.matrix</span>(<span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> lstat <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> rm, Boston)) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>models_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(fits)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>best_cp <span class="ot">&lt;-</span> <span class="fu">which.min</span>(models_summary<span class="sc">$</span>cp)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(models_summary<span class="sc">$</span>cp, <span class="at">xlab =</span> <span class="st">"Number of varaiables"</span>, <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(best_cp, models_summary<span class="sc">$</span>cp[best_cp], <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>models_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Subset selection object
+Call: regsubsets.formula(log(medv) ~ . - crim + sqrt(crim) + I(rm^2) + 
+    I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * rm, data = Boston, 
+    nvmax = ncol(model.matrix(log(medv) ~ . - crim + sqrt(crim) + 
+        I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * 
+        rm, Boston)) - 1)
+24 Variables  (and intercept)
+                 Forced in Forced out
+zn                   FALSE      FALSE
+indus                FALSE      FALSE
+chas1                FALSE      FALSE
+nox                  FALSE      FALSE
+rm                   FALSE      FALSE
+age                  FALSE      FALSE
+dis                  FALSE      FALSE
+rad2                 FALSE      FALSE
+rad3                 FALSE      FALSE
+rad4                 FALSE      FALSE
+rad5                 FALSE      FALSE
+rad6                 FALSE      FALSE
+rad7                 FALSE      FALSE
+rad8                 FALSE      FALSE
+rad24                FALSE      FALSE
+tax                  FALSE      FALSE
+ptratio              FALSE      FALSE
+black                FALSE      FALSE
+lstat                FALSE      FALSE
+sqrt(crim)           FALSE      FALSE
+I(rm^2)              FALSE      FALSE
+I(lstat^2)           FALSE      FALSE
+lstat:sqrt(crim)     FALSE      FALSE
+rm:sqrt(crim)        FALSE      FALSE
+1 subsets of each size up to 24
+Selection Algorithm: exhaustive
+          zn  indus chas1 nox rm  age dis rad2 rad3 rad4 rad5 rad6 rad7 rad8
+1  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+2  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+3  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+4  ( 1 )  " " " "   " "   " " "*" " " " " " "  " "  " "  " "  " "  " "  " " 
+5  ( 1 )  " " " "   " "   " " "*" " " " " " "  " "  " "  " "  " "  " "  " " 
+6  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+7  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+8  ( 1 )  " " " "   " "   " " " " " " " " " "  " "  " "  " "  " "  " "  " " 
+9  ( 1 )  " " " "   " "   "*" " " " " "*" " "  " "  " "  " "  " "  " "  " " 
+10  ( 1 ) " " " "   " "   " " " " " " "*" " "  " "  " "  " "  " "  " "  " " 
+11  ( 1 ) " " " "   " "   "*" " " " " "*" " "  " "  " "  " "  " "  " "  " " 
+12  ( 1 ) " " " "   " "   "*" " " " " "*" " "  " "  " "  " "  " "  " "  " " 
+13  ( 1 ) " " " "   "*"   "*" " " " " "*" " "  " "  " "  " "  " "  " "  " " 
+14  ( 1 ) " " " "   "*"   "*" " " " " "*" "*"  " "  " "  " "  " "  " "  " " 
+15  ( 1 ) " " " "   "*"   "*" "*" " " "*" "*"  " "  " "  " "  " "  " "  " " 
+16  ( 1 ) " " " "   "*"   "*" " " " " "*" " "  "*"  " "  "*"  " "  "*"  " " 
+17  ( 1 ) " " " "   "*"   "*" "*" " " "*" " "  "*"  " "  "*"  " "  "*"  " " 
+18  ( 1 ) " " " "   "*"   "*" "*" " " "*" " "  "*"  " "  "*"  "*"  "*"  " " 
+19  ( 1 ) " " " "   "*"   "*" " " " " "*" " "  "*"  "*"  "*"  "*"  "*"  "*" 
+20  ( 1 ) " " " "   "*"   "*" "*" " " "*" " "  "*"  "*"  "*"  "*"  "*"  "*" 
+21  ( 1 ) "*" " "   "*"   "*" "*" " " "*" " "  "*"  "*"  "*"  "*"  "*"  "*" 
+22  ( 1 ) "*" " "   "*"   "*" "*" " " "*" "*"  "*"  "*"  "*"  "*"  "*"  "*" 
+23  ( 1 ) "*" " "   "*"   "*" "*" "*" "*" "*"  "*"  "*"  "*"  "*"  "*"  "*" 
+24  ( 1 ) "*" "*"   "*"   "*" "*" "*" "*" "*"  "*"  "*"  "*"  "*"  "*"  "*" 
+          rad24 tax ptratio black lstat sqrt(crim) I(rm^2) I(lstat^2)
+1  ( 1 )  " "   " " " "     " "   "*"   " "        " "     " "       
+2  ( 1 )  " "   " " "*"     " "   "*"   " "        " "     " "       
+3  ( 1 )  " "   " " " "     " "   "*"   " "        "*"     " "       
+4  ( 1 )  " "   " " " "     " "   "*"   " "        "*"     " "       
+5  ( 1 )  " "   " " " "     " "   "*"   " "        "*"     "*"       
+6  ( 1 )  " "   " " " "     " "   "*"   "*"        "*"     "*"       
+7  ( 1 )  " "   " " "*"     " "   "*"   "*"        "*"     "*"       
+8  ( 1 )  " "   " " "*"     "*"   "*"   "*"        "*"     "*"       
+9  ( 1 )  " "   " " "*"     " "   "*"   "*"        "*"     "*"       
+10  ( 1 ) "*"   "*" "*"     " "   "*"   "*"        "*"     "*"       
+11  ( 1 ) "*"   "*" "*"     " "   "*"   "*"        "*"     "*"       
+12  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+13  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+14  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+15  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+16  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+17  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+18  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+19  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+20  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+21  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+22  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+23  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+24  ( 1 ) "*"   "*" "*"     "*"   "*"   "*"        "*"     "*"       
+          lstat:sqrt(crim) rm:sqrt(crim)
+1  ( 1 )  " "              " "          
+2  ( 1 )  " "              " "          
+3  ( 1 )  " "              "*"          
+4  ( 1 )  "*"              " "          
+5  ( 1 )  "*"              " "          
+6  ( 1 )  "*"              "*"          
+7  ( 1 )  "*"              "*"          
+8  ( 1 )  "*"              "*"          
+9  ( 1 )  "*"              "*"          
+10  ( 1 ) "*"              "*"          
+11  ( 1 ) "*"              "*"          
+12  ( 1 ) "*"              "*"          
+13  ( 1 ) "*"              "*"          
+14  ( 1 ) "*"              "*"          
+15  ( 1 ) "*"              "*"          
+16  ( 1 ) "*"              "*"          
+17  ( 1 ) "*"              "*"          
+18  ( 1 ) "*"              "*"          
+19  ( 1 ) "*"              "*"          
+20  ( 1 ) "*"              "*"          
+21  ( 1 ) "*"              "*"          
+22  ( 1 ) "*"              "*"          
+23  ( 1 ) "*"              "*"          
+24  ( 1 ) "*"              "*"          </code></pre>
+</div>
+</div>
+<p>We need to pick 20 variables, and from the table, the variables we need to remove are <code>zn</code>, <code>indus</code> and <code>age</code>. Since <code>rad</code> is a categorical variable represented by multiple dummy variables, all levels must be kept together in the model. Even if some individual coefficients are not significant, we should test the significance of the entire factor using an F-test rather than removing individual levels.</p>
+<p>The above selection is the same if we use <code>step</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(fit_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=-1818.1
+log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim) + 
+    I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * 
+    rm
+
+                   Df Sum of Sq    RSS     AIC
+- indus             1   0.01077 12.623 -1819.7
+- age               1   0.01259 12.625 -1819.6
+- zn                1   0.04912 12.661 -1818.1
+&lt;none&gt;                          12.612 -1818.1
+- chas              1   0.13887 12.751 -1814.6
+- I(rm^2)           1   0.26398 12.876 -1809.6
+- black             1   0.34418 12.956 -1806.5
+- tax               1   0.43581 13.048 -1802.9
+- nox               1   0.45819 13.070 -1802.0
+- dis               1   0.70671 13.319 -1792.5
+- rm:sqrt(crim)     1   0.71953 13.332 -1792.0
+- ptratio           1   0.74902 13.361 -1790.9
+- rad               8   1.28103 13.893 -1785.2
+- I(lstat^2)        1   1.14346 13.755 -1776.2
+- lstat:sqrt(crim)  1   2.28857 14.900 -1735.7
+
+Step:  AIC=-1819.66
+log(medv) ~ zn + chas + nox + rm + age + dis + rad + tax + ptratio + 
+    black + lstat + sqrt(crim) + I(rm^2) + I(lstat^2) + lstat:sqrt(crim) + 
+    rm:sqrt(crim)
+
+                   Df Sum of Sq    RSS     AIC
+- age               1   0.01338 12.636 -1821.1
+- zn                1   0.04443 12.667 -1819.9
+&lt;none&gt;                          12.623 -1819.7
+- chas              1   0.14650 12.769 -1815.8
+- I(rm^2)           1   0.25855 12.881 -1811.4
+- black             1   0.34214 12.965 -1808.1
+- nox               1   0.45375 13.076 -1803.8
+- tax               1   0.45726 13.080 -1803.7
+- rm:sqrt(crim)     1   0.71679 13.339 -1793.7
+- ptratio           1   0.74183 13.365 -1792.8
+- dis               1   0.77851 13.401 -1791.4
+- rad               8   1.31706 13.940 -1785.4
+- I(lstat^2)        1   1.17569 13.798 -1776.6
+- lstat:sqrt(crim)  1   2.41183 15.035 -1733.2
+
+Step:  AIC=-1821.13
+log(medv) ~ zn + chas + nox + rm + dis + rad + tax + ptratio + 
+    black + lstat + sqrt(crim) + I(rm^2) + I(lstat^2) + lstat:sqrt(crim) + 
+    rm:sqrt(crim)
+
+                   Df Sum of Sq    RSS     AIC
+- zn                1   0.04768 12.684 -1821.2
+&lt;none&gt;                          12.636 -1821.1
+- chas              1   0.14352 12.780 -1817.4
+- I(rm^2)           1   0.25693 12.893 -1812.9
+- black             1   0.33271 12.969 -1810.0
+- tax               1   0.46365 13.100 -1804.9
+- nox               1   0.51974 13.156 -1802.7
+- rm:sqrt(crim)     1   0.70511 13.341 -1795.7
+- ptratio           1   0.77704 13.413 -1792.9
+- dis               1   0.78139 13.418 -1792.8
+- rad               8   1.37636 14.012 -1784.8
+- I(lstat^2)        1   1.24999 13.886 -1775.4
+- lstat:sqrt(crim)  1   2.45365 15.090 -1733.3
+
+Step:  AIC=-1821.22
+log(medv) ~ chas + nox + rm + dis + rad + tax + ptratio + black + 
+    lstat + sqrt(crim) + I(rm^2) + I(lstat^2) + lstat:sqrt(crim) + 
+    rm:sqrt(crim)
+
+                   Df Sum of Sq    RSS     AIC
+&lt;none&gt;                          12.684 -1821.2
+- chas              1   0.14541 12.829 -1817.5
+- I(rm^2)           1   0.25115 12.935 -1813.3
+- black             1   0.33199 13.016 -1810.2
+- tax               1   0.43225 13.116 -1806.3
+- nox               1   0.53593 13.220 -1802.3
+- rm:sqrt(crim)     1   0.75049 13.434 -1794.1
+- dis               1   0.79620 13.480 -1792.4
+- rad               8   1.33524 14.019 -1786.6
+- ptratio           1   1.01538 13.699 -1784.3
+- I(lstat^2)        1   1.30254 13.986 -1773.8
+- lstat:sqrt(crim)  1   2.43560 15.119 -1734.3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ chas + nox + rm + dis + rad + tax + 
+    ptratio + black + lstat + sqrt(crim) + I(rm^2) + I(lstat^2) + 
+    lstat:sqrt(crim) + rm:sqrt(crim), data = Boston)
+
+Coefficients:
+     (Intercept)             chas1               nox                rm  
+       4.5059381         0.0702287        -0.5731773        -0.2238236  
+             dis              rad2              rad3              rad4  
+      -0.0322959         0.0520156         0.1364592         0.0888065  
+            rad5              rad6              rad7              rad8  
+       0.1217036         0.1161403         0.1553079         0.1141133  
+           rad24               tax           ptratio             black  
+       0.3943541        -0.0004944        -0.0297147         0.0003294  
+           lstat        sqrt(crim)           I(rm^2)        I(lstat^2)  
+      -0.0471656         0.4674652         0.0319646         0.0011399  
+lstat:sqrt(crim)     rm:sqrt(crim)  
+      -0.0108782        -0.0586671  </code></pre>
+</div>
+</div>
+<p>We now delete these variables, and get a new model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> . <span class="sc">-</span> crim <span class="sc">-</span> zn <span class="sc">-</span> indus <span class="sc">-</span> age <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">+</span> <span class="fu">I</span>(rm<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> lstat <span class="sc">+</span> <span class="fu">sqrt</span>(crim) <span class="sc">*</span> rm,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We apply the nested F-test to confirm the deleting.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit, fit_int)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim - zn - indus - 
+    age + sqrt(crim) + I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + 
+    sqrt(crim) * rm
+Model 2: log(medv) ~ (crim + zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat) - crim + sqrt(crim) + 
+    I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * 
+    rm
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1    484 12.684                           
+2    481 12.612  3  0.071827 0.9131 0.4344</code></pre>
+</div>
+</div>
+<p>It is not significant. Therefore it is safe to remove them. We do a final check up.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ . - crim - zn - indus - age + sqrt(crim) + 
+    I(rm^2) + I(lstat^2) + sqrt(crim) * lstat + sqrt(crim) * 
+    rm, data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.68354 -0.07637 -0.00795  0.08444  0.76250 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       4.506e+00  5.314e-01   8.480 2.75e-16 ***
+chas1             7.023e-02  2.981e-02   2.356 0.018893 *  
+nox              -5.732e-01  1.267e-01  -4.522 7.71e-06 ***
+rm               -2.238e-01  1.427e-01  -1.568 0.117508    
+dis              -3.230e-02  5.859e-03  -5.512 5.78e-08 ***
+rad2              5.202e-02  5.047e-02   1.031 0.303246    
+rad3              1.365e-01  4.565e-02   2.989 0.002942 ** 
+rad4              8.881e-02  4.098e-02   2.167 0.030731 *  
+rad5              1.217e-01  4.112e-02   2.960 0.003229 ** 
+rad6              1.161e-01  5.017e-02   2.315 0.021025 *  
+rad7              1.553e-01  5.399e-02   2.877 0.004195 ** 
+rad8              1.141e-01  5.060e-02   2.255 0.024569 *  
+rad24             3.944e-01  6.502e-02   6.065 2.65e-09 ***
+tax              -4.944e-04  1.217e-04  -4.061 5.69e-05 ***
+ptratio          -2.971e-02  4.774e-03  -6.225 1.05e-09 ***
+black             3.294e-04  9.254e-05   3.559 0.000409 ***
+lstat            -4.717e-02  5.258e-03  -8.970  &lt; 2e-16 ***
+sqrt(crim)        4.675e-01  8.062e-02   5.799 1.21e-08 ***
+I(rm^2)           3.196e-02  1.033e-02   3.096 0.002077 ** 
+I(lstat^2)        1.140e-03  1.617e-04   7.050 6.20e-12 ***
+lstat:sqrt(crim) -1.088e-02  1.128e-03  -9.641  &lt; 2e-16 ***
+rm:sqrt(crim)    -5.867e-02  1.096e-02  -5.351 1.35e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1619 on 484 degrees of freedom
+Multiple R-squared:  0.8497,    Adjusted R-squared:  0.8432 
+F-statistic: 130.3 on 21 and 484 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="step-4-diagnose-the-final-model" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="step-4-diagnose-the-final-model"><span class="header-section-number">14.4</span> Step 4: Diagnose the Final Model</h2>
+<p>We can also check multicollinearity and influence numerically.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>there are higher-order terms (interactions) in this model
+consider setting type = 'predictor'; see ?vif</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       GVIF Df GVIF^(1/(2*Df))
+chas               1.105037  1        1.051207
+nox                4.156822  1        2.038829
+rm               193.812361  1       13.921651
+dis                2.933328  1        1.712696
+rad               19.430756  8        1.203734
+tax                8.110976  1        2.847978
+ptratio            2.058263  1        1.434665
+black              1.375484  1        1.172810
+lstat             27.171883  1        5.212666
+sqrt(crim)       263.762982  1       16.240781
+I(rm^2)          169.368441  1       13.014163
+I(lstat^2)        28.071285  1        5.298234
+lstat:sqrt(crim)  30.127124  1        5.488818
+rm:sqrt(crim)    170.122683  1       13.043109</code></pre>
+</div>
+</div>
+<p>Polynomial and interaction terms often lead to higher VIF values because they are inherently correlated with the variables from which they are constructed. In this model, variables such as <code>rm</code>, <code>lstat</code>, and <code>sqrt(crim)</code> appear together with their squared terms or interaction terms, which naturally induces multicollinearity. This behavior is expected when a variable and its polynomial, transformed, or interaction terms are included in the model. Therefore, moderately large VIF values in this situation do not necessarily indicate a problem and are not, by themselves, a reason to remove these terms.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>rs <span class="ot">&lt;-</span> <span class="fu">rstudent</span>(fit)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>cd <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(fit)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>lev <span class="ot">&lt;-</span> <span class="fu">hatvalues</span>(fit)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>nr <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Boston)</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_abs_studentized =</span> <span class="fu">max</span>(<span class="fu">abs</span>(rs)),</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_abs_studentized_gt_3 =</span> <span class="fu">sum</span>(<span class="fu">abs</span>(rs) <span class="sc">&gt;</span> <span class="dv">3</span>),</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_cooks_gt_4_over_n =</span> <span class="fu">sum</span>(cd <span class="sc">&gt;</span> <span class="dv">4</span> <span class="sc">/</span> nr),</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_high_leverage =</span> <span class="fu">sum</span>(lev <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(<span class="fu">coef</span>(fit)) <span class="sc">/</span> nr)</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     max_abs_studentized num_abs_studentized_gt_3    num_cooks_gt_4_over_n 
+                4.914443                12.000000                31.000000 
+       num_high_leverage 
+               30.000000 </code></pre>
+</div>
+</div>
+<p>The diagnostics show that</p>
+<ul>
+<li>the largest absolute studentized residual is about <span class="math inline">\(4.9\)</span>,</li>
+<li>12 observations exceeding the rule-of-thumb threshold of <span class="math inline">\(3\)</span>,</li>
+<li>about <span class="math inline">\(31\)</span> observations have Cook’s distance greater than <span class="math inline">\(4/n\)</span>,</li>
+<li>roughly 30 observations exceed the <span class="math inline">\(2p/n\)</span>.</li>
+</ul>
+<p>These values indicate the presence of some unusual observations, which is not surprising for a dataset of this size and with a model containing several nonlinear and interaction terms. However,</p>
+<ul>
+<li>none of the observations appear to be extremely influential.</li>
+</ul>
+<p>Unless these observations correspond to data entry or measurement errors, it is generally preferable to keep them in the analysis and simply report their presence.</p>
+<p>To improve interpretability and reduce VIF values, we may center some of the variables. The <code>vif</code> output shows relatively large values for <code>sqrt(crim)</code>, <code>rm</code>, <code>lstat</code>, and their associated polynomial and interaction terms. This occurs because such terms are naturally correlated with the variables from which they are constructed. Therefore we center these variables before forming the polynomial and interaction terms.</p>
+<p>Note that centering is not required for statistical correctness. It does not change the fitted values or overall model fit, but it can reduce VIF values and make the coefficients easier to interpret.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>sqrt_crim <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(Boston<span class="sc">$</span>crim)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>sqrt_crim_c <span class="ot">&lt;-</span> <span class="fu">scale</span>(Boston<span class="sc">$</span>sqrt_crim, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>rm_c <span class="ot">&lt;-</span> <span class="fu">scale</span>(Boston<span class="sc">$</span>rm, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>Boston<span class="sc">$</span>lstat_c <span class="ot">&lt;-</span> <span class="fu">scale</span>(Boston<span class="sc">$</span>lstat, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>fit_final <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span>(medv) <span class="sc">~</span> chas <span class="sc">+</span> nox <span class="sc">+</span> dis <span class="sc">+</span> rad <span class="sc">+</span> tax <span class="sc">+</span> ptratio <span class="sc">+</span> black <span class="sc">+</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>        sqrt_crim_c <span class="sc">+</span> rm_c <span class="sc">+</span> lstat_c <span class="sc">+</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">I</span>(rm_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(lstat_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>        sqrt_crim_c<span class="sc">:</span>lstat_c <span class="sc">+</span> sqrt_crim_c<span class="sc">:</span>rm_c,</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> Boston</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>there are higher-order terms (interactions) in this model
+consider setting type = 'predictor'; see ?vif</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         GVIF Df GVIF^(1/(2*Df))
+chas                 1.105037  1        1.051207
+nox                  4.156822  1        2.038829
+dis                  2.933328  1        1.712696
+rad                 19.430756  8        1.203734
+tax                  8.110976  1        2.847978
+ptratio              2.058263  1        1.434665
+black                1.375484  1        1.172810
+sqrt_crim_c          7.371623  1        2.715073
+rm_c                 2.404949  1        1.550790
+lstat_c              4.452527  1        2.110101
+I(rm_c^2)            1.929409  1        1.389032
+I(lstat_c^2)         3.237789  1        1.799386
+sqrt_crim_c:lstat_c  4.683008  1        2.164026
+sqrt_crim_c:rm_c     3.046427  1        1.745402</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(medv) ~ chas + nox + dis + rad + tax + ptratio + 
+    black + sqrt_crim_c + rm_c + lstat_c + I(rm_c^2) + I(lstat_c^2) + 
+    sqrt_crim_c:lstat_c + sqrt_crim_c:rm_c, data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.68354 -0.07637 -0.00795  0.08444  0.76250 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          3.900e+00  1.447e-01  26.956  &lt; 2e-16 ***
+chas1                7.023e-02  2.981e-02   2.356 0.018893 *  
+nox                 -5.732e-01  1.267e-01  -4.522 7.71e-06 ***
+dis                 -3.230e-02  5.859e-03  -5.512 5.78e-08 ***
+rad2                 5.202e-02  5.047e-02   1.031 0.303246    
+rad3                 1.365e-01  4.565e-02   2.989 0.002942 ** 
+rad4                 8.881e-02  4.098e-02   2.167 0.030731 *  
+rad5                 1.217e-01  4.112e-02   2.960 0.003229 ** 
+rad6                 1.161e-01  5.017e-02   2.315 0.021025 *  
+rad7                 1.553e-01  5.399e-02   2.877 0.004195 ** 
+rad8                 1.141e-01  5.060e-02   2.255 0.024569 *  
+rad24                3.944e-01  6.502e-02   6.065 2.65e-09 ***
+tax                 -4.944e-04  1.217e-04  -4.061 5.69e-05 ***
+ptratio             -2.971e-02  4.774e-03  -6.225 1.05e-09 ***
+black                3.294e-04  9.254e-05   3.559 0.000409 ***
+sqrt_crim_c         -3.888e-02  1.348e-02  -2.885 0.004091 ** 
+rm_c                 1.058e-01  1.590e-02   6.655 7.67e-11 ***
+lstat_c             -3.169e-02  2.129e-03 -14.890  &lt; 2e-16 ***
+I(rm_c^2)            3.196e-02  1.033e-02   3.096 0.002077 ** 
+I(lstat_c^2)         1.140e-03  1.617e-04   7.050 6.20e-12 ***
+sqrt_crim_c:lstat_c -1.088e-02  1.128e-03  -9.641  &lt; 2e-16 ***
+sqrt_crim_c:rm_c    -5.867e-02  1.096e-02  -5.351 1.35e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1619 on 484 degrees of freedom
+Multiple R-squared:  0.8497,    Adjusted R-squared:  0.8432 
+F-statistic: 130.3 on 21 and 484 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Now we return to the standard diagnostics for the refined model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_final)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="project3_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>These plots are substantially improved compared with those from the original untransformed model:</p>
+<ul>
+<li>The residuals versus fitted plot shows no strong systematic pattern, indicating that the nonlinear terms have largely captured the curvature present in the original model.</li>
+<li>The spread of the residuals is more stable across fitted values, although a mild heteroscedastic pattern may still remain.</li>
+<li>The Q–Q plot follows the reference line reasonably well in the center but shows deviations in the tails, indicating mild departures from normality.</li>
+<li>The Scale–Location plot suggests that the variance is more stable than in the original model, although a mild heteroscedastic pattern may still remain.</li>
+<li>The residuals versus leverage plot shows several observations with moderate leverage, but none appear to have extremely large Cook’s distance values.</li>
+</ul>
+<p>Overall, the diagnostic plots suggest that the refined model satisfies the regression assumptions much better than the original additive model.</p>
+</section>
+<section id="final-model" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="final-model"><span class="header-section-number">14.5</span> Final Model</h2>
+<p>Our final working model is</p>
+<p><span class="math display">\[
+\log(\texttt{medv}) = \beta_0 + \beta_1\texttt{chas}+ \beta_2\texttt{nox} +  \beta_3\texttt{dis}
++ \beta_4\texttt{rad} + \beta_5\texttt{tax} + \beta_6\texttt{ptratio}
++ \beta_7\texttt{black}+\beta_8\sqrt{\texttt{crim}} +\beta_9\texttt{rm}+ \beta_{10}\texttt{lstat}
++ \beta_{11}\texttt{rm}^2+ \beta_{12}\texttt{lstat}^2+\beta_{13}\sqrt{\texttt{crim}}\texttt{lstat} +\beta_{14}\sqrt{\texttt{crim}}\texttt{rm}+ \varepsilon.
+\]</span></p>
+<p>In R formula form, this is:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(fit_final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>log(medv) ~ chas + nox + dis + rad + tax + ptratio + black + 
+    sqrt_crim_c + rm_c + lstat_c + I(rm_c^2) + I(lstat_c^2) + 
+    sqrt_crim_c:lstat_c + sqrt_crim_c:rm_c</code></pre>
+</div>
+</div>
+<p>The main conclusions are:</p>
+<ul>
+<li>Transforming the response using <code>log(medv)</code> is supported by the Box–Cox analysis and helps stabilize the variance.</li>
+<li>Adding quadratic, interaction, and transformed terms captures nonlinear patterns that the simple additive linear model cannot represent.</li>
+<li>The final model explains about 85% of the variation in <code>log(medv)</code>, with an adjusted <span class="math inline">\(R^2_{adj}\)</span> around <span class="math inline">\(0.84\)</span>. The residual standard error is <span class="math inline">\(0.1619\)</span>.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
