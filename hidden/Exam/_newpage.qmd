@@ -1,8 +1,0 @@
-
-```{r}
-#| echo: false
-#| results: asis
-if (!params$show_solution) {
-    cat("{{< pagebreak >}}")
-} 
-```
