@@ -1047,7 +1047,7 @@ hatvalues(fit)
 ::: {#def-}
 ## Cook's distance
 
-**Cook's distance** combines information about residual size and leverage to assess the influence of an observation on the fitted regression model.
+Cook's distance combines information about residual size and leverage to assess the influence of an observation on the fitted regression model.
 
 Formally, Cook's distance for observation $i$ is
 
@@ -1071,7 +1071,8 @@ A common rule of thumb is:
 - $D_i > 1$ suggests an influential observation,
 - larger Cook's distance values deserve further investigation.
 
-Cook's distance is often preferred because it captures the overall impact of an observation on the fitted model, taking into account both its residual and leverage. An observation tends to have a large Cook's distance when it has **both high leverage and a large residual**.
+Cook's distance is often preferred because it captures the overall impact of an observation on the fitted model, taking into account both its residual and leverage. An observation tends to have a large Cook's distance when it has both high leverage and a large residual.
+
 
 It can be computed in R using `cooks.distance()`.
 
@@ -1092,6 +1093,15 @@ cooks.distance(fit)
 ```
 
 
+
+::: {.callout-note}
+## Critical point of Cook's distance
+While $D_i > 1$ is a common heuristic, a more formal threshold involves comparing Cook's distance to the $F$-distribution. Since $D_i$ measures the movement of the parameter vector $\hat{\beta}$ relative to its covariance matrix, we often look for values that push the estimates toward the edge of a confidence ellipsoid.
+
+Usually, we compare $D_i$ to the median of the $F$-distribution, denoted as $F_{0.5}(p, n - p)$. If $D_i$ exceeds this value, it indicates that deleting the $i^{th}$ observation moves the least squares estimate to the edge of a $50\%$ confidence region, signaling a major shift in the model's structure. In R, this theoretical cutoff can be computed using `qf(0.5, p, n - p)`.
+
+For larger datasets where $n$ is high, the $F$-median can be quite large and might fail to flag influential points. In these cases, a more sensitive and widely used threshold is $D_i > 4/n$, which flags observations that exert a disproportionate influence relative to the rest of the sample.
+:::
 
 <!-- 
 

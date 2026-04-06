@@ -230,7 +230,7 @@ PROPPASS <- c(
     0.987
 )
 
-source("../../../anova_alt.R")
+source("../../anova_alt.R")
 
 fit <- lm(PROPPASS ~ TEMP)
 s <- capture.output(summary(fit))

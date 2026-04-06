@@ -10,7 +10,8 @@ format:
         include-in-header:
             - ../../math.tex
             - text: |
-                \usepackage{xcolor} 
+                \usepackage{xcolor}
+                \definecolor{AccessibleRed}{HTML}{8B0000}
                 \usepackage{alltt}
                 \usepackage{enumitem}
                 \usepackage[letterpaper,top=1in,bottom=0.89in,left=1in,right=1in]{geometry}
@@ -18,12 +19,26 @@ format:
                     \renewcommand{\theexercise}{\arabic{exercise}}
                 }
                 \newcommand{\red}[1]{\textcolor{red}{\textbf{#1}}}
-                \newcommand{\mc}[1]{%
+                \newcommand{\mc}[1]{
                     \begin{enumerate}
-                    \setcounter{enumi}{0}
-                    \renewcommand{\labelenumi}{\Alph{enumi}.}
-                    #1
+                        \setcounter{enumi}{0}
+                        \renewcommand{\labelenumi}{\Alph{enumi}.}
+                        \setlength{\itemsep}{0pt}
+                        \setlength{\topsep}{2pt}
+                        #1
                     \end{enumerate}
+                }
+                \usepackage{multicol}
+                \newcommand{\mcc}[2][2]{
+                    \begin{multicols}{#1}
+                        \begin{enumerate}
+                            \setcounter{enumi}{0}
+                            \renewcommand{\labelenumi}{\Alph{enumi}.}
+                            \setlength{\itemsep}{0pt}
+                            \setlength{\topsep}{2pt}
+                            #2
+                        \end{enumerate}
+                    \end{multicols}
                 }
         mainfont: Libertinus Serif
         sansfont: Libertinus Sans
@@ -44,3 +59,789 @@ crossref:
 # Problems
 
 
+
+::: {#exr-1}
+## 1 point
+In regression analysis, which of the following is **not** a required assumption about the error term $\varepsilon$?
+
+\mc{
+\item The expected value of the error term is zero.
+\item The variance of the error term is the same for all values of $X$.
+\item The values of the error term are dependent.
+\item The error term is normally distributed.
+}
+:::
+
+---
+
+::: {#exr-2}
+## 1 point
+In regression analysis, the response variable is the
+
+\mc{
+   \item dependent variable
+   \item independent variable
+   \item slope of the regression function
+   \item intercept of the regression function
+}
+:::
+
+---
+
+::: {#exr-3}
+## 1 point
+A variable that takes on the values of $0$ or $1$ and is used to incorporate the effect of categorical variables in a regression model is called
+\mc{
+    \item a constant variable
+    \item an interaction
+    \item a dummy variable
+    \item None of these alternative is correct.
+}
+:::
+
+---
+
+::: {#exr-4}
+## 1 point
+If a categorical variable has $k$ levels, ____ indicator variables are required with each indicator being coded as $0$ or $1$.
+\mc{
+    \item $k$
+    \item $k-1$
+    \item $k-2$
+    \item None of these alternatives is correct.
+}
+:::
+
+
+{{< include ../_newpage.qmd >}} 
+
+
+::: {#exr-5}
+## 1 point
+The following regression model is known as 
+$$
+y=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_5+\beta_6x_6+\varepsilon.
+$$
+\mc{
+    \item Sixth order model with one predictor
+    \item First order model with one predictor
+    \item First order model with six predictors
+    \item Sixth order model with six predictors
+}
+:::
+
+---
+
+::: {#exr-6}
+## 1 point
+Which of the following tests is used to determine whether an additional set of several independent variables makes a significant reduction in SSE to a multiple regression model?
+\mc{
+    \item Z-test
+    \item t-test
+    \item Overall F-test
+    \item Partial F-test
+}
+:::
+
+---
+
+::: {#exr-7}
+## 1 point
+A variable $x_1x_2$ is added to a multiple regression model in order to account for potential effects of two variables $x_1$ and $x_2$ acting together. This type of effect is
+\mc{
+    \item called multicollinearity effect
+    \item called transformation effect
+    \item called interaction
+    \item called quadratic term
+}
+:::
+
+---
+
+::: {#exr-8}
+## 1 point
+The variable selection procedure that selects the best regression model, for a given number of independent variables, is known as
+\mc{
+    \item backwards elimination
+    \item forward selection
+    \item stepwise regression
+    \item all-possible-regression selecton (aka. best subsets regression)}
+:::
+
+::: {.answer}
+1. C. The values of the error term are dependent.
+2. A. dependent variable
+3. C. a dummy variable
+4. B. $k-1$
+5. C. First order model with six predictors
+6. D. Partial F-test
+7. C. called interaction
+8. D. all-possible-regression selecton (aka. best subsets regression)
+:::
+
+
+
+{{< include ../_newpage.qmd >}} 
+
+
+## Rain Level part 1
+
+The state of California operates numerous meteorological stations. One of the many functions of each station is to monitor rainfall on a daily basis. This information is then used to produce an average annual precipitation level for each station.
+
+
+```{r}
+#| echo: false
+dat <- read.csv("p9.csv")
+attach(dat)
+source("../../anova_alt.R")
+knitr::kable(
+    dat,
+    digits = 2
+)
+```
+
+
+
+Table above lists average annual precipitation levels (in inches) for a sample of 30 meteorological stations scattered throughout the state. In addition to average annual precipitation ($y$), the table lists three independent variables that are believed (by California geographers) to have the most impact on the amount of rainfall at each station, as follows:
+
+- Altitude of the station ($x_1$, feet)
+- Latitude of the station ($x_2$, degrees)
+- Distance of the station from the Pacific coast ($x_3$, miles)
+   
+As an initial attempt in explaining the average annual preciptation in california, we consider the following simple linear regression model:
+$$
+\Exp(y)=\beta_0+\beta_2x_2
+$$
+where $x_2$ is the latitude of the station. The R printout is as follows:
+
+
+{{< include ../_newpage.qmd >}} 
+
+```{r}
+#| echo: false
+fit_slr <- lm(Precip_in~ Latitude_deg)
+a <- capture.output(anova(fit_slr))
+s <- capture.output(summary(fit_slr))
+```
+
+
+
+
+```{r}
+#| echo: false
+#| output: asis
+
+a <- gsub(
+    "Latitude_deg  1",
+    "Latitude_deg\\\\red{1.__}",
+    a
+)
+
+
+a <- gsub(
+    "5346.8  190.96",
+    "5346.8  \\\\red{2.____}",
+    a
+)
+
+s <- gsub(
+    "0.9623   3.736  0.00085",
+    "0.9623  \\\\red{3.____}  0.00085",
+    s
+)
+
+s <- gsub(
+    "Residual standard error: 13.82 on",
+    "Residual standard error: \\\\red{4.___} on",
+    s
+)
+
+cat("\\begin{alltt}\n")
+cat(paste(a, collapse = "\n"))
+cat("\n\\end{alltt}\n")
+
+cat("\\begin{alltt}\n")
+cat(paste(s, collapse = "\n"))
+cat("\n\\end{alltt}\n")
+
+# a_lines <- paste0("\\texttt{", a, "}")
+# s_lines <- paste0("\\texttt{", s, "}")
+
+# cat(paste(a_lines, collapse = "\\\\\n"))
+# cat("\n\n")
+# cat(paste(s_lines, collapse = "\\\\\n"))
+```
+
+---
+
+::: {#exr-9}
+## 1 point
+Please fill in the value of 1.___.
+:::
+
+
+::: {#exr-10}
+## 1 point
+Please fill in the value of 2.___.
+:::
+
+
+::: {#exr-11}
+## 1 point
+Please fill in the value of 3.___.
+:::
+
+
+::: {#exr-12}
+## 1 point
+Please fill in the value of 4.___.
+:::
+
+
+::: {#exr-13}
+## 1 point
+Please interpret the coefficient of determination equation $R^2$.
+:::
+
+::: {.answer}
+9. 1
+10. 190.96
+11. 3.736
+12. 13.82
+13. 
+:::
+
+
+
+
+{{< include ../_newpage.qmd >}} 
+
+
+## Rain Level part 2
+
+
+Next, we consider using more predictors to predict the average annual preciption. We consider the following first-order regression model:
+$$
+\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3.
+$$
+<!-- where $x_1$ is the altitude of the station, $x_2$ is the latitude of the station, and $x_3$ is the distance of the station from the Pacific coast.  -->
+
+
+```{r}
+#| echo: false
+fit_mlr <- lm(Precip_in ~ Altitude_ft+Latitude_deg+Distance_miles)
+summary(fit_mlr)
+anova_alt(fit_mlr)
+```
+
+---
+
+::: {#exr-14}
+## 1 point
+Fit the model to the data using the method of least squares. (Round the coefficient to three decimal places.)
+:::
+
+
+::: {#exr-15}
+## 1 point
+Test whether the overall model is statistically useful for predicting the average annual precipitation using $\alpha=.05$. What is the null and alternative hypothesis?
+
+\mc{
+    \item $H_0:\beta_0=\beta_1=\beta_2=\beta_3=0$, $H_a:\beta_0\neq \beta_1\neq\beta_2\neq\beta_3\neq0$.
+    \item $H_0:\beta_0=\beta_1=\beta_2=\beta_3=0$, $H_a$: At least one of the $\beta$'s $\neq0$.
+    \item $H_0:\beta_1=\beta_2=\beta_3=0$, $H_a$: At least one of the $\beta$'s $\neq0$.
+    \item $H_0:\beta_1=\beta_3=0$, $H_a:\beta_0\neq \beta_1\neq\beta_2\neq\beta_3\neq0$.
+}
+
+:::
+
+
+::: {#exr-16}
+## 1 point
+Test whether the overall model is statistically useful for predicting the average annual precipitation using $\alpha=0.05$. What is your conclusion?
+:::
+
+
+::: {#exr-17}
+## 1 point
+Give practical interpretations of $\hat \beta_2$.
+:::
+
+
+::: {#exr-18}
+## 1 point
+Find the model standard deviation, $s$, and interpret its value.
+:::
+
+
+::: {.answer}
+14. 
+15. C. \item $H_0:\beta_1=\beta_2=\beta_3=0$, $H_a$: At least one of the $\beta$'s $\neq0$.
+16. p is small. So at least one variable is significant.
+17. Holding the other variables constant, moving one degree north in latitude changes the predicted precipitation by $\hat\beta_2$ inches on average.
+18. 11.1. The model standard deviation is approximately 11.1, meaning that the observed precipitation values tend to vary from the predicted values by about 11.1.
+:::
+
+{{< include ../_newpage.qmd >}} 
+
+	
+## Rain level part 3
+
+
+The researchers found that the stations located on the west-facing slopes of the California mountains invariablly has higher average annual preciptation values than the leeward sid of the mountains. To account for the shadow effect of the california moutains, we consider adding the dummy variable to the model.
+  
+The model with the shadow effect takes the form
+$$
+\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4
+$$
+where $x_1$, $x_2$, and $x_3$ are defined as before, and
+$$
+x_4=\begin{cases}
+1&\text{ if station on the leeward side}\\
+0&\text{ if station on the westward side}
+\end{cases}
+$$
+
+The R printout for the model is shown below.
+
+
+```{r}
+#| echo: false
+fit_dummy <- lm(Precip_in~Altitude_ft+Latitude_deg+Distance_miles+Shadow)
+summary(fit_dummy)
+```
+
+
+```{r}
+anova(fit_mlr, fit_dummy)
+```
+
+{{< include ../_newpage.qmd >}} 
+
+::: {#exr-19}
+## 1 point
+Interpret the slope related with Shadow efect $\hat\beta_4$
+:::
+
+---
+
+::: {#exr-20}
+## 1 point
+Does the shadow effect ($x_4$) contribute significantly in explaining the information in average annual precipitation ($y$)? Give the null and alternative hypothesis.
+
+
+\mc{
+    \item $H_0:\beta_0=\beta_1=\beta_2=\beta_3=\beta_4=0$, $H_a:$ At least one of the $\beta$'s $\neq0$.
+    \item $H_0:\beta_1=\beta_2=\beta_3=0$, $H_a$: At least one of the $\beta$'s $\neq0$.
+    \item $H_0:\beta_1=\beta_2=\beta_3=\beta_4=0$, $H_a:\beta_1\neq\beta_2\neq\beta_3\neq\beta_4\neq0$.
+    \item $H_0:\beta_4=0$, $H_a:\beta_4\neq0$.
+}
+
+:::
+
+---
+
+
+::: {#exr-21}
+## 1 point  
+Conduct a test ($\alpha=0.05$) to determine whether the shadow effect ($x_4$) contributes significantly in explaining the information in average annual precipitation ($y$). State the conclusion of the test in the words of the problem.
+:::
+
+::: {.answer}
+19. $y$ is expected to be changed by this amount when `Shadow` changes from `L` to `W`, holding the other variables constant.
+20. D. $H_0:\beta_4=0$, $H_a:\beta_4\neq0$.
+21. It is significant.
+:::
+
+
+{{< include ../_newpage.qmd >}} 
+
+
+## Rain Level part 4
+
+
+
+
+The model with shadow effect is 
+$$
+\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4
+$$
+Can the model above be improved by adding interaction terms? Consider the interaction model as follows:
+
+$$
+\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_1x_4+\beta_6x_2x_4+\beta_7x_3x_4.
+$$
+
+
+```{r}
+#| echo: false
+
+fit_int <- lm(Precip_in ~ Altitude_ft + Latitude_deg + Distance_miles + Shadow + Shadow:Altitude_ft + Shadow:Latitude_deg + Shadow:Distance_miles)
+```
+
+```{r}
+anova_alt(fit_dummy)
+anova_alt(fit_int)
+anova(fit_dummy, fit_int)
+```
+
+```{r}
+#| echo: false
+#| output: false
+var2097 <- sprintf("%.1f", anova_alt(fit_dummy)["Error", "SS"])
+var1090 <- sprintf("%.1f", anova_alt(fit_int)["Error", "SS"])
+df_reduce <- 4
+df_full <- 7
+df_diff <- 3
+df_22 <- 22
+df_25 <- 25
+```
+
+---
+
+::: {#exr-22}
+## 1 point
+
+Conduct a hypothesis testing to determine whether these interaction terms are important. Give the null and alternative hypothesis.
+
+
+\mc{
+\item $H_0:\beta_0=\beta_1=\beta_2=\beta_3=\beta_4=\beta_5=\beta_6=\beta_7=0$, $H_a:$ At least one of the $\beta$'s $\neq 0$.
+\item $H_0:\beta_1=\beta_2=\beta_3=\beta_4=\beta_5=\beta_6=\beta_7=0$, $H_a:$ At least one of the $\beta$'s $\neq 0$.
+\item $H_0:\beta_1=\beta_2=\beta_3=\beta_4=0$, $H_a:$ At least one of the $\beta$'s $\neq 0$.
+\item $H_0:\beta_5=\beta_6=\beta_7=0$, $H_a:$ At least one of the $\beta$'s $\neq 0$.
+}
+:::
+
+{{< include ../_newpage.qmd >}} 
+
+::: {#exr-23}
+## 1 point
+Compare the two above models. Which one is the reduced model?
+\mc{
+    \item $\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4$
+    \item $\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4+\beta_5x_1x_4+\beta_6x_2x_4+\beta_7x_3x_4.$
+}
+:::
+
+---
+
+::: {#exr-24}
+## 1 point
+Based on the R printout above, what is the $SSE_R$? That is, the SSE of the reduced model.
+:::
+
+
+---
+
+
+::: {#exr-25}
+## 1 point
+Based on the R printout above, what is the $SSE_F$? That is, the SSE of the full model.
+:::
+
+---
+
+
+::: {#exr-26}
+## 1 point
+Which one is the correct formula to calculate the F-statistics?
+\mcc[4]{
+    \item $\displaystyle F=\dfrac{\dfrac{`r var2097`-`r var1090`}{`r df_diff`}}{\dfrac{`r var1090`}{`r df_22`}}$
+    \item $\displaystyle F=\dfrac{\dfrac{`r var1090`-`r var2097`}{`r df_full`}}{\dfrac{`r var1090`}{`r df_22`}}$
+    \item $\displaystyle F=\dfrac{\dfrac{`r var2097`-`r var1090`}{`r df_reduce`}}{\dfrac{`r var1090`}{`r df_25`}}$
+    \item $\displaystyle F=\dfrac{\dfrac{`r var2097`-`r var1090`}{`r df_diff`}}{\dfrac{`r var1090`}{`r df_25`}}$
+}
+:::
+
+
+---
+
+
+::: {#exr-27}
+## 1 point
+Based on the R printout above, use partial F-test ($\alpha=0.05$) to determine which model, the complete or reduced, is prefered. State the conclusion of the test in the words of the problem.
+:::
+
+
+
+
+
+::: {.answer}
+22. D. $H_0:\beta_5=\beta_6=\beta_7=0$, $H_a:$ At least one of the $\beta$'s $\neq 0$.
+23. A. $\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4$
+24. `r var2097`
+25. `r var1090`
+26. A. $\displaystyle F=\dfrac{\dfrac{`r var2097`-`r var1090`}{`r df_diff`}}{\dfrac{`r var1090`}{`r df_22`}}$
+27. Since p-value is small in the nested F-test, full model is preferred.
+:::
+
+
+
+{{< include ../_newpage.qmd >}} 
+
+
+## Semiconductor part 1
+
+
+The national semiconductor study on using tinlead solder bumps to manufacture silicon wafer integrated circuit chips. The failure times of 22 microchips (in hours) were determined at different solder temperatures (degrees Centigrade), with the data repeated in the accompanying table. Recall that the researchers want to predict failure time ($y$) based on solder temperature ($x$). 
+
+Fit the straight-line model, 
+$$
+\Exp(y)=\beta_0+\beta_1x,
+$$ 
+to the data and plot the residuals against solder temperature. 
+
+
+```{r}
+#| echo: false
+#| fig-height: 8
+#| fig-width: 10
+#| fig-show: hold
+dat2 <- read.csv("p28.csv")
+attach(dat2)
+fit <- lm(FAILTIME ~ TEMP)
+par(mfrow = c(2, 2))
+plot(TEMP, FAILTIME)
+plot(fit, which = 1)
+plot(fit, which = 2)
+plot(fit, which = 5)
+par(mfrow = c(1, 1))
+```
+
+
+
+::: {#exr-28}
+## 1 point
+Based on the scatter plot and residual plot, do you detect a lack of fit? 
+:::
+
+
+::: {#exr-29}
+## 1 point
+Comment on the normal QQ plot. Is the normality assumption reasonably satisfied?
+:::
+
+
+::: {#exr-30}
+## 1 point 
+Comment on the residual vs leverage plot. Is there any influential observation?
+:::
+
+
+
+::: {.answer}
+28. Yes.
+29. 
+30. 
+:::
+
+
+{{< include ../_newpage.qmd >}} 
+
+## Semiconductor part 2
+
+
+The national semiconductor study on using tinlead solder bumps to manufacture silicon wafer integrated circuit chips. The failure times of 22 microchips (in hours) were determined at different solder temperatures (degrees Centigrade), with the data repeated in the accompanying table. Recall that the researchers want to predict failure time ($y$) based on solder temperature ($x$). 
+
+Fit the quadratic model 
+$$
+\Exp(y)=\beta_0+\beta_1x+\beta_2x^2.
+$$ 
+Based on the output below, conduct a test to determine if there is upward curvature in the relationship between failure time and solder temperature. (Use $\alpha=0.05$)
+```{r}
+fit2 <- lm(FAILTIME ~ TEMP + I(TEMP^2))
+summary(fit2)
+anova_alt(fit2)
+```
+ 
+---
+
+::: {#exr-31}
+## 1 point
+What is the null hypothesis?
+\mcc[4]{
+    \item $H_0$: $\beta_1=\beta_2=0$
+    \item $H_0$: $\beta_1=0$
+    \item $H_0$: $\beta_2=0$
+    \item $H_0$: $\beta_0=0$
+}
+:::
+
+
+::: {#exr-32}
+## 1 point
+What is your conclusion?
+:::
+
+
+
+::: {#exr-33}
+## 1 point
+Interpret the estimated slope $\hat\beta_2=5.929$.
+:::
+
+::: {.answer}
+31. C. $H_0$: $\beta_2=0$
+32. 
+33. 
+:::
+
+
+{{< include ../_newpage.qmd >}} 
+
+## Variable selections
+	
+::: {#exr-34}
+## 1 point
+
+Industrial engineers at the University of Florida used regression modeling as a tool to reduce the time and cost associated with developing new metallic alloys. To illustrate, the engineers built a regression model for the tensile yield strength ($y$) of a new steel alloy. The potential important predictors of yield strength are listed below.
+
+::: {=latex}
+\begin{multicols}{2}
+\begin{itemize}
+    \item $x_1$ = Carbon amount (\% weight)
+    \item $x_2$ = Manganese amount (\% weight)
+    \item $x_3$ = Chromium amount (\% weight)
+    \item $x_4$ = Nickel amount (\% weight)
+    \item $x_5$ = Molybdenum amount (\% weight)
+    \item $x_6$ = Copper amount (\% weight)
+    \item $x_7$ = Nitrogen amount (\% weight)
+    \item $x_8$ = Vanadium amount (\% weight)
+    \item $x_9$ = Plate thickness (millimeters)
+    \item $x_{10}$ = Solution treating (milliliters)
+    \item $x_{11}$ = Aging temperature (degrees Celsius)
+\end{itemize}
+\end{multicols}
+:::
+
+The stepwise regression selected the following independent variables: $x_1$, $x_2$, $x_3$, $x_5$, $x_6$, $x_8$, $x_9$, $x_{10}$, $x_{11}$. All these variables were statistically significant in the stepwise model, with $R^2=.94$. Consequently, the engineers used the estimated stepwise model to predict yield strength. Do you agree with this decision? Explain.
+:::
+
+
+---
+
+::: {#exr-35}
+## 1 point
+	
+Based on the output below, apply a variable screening method to the data to find a small subset of the independent variables that are the best predictors of response variable MTBE level. 
+
+
+
+```{r}
+#| echo: false
+dat4 <- read.csv("p35.csv", na.strings = "*")
+dat4 <- na.omit(dat4)
+dat4$WellClass <- as.factor(dat4$WellClass)
+dat4$Aquifier <- as.factor(dat4$Aquifier)
+library(leaps)
+s4 <- summary(regsubsets(MTBE ~ ., data = dat4, nvmax = 7, nbest = 1))
+tab <- ifelse(s4$which, "*", " ")
+```
+
+```{r}
+#| echo: false
+#| output: asis
+knitr::kable(tab, row.names = TRUE, align = "c")
+```
+
+
+
+```{r}
+#| echo: false
+#| output: asis
+tab2 <- data.frame(
+    Vars = 1:nrow(s4$which),
+    `R-sq` = s4$rsq,
+    `R-sq (adj)` = s4$adjr2,
+    `Mallows Cp` = s4$cp
+    # PRESS = PRESS_var
+)
+knitr::kable(tab2)
+```
+
+Please specify how you used the criterions (e.g. adjusted-R-sq, Cp) to draw the conclusion.
+
+:::
+
+
+
+
+::: {.answer}
+34. Yes.
+35. 2 variables are the best.
+:::
+
+
+{{< include ../_newpage.qmd >}} 
+
+## Quasar
+
+
+	
+A quasar is a distance celestial object (at least 4 billion light-years away) that provides a powerful source of radio energy. The data for a sample of 25 large (redshift) quasars is from a survey study of quasars detected by a deep space survey. The survey enabled astronomers to measure the rest frame equivalent width (the response variable $y$), redshift range ($x_1$), line flux ($x_2$), line luminosity ($x_3$), AB1450 magnitude ($x_4$) in a linear model below 
+$$
+\Exp(y)=\beta_0+\beta_1x_1+\beta_2x_2+\beta_3x_3+\beta_4x_4.
+$$
+
+A portion of the R spreadsheet showing the diagnostic table as follows. 
+
+
+```{r}
+#| echo: false
+#| output: asis
+dat36 <- read.csv("p36.csv")
+fit36 <- lm(RFEWIDTH ~ REDSHIFT + LINEFLUX + LUMINOSITY + AB1450, data = dat36)
+tab <- data.frame(
+    RFEWIDTH = dat36$RFEWIDTH, # 响应变量
+    Predicted_Value = fitted(fit36),
+    Residual = resid(fit36),
+    Std_Residual = rstandard(fit36),
+    Del_Residual = rstudent(fit36),
+    leverage_values = hatvalues(fit36),
+    CooksD = cooks.distance(fit36)
+)
+
+knitr::kable(
+    tab,
+    digits = 4
+)
+```
+
+::: {#exr-36}
+## 1 point
+Do you detect any outliers by using the standardized residual method? Explain.
+:::
+
+
+::: {#exr-37}
+## 1 point
+Do you detect any outliers by using the studentized deleted residual method? Explain.
+:::
+
+
+
+::: {#exr-38}
+## 1 point
+	
+What is the critical value of cook's distance in R?
+\mcc[2]{
+    \item \texttt{qf(0.5, 5, 20) = 0.9004}
+    \item \texttt{qf(0.5, 4, 21) = 0.8669}
+    \item \texttt{qf(0.05, 5, 20) = 0.2193}
+    \item \texttt{qf(0.05, 4, 21) = 0.1726}
+}
+:::
+
+
+::: {#exr-39}
+## 1 point
+Do you detect any influential observations by using Cook's distance method? Explain.
+:::
+
+
+::: {.answer}
+37. Yes.
+38. A. `qf(0.5, 5, 20) = 0.9004`
+39. Yes.
+:::
