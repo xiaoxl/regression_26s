@@ -275,7 +275,7 @@ From this perspective, $C_p$ can be viewed as the training error SSE plus a pena
 
 
 ::: {.callout-caution}
-## Number of parameters in \(C_p\) and AIC
+## Number of parameters in $C_p$ and AIC
 
 - In Mallows’ $C_p$, $p$ denotes the number of regression parameters, including the intercept.
 - In AIC, the penalty uses the total number of estimated parameters. For a Gaussian linear model, this includes:
