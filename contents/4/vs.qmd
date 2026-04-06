@@ -39,6 +39,7 @@ Variable selections can be treated as a model comparison process. Therefore we n
 ### What we already covered
 1. p-value: when comparing nested models, the p-value can be used to determine whether the added variables are significant as a group.
 2. $R^2$ and $R_a^2$: the proportion of the varaiance that can be explained. This is one of the metrics that is used to determine the performance of a model.
+3. MSE: this measures the average squared prediction error of the model on the training data.
 
 When talking about approximation ability, some tend to use MSE. This is very similar to $R^2$ and $R_a^2$ since they are computed using MSE.
 
