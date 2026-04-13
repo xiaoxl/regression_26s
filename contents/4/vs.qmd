@@ -210,6 +210,84 @@ How to interpret it:
 - If $C_p<p$, it may indicate overfitting or that $\hat\sigma^2$ is overestimated.
 
 
+
+::: {.callout-note collapse="true"}
+## The rough story of Mallows' $C_p$
+
+The goal in model selection is to estimate the expected prediction error on new data
+$$
+\Exp[(Y^{new}-\hat y)^2]
+$$
+But we only observe the training error
+$$
+SSE_p=\sum(y_i-\hat y_i)^2
+$$
+Training error is too optimistic because the model was fit using the same data.
+
+Consider the MLR model 
+$$
+y=X\beta+\varepsilon,\quad \varepsilon\sim N(0,\sigma^2I)
+$$
+Let 
+$$
+\hat y=Hy,\quad H=X(X^TX)^{-1}X^T.
+$$
+Note that 
+$$
+\begin{split}
+H^T&=(X(X^TX)^{-1}X^T)^T=X(X^TX)^{-1}X^T=H,\\
+H^2&=(X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T)=X(X^TX)^{-1}X^T=H.\\
+\tr(H)&=p.
+\end{split}
+$$
+Then
+$$
+\begin{split}
+\mathbf e&=\mathbf y-\hat {\mathbf y}=(I-H)\mathbf y,\\
+SSE_p&=\sum(y_i-\hat y_i)^2=\mathbf e^T\mathbf e=\varepsilon^T(I-H)^T(I-H)\varepsilon=\varepsilon^T(I-H)\varepsilon,\\
+\Exp[SSE_p]&=\Exp[\varepsilon^T(I-H)^T(I-H)\varepsilon]=\sigma^2\tr(I-H)\\
+&=(n-p)\sigma^2.
+\end{split}
+$$
+
+
+Now consider a new data $Y^{new}=X\beta+\varepsilon^{new}$. Note that $\varepsilon^{new}$ and $\varepsilon$ are independent, so $\Exp[(\varepsilon^{new})^T\varepsilon]=0$. Then
+$$
+\begin{split}
+\hat y&=Hy=H(X\beta+\varepsilon)=HX\beta+H\varepsilon=X\beta+H\varepsilon,\\
+Y^{new}-\hat y&=\varepsilon^{new}-H\varepsilon,\\
+\sum(Y_i^{new}-\hat y_i)^2&=(\varepsilon^{new}-H\varepsilon)^T(\varepsilon^{new}-H\varepsilon),\\
+\Exp[\sum(Y_i^{new}-\hat y_i)^2]&=\Exp[(\varepsilon^{new})^T\varepsilon^{new}]+\Exp[(H\varepsilon)^T(H\varepsilon)]\\
+&=n\sigma^2+\Exp[\varepsilon^TH^2\varepsilon]=n\sigma^2+\Exp[\varepsilon^TH\varepsilon]=n\sigma^2+\sigma^2\tr(H)\\
+&=n\sigma^2+\sigma^2p=(n+p)\sigma^2.
+\end{split}
+$$
+
+
+
+
+Therefore the gap is
+$$
+(n+p)\sigma^2-(n-p)\sigma^2=2p\sigma^2.
+$$
+Therefore we could use $SSE_p+2p\sigma^2$ to estimate the prediction error. But $\sigma^2$ is unknown, so we use the full model to estimate it
+$$
+\sigma^2\approx s^2=MSE_{full}.
+$$
+Therefore 
+$$
+SSE_p+2ps^2
+$$
+is an estimate of prediction error. Now we arrange the terms by dividing by $s^2$ and minus $n$,
+$$
+C_p=\frac{SSE_p}{s^2}-(n-2p)
+$$
+This is the usual formula for $C_p$.
+
+
+
+:::
+
 ::: {#exm-}
 
 - Model A has $p=3$ parameters and $C_p=12$
@@ -356,6 +434,167 @@ ols_press(fit)
 
 
 :::
+
+
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+dat <- read.csv("EXAMPLE2.csv", na.strings = "*")
+dat <- na.omit(dat)
+dat$WellClass <- as.factor(dat$WellClass)
+dat$Aquifier <- as.factor(dat$Aquifier)
+library(leaps)
+s <- summary(regsubsets(MTBE ~ ., data = dat, nvmax = 7, nbest = 1))
+tab <- ifelse(s$which, "*", " ")
+
+
+X_full <- model.matrix(MTBE ~ ., data = dat)
+y <- dat$MTBE
+
+# 4. 循环计算每个子集的 PRESS
+PRESS_var <- numeric(nrow(s$which))
+
+for (i in 1:nrow(s$which)) {
+    # 提取第 i 个模型选中的列名
+    logical_vec <- s$which[i, ]
+    Xi <- X_full[, logical_vec, drop = FALSE]
+
+    # 直接使用矩阵运算或 lm.fit 会更稳健
+    # 因为 Xi 已经包含了截距项(Intercept)，所以用 -1
+    fit <- lm(y ~ Xi - 1)
+
+    # 计算 PRESS
+    # 方式 A: 使用 MPV 包
+    # PRESS_var[i] <- olsrr_press(fit)
+
+    # 方式 B: 手动验证公式 (更推荐，防止包冲突)
+    res <- residuals(fit)
+    hat <- hatvalues(fit)
+    PRESS_var[i] <- sum((res / (1 - hat))^2)
+}
+
+
+tab <- data.frame(
+    Vars = 1:nrow(s$which),
+    `R-sq` = s$rsq,
+    `R-sq (adj)` = s$adjr2,
+    `Mallows Cp` = s$cp,
+    `PRESS` = PRESS_var
+)
+tab
+```
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+library(leaps)
+
+best_subset_full_press <- function(formula, data, nvmax = NULL, really.big = FALSE) {
+    mf <- model.frame(formula, data = data, na.action = na.omit)
+    tt <- terms(mf)
+    response_name <- as.character(formula[[2]])
+
+    # 原始公式的 term labels
+    term_labels <- attr(tt, "term.labels")
+
+    # 设计矩阵与 assign
+    mm <- model.matrix(tt, data = mf)
+    assign_vec <- attr(mm, "assign")
+    mm_colnames <- colnames(mm)
+
+    # 每个设计矩阵列属于哪个原始 term
+    col_to_term <- rep(NA_character_, length(mm_colnames))
+    col_to_term[assign_vec == 0] <- "(Intercept)"
+    col_to_term[assign_vec > 0] <- term_labels[assign_vec[assign_vec > 0]]
+    names(col_to_term) <- mm_colnames
+
+    if (is.null(nvmax)) {
+        nvmax <- length(term_labels)
+    }
+
+    regfit <- regsubsets(formula, data = mf, nvmax = nvmax, really.big = really.big)
+    regsum <- summary(regfit)
+
+    get_press <- function(fit) {
+        e <- resid(fit)
+        h <- hatvalues(fit)
+        sum((e / (1 - h))^2)
+    }
+
+    out <- vector("list", nrow(regsum$which))
+
+    for (i in seq_len(nrow(regsum$which))) {
+        w <- regsum$which[i, ]
+
+        # regsubsets 认为被选中的“名字”
+        chosen_basis <- names(w)[w]
+        chosen_basis <- setdiff(chosen_basis, "(Intercept)")
+
+        # 把这些 basis 名字映射回原始 term
+        # 情况1：名字本身就是原始 term
+        # 情况2：名字是设计矩阵列名（dummy），则回到对应 term
+        chosen_terms <- unique(vapply(chosen_basis, function(x) {
+            if (x %in% term_labels) {
+                x
+            } else if (x %in% names(col_to_term)) {
+                col_to_term[[x]]
+            } else {
+                NA_character_
+            }
+        }, character(1)))
+
+        chosen_terms <- chosen_terms[!is.na(chosen_terms)]
+        chosen_terms <- setdiff(chosen_terms, "(Intercept)")
+
+        # 重拟合完整 term 模型
+        form_i <- if (length(chosen_terms) == 0) {
+            as.formula(paste(response_name, "~ 1"))
+        } else {
+            reformulate(chosen_terms, response = response_name)
+        }
+
+        fit_i <- lm(form_i, data = mf)
+        press_i <- get_press(fit_i)
+
+        out[[i]] <- data.frame(
+            subset_size = sum(setdiff(names(w)[w], "(Intercept)") != ""),
+            regsubsets_basis = paste(chosen_basis, collapse = ", "),
+            full_terms_used = paste(chosen_terms, collapse = " + "),
+            n_terms_in_refit = length(attr(terms(fit_i), "term.labels")),
+            p_refit = length(coef(fit_i)) - 1,
+            cp = regsum$cp[i],
+            bic = regsum$bic[i],
+            adjr2 = regsum$adjr2[i],
+            press = press_i,
+            press_mse = press_i / nrow(mf),
+            stringsAsFactors = FALSE
+        )
+    }
+
+    out <- do.call(rbind, out)
+    rownames(out) <- NULL
+    out
+}
+
+best_subset_full_press(MTBE ~ ., data = dat, nvmax = 7)
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Summary
