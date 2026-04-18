@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.12">
+<meta name="generator" content="quarto-1.10.3">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>12&nbsp; Variable selection – Regression 26 Spring</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -88,19 +91,18 @@ div.csl-indent {
 <link href="../../contents/3/project2.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-bd72660a7ac1d74eb59e6013565e57c7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-76bd60113cab0e4045c5a075e28c35eb.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7cf0f3ac4fa6ece873d2842395095c69.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4206948228c3a517d1ec61face932dbd.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7cf0f3ac4fa6ece873d2842395095c69.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-98d67fd4a94d75c92ed86be1e8f4ff03.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-18c4c02f2e0c35b6cc6a137a251bffe3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-7b3776d37d2c8d11d103ff2c9580773d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-817628477a5b97f551368350b6010dfb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7b3776d37d2c8d11d103ff2c9580773d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/bookup_fonts_gwf-0.0/fonts-embed.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -131,7 +133,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -160,7 +162,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../../styles/blocks.css">
+<link rel="stylesheet" href="../../blocks.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -648,6 +650,7 @@ The two methods emphasized in this chapter are:
 <ol type="1">
 <li>p-value: when comparing nested models, the p-value can be used to determine whether the added variables are significant as a group.</li>
 <li><span class="math inline">\(R^2\)</span> and <span class="math inline">\(R_a^2\)</span>: the proportion of the varaiance that can be explained. This is one of the metrics that is used to determine the performance of a model.</li>
+<li>MSE: this measures the average squared prediction error of the model on the training data.</li>
 </ol>
 <p>When talking about approximation ability, some tend to use MSE. This is very similar to <span class="math inline">\(R^2\)</span> and <span class="math inline">\(R_a^2\)</span> since they are computed using MSE.</p>
 </section>
@@ -793,6 +796,63 @@ C_p=\frac{SSE_p}{\hat\sigma^2}-(n-2p),
 <li>If <span class="math inline">\(C_p\)</span> is much larger than <span class="math inline">\(p\)</span>, the model likely suffers from bias that important variables are missing.</li>
 <li>If <span class="math inline">\(C_p&lt;p\)</span>, it may indicate overfitting or that <span class="math inline">\(\hat\sigma^2\)</span> is overestimated.</li>
 </ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The rough story of Mallows’ <span class="math inline">\(C_p\)</span>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The goal in model selection is to estimate the expected prediction error on new data <span class="math display">\[
+\operatorname{E}[(Y^{new}-\hat y)^2]
+\]</span> But we only observe the training error <span class="math display">\[
+SSE_p=\sum(y_i-\hat y_i)^2
+\]</span> Training error is too optimistic because the model was fit using the same data.</p>
+<p>Consider the MLR model <span class="math display">\[
+y=X\beta+\varepsilon,\quad \varepsilon\sim N(0,\sigma^2I)
+\]</span> Let <span class="math display">\[
+\hat y=Hy,\quad H=X(X^TX)^{-1}X^T.
+\]</span> Note that <span class="math display">\[
+\begin{split}
+H^T&amp;=(X(X^TX)^{-1}X^T)^T=X(X^TX)^{-1}X^T=H,\\
+H^2&amp;=(X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T)=X(X^TX)^{-1}X^T=H.\\
+\tr(H)&amp;=p.
+\end{split}
+\]</span> Then <span class="math display">\[
+\begin{split}
+\mathbf e&amp;=\mathbf y-\hat {\mathbf y}=(I-H)\mathbf y,\\
+SSE_p&amp;=\sum(y_i-\hat y_i)^2=\mathbf e^T\mathbf e=\varepsilon^T(I-H)^T(I-H)\varepsilon=\varepsilon^T(I-H)\varepsilon,\\
+\operatorname{E}[SSE_p]&amp;=\operatorname{E}[\varepsilon^T(I-H)^T(I-H)\varepsilon]=\sigma^2\tr(I-H)\\
+&amp;=(n-p)\sigma^2.
+\end{split}
+\]</span></p>
+<p>Now consider a new data <span class="math inline">\(Y^{new}=X\beta+\varepsilon^{new}\)</span>. Note that <span class="math inline">\(\varepsilon^{new}\)</span> and <span class="math inline">\(\varepsilon\)</span> are independent, so <span class="math inline">\(\operatorname{E}[(\varepsilon^{new})^T\varepsilon]=0\)</span>. Then <span class="math display">\[
+\begin{split}
+\hat y&amp;=Hy=H(X\beta+\varepsilon)=HX\beta+H\varepsilon=X\beta+H\varepsilon,\\
+Y^{new}-\hat y&amp;=\varepsilon^{new}-H\varepsilon,\\
+\sum(Y_i^{new}-\hat y_i)^2&amp;=(\varepsilon^{new}-H\varepsilon)^T(\varepsilon^{new}-H\varepsilon),\\
+\operatorname{E}[\sum(Y_i^{new}-\hat y_i)^2]&amp;=\operatorname{E}[(\varepsilon^{new})^T\varepsilon^{new}]+\operatorname{E}[(H\varepsilon)^T(H\varepsilon)]\\
+&amp;=n\sigma^2+\operatorname{E}[\varepsilon^TH^2\varepsilon]=n\sigma^2+\operatorname{E}[\varepsilon^TH\varepsilon]=n\sigma^2+\sigma^2\tr(H)\\
+&amp;=n\sigma^2+\sigma^2p=(n+p)\sigma^2.
+\end{split}
+\]</span></p>
+<p>Therefore the gap is <span class="math display">\[
+(n+p)\sigma^2-(n-p)\sigma^2=2p\sigma^2.
+\]</span> Therefore we could use <span class="math inline">\(SSE_p+2p\sigma^2\)</span> to estimate the prediction error. But <span class="math inline">\(\sigma^2\)</span> is unknown, so we use the full model to estimate it <span class="math display">\[
+\sigma^2\approx s^2=MSE_{full}.
+\]</span> Therefore <span class="math display">\[
+SSE_p+2ps^2
+\]</span> is an estimate of prediction error. Now we arrange the terms by dividing by <span class="math inline">\(s^2\)</span> and minus <span class="math inline">\(n\)</span>, <span class="math display">\[
+C_p=\frac{SSE_p}{s^2}-(n-2p)
+\]</span> This is the usual formula for <span class="math inline">\(C_p\)</span>.</p>
+</div>
+</div>
+</div>
 <div id="exm-" class="theorem example">
 <p><span class="theorem-title"><strong>Example 12.2</strong></span> &nbsp;</p>
 <ul>
@@ -848,7 +908,7 @@ C_p=\frac1n(SSE+2p\hat\sigma^2).
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Caution</span>Number of parameters in (C_p) and AIC
+<span class="screen-reader-only">Caution</span>Number of parameters in <span class="math inline">\(C_p\)</span> and AIC
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1483,7 +1543,7 @@ Coefficients:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vs_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vs_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1495,7 +1555,7 @@ Coefficients:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vs_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vs_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1507,7 +1567,7 @@ Coefficients:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vs_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vs_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1519,7 +1579,7 @@ Coefficients:
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vs_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vs_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1527,7 +1587,7 @@ Coefficients:
 </details>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1536,7 +1596,7 @@ Coefficients:
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>This description follows <span class="citation" data-cites="Jam2021">[<a href="../../index.html#ref-Jam2021" role="doc-biblioref">1</a>]</span>. The key idea is to approximate best subset selection using a greedy procedure.</p>
 <ol type="1">
@@ -1593,7 +1653,7 @@ Selection Algorithm: forward
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vs_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="vs_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
